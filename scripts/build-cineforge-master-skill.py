@@ -24,7 +24,7 @@ LINKS=re.compile(r'(?<!!)\[([^\]\n]+)\]\(([^)\n]+)\)')
 def merge_source(name):
     p=BASE/name/"SKILL.md"
     t=p.read_text(encoding="utf-8")
-    m=re.match(r"\A---\n(.*?)\n---\n([\s\S]*)\Z",t)
+    m=re.match(r"\A---\n(.*?)\n---\n([\s\S]*)\Z",t,re.S)
     if not m or not re.search(r"^name:\s*"+re.escape(name)+r"\s*$",m.group(1),re.M):
         raise ValueError("Invalid source skill: "+name)
     body=m.group(2).strip()
