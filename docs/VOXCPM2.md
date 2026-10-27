@@ -78,6 +78,10 @@ For continuation-style cloning, provide `--prompt-audio input/voice.wav --prompt
 
 Only use reference voices with the speaker's permission or your own voice. Do not use for impersonation, fraud, or misleading speech; disclose synthetic voice use where appropriate.
 
+## Real Tagalog audio verification on Google Colab GPU
+
+Open the [VoxCPM2 Tagalog GPU QA notebook](../notebooks/VoxCPM2_Tagalog_GPU_QA.ipynb) in [Google Colab](https://colab.research.google.com/github/urfavxbf/video-ai-editor/blob/feat/voxcpm2-voiceover/notebooks/VoxCPM2_Tagalog_GPU_QA.ipynb) and choose a GPU runtime. The notebook synthesizes **one** Tagalog WAV from the actual 2B model, plays it in the browser and attaches that same WAV to a locally generated test MP4 (no additional model run). GPU quota/costs may apply, and this process has **not** been executed by GitHub Actions. Do not claim pronunciation or voice quality has passed until someone has listened to the produced audio.
+
 ## Verification and failure handling
 
 ```bash
