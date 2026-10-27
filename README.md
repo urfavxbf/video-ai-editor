@@ -10,6 +10,16 @@
 - **AI editing workflows and Claude skill** in `.claude/skills/ai-video-editor/`.
 - **CI smoke tests** and dependency installation scripts.
 
+## One-click Codespaces setup (Android / browser)
+
+Create a Codespace from the `main` branch using **Code → Codespaces → Create codespace on main**. The committed `.devcontainer/devcontainer.json` installs the full editing toolchain automatically. After initialization, run:
+
+```bash
+bash scripts/check-codespace.sh
+```
+
+See [Codespaces setup and Groq secrets](docs/CODESPACES_SETUP.md) for Android-friendly steps. Codespaces and Groq usage can consume plan quotas.
+
 ## Quick start
 
 ```bash
