@@ -47,9 +47,11 @@ def main() -> None:
             print("  seconds:", round(length, 2), "tempo:", round(speed, 2), flush=True)
             if speed > 1.7:
                 raise RuntimeError("Scene voice too long to preserve speech. Shorten the script.")
-            fx = "atempo="+str(round(speed,5))+",adelay=300:all=1,apad,atrim=0:6,asetpts=N/SR/TB"
-            ffmpeg("-i", str(raw), "-af", fx, "-ar", "48000", "-ac", "2",
+            fx = "atempo="+str(round(speed,5))+",adelay=300:all=1,apad"
+            ffmpeg("-i", str(raw), "-af", fx, "-t", "6", "-ar", "48000", "-ac", "2",
                    "-c:a", "pcm_s16le", str(padded))
+            if not (5.995 <= seconds(padded) <= 6.005):
+                raise RuntimeError("FFmpeg did not pad a scene to six seconds.")
             paths.append(padded)
         manifest = root/"concat.txt"
         manifest.write_text("".join("file '"+str(p)+"'\n" for p in paths))
