@@ -8,6 +8,7 @@
 - **Video editing compositions** in `src/edit/` with a JSON cut list.
 - **Effects source code** in `src/fx/` with fonts, textures and sound effects in `public/`.
 - **Groq transcription helper** in `scripts/groq_transcribe.py` for Tagalog/Taglish captions.
+- **Optional Chatterbox Multilingual V3 narration engine** with consent-based voice cloning, WAV export, and a Remotion narration track. See [Chatterbox setup](docs/CHATTERBOX_TTS.md). Tagalog is not officially supported.
 - **AI editing workflows and Claude skill** in `.claude/skills/ai-video-editor/`.
 - **12 official Remotion Agent Skills** in `.claude/skills/remotion-*/` (full source/reference files, pinned official import). See [the Remotion skills guide](docs/REMOTION_SKILLS.md).
 - **CineForge Pro all-in-one Skill** in [`.claude/skills/cineforge-pro/SKILL.md`](.claude/skills/cineforge-pro/SKILL.md): one portable skill merging the 12 official Remotion skill bodies and our professional `ai-video-editor` skill. The original 13 directories remain for auditing and maintenance; run `python3 scripts/build-cineforge-master-skill.py` to rebuild the master file.

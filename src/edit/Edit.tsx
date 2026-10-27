@@ -8,7 +8,7 @@ import { GlassBlur } from '../fx/theme'
 /** A cut list over one take. `at` is the source frame the segment starts on, `frames` its length on the timeline.
  * `kind: 'fx'` plays the effect `id` from `at` (cut short if `frames` is less than the effect's duration). */
 export type Segment = { kind: 'aroll' | 'fx'; at: number; frames: number; id?: string }
-export type EditSpec = { source: FxSource; segments: Segment[]; music?: { file: string; volume: number; trimBefore?: number } }
+export type EditSpec = { source: FxSource; segments: Segment[]; music?: { file: string; volume: number; trimBefore?: number }; narration?: { file: string; volume?: number }; sourceVolume?: number }
 
 const timeline = (spec: EditSpec) => {
 	let start = 0
@@ -29,10 +29,11 @@ export const Edit = ({ spec }: { spec: EditSpec }) => {
 			const entry = s.kind === 'fx' ? fxById(s.id!) : undefined
 			return <Sequence key={i} from={s.start} durationInFrames={s.frames} premountFor={30}>
 				{entry ? <entry.Component from={s.at} /> : <ARoll from={s.at} />}
-				<Audio src={staticFile(spec.source.video)} trimBefore={s.at} />
+				<Audio src={staticFile(spec.source.video)} trimBefore={s.at} volume={spec.sourceVolume ?? 1} />
 			</Sequence>
 		})}
 		<Sfx cues={cues} />
+		{spec.narration && <Audio src={staticFile(spec.narration.file)} volume={spec.narration.volume ?? 1} />}
 		{spec.music && <Audio src={staticFile(spec.music.file)} trimBefore={spec.music.trimBefore ?? 0} volume={f => spec.music!.volume * Math.min(1, f / 15, Math.max(0, (total - f) / 45))} />}
 	</AbsoluteFill></GlassBlur.Provider></FxSourceContext.Provider>
 }
