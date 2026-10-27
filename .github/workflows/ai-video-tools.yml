@@ -1,0 +1,60 @@
+name: AI Video Editor - install and verify
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'requirements.txt'
+      - 'scripts/setup-ai-video-tools.sh'
+      - 'scripts/groq_transcribe.py'
+      - 'tests/**'
+      - '.github/workflows/ai-video-tools.yml'
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'requirements.txt'
+      - 'scripts/setup-ai-video-tools.sh'
+      - 'scripts/groq_transcribe.py'
+      - 'tests/**'
+      - '.github/workflows/ai-video-tools.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  install-and-smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install all editing dependencies
+        run: bash scripts/setup-ai-video-tools.sh
+      - name: Validate Groq subtitle formatter without external API calls
+        run: |
+          .venv/bin/python -m py_compile scripts/groq_transcribe.py
+          .venv/bin/python -m unittest discover -s tests -p 'test_groq_transcribe.py' -v
+      - name: Generate lightweight smoke-test source video
+        run: |
+          mkdir -p public/sample out
+          ffmpeg -hide_banner -loglevel error -y -f lavfi -i "color=c=0x223344:s=1080x1920:r=30:d=2" \
+            -f lavfi -i "anullsrc=channel_layout=stereo:sample_rate=48000" \
+            -t 2 -c:v libx264 -preset ultrafast -pix_fmt yuv420p -c:a aac -shortest public/sample/take.mp4
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 public/sample/take.mp4
+      - name: Render one real Remotion test frame
+        run: |
+          npx remotion still FxPreview out/editor-smoke.png --frame=12 --props='{"id":"snap-zoom","from":0}'
+          test -s out/editor-smoke.png
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: remotion-smoke-frame
+          path: out/editor-smoke.png
+          retention-days: 3
