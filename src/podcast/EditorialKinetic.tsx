@@ -142,7 +142,7 @@ export const EditorialKinetic = ({
   const frame=useCurrentFrame();
   const t=frame/EDITORIAL_FPS;
   const beat=beats.find(b => t>=b.start && t<b.end) ?? beats[beats.length-1];
-  const elapsed=clamp(t-beat.start);
+  const elapsed=Math.max(0,t-beat.start);
   const fade=interpolate(t,[beat.start,beat.start+.2,Math.max(beat.start+.21,beat.end-.2),beat.end],
     [0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
   const speaker=beat.mode==='speaker';
