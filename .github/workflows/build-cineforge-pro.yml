@@ -1,0 +1,62 @@
+name: Build CineForge Pro Single Skill
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-cineforge-master-skill.py'
+      - '.github/workflows/build-cineforge-pro.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  combine-13-skills:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout editor repository
+        uses: actions/checkout@v4
+      - name: Combine all thirteen SKILL.md files
+        run: python3 scripts/build-cineforge-master-skill.py
+      - name: Validate one-skill packaging
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          from zipfile import ZipFile
+          p=Path(".claude/skills/cineforge-pro/SKILL.md")
+          t=p.read_text(encoding="utf-8")
+          assert t.startswith("---\nname: cineforge-pro\n")
+          assert len(re.findall(r"(?m)^## Module \d\d:",t)) == 13
+          assert "remotion-captions" in t and "remotion-render" in t and "ai-video-editor" in t
+          assert len(t)>25000
+          with ZipFile("out/cineforge-pro/CineForge-Pro-One-Skill.zip") as z:
+              assert z.namelist()==["SKILL.md"]
+              assert z.read("SKILL.md")==p.read_bytes()
+              assert z.testzip() is None
+          print("PASS: Single master skill contains thirteen original modules")
+          print("PASS: One-file ZIP matches standalone SKILL.md byte-for-byte")
+          PY
+      - name: Commit consolidated skill to repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .claude/skills/cineforge-pro/SKILL.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Add CineForge Pro all-in-one master video editing skill"
+            git push origin HEAD:main
+          fi
+      - name: Upload one-install master skill
+        uses: actions/upload-artifact@v4
+        with:
+          name: cineforge-pro-single-skill
+          path: |
+            out/cineforge-pro/SKILL.md
+            out/cineforge-pro/CineForge-Pro-One-Skill.zip
+          retention-days: 14
+          if-no-files-found: error
