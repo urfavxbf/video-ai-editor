@@ -51,11 +51,11 @@ These snippets are NOT a contiguous verbatim transcript. The final audio must fo
 
 | Preview time | Mode | On-screen emphasis |
 |---|---|---|
-| 0–5s | Speaker close-up (or original mic illustration if no rights) | Engagement decision |
-| 5–10s | White kinetic typography + red circle | Ring |
-| 10–15s | Speaker close-up | Betrayal |
-| 15–22s | White typography + red underline | Trust yourself |
-| 22–27s | Speaker close-up | Choosing herself |
+| 0–5s | Speaker close-up (or original illustration if no rights) | The thing about betrayal |
+| 5–12s | White kinetic typography + red underline | Trust yourself |
+| 12–17s | Speaker close-up | This is about me |
+| 17–22s | White typography + red circle | No, I come first |
+| 22–27s | Speaker close-up | Love isn't enough |
 
 The editor may change all five segment lengths to match the real recording. A polished cut can run ~25–45 seconds depending on pauses and context; do **not** time-stretch quotations to fit a predetermined number.
 
