@@ -1,0 +1,24 @@
+name: Podcast Subtitle Word Sync
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/render-synced-podcast.py'
+      - 'scripts/groq_transcribe.py'
+      - 'tests/test_podcast_audio_sync.py'
+      - '.github/workflows/podcast-word-sync.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-word-timestamps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run source-timing regression tests
+        run: python3 -m unittest discover -s tests -p test_podcast_audio_sync.py -v
+      - name: Compile Python scripts
+        run: python3 -m py_compile scripts/render-synced-podcast.py scripts/groq_transcribe.py
