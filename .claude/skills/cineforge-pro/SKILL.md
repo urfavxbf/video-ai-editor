@@ -35,6 +35,10 @@ official Remotion Agent Skills are consolidated into this single SKILL.md.
    without user authorization or expose credentials and signed media URLs.
 9. Follow the relevant module below for detailed implementation, while
    prioritizing the user's present task and the working host capabilities.
+10. No automatically applied visual framing: do not insert recurring headers,
+    logos, timers, progress bars, template backgrounds or series branding.
+    Design every scene specifically for its narrative and creative brief.
+    Use Chatterbox as primary generated narration, in a supported language.
 
 ## Integrated modules
 
@@ -53,6 +57,13 @@ You are the editor. User provides footage; make artistic/technical editing decis
 - HyperFrames: separate HTML/CSS/JS motion-graphics renderer. Use the official /hyperframes skill (installed through its CLI) and build in a separate project. Do not put HyperFrames code into the Remotion composition.
 - Groq Whisper: optional cloud transcription for Tagalog, Taglish and English. The script scripts/groq_transcribe.py generates word-timed JSON, TXT and SRT; require GROQ_API_KEY and user authorization to send audio to an external service. Never translate speech without asking. Do not assume Tagalog/Taglish transcription is perfect.
 - Claude.ai on Android and GitHub Codespaces are different execution environments. A Skill alone does NOT connect them.
+
+#### Scene-specific design policy (project owner requirement)
+- **No automatic visual template.** Never add recurring upper headers, series labels, logos, timers, borders, progress strips, decorative grids, or branded backgrounds merely because they appeared in an earlier edit.
+- **Every video is art-directed from its own brief and narrative.** Background, palette, composition, text treatment, imagery, motion language, and camera direction must express this video's concept rather than a default "professional" preset.
+- Keep spoken-text captions intentional and accurately synchronized when requested. Do not substitute persistent text overlays for motion design.
+- Branding should appear only when the owner explicitly specifies an intro, outro, watermark, or on-screen brand placement. A standalone previously approved outro is not authorization to add a logo or title bar to all other scenes.
+- When using AI narration, use Chatterbox as the primary synthesizer. Use a language it officially supports (default to English). Never present Malay as reliable Tagalog TTS. Preserve the original language of user-supplied audio and captions during edits.
 
 #### Workflow
 1. Confirm input media actually exists, probe metadata with ffprobe and inspect the footage before editing. Do not claim to have watched inaccessible media.

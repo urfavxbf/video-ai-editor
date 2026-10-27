@@ -94,6 +94,10 @@ official Remotion Agent Skills are consolidated into this single SKILL.md.
    without user authorization or expose credentials and signed media URLs.
 9. Follow the relevant module below for detailed implementation, while
    prioritizing the user's present task and the working host capabilities.
+10. No automatically applied visual framing: do not insert recurring headers,
+    logos, timers, progress bars, template backgrounds or series branding.
+    Design every scene specifically for its narrative and creative brief.
+    Use Chatterbox as primary generated narration, in a supported language.
 
 ## Integrated modules
 
