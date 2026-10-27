@@ -1,0 +1,31 @@
+name: VoxCPM2 adapter tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_voiceover.py'
+      - '.github/workflows/voxcpm-voiceover.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_voiceover.py'
+      - '.github/workflows/voxcpm-voiceover.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  adapter-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile adapter
+        run: python -m py_compile scripts/voxcpm_voiceover.py
+      - name: Unit tests (no GPU, downloads, or secrets)
+        run: python -m unittest discover -s tests -p 'test_voxcpm_voiceover.py' -v
