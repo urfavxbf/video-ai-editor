@@ -25,26 +25,26 @@ const FONT = "'Montserrat', 'Inter', sans-serif";
 
 type Caption = { from: number; to: number; text: string; key?: string };
 const captions: Caption[] = [
-  { from: 0.00, to: 1.55, text: 'Pero ginawa mo ba yun?' },
-  { from: 1.55, to: 3.45, text: 'Siyempre, 11 YEARS nga, di ba?', key: '11 YEARS' },
-  { from: 3.45, to: 5.80, text: 'Ginawa mo ba siya' },
-  { from: 5.80, to: 7.96, text: 'out of respect?' },
-  { from: 7.96, to: 10.60, text: 'Doon sa 11 years' },
-  { from: 10.60, to: 12.20, text: 'na pinagsamahan?' },
-  { from: 12.20, to: 14.05, text: 'O hindi mo lang sinabi' },
-  { from: 14.05, to: 16.25, text: 'dahil yun ang tama?' },
-  { from: 16.25, to: 17.25, text: 'Parang mali.' },
+  { from: 0.00, to: 1.52, text: 'Pero ginawa mo ba yun?' },
+  { from: 1.52, to: 3.40, text: 'Siyempre, 11 YEARS nga, di ba?', key: '11 YEARS' },
+  { from: 3.40, to: 5.90, text: 'Ginawa mo ba siya' },
+  { from: 5.90, to: 7.98, text: 'out of respect?' },
+  { from: 7.98, to: 10.60, text: 'Doon sa 11 years?' },
+  { from: 10.60, to: 11.70, text: 'Na hindi mo sinabi' },
+  { from: 11.70, to: 14.30, text: 'because of respect' },
+  { from: 14.30, to: 16.25, text: 'O yun yung tama?' },
+  { from: 16.25, to: 17.25, text: 'Parang mali, parang mali.' },
   { from: 17.25, to: 19.85, text: 'Hindi siya respect' },
-  { from: 19.85, to: 21.90, text: 'para doon sa kabila.' },
-  { from: 21.95, to: 23.53, text: 'RESPETO SA SARILI KO', key: 'RESPETO SA SARILI' },
-  { from: 23.53, to: 25.60, text: 'Respeto sa sarili ko.' },
-  { from: 25.60, to: 26.25, text: 'Ganun.' },
-  { from: 26.58, to: 27.56, text: 'Money!' },
+  { from: 19.85, to: 21.82, text: 'para doon sa kabila.' },
+  { from: 22.00, to: 23.48, text: 'RESPETO SA SARILI KO TALAGA.', key: 'RESPETO SA SARILI' },
+  { from: 23.48, to: 25.65, text: 'Respeto sa sarili ko.' },
+  { from: 25.65, to: 26.18, text: 'Ganun.' },
+  { from: 26.56, to: 27.53, text: 'Money!' },
   { from: 28.98, to: 31.95, text: 'Respeto talaga sa sarili ko.' },
-  { from: 31.95, to: 34.20, text: 'I will not give you' },
-  { from: 34.20, to: 36.25, text: 'the dignity...' },
-  { from: 36.25, to: 38.52, text: 'THE SATISFACTION!', key: 'THE SATISFACTION' },
-  { from: 38.52, to: 41.80, text: 'Hindi mo ako makitang umiiyak!', key: 'UMIIYAK' },
+  { from: 31.95, to: 35.15, text: 'Kumbaga, I will not give' },
+  { from: 35.15, to: 36.18, text: 'you the dignity...' },
+  { from: 36.18, to: 38.57, text: 'THE SATISFACTION!', key: 'THE SATISFACTION' },
+  { from: 38.57, to: 41.66, text: 'Hindi mo ako makitang umiiyak!', key: 'UMIIYAK' },
 ];
 
 const phrases = [
@@ -130,7 +130,7 @@ export const DudutV2 = ({ videoPath, sourceStartSeconds }: DudutV2Props) => {
               boxShadow:'0 30px 60px rgba(0,0,0,.5)',
             }}>
               <VideoLayer src={src} trimBefore={trimBefore} muted position='22% center'
-                style={{filter:'contrast(1.08) saturate(.98)'}} />
+                style={{filter:'contrast(1.08) saturate(.98)',transform:'scale(1.35)',transformOrigin:'25% center'}} />
               <div style={{
                 position:'absolute', left:0, top:0, bottom:0, width:7, background:GOLD,
               }}/>
@@ -141,7 +141,7 @@ export const DudutV2 = ({ videoPath, sourceStartSeconds }: DudutV2Props) => {
               boxShadow:'0 30px 60px rgba(0,0,0,.5)',
             }}>
               <VideoLayer src={src} trimBefore={trimBefore} muted position='78% center'
-                style={{filter:'contrast(1.08) saturate(.98)'}} />
+                style={{filter:'contrast(1.08) saturate(.98)',transform:'scale(1.35)',transformOrigin:'75% center'}} />
               <div style={{
                 position:'absolute', right:0, top:0, bottom:0, width:7, background:LIME,
               }}/>
