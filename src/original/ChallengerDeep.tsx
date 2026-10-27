@@ -5,6 +5,7 @@ export type ChallengerProps = {
   totalFrames: number;
   captions: {startFrame:number;endFrame:number;text:string}[];
   narrationAvailable: boolean;
+  phaseStarts?: number[];
 };
 const CYAN='#66e8fa', LIME='#e5ff89', WHITE='#f6fdff', BG='#020917';
 const clamp=(n:number)=>Math.max(0,Math.min(1,n));
@@ -33,12 +34,20 @@ const Vessel=({frame,pressure}:{frame:number;pressure:number})=><svg width="1080
  </g>
 </svg>;
 
-export const ChallengerDeep = ({totalFrames,captions,narrationAvailable}:ChallengerProps)=>{
+export const ChallengerDeep = ({totalFrames,captions,narrationAvailable,phaseStarts}:ChallengerProps)=>{
  const frame=useCurrentFrame(), t=clamp(frame/Math.max(totalFrames,1));
- const idx=Math.max(0,parts.findIndex(p=>t<p.end)), phase=parts[idx], start=Math.round((idx?parts[idx-1].end:0)*totalFrames), end=Math.min(totalFrames,Math.round(phase.end*totalFrames));
+ const bounds=(phaseStarts && phaseStarts.length===6)?phaseStarts:
+   [0,...parts.slice(0,5).map(p=>Math.round(p.end*totalFrames))];
+ const idx=Math.max(0,bounds.findIndex((_,i)=>frame<(bounds[i+1]??totalFrames)));
+ const phase=parts[idx], start=bounds[idx], end=(bounds[idx+1]??totalFrames);
  const textAlpha=interpolate(frame,[start,start+12,Math.max(start+13,end-12),end],[0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
  const up=spring({frame:frame-start,fps:30,config:{damping:20,stiffness:112}});
- const depth=Math.round(10935*eased(clamp((t-.06)/.79))), pressure=depth/10935;
+ const chapterProgress=clamp((frame-start)/Math.max(1,end-start));
+ const depth=idx===0?Math.round(190*chapterProgress):
+   idx===1?Math.round(200+790*chapterProgress):
+   idx===2?1000:
+   idx===3?Math.round(1000+9000*chapterProgress):10935;
+ const pressure=depth/10935;
  const caption=captions.find(c=>frame>=c.startFrame&&frame<c.endFrame);
  return <AbsoluteFill style={{background:BG,color:WHITE,fontFamily:"'Montserrat','Inter',sans-serif",overflow:'hidden'}}>
   <AbsoluteFill style={{background:`radial-gradient(ellipse at 52% ${16+(1-t)*12}%,#154b64 0%,#0b263c 30%,#030e1d 75%,#01050a 100%)`}}/>
