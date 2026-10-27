@@ -71,6 +71,59 @@ class VoiceoverTests(unittest.TestCase):
         )
         self.assertIn("[1:a:0]apad[aout]", command)
 
+    def test_separate_repo_audio_requires_existing_wav_and_video(self):
+        with tempfile.TemporaryDirectory() as directory:
+            wav = Path(directory) / "narration.wav"
+            wav.write_bytes(b"RIFF")
+            video = Path(directory) / "video.mp4"
+            video.write_bytes(b"test video")
+            output = Path(directory) / "voiced.mp4"
+            args = voice.create_parser().parse_args([
+                "--audio-file", str(wav), "--video", str(video),
+                "--video-output", str(output),
+            ])
+            self.assertEqual(voice.validate_args(args), output)
+            with self.assertRaisesRegex(ValueError, "requires --video"):
+                voice.validate_args(voice.create_parser().parse_args([
+                    "--audio-file", str(wav),
+                ]))
+            with self.assertRaisesRegex(ValueError, "existing WAV"):
+                voice.validate_args(voice.create_parser().parse_args([
+                    "--audio-file", str(Path(directory) / "missing.wav"),
+                    "--video", str(video),
+                ]))
+
+    def test_separate_repo_audio_cannot_overwrite_inputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            wav = Path(directory) / "narration.wav"
+            wav.write_bytes(b"RIFF")
+            video = Path(directory) / "video.mp4"
+            video.write_bytes(b"test video")
+            for target in [wav, video]:
+                with self.assertRaisesRegex(ValueError, "overwrite an input"):
+                    voice.validate_args(voice.create_parser().parse_args([
+                        "--audio-file", str(wav),
+                        "--video", str(video),
+                        "--video-output", str(target),
+                        "--overwrite",
+                    ]))
+
+    def test_separate_repo_audio_skips_model_generation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            wav = Path(directory) / "narration.wav"
+            wav.write_bytes(b"RIFF")
+            video = Path(directory) / "clip.mp4"
+            video.write_bytes(b"dummy mp4")
+            output = Path(directory) / "voiced.mp4"
+            with patch.object(voice, "synthesize", side_effect=AssertionError("TTS imported")):
+                with patch.object(voice, "mux_video") as mux:
+                    code = voice.main([
+                        "--audio-file", str(wav), "--video", str(video),
+                        "--video-output", str(output),
+                    ])
+            self.assertEqual(code, 0)
+            mux.assert_called_once_with(video, wav, output, 0.22)
+
     def test_help_does_not_import_voxcpm(self):
         with self.assertRaises(SystemExit) as exit_:
             voice.main(["--help"])
