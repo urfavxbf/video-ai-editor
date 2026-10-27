@@ -70,7 +70,7 @@ def main() -> None:
     if len(starts)!=6:
         starts=[round(data['totalFrames']*f) for f in (0,.18,.34,.49,.66,.85)]
     data['phaseStarts']=starts
-    OUTPUT.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\\n',encoding='utf-8')
+    OUTPUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     if options.external_wav is None:
         source='edge-tts' if (VOICE/'voiceover.srt').exists() else 'gtts'
     provenance={
