@@ -103,6 +103,20 @@ class MediaMuxIntegrationTests(unittest.TestCase):
         self.assertEqual(original_sha, sha256(video), "Source video must be untouched")
         self.check_output(output, video)
 
+    def test_import_external_voxcpm_wav_through_cli(self):
+        video = self.make_video(True)
+        original_sha = sha256(video)
+        output = self.root / "external-voxcpm.wav-voiced.mp4"
+        status = voice.main([
+            "--audio-file", str(self.voice),
+            "--video", str(video),
+            "--video-output", str(output),
+            "--original-volume", "0.15",
+        ])
+        self.assertEqual(status, 0)
+        self.assertEqual(original_sha, sha256(video))
+        self.check_output(output, video)
+
     def test_replace_audio_without_mutating_source(self):
         video = self.make_video(True)
         source_hash = sha256(video)
