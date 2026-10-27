@@ -1,13 +1,13 @@
 import {Audio, Video} from '@remotion/media';
 import type {CSSProperties} from 'react';
-import {AbsoluteFill, interpolate, spring, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Sequence, interpolate, spring, staticFile, useCurrentFrame} from 'remotion';
 import {Sfx} from '../fx/sfx';
 
 /**
  * Editorial / kinetic podcast shorts engine.
  *
  * NOTE: A beat's tokens are timed by a human or forced aligner, in seconds
- * relative to the beat's start. They must be checked against real narration
+ * relative to the beat's start. They must be checked against the real recording
  * before publishing. This component never presents approximate timing as
  * automated transcription.
  *
@@ -25,6 +25,8 @@ export type EditorialBeat = {
   tokens: EditorialToken[];
   kicker?: string;
   mark?: 'circle' | 'underline' | 'strike';
+  /** Optional, rights-cleared source in-point for THIS beat, in seconds. */
+  mediaStartSeconds?: number;
 };
 export type EditorialKineticProps = {
   beats: EditorialBeat[];
@@ -32,6 +34,8 @@ export type EditorialKineticProps = {
   videoPath?: string;
   audioPath?: string;
   sourceStartSeconds?: number;
+  /** Opt in to using the source video's OWN soundtrack when no audioPath is supplied. */
+  playSourceAudio?: boolean;
   sourceLabel?: string;
   seriesLabel?: string;
   approximateTiming?: boolean;
@@ -135,7 +139,7 @@ const TimedWords = ({beat, elapsed, dark}: {
 };
 
 export const EditorialKinetic = ({
-  beats,totalSeconds,videoPath,audioPath,sourceStartSeconds=0,
+  beats,totalSeconds,videoPath,audioPath,sourceStartSeconds=0,playSourceAudio=false,
   sourceLabel='PODCAST INTERVIEW',seriesLabel='EDITORIAL / ORIGINAL',
   approximateTiming=true,
 }: EditorialKineticProps) => {
@@ -158,10 +162,21 @@ export const EditorialKinetic = ({
     <AbsoluteFill style={{background:'radial-gradient(ellipse at center, #fffefa, #e9e8e4 90%)'}}/>
     {!speaker && <CornerAccents frame={frame}/>}
     {speaker && <AbsoluteFill style={{background:'radial-gradient(ellipse at 50% 30%, #314956, #10151f 72%)'}}/>}
-    {/* Keep video mounted throughout the timeline to retain source synchronization. */}
-    {videoSrc && <Video src={videoSrc} trimBefore={Math.round(sourceStartSeconds*EDITORIAL_FPS)}
-      muted style={{position:'absolute',width:'100%',height:'100%',objectFit:'cover',
-        opacity:speaker?1:0,transform:'scale(' + (1.03+Math.sin(frame/45)*.018) + ')'}}/>}
+    {/* Each beat can use its own verified in-point. Video is invisible during
+        paper typography cards, but source dialogue can continue underneath.
+        Source audio is opt-in and is automatically disabled if separate audio
+        is supplied, so tracks do not double. */}
+    {videoSrc && beats.map((part, index) => (
+      <Sequence key={index} from={Math.round(part.start*EDITORIAL_FPS)}
+        durationInFrames={Math.round((part.end-part.start)*EDITORIAL_FPS)} premountFor={12}>
+        <Video src={videoSrc}
+          trimBefore={Math.round((part.mediaStartSeconds ?? (sourceStartSeconds + part.start))*EDITORIAL_FPS)}
+          muted={!playSourceAudio || Boolean(audioSrc)}
+          style={{position:'absolute',width:'100%',height:'100%',objectFit:'cover',
+            opacity:part.mode==='speaker'?1:0,
+            transform:'scale(' + (1.03+Math.sin(frame/45)*.018) + ')'}}/>
+      </Sequence>
+    ))}
     {speaker && !videoSrc && <WaveMic frame={frame}/>}
     {speaker && <AbsoluteFill style={{background:'linear-gradient(180deg,#0008,transparent 24%,transparent 51%,#000c)',
       pointerEvents:'none'}}/>}
