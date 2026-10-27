@@ -8,6 +8,8 @@ on:
       - 'requirements.txt'
       - 'scripts/setup-ai-video-tools.sh'
       - 'scripts/groq_transcribe.py'
+      - 'scripts/check-codespace.sh'
+      - '.devcontainer/**'
       - 'tests/**'
       - '.github/workflows/ai-video-tools.yml'
   pull_request:
@@ -37,6 +39,8 @@ jobs:
           python-version: '3.12'
       - name: Install all editing dependencies
         run: bash scripts/setup-ai-video-tools.sh
+      - name: Verify Codespaces-ready toolchain
+        run: bash scripts/check-codespace.sh
       - name: Validate Groq subtitle formatter without external API calls
         run: |
           .venv/bin/python -m py_compile scripts/groq_transcribe.py
