@@ -10,6 +10,7 @@ You are the editor. User provides footage; make artistic/technical editing decis
 ## Tools
 - FFmpeg: transcode, trim, audio mix, silence/noise processing, final encoding.
 - Remotion: reuse the existing project's effects; its edit list is src/edit/edit.json.
+- Official Remotion Agent Skills: consult `.claude/skills/remotion-best-practices/SKILL.md` for routing; `remotion-markup` for animation/composition rules, `remotion-captions` for word-timed subtitles, `remotion-render` for export, and `remotion-studio` for preview. The official skills are reference guidance; follow this project skill's user-specific editing and delivery requirements.
 - HyperFrames: separate HTML/CSS/JS motion-graphics renderer. Use the official /hyperframes skill (installed through its CLI) and build in a separate project. Do not put HyperFrames code into the Remotion composition.
 - Groq Whisper: optional cloud transcription for Tagalog, Taglish and English. The script scripts/groq_transcribe.py generates word-timed JSON, TXT and SRT; require GROQ_API_KEY and user authorization to send audio to an external service. Never translate speech without asking. Do not assume Tagalog/Taglish transcription is perfect.
 - Claude.ai on Android and GitHub Codespaces are different execution environments. A Skill alone does NOT connect them.
