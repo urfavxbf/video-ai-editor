@@ -8,6 +8,7 @@
 - **Effects source code** in `src/fx/` with fonts, textures and sound effects in `public/`.
 - **Groq transcription helper** in `scripts/groq_transcribe.py` for Tagalog/Taglish captions.
 - **AI editing workflows and Claude skill** in `.claude/skills/ai-video-editor/`.
+- **12 official Remotion Agent Skills** in `.claude/skills/remotion-*/` (full source/reference files, pinned official import). See [the Remotion skills guide](docs/REMOTION_SKILLS.md).
 - **CI smoke tests** and dependency installation scripts.
 
 ## One-click Codespaces setup (Android / browser)
