@@ -6,12 +6,15 @@ import { FxShowcase, showcaseDuration } from './fx/FxShowcase'
 import { FX_FPS, FX_H, FX_W } from './fx/shared'
 import { DudutPremium, DUDUT_DURATION, type DudutPremiumProps } from './podcast/DudutPremium'
 import { DudutV2, DUDUT_V2_DURATION, type DudutV2Props } from './podcast/DudutV2'
+import { DoorwayEffect, type DoorwayProps } from './original/DoorwayEffect'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
-	<Composition id="FxShowcase" component={FxShowcase} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={showcaseDuration()} />
+	<Composition id="OriginalDoorway" component={DoorwayEffect} width={1080} height={1920} fps={30} durationInFrames={2400}
+    defaultProps={{totalFrames:1230,captions:[],narrationAvailable:false} satisfies DoorwayProps} />
+  <Composition id="FxShowcase" component={FxShowcase} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={showcaseDuration()} />
 	<Composition id="FxPreview" component={FxPreview} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={90}
 		defaultProps={{ id: 'orbit', from: 0 } satisfies FxPreviewProps}
 		calculateMetadata={({ props }) => ({ durationInFrames: fxById(props.id)?.duration ?? 90 })} />
