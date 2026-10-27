@@ -36,6 +36,10 @@ Install FFmpeg separately. See [AI editing setup](docs/AI_VIDEO_TOOLS.md) for Gr
 
 ## Provenance and licenses
 
-This repository is a standalone copy of [urfavxbf/video-effects-mobile](https://github.com/urfavxbf/video-effects-mobile), based on the MIT-licensed original [JesseEisenbart/video-effects-skill](https://github.com/JesseEisenbart/video-effects-skill). Original authorship is credited in [LICENSE](LICENSE) and the [upstream README](docs/UPSTREAM_README.md). The original MIT terms and copyright notice must stay intact. Bundled fonts are governed separately by [SIL OFL](public/fonts/OFL.txt). Remotion itself has separate licensing conditions.
+**Video AI Editor is not published under a repository-wide MIT license.** Its custom application and newer video compositions are distinct from the Remotion framework and from the effects source that was imported earlier.
 
-This repository is **not** a GitHub fork of the upstream repository. Original history remains available at the links above.
+The initial 21-effect library was imported from [urfavxbf/video-effects-mobile](https://github.com/urfavxbf/video-effects-mobile), originally derived from [JesseEisenbart/video-effects-skill](https://github.com/JesseEisenbart/video-effects-skill). The required MIT notice for the applicable imported source code is preserved **only as a third-party notice** in [licenses/video-effects-skill-MIT.txt](licenses/video-effects-skill-MIT.txt). See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for the license scope, separate font and audio asset notes, and the archived [upstream README](docs/UPSTREAM_README.md).
+
+[Remotion](https://github.com/remotion-dev/remotion) is the independent video framework used as an npm dependency. It has its **own license** ([official Remotion license](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md)); it is **not** relicensed by this project.
+
+This repository is not a GitHub fork of either upstream repository. Refer to Git history and the links above for provenance.
