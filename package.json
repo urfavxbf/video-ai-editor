@@ -14,10 +14,17 @@
   },
   "dependencies": {
     "@remotion/bundler": "4.0.522",
+    "@remotion/captions": "4.0.522",
     "@remotion/cli": "4.0.522",
+    "@remotion/effects": "4.0.522",
     "@remotion/fonts": "4.0.522",
     "@remotion/media": "4.0.522",
+    "@remotion/motion-blur": "4.0.522",
+    "@remotion/player": "4.0.522",
     "@remotion/renderer": "4.0.522",
+    "@remotion/sfx": "4.0.522",
+    "@remotion/shapes": "4.0.522",
+    "@remotion/transitions": "4.0.522",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "remotion": "4.0.522"
