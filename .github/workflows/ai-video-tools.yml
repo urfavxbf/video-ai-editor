@@ -10,6 +10,7 @@ on:
       - 'scripts/groq_transcribe.py'
       - 'scripts/render-dudut.sh'
       - 'src/podcast/**'
+      - 'src/features/**'
       - 'src/Root.tsx'
       - 'scripts/check-codespace.sh'
       - '.devcontainer/**'
@@ -66,11 +67,17 @@ jobs:
         run: |
           npx remotion still DudutPremium out/dudut-premium-smoke.png --frame=6 --props='{"videoPath":"sample/take.mp4","sourceStartSeconds":0}'
           test -s out/dudut-premium-smoke.png
+      - name: Smoke-test official Remotion captions, transitions and shapes
+        run: |
+          npx remotion still OfficialFeaturesDemo out/official-feature-demo.png --frame=75
+          test -s out/official-feature-demo.png
+          npx remotion compositions | grep -F 'OfficialFeaturesDemo'
       - uses: actions/upload-artifact@v4
         if: success()
         with:
           name: remotion-smoke-frame
           path: |
             out/editor-smoke.png
+            out/official-feature-demo.png
             out/dudut-premium-smoke.png
           retention-days: 3
