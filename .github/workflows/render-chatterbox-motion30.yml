@@ -26,8 +26,10 @@ jobs:
           python-version: '3.11'
       - name: Prepare FFmpeg and Remotion
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg
+          fi
           npm ci --no-audit --no-fund
           npm run typecheck
       - name: Install official Chatterbox with CPU-only PyTorch
@@ -44,6 +46,12 @@ jobs:
         run: |
           python scripts/generate-motion30-voice.py
           test -s public/voiceovers/motion30.wav
+      - name: Upload separate Chatterbox narration sample
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatterbox-motion30-voice-only
+          path: public/voiceovers/motion30.wav
+          retention-days: 30
       - name: Generate original soundtrack
         run: python scripts/generate-motion30-bed.py
       - name: Render Remotion video with English voice and original music
