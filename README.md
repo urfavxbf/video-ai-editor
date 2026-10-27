@@ -3,6 +3,7 @@
 **Video AI Editor** is an independent video-editing workspace maintained in [urfavxbf/video-ai-editor](https://github.com/urfavxbf/video-ai-editor), built around Remotion motion graphics and FFmpeg processing for vertical videos, podcast clips and Shorts.
 
 ## Included
+- **18-second original Remotion product reel** with kinetic typography, podcast mockups, Tagalog caption animation and stack overview. Run `npm run render:repo-showcase`; see [showcase guide](docs/SHOWCASE.md).
 - **21 Remotion motion effects**: Snap Zoom, Headline Storm, Liquid Glass, Frame Escape, Paper Cutout, Magazine Cover, Split and more.
 - **Video editing compositions** in `src/edit/` with a JSON cut list.
 - **Effects source code** in `src/fx/` with fonts, textures and sound effects in `public/`.
