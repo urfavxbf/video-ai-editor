@@ -22,7 +22,7 @@ jobs:
         run: |
           set -euo pipefail
           git clone --depth=1 --branch main https://github.com/urfavxbf/video-effects-mobile.git "$RUNNER_TEMP/video-effects-source"
-          rsync -a --exclude='.git' "$RUNNER_TEMP/video-effects-source/" ./
+          rsync -a --exclude='.git' --exclude='.github/workflows/ai-video-tools.yml' "$RUNNER_TEMP/video-effects-source/" ./
           mkdir -p docs
           cp README.md docs/UPSTREAM_README.md
           cat > README.md <<'README_EOF'
