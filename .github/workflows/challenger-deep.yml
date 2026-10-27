@@ -1,0 +1,86 @@
+name: Render Challenger Deep — Filipino Cinematic Science Short
+on:
+  pull_request:
+    paths:
+      - 'src/original/ChallengerDeep.tsx'
+      - 'scripts/make-original-challenger.py'
+      - 'src/Root.tsx'
+      - '.github/workflows/challenger-deep.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/original/ChallengerDeep.tsx'
+      - 'scripts/make-original-challenger.py'
+      - 'src/Root.tsx'
+      - '.github/workflows/challenger-deep.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-documentary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout original work
+        uses: actions/checkout@v4
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install rendering and Filipino voice tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          npm ci --no-audit --no-fund
+          python3 -m pip install 'edge-tts>=6.1,<9' 'gTTS>=2.5,<3'
+          npx remotion browser ensure
+      - name: Validate composition
+        run: |
+          npm run typecheck
+          python3 -m py_compile scripts/make-original-challenger.py
+      - name: Synthesize Tagalog preview voice (not VoxCPM2)
+        run: python3 scripts/make-original-challenger.py
+      - name: Calculate video length from actual voice track
+        id: range
+        shell: bash
+        run: |
+          count="$(python3 -c 'import json; print(json.load(open("out/challenger-props.json"))["totalFrames"])')"
+          test "$count" -ge 600
+          test "$count" -le 2400
+          echo "end=$((count - 1))" >> "$GITHUB_OUTPUT"
+      - name: Render preview still
+        run: npx remotion still ChallengerDeep out/challenger-poster.png --frame=155 --props=out/challenger-props.json
+      - name: Render original Tagalog cinematic Short
+        shell: bash
+        run: |
+          npx remotion render ChallengerDeep out/challenger-deep-tagalog.mp4 \
+            --props=out/challenger-props.json \
+            --frames=0-${{ steps.range.outputs.end }} \
+            --codec=h264 --crf=19 --pixel-format=yuv420p \
+            --audio-codec=aac --audio-bitrate=192k --concurrency=2
+      - name: Verify actual MP4 with Tagalog audio track
+        shell: bash
+        run: |
+          test -s out/challenger-deep-tagalog.mp4
+          ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 out/challenger-deep-tagalog.mp4 | grep -q '1080,1920'
+          ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of csv=p=0 out/challenger-deep-tagalog.mp4 | grep -q aac
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 out/challenger-deep-tagalog.mp4
+          cat out/challenger-source.json
+      - name: Upload finished Short, thumbnail and voice provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: challenger-deep-what-if-inspired-tagalog-1080p
+          path: |
+            out/challenger-deep-tagalog.mp4
+            out/challenger-poster.png
+            out/challenger-source.json
+            out/challenger-props.json
+          if-no-files-found: error
+          retention-days: 14
