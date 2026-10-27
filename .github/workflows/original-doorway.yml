@@ -1,0 +1,77 @@
+name: Render Original Filipino Short — Doorway Effect
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/original/**'
+      - 'scripts/make-original-doorway.py'
+      - 'src/Root.tsx'
+      - '.github/workflows/original-doorway.yml'
+      - 'original-queue/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-short:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout Video AI Editor
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install editing and narration dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          npm ci --no-audit --no-fund
+          python3 -m pip install --upgrade pip
+          python3 -m pip install "edge-tts>=6.1,<9" "gTTS>=2.5,<3"
+          npx remotion browser ensure
+      - name: Validate original Remotion composition
+        run: npm run typecheck
+      - name: Create Tagalog voiceover, accurate subtitle timings, original soundtrack
+        run: python3 scripts/make-original-doorway.py
+      - name: Compute source-dependent final frame count
+        id: frames
+        shell: bash
+        run: |
+          count="$(python3 -c 'import json; print(json.load(open("out/doorway-props.json"))["totalFrames"])')"
+          test "$count" -ge 450
+          test "$count" -le 2400
+          echo "end=$((count - 1))" >> "$GITHUB_OUTPUT"
+          echo "Video is $count frames including speech ending."
+      - name: Preview actual animation with Tagalog assets
+        run: npx remotion still OriginalDoorway out/original-doorway-preview.png --frame=90 --props=out/doorway-props.json
+      - name: Render fully original Filipino animated Short
+        run: |
+          npx remotion render OriginalDoorway out/original-doorway-filipino-1080p.mp4 \
+            --props=out/doorway-props.json \
+            --frames=0-${{ steps.frames.outputs.end }} \
+            --codec=h264 --crf=17 --pixel-format=yuv420p \
+            --audio-codec=aac --audio-bitrate=192k --concurrency=2
+      - name: Inspect MP4 and audio output
+        shell: bash
+        run: |
+          test -s out/original-doorway-filipino-1080p.mp4
+          ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate -show_entries format=duration -of default=noprint_wrappers=1 out/original-doorway-filipino-1080p.mp4
+          ffprobe -v error -select_streams a -show_entries stream=codec_name -of csv=p=0 out/original-doorway-filipino-1080p.mp4 | grep -q aac
+      - name: Upload finished original MP4 and preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-filipino-doorway-effect-full-hd
+          path: |
+            out/original-doorway-filipino-1080p.mp4
+            out/original-doorway-preview.png
+          retention-days: 14
+          if-no-files-found: error
