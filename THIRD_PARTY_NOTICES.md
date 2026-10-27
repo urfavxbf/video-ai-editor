@@ -12,6 +12,10 @@ The source repository published that code under the MIT License. The full copyri
 
 **Provenance clarification:** Building effects with Remotion or importing Remotion packages does not establish that these effects were copied from the Remotion monorepo. This project makes no claim that the third-party author created the underlying Remotion framework.
 
+## Official Remotion Agent Skills
+
+The repository also vendors 12 official skills and their reference materials from [remotion-dev/skills](https://github.com/remotion-dev/skills). The exact pinned source commit is recorded in [docs/REMOTION_SKILLS_SOURCE_COMMIT.txt](docs/REMOTION_SKILLS_SOURCE_COMMIT.txt). These materials are upstream Remotion content, not original code authored by this repository, and are not represented as MIT-licensed. Follow the publisher's applicable terms.
+
 ## Remotion framework
 
 The `remotion` and `@remotion/*` dependencies come from [remotion-dev/remotion](https://github.com/remotion-dev/remotion), which publishes its **own license** at [LICENSE.md](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md). Remotion is not generally MIT-licensed. Review its eligibility and commercial usage rules separately.
