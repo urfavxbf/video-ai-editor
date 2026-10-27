@@ -8,6 +8,9 @@ on:
       - 'requirements.txt'
       - 'scripts/setup-ai-video-tools.sh'
       - 'scripts/groq_transcribe.py'
+      - 'scripts/render-dudut.sh'
+      - 'src/podcast/**'
+      - 'src/Root.tsx'
       - 'scripts/check-codespace.sh'
       - '.devcontainer/**'
       - 'tests/**'
@@ -19,6 +22,9 @@ on:
       - 'requirements.txt'
       - 'scripts/setup-ai-video-tools.sh'
       - 'scripts/groq_transcribe.py'
+      - 'scripts/render-dudut.sh'
+      - 'src/podcast/**'
+      - 'src/Root.tsx'
       - 'tests/**'
       - '.github/workflows/ai-video-tools.yml'
   workflow_dispatch:
@@ -56,9 +62,15 @@ jobs:
         run: |
           npx remotion still FxPreview out/editor-smoke.png --frame=12 --props='{"id":"snap-zoom","from":0}'
           test -s out/editor-smoke.png
+      - name: Verify premium podcast composition renders correctly
+        run: |
+          npx remotion still DudutPremium out/dudut-premium-smoke.png --frame=6 --props='{"videoPath":"sample/take.mp4","sourceStartSeconds":0}'
+          test -s out/dudut-premium-smoke.png
       - uses: actions/upload-artifact@v4
         if: success()
         with:
           name: remotion-smoke-frame
-          path: out/editor-smoke.png
+          path: |
+            out/editor-smoke.png
+            out/dudut-premium-smoke.png
           retention-days: 3
