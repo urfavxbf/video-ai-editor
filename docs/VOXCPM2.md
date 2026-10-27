@@ -29,6 +29,37 @@ python -m pip install voxcpm soundfile
 
 Do **not** add VoxCPM2 to the Codespaces bootstrap: it would force large PyTorch dependencies and model downloads on normal editors.
 
+## Use the separate official VoxCPM repository (recommended for this project)
+
+VoxCPM2 does **not** need to be copied into this editor. Its official source and model stay in a separate environment (GPU workstation or Google Colab); only the resulting **WAV** is transferred to Video AI Editor. That keeps normal Codespaces setup lightweight and avoids installing `torch` or model weights here.
+
+In a **separate** GPU-capable environment, use the [official OpenBMB/VoxCPM repository](https://github.com/OpenBMB/VoxCPM):
+
+```bash
+git clone https://github.com/OpenBMB/VoxCPM.git
+cd VoxCPM
+python -m pip install -e .
+voxcpm design --text "Paano kung bumaba ka sa pinakamalalim na bahagi ng dagat?" \
+  --device auto --output narration.wav
+```
+
+This downloads the model on first use and requires suitable resources. CPU inference is supported upstream but can be very slow. Check the generated WAV and its Tagalog delivery before importing. Do not commit WAV recordings or model weights.
+
+Transfer `narration.wav` to the editor as `input/narration.wav`, then run from **video-ai-editor**:
+
+```bash
+npm run render:edit
+npm run voiceover -- \
+  --audio-file input/narration.wav \
+  --video out/edit.mp4 \
+  --video-output out/edit-voiced.mp4 \
+  --original-volume 0.22
+```
+
+This import path uses Python's standard library, FFmpeg and FFprobe only; no `voxcpm`, PyTorch, GPU, or Hugging Face downloads are required in the editor. The source MP4/WAV remain untouched. Output overwrite is blocked by default; pass `--overwrite` only when intentional. The edited MP4 uses the source video's duration, so match the narration timing before rendering. Imported WAV is treated as media—not a new TTS request, and automatic lip-sync is not included.
+
+The existing direct synthesis option below remains available for environments that **do** have a GPU.
+
 ## Generate a Tagalog voiceover
 
 ```bash
