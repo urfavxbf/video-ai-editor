@@ -1,0 +1,83 @@
+name: Render Chatterbox 30s Motion Graphics
+on:
+  push:
+    branches: [feat/chatterbox-motion30-showcase]
+    paths:
+      - '.github/workflows/render-chatterbox-motion30.yml'
+      - 'scripts/generate-motion30-voice.py'
+      - 'scripts/generate-motion30-bed.py'
+      - 'src/showcase/Motion30.tsx'
+      - 'src/Root.tsx'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare FFmpeg and Remotion
+        run: |
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y ffmpeg
+          fi
+          npm ci --no-audit --no-fund
+          npm run typecheck
+      - name: Install official Chatterbox with CPU-only PyTorch
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          # Nano was added upstream after the latest PyPI wheel; pin reviewed upstream code.
+          python -m pip install --no-deps --force-reinstall git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2
+      - name: Generate 30-second voice-over with Chatterbox Nano
+        env:
+          HF_HUB_DISABLE_XET: '1'
+          OMP_NUM_THREADS: '4'
+        run: |
+          python scripts/generate-motion30-voice.py
+          test -s public/voiceovers/motion30.wav
+      - name: Upload separate Chatterbox narration sample
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatterbox-motion30-voice-only
+          path: public/voiceovers/motion30.wav
+          retention-days: 30
+      - name: Generate original soundtrack
+        run: python scripts/generate-motion30-bed.py
+      - name: Render Remotion video with English voice and original music
+        run: |
+          npx remotion browser ensure
+          mkdir -p out
+          npx remotion render Motion30 out/chatterbox-motion30-1080x1920.mp4 --codec=h264 --crf=21 \
+            --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=192k \
+            --props='{"includeNarration":true,"includeMusic":true}' --concurrency=2
+      - name: Check 30-second stereo MP4
+        run: |
+          test -s out/chatterbox-motion30-1080x1920.mp4
+          python - <<'PY'
+          import json,subprocess
+          name='out/chatterbox-motion30-1080x1920.mp4'
+          m=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',name]))
+          v=next(s for s in m['streams'] if s['codec_type']=='video')
+          a=next(s for s in m['streams'] if s['codec_type']=='audio')
+          duration=float(m['format']['duration'])
+          print('duration',duration,'resolution',v['width'],v['height'],'audio',a['codec_name'])
+          assert 29.9<=duration<=30.1
+          assert (v['width'],v['height'])==(1080,1920)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chatterbox-motion30-english
+          path: out/chatterbox-motion30-1080x1920.mp4
+          retention-days: 30
+          if-no-files-found: error
