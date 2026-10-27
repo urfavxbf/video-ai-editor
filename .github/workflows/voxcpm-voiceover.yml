@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/voxcpm_voiceover.py'
       - 'tests/test_voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_media.py'
       - '.github/workflows/voxcpm-voiceover.yml'
   push:
     branches: [main]
@@ -27,5 +28,7 @@ jobs:
           python-version: '3.11'
       - name: Compile adapter
         run: python -m py_compile scripts/voxcpm_voiceover.py
-      - name: Unit tests (no GPU, downloads, or secrets)
+      - name: Adapter unit tests (no GPU or model downloads)
         run: python -m unittest discover -s tests -p 'test_voxcpm_voiceover.py' -v
+      - name: Real FFmpeg mux smoke tests (synthetic 2-second videos)
+        run: python -m unittest discover -s tests -p 'test_voxcpm_media.py' -v
