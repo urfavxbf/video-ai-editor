@@ -15,16 +15,16 @@ ROOT=Path(__file__).resolve().parent.parent
 VOICE=ROOT/'public'/'original'/'challenger'
 OUTPUT=ROOT/'out'/'challenger-props.json'
 SCRIPT=(
-    "Paano kung bumaba ka sa pinakamalalim na bahagi ng karagatan? "
-    "Sa unang dalawang daang metro, mabilis na kumukupas ang sikat ng araw. "
-    "Paglampas ng isang kilometro, halos wala nang liwanag mula sa araw. "
-    "At habang bumababa ka, tumitindi ang pressure. "
-    "Bawat sampung metro, nadaragdagan ito ng halos isang atmosphere. "
-    "Sa Challenger Deep, umaabot sa sampung libo siyam na raan tatlumpu't limang metro ang lalim. "
-    "Higit isang libong beses ang pressure dito kumpara sa ibabaw. "
-    "Hindi ito kakayanin ng ordinaryong submarino. "
-    "Pero kahit sa matinding dilim at pressure, may mga organismong nabubuhay. "
-    "At baka mas marami pang lihim ang karagatan kaysa sa iniisip natin."
+    "Paano kung bumaba ka sa pinakamalalim na karagatan? "
+    "Sa dalawang daang metro, halos wala nang liwanag. "
+    "Paglampas ng isang kilometro, purong dilim na. "
+    "Habang lumalalim, tumitindi ang pressure. "
+    "Bawat sampung metro, dagdag na halos isang atmosphere. "
+    "Sa Challenger Deep, halos labing-isang kilometro ang lalim. "
+    "Higit isang libong beses ang pressure kumpara sa ibabaw. "
+    "Walang ordinaryong submarino ang makakatagal roon. "
+    "Pero may mga organismong nabubuhay sa kadiliman. "
+    "Ang tanong: ano pa ang hindi natin alam sa ilalim ng dagat?"
 )
 
 def main() -> None:
@@ -55,6 +55,24 @@ def main() -> None:
     else:
         source='filipino-edge-tts-or-gtts'
     engine.main()
+    # Derive chapter start times from actual TTS word boundaries where available.
+    cues=('dalawang','Paglampas','Habang','Challenger','Pero')
+    words=engine.subtitle_words()
+    starts=[0]
+    for cue in cues:
+        hits=[round(w[0]*30) for w in words if cue.lower() in w[2].lower()]
+        if hits and hits[0]>starts[-1]:
+            starts.append(hits[0])
+        else:
+            starts=[]
+            break
+    data=json.loads(OUTPUT.read_text(encoding='utf-8'))
+    if len(starts)!=6:
+        starts=[round(data['totalFrames']*f) for f in (0,.18,.34,.49,.66,.85)]
+    data['phaseStarts']=starts
+    OUTPUT.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\\n',encoding='utf-8')
+    if options.external_wav is None:
+        source='edge-tts' if (VOICE/'voiceover.srt').exists() else 'gtts'
     provenance={
         'narrationSource':source,
         'isVoxCPM2Verified':False,
