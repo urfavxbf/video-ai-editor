@@ -35,6 +35,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
           python -m pip install -r requirements-chatterbox.txt
+          # Nano was added upstream after the latest PyPI wheel; pin reviewed upstream code.
+          python -m pip install --no-deps --force-reinstall git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2
       - name: Generate 30-second voice-over with Chatterbox Nano
         env:
           HF_HUB_DISABLE_XET: '1'
