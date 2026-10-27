@@ -29,10 +29,11 @@ FPS = 30
 W, H = 1080, 1920
 # Latin words are measured with a real font, not by rough character count.
 FONT_PATHS = (
+    "/usr/share/fonts/opentype/inter/InterDisplay-Bold.otf",
     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
     "/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf",
 )
-FONT = "DejaVu Sans"
+FONT = "Inter Display"
 INK = "&H00191B1F&"
 RED = "&H00414ACC&"  # ASS BGR
 WHITE = "&H00FFFFFF&"
@@ -48,9 +49,9 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style:Speech,DejaVu Sans,66,&H00FFFFFF,&H00FFFFFF,&H000C1017,&H60080C11,1,0,0,0,100,100,0,0,1,3,1,5,48,48,40,1
-Style:Paper,DejaVu Sans,82,&H00191B1F,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,1,0,0,0,100,100,0,0,1,0,0,5,48,48,40,1
-Style:Small,DejaVu Sans,25,&H00666666,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,1,0,0,5,48,48,40,1
+Style:Speech,Inter Display,66,&H00FFFFFF,&H00FFFFFF,&H000C1017,&H60080C11,1,0,0,0,100,100,0,0,1,3,1,5,48,48,40,1
+Style:Paper,Inter Display,82,&H00191B1F,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,1,0,0,0,100,100,0,0,1,0,0,5,48,48,40,1
+Style:Small,Inter Display,25,&H00666666,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,1,0,0,5,48,48,40,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -232,15 +233,33 @@ def parse_windows(values: list[str], clip_start: float, duration: float) -> list
     return out
 
 
+def parse_crop_switches(values: list[str], clip_start: float, duration: float, first_x: int) -> str:
+    """Crop x expression evaluated per 30fps output frame, never at source fps."""
+    result = str(first_x)
+    previous = -1.0
+    for val in values:
+        match = re.fullmatch(r"(\d+(?:\.\d+)?):(\d+)", val)
+        if match is None:
+            raise ValueError(f"Invalid crop switch {val!r}; expected SOURCE_SECONDS:X")
+        at = float(match[1]) - clip_start
+        x = int(match[2])
+        if not (0 <= at <= duration and at >= previous and 0 <= x <= 2390):
+            raise ValueError(f"Invalid crop position/time: {val!r}")
+        previous = at
+        result = f"if(gte(n\\,{round(at*FPS)})\\,{x}\\,{result})"
+    return result
+
+
 def render_video(source: Path, output: Path, ass_path: Path,
-                 start: float, duration: float, crop_x: int, paper_windows: list) -> None:
+                 start: float, duration: float, crop_x: int,
+                 crop_switches: list[str]) -> None:
     if not 0 <= crop_x <= 2390:
         raise ValueError("crop-x outside 3200-wide source")
     # Filter uses a fixed, centered speaker crop; manual QA required for speaker switches.
     # ASS paper cards obscure video only when intended; native source audio remains continuous.
     escaped = str(ass_path.resolve()).replace("\\", "\\\\").replace(":", "\\:").replace(",", "\\,").replace("'", "\\'")
     vf = (
-        f"fps={FPS},crop=810:1440:{crop_x}:0,"
+        f"fps={FPS},crop=810:1440:x='{parse_crop_switches(crop_switches, start, duration, crop_x)}':y=0,"
         f"scale={W}:{H}:flags=lanczos,"
         f"ass='{escaped}'"
     )
@@ -262,6 +281,8 @@ def main() -> int:
     ap.add_argument("--duration", type=float, default=35)
     ap.add_argument("--paper", action="append", default=[], metavar="SOURCE_START:SOURCE_END")
     ap.add_argument("--crop-x", type=int, default=800, help="for 3200x1440 source; 800=Gloc-9")
+    ap.add_argument("--crop-switch", action="append", default=[], metavar="SOURCE_SECONDS:X",
+                    help="Switch portrait crop on verified camera changes; repeat as needed")
     ap.add_argument("--transcript", type=Path, help="Groq verbose_json with word timestamps; skips API")
     ap.add_argument("--output", type=Path, default=Path("out/synced-quote.mp4"))
     ap.add_argument("--no-render", action="store_true", help="Validate and create ASS/JSON, no MP4")
@@ -295,7 +316,7 @@ def main() -> int:
         print(f"ASS: {ass}; word timestamps: {metadata}")
         if not args.no_render:
             render_video(args.source, args.output, ass, args.start, args.duration,
-                         args.crop_x, paper)
+                         args.crop_x, args.crop_switch)
             print(f"Rendered: {args.output}")
         print("REVIEW REQUIRED: Whisper timestamps/text may contain errors. Verify against original audio.")
         return 0
