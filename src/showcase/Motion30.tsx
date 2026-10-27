@@ -3,84 +3,178 @@ import { Audio } from '@remotion/media';
 import { AbsoluteFill, interpolate, spring, staticFile, useCurrentFrame } from 'remotion';
 
 export const MOTION30_FRAMES = 900;
-const LIME='#D9FF4B', CREAM='#F7F7ED', MUTE='#A0A6AA', BG='#080B10';
-type MotionProps={includeNarration?:boolean;includeMusic?:boolean};
-const op=(f:number,start:number)=>interpolate(f,[start,start+13,start+161,start+179],[0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
-const pop=(f:number,start:number)=>spring({fps:30,frame:Math.max(0,f-start),config:{damping:19,stiffness:96}});
-const Animated=({children,frame,at=0,style={}}:{children:React.ReactNode;frame:number;at?:number;style?:React.CSSProperties})=>{
- const p=pop(frame,at);
- return <div style={{opacity:p,transform:'translateY('+((1-p)*85)+'px) scale('+(0.94+p*0.06)+')',...style}}>{children}</div>;
-};
-const Eyebrow=({children}:{children:React.ReactNode})=><div style={{fontFamily:'Inter,sans-serif',fontSize:26,letterSpacing:7,fontWeight:700,color:MUTE,marginBottom:38}}>{children}</div>;
-const Heading=({children,size=124,color=CREAM}:{children:React.ReactNode;size?:number;color?:string})=><div style={{fontFamily:'Montserrat,Inter,sans-serif',fontSize:size,fontWeight:900,lineHeight:1.0,letterSpacing:-7,color}}>{children}</div>;
-const Frame=({children,frame,start}:{children:React.ReactNode;frame:number;start:number})=><AbsoluteFill style={{opacity:op(frame,start),background:BG,overflow:'hidden',color:CREAM}}>
- <AbsoluteFill style={{background:'radial-gradient(ellipse at 84% 20%, #243622 0%, transparent 50%), radial-gradient(ellipse at 10% 84%,#1C2029 0%,transparent 53%)'}}/>
- <AbsoluteFill style={{opacity:.27,backgroundImage:'linear-gradient(#FFFFFF12 1px, transparent 1px),linear-gradient(90deg,#FFFFFF12 1px,transparent 1px)',backgroundSize:'90px 90px',transform:'translateX('+(-frame%90)+'px)'}}/>
- <div style={{position:'absolute',top:95,left:89,right:89,display:'flex',justifyContent:'space-between',alignItems:'center'}}>
- <span style={{fontFamily:'Inter',fontWeight:900,fontSize:29,letterSpacing:3}}>URFAV<span style={{color:LIME}}>X</span>BF</span>
- <span style={{fontFamily:'Inter',fontSize:22,letterSpacing:4,color:MUTE}}>MOTION / 001</span></div>
- <div style={{position:'absolute',bottom:112,left:90,right:90,height:2,background:'#FFFFFF30'}}/>
- <div style={{position:'absolute',bottom:112,left:90,width:(frame/900*900),height:3,background:LIME}}/>
- <div style={{position:'absolute',bottom:66,left:90,right:90,display:'flex',justifyContent:'space-between',fontFamily:'Inter',fontSize:20,letterSpacing:4,color:MUTE}}>
- <span>MAKE IT HAPPEN</span><span>{String(Math.min(30,Math.floor(frame/30))).padStart(2,'0')} / 30</span></div>
- {children}</AbsoluteFill>;
+type MotionProps = { includeNarration?: boolean; includeMusic?: boolean };
+const FPS = 30;
+const duration = 180;
+const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
 
-const SceneOne=({f}:{f:number})=><Frame frame={f} start={0}>
- <div style={{position:'absolute',top:456,left:84,right:60}}>
-  <Animated frame={f} at={10}><Eyebrow>01 / A SIMPLE TRUTH</Eyebrow></Animated>
-  <Animated frame={f} at={23}><Heading size={124}>PERFECT<br/>IS A<br/><span style={{color:LIME}}>TRAP.</span></Heading></Animated>
-  <Animated frame={f} at={52}><div style={{fontFamily:'Inter',fontSize:37,color:MUTE,marginTop:66}}>Your next chapter starts when you move.</div></Animated>
- </div>
- <div style={{position:'absolute',left:615,top:1020,width:690,height:690,border:'5px solid '+LIME,borderRadius:'50%',opacity:.24,transform:'scale('+(0.8+f/900)+')'}}/>
-</Frame>;
+function fade(frame: number, start: number) {
+  return interpolate(frame, [start - 8, start + 8, start + duration - 15, start + duration - 1], [0, 1, 1, 0], clamp);
+}
+function motion(frame: number, start: number, offset = 0) {
+  return spring({ fps: FPS, frame: Math.max(0, frame - start - offset), config: { stiffness: 96, damping: 19, mass: 0.85 } });
+}
+function Reveal({
+  frame, start, delay = 0, children, style,
+}: {
+  frame: number; start: number; delay?: number; children: React.ReactNode; style?: React.CSSProperties;
+}) {
+  const p = motion(frame, start, delay);
+  return <div style={{ opacity: p, transform: 'translateY(' + Math.round((1 - p) * 105) + 'px)', ...style }}>{children}</div>;
+}
+const headline = (fontSize: number, color: string): React.CSSProperties => ({
+  fontFamily: 'Montserrat, Inter, sans-serif', fontWeight: 900, fontSize, letterSpacing: -7,
+  lineHeight: 1.03, color, textTransform: 'uppercase',
+});
 
-const SceneTwo=({f}:{f:number})=><Frame frame={f} start={180}>
- <div style={{position:'absolute',left:90,right:80,top:395}}>
-  <Animated frame={f} at={193}><Eyebrow>02 / IT ONLY TAKES ONE</Eyebrow></Animated>
-  <Animated frame={f} at={208}><Heading color={LIME} size={175}>ONE.</Heading></Animated>
-  <Animated frame={f} at={224}><Heading size={102}>IDEA.<br/>DECISION.<br/>ACTION.</Heading></Animated>
-  <Animated frame={f} at={249}><div style={{fontFamily:'Inter',fontSize:43,color:MUTE,marginTop:64}}>Small moves change everything.</div></Animated>
- </div>
- {Array.from({length:5},(_,i)=>{const p=pop(f,190+i*17);return <div key={i} style={{position:'absolute',left:95+i*186,top:1390,height:118,width:118,background:i===4?LIME:'#293627',border:'3px solid '+LIME,borderRadius:'50%',transform:'scale('+(0.3+p*.7)+')',opacity:p}}/>;})}
-</Frame>;
+// Scene 1: editorial paper, a diagonal red strike-through, punchy typographic protest.
+// There is deliberately NO shared frame, series title, logo, progress bar or template background.
+function BreakPerfection({ frame: f }: { frame: number }) {
+  const strike = interpolate(f, [24, 66], [0, 1120], clamp);
+  const glitch = interpolate(f, [62, 95], [0, 1], clamp);
+  return <AbsoluteFill style={{ opacity: fade(f, 0), background: '#F8F5E9', overflow: 'hidden' }}>
+    <AbsoluteFill style={{ background: 'radial-gradient(circle at 85% 17%, #FFE6D2 0%, transparent 42%)' }} />
+    <div style={{ position: 'absolute', left: -160, top: 130, width: 490, height: 490, borderRadius: '50%', background: '#E7E5DC' }} />
+    <div style={{ position: 'absolute', left: 60, right: 60, top: 340 }}>
+      <Reveal frame={f} start={0} delay={9}>
+        <div style={headline(169, '#13191F')}>PERFECT</div>
+      </Reveal>
+      <div style={{ position: 'absolute', left: -24, top: 105, width: strike, maxWidth: '118%', height: 28, transform: 'rotate(-10deg)', transformOrigin: 'left center', background: '#FF423B', borderRadius: 5 }} />
+      <Reveal frame={f} start={0} delay={34}>
+        <div style={{ ...headline(170, '#13191F'), marginTop: 92 }}>IS A</div>
+        <div style={{ ...headline(228, '#FF423B'), letterSpacing: -12, transform: 'rotate(' + (-3 * glitch) + 'deg)', marginTop: 12 }}>TRAP.</div>
+      </Reveal>
+      <Reveal frame={f} start={0} delay={64}>
+        <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 41, fontWeight: 550, lineHeight: 1.42, color: '#3A4147', maxWidth: 780, marginTop: 90 }}>
+          Your next chapter starts when you move.
+        </div>
+      </Reveal>
+    </div>
+    {Array.from({ length: 8 }, (_, i) => {
+      const p = motion(f, 0, 85 + i * 6);
+      return <div key={i} style={{ position: 'absolute', width: 65, height: 65, border: '5px solid #FF423B', borderRadius: 999, top: 1460 + (i % 2) * 120, left: 110 + i * 124, transform: 'scale(' + p + ') rotate(' + (f * .5) + 'deg)' }} />;
+    })}
+  </AbsoluteFill>;
+}
 
-const SceneThree=({f}:{f:number})=><Frame frame={f} start={360}>
- <div style={{position:'absolute',top:408,left:84,right:64}}>
-  <Animated frame={f} at={374}><Eyebrow>03 / BUILD THE ENERGY</Eyebrow></Animated>
-  <Animated frame={f} at={390}><Heading size={113}>MOTIVATION<br/><span style={{color:MUTE}}>FADES.</span></Heading></Animated>
-  <Animated frame={f} at={422}><Heading size={127} color={LIME}>MOMENTUM<br/>BUILDS.</Heading></Animated>
- </div>
- <div style={{position:'absolute',left:90,right:90,top:1250}}>
- {Array.from({length:6},(_,i)=>{const p=interpolate(f,[389+i*17,478+i*9],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});return <div key={i} style={{height:13,marginBottom:22,background:'#30383A',borderRadius:15}}><div style={{height:'100%',width:(28+i*14)*p+'%',maxWidth:'100%',background:LIME,borderRadius:15}}/></div>;})}
- </div></Frame>;
+// Scene 2: royal blue full-bleed field and a chain reaction of animated geometric tiles.
+function SmallAction({ frame: f }: { frame: number }) {
+  const s = 180;
+  return <AbsoluteFill style={{ opacity: fade(f, s), background: '#1646DE', overflow: 'hidden' }}>
+    <div style={{ position: 'absolute', top: -330, left: 430, width: 1040, height: 1040, border: '90px solid #245DF3', borderRadius: '50%', transform: 'rotate(' + (f - s) * .1 + 'deg)' }} />
+    <div style={{ position: 'absolute', left: 85, top: 252 }}>
+      <Reveal frame={f} start={s} delay={12}>
+        <div style={{ ...headline(186, '#FDFFA0'), letterSpacing: -15 }}>ONE.</div>
+      </Reveal>
+      <Reveal frame={f} start={s} delay={30}>
+        <div style={{ ...headline(114, '#FFFFFF') }}>IDEA.</div>
+      </Reveal>
+      <Reveal frame={f} start={s} delay={53}>
+        <div style={{ ...headline(114, '#FFFFFF') }}>DECISION.</div>
+      </Reveal>
+      <Reveal frame={f} start={s} delay={76}>
+        <div style={{ ...headline(114, '#FDFFA0') }}>ACTION.</div>
+      </Reveal>
+    </div>
+    {Array.from({ length: 5 }, (_, i) => {
+      const p = motion(f, s, 55 + i * 16);
+      const rotate = (1 - p) * -70;
+      return <div key={i} style={{ position: 'absolute', left: 94 + i * 191, top: 1245 + (i % 2) * 45, width: 151, height: 258, background: i === 4 ? '#FDFFA0' : '#EDF1FF', borderRadius: 18, transform: 'perspective(500px) rotateZ(' + rotate + 'deg) translateY(' + ((1 - p) * -120) + 'px)', transformOrigin: 'bottom left', boxShadow: '12px 20px 0 #0C31B3' }} />;
+    })}
+    <Reveal frame={f} start={s} delay={107} style={{ position: 'absolute', left: 90, bottom: 210 }}>
+      <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, color: '#EEF0FF', fontSize: 39 }}>Small moves change everything.</div>
+    </Reveal>
+  </AbsoluteFill>;
+}
 
-const SceneFour=({f}:{f:number})=><Frame frame={f} start={540}>
- <div style={{position:'absolute',top:395,left:90,right:64}}>
-  <Animated frame={f} at={555}><Eyebrow>04 / TRUST THE PROCESS</Eyebrow></Animated>
-  <Animated frame={f} at={575}><Heading size={107}>YOU DON'T<br/>NEED THE<br/><span style={{color:LIME}}>WHOLE</span><br/>PATH.</Heading></Animated>
- </div>
- <svg width={895} height={430} viewBox="0 0 895 430" style={{position:'absolute',left:90,top:1180}}>
- <path d="M 45 354 C 260 354 210 79 430 84 S 635 360 860 42" fill="none" stroke="#FFFFFF55" strokeWidth="5" strokeDasharray="15 16"/>
- <path d="M 45 354 C 260 354 210 79 430 84 S 635 360 860 42" fill="none" stroke={LIME} strokeWidth="9" strokeLinecap="round" pathLength={1} strokeDasharray={(interpolate(f,[558,681],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'}))+' 1'}/>
- <circle cx={45} cy={354} r={18} fill={LIME}/><circle cx={860} cy={42} r={19} fill={LIME} opacity={interpolate(f,[680,690],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'})}/></svg>
- <div style={{position:'absolute',bottom:247,left:90,fontFamily:'Inter',fontSize:37,color:MUTE}}>Take the first step.</div>
-</Frame>;
+// Scene 3: animated sound/momentum wave, no reused scene furniture.
+function BuildMomentum({ frame: f }: { frame: number }) {
+  const s = 360;
+  const p = interpolate(f, [s + 15, s + 153], [0, 1], clamp);
+  return <AbsoluteFill style={{ opacity: fade(f, s), background: '#141321', overflow: 'hidden' }}>
+    <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 62% 85%,#6935A9 0%,transparent 56%)' }} />
+    <svg width={1200} height={980} viewBox="0 0 1200 980" style={{ position: 'absolute', top: 730, left: -60 }}>
+      {Array.from({ length: 21 }, (_, i) => {
+        const y = 130 + i * 31;
+        const offset = Math.sin(i * .66 + f * .07) * 62 * p;
+        const d = 'M -40 ' + y + ' C 280 ' + (y - 180 - offset) + ' 330 ' + (y + 200 + offset) + ' 610 ' + y +
+          ' S 980 ' + (y - 170 - offset) + ' 1240 ' + (y + 35);
+        return <path key={i} d={d} fill="none" stroke={i % 4 === 0 ? '#FF9C45' : '#B477FB'} strokeWidth={i % 4 === 0 ? 10 : 4} opacity={.25 + p * .4} />;
+      })}
+    </svg>
+    <div style={{ position: 'absolute', left: 80, top: 284, right: 55 }}>
+      <Reveal frame={f} start={s} delay={16}>
+        <div style={{ ...headline(111, '#F3F0F6') }}>MOTIVATION</div>
+        <div style={{ ...headline(135, '#817E99') }}>FADES.</div>
+      </Reveal>
+      <Reveal frame={f} start={s} delay={68} style={{ marginTop: 88 }}>
+        <div style={{ ...headline(123, '#FFAA60') }}>MOMENTUM</div>
+        <div style={{ ...headline(154, '#FFAA60') }}>BUILDS.</div>
+      </Reveal>
+    </div>
+  </AbsoluteFill>;
+}
 
-const SceneFive=({f}:{f:number})=><Frame frame={f} start={720}>
- <div style={{position:'absolute',top:530,left:82,right:72}}>
-  <Animated frame={f} at={733}><Eyebrow>05 / YOUR MOVE</Eyebrow></Animated>
-  <Animated frame={f} at={751}><Heading size={201}>START.</Heading></Animated>
-  <Animated frame={f} at={774}><Heading size={264} color={LIME}>NOW.</Heading></Animated>
-  <Animated frame={f} at={797}><div style={{fontFamily:'Inter',fontSize:45,letterSpacing:1,marginTop:78}}>YOUR FUTURE IS WATCHING.</div></Animated>
- </div>
- <div style={{position:'absolute',top:1180,left:570,width:810,height:810,border:'4px solid '+LIME,borderRadius:'50%',opacity:.18,transform:'scale('+interpolate(f,[721,890],[.4,1.45],{extrapolateLeft:'clamp',extrapolateRight:'clamp'})+')'}}/>
-</Frame>;
+// Scene 4: an actual animated route, shaped around the concept of taking a step.
+function FindThePath({ frame: f }: { frame: number }) {
+  const s = 540;
+  const distance = interpolate(f, [s + 15, s + 158], [0, 1], clamp);
+  return <AbsoluteFill style={{ opacity: fade(f, s), background: '#EAE0CE', overflow: 'hidden', color: '#242A2B' }}>
+    <div style={{ position: 'absolute', top: -130, left: -150, width: 760, height: 760, background: '#D5D0BF', borderRadius: '50%' }} />
+    <div style={{ position: 'absolute', right: -280, bottom: 120, width: 890, height: 890, background: '#F5B875', borderRadius: '50%', opacity: .6 }} />
+    <svg width={1080} height={1180} viewBox="0 0 1080 1180" style={{ position: 'absolute', left: 0, top: 620 }}>
+      <path d="M 80 900 C 310 1080 500 850 310 690 S 140 330 510 300 S 680 570 960 60" fill="none" stroke="#4C504B" strokeWidth={8} strokeDasharray="16 24" opacity={.4} />
+      <path d="M 80 900 C 310 1080 500 850 310 690 S 140 330 510 300 S 680 570 960 60" fill="none" stroke="#F35631" strokeWidth={21} strokeLinecap="round" pathLength={1} strokeDasharray={distance + ' 1'} />
+      <circle cx={80} cy={900} r={24} fill="#F35631" />
+    </svg>
+    <div style={{ position: 'absolute', top: 235, left: 78, right: 65 }}>
+      <Reveal frame={f} start={s} delay={13}>
+        <div style={{ ...headline(96, '#242A2B') }}>YOU DON'T</div>
+        <div style={{ ...headline(96, '#242A2B') }}>NEED THE</div>
+      </Reveal>
+      <Reveal frame={f} start={s} delay={42}>
+        <div style={{ ...headline(158, '#F35631') }}>WHOLE</div>
+        <div style={{ ...headline(180, '#242A2B') }}>PATH.</div>
+      </Reveal>
+    </div>
+    <Reveal frame={f} start={s} delay={104} style={{ position: 'absolute', left: 78, bottom: 110 }}>
+      <span style={{ fontSize: 43, fontWeight: 700, fontFamily: 'Inter, sans-serif', color: '#363E3E' }}>Just take the first step.</span>
+    </Reveal>
+  </AbsoluteFill>;
+}
 
-export const Motion30=({includeNarration=false,includeMusic=false}:MotionProps)=>{
- const f=useCurrentFrame();
- return <AbsoluteFill style={{background:BG}}>
-  <SceneOne f={f}/><SceneTwo f={f}/><SceneThree f={f}/><SceneFour f={f}/><SceneFive f={f}/>
-  {includeNarration&&<Audio src={staticFile('voiceovers/motion30.wav')} volume={1}/>}
-  {includeMusic&&<Audio src={staticFile('voiceovers/motion30-bed.wav')} volume={0.28}/>}
- </AbsoluteFill>;
+// Scene 5: self-contained final punch. Brand is not burned into the video.
+function StartNow({ frame: f }: { frame: number }) {
+  const s = 720;
+  const radial = interpolate(f, [s + 15, s + 135], [.2, 1.8], clamp);
+  return <AbsoluteFill style={{ opacity: fade(f, s), overflow: 'hidden', background: '#FA513D', color: '#201819' }}>
+    <div style={{ position: 'absolute', left: -310, top: -240, width: 1080, height: 1080, border: '120px solid #FF8A55', borderRadius: '50%', transform: 'scale(' + radial + ')' }} />
+    <div style={{ position: 'absolute', left: 80, right: 80, top: 430 }}>
+      <Reveal frame={f} start={s} delay={10}>
+        <div style={{ ...headline(218, '#22171A'), letterSpacing: -15 }}>START.</div>
+      </Reveal>
+      <Reveal frame={f} start={s} delay={33}>
+        <div style={{ ...headline(270, '#FFFBEA'), letterSpacing: -18 }}>NOW.</div>
+      </Reveal>
+    </div>
+    <Reveal frame={f} start={s} delay={75} style={{ position: 'absolute', left: 86, bottom: 440, right: 70 }}>
+      <div style={{ fontSize: 57, color: '#27171B', fontFamily: 'Inter, sans-serif', fontWeight: 900, lineHeight: 1.18 }}>
+        YOUR FUTURE<br />IS WATCHING.
+      </div>
+    </Reveal>
+    <div style={{ position: 'absolute', bottom: -320, right: -140, width: 750, height: 750, border: '80px solid #22171A', borderRadius: '50%', opacity: .12, transform: 'scale(' + (1 + radial / 5) + ')' }} />
+  </AbsoluteFill>;
+}
+
+export const Motion30 = ({ includeNarration = false, includeMusic = false }: MotionProps) => {
+  const frame = useCurrentFrame();
+  return <AbsoluteFill style={{ background: '#141321' }}>
+    <BreakPerfection frame={frame} />
+    <SmallAction frame={frame} />
+    <BuildMomentum frame={frame} />
+    <FindThePath frame={frame} />
+    <StartNow frame={frame} />
+    {includeNarration && <Audio src={staticFile('voiceovers/motion30.wav')} volume={1} />}
+    {includeMusic && <Audio src={staticFile('voiceovers/motion30-bed.wav')} volume={0.28} />}
+  </AbsoluteFill>;
 };

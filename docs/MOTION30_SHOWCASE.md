@@ -1,6 +1,6 @@
 # Chatterbox Motion30 English showcase
 
-A 30-second 1080×1920 original motion-design video, with five six-second scenes and original electronic soundtrack. The narrator is **Chatterbox Nano**, the official CPU-friendly English-only model from Resemble AI, using its built-in voice conditionals. No stock footage, royalty music, or substitute TTS model is used.
+A 30-second 1080×1920 original motion-design video, with five **visually distinct full-bleed** six-second scenes and original electronic soundtrack. No recurring headers, branding, grid backgrounds, or progress bars are burned into the picture. The narrator is **Chatterbox Nano**, the official CPU-friendly English-only model from Resemble AI, using its built-in voice conditionals. No stock footage, royalty music, or substitute TTS model is used.
 
 ## Scene-by-scene English voiceover
 1. Your next chapter doesn't start when everything is perfect. It starts when you move.
@@ -13,3 +13,6 @@ GitHub workflow **Render Chatterbox 30s Motion Graphics** installs the CPU model
 
 Audio alignment is **scene-level**, not word-by-word; listen to each segment before publishing.
 Official engine: https://github.com/resemble-ai/chatterbox (MIT).
+
+## Visual direction (owner correction)
+Five different art-directed scenes: editorial strike-through on paper, electric blue domino chain reaction, violet momentum waves, sand-colored animated path, and a coral high-impact CTA. No shared background/frame component or permanent `URFAVXBF`, `MOTION / 001`, timer, chapter tag, logo, or progress overlay. This is the explicit design rule for this cut; other videos must have their own concept-specific art direction.
