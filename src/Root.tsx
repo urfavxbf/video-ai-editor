@@ -5,6 +5,7 @@ import { fxById, FxPreview, type FxPreviewProps } from './fx/index'
 import { FxShowcase, showcaseDuration } from './fx/FxShowcase'
 import { FX_FPS, FX_H, FX_W } from './fx/shared'
 import { DudutPremium, DUDUT_DURATION, type DudutPremiumProps } from './podcast/DudutPremium'
+import { DudutV2, DUDUT_V2_DURATION, type DudutV2Props } from './podcast/DudutV2'
 import './fonts'
 
 const spec = edit as EditSpec
@@ -14,6 +15,7 @@ export const Root = () => <>
 	<Composition id="FxPreview" component={FxPreview} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={90}
 		defaultProps={{ id: 'orbit', from: 0 } satisfies FxPreviewProps}
 		calculateMetadata={({ props }) => ({ durationInFrames: fxById(props.id)?.duration ?? 90 })} />
+	<Composition id="DudutV2" component={DudutV2} width={1080} height={1920} fps={30} durationInFrames={DUDUT_V2_DURATION} defaultProps={{ videoPath: 'takes/dudut/clip.mp4', sourceStartSeconds: 42 } satisfies DudutV2Props} />
 	<Composition id="DudutPremium" component={DudutPremium} width={1080} height={1920} fps={30} durationInFrames={DUDUT_DURATION} defaultProps={{ videoPath: 'takes/dudut/clip.mp4', sourceStartSeconds: 42 } satisfies DudutPremiumProps} />
 	<Composition id="ExampleEdit" component={Edit} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={editDuration(spec)} defaultProps={{ spec }} />
 </>
