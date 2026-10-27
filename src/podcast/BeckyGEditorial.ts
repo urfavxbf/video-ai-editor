@@ -1,70 +1,62 @@
 import type {EditorialBeat, EditorialKineticProps} from './EditorialKinetic';
 
 /**
- * An ORIGINAL narration storyboard, not a transcript of the podcast.
+ * Quote-first editing brief based on the guest's actual spoken words.
  *
- * Draft word positions are proportional estimates. Retiming to a recorded
- * narration track with a forced aligner is required before final delivery.
+ * These are SELECTED WORDS / kinetic display cues, not a complete transcript.
+ * The spacing is a DRAFT for a silent typography preview only.
+ * Attach cleared source material, align to speech, and review the full context
+ * before publishing. See docs/BECKY_G_EDITORIAL.md.
  */
-const paced = (sentence: string, duration: number, strong: string[] = []) => {
-  const words = sentence.split(' ');
-  const interval = (duration - 0.45) / Math.max(1, words.length);
-  return words.map((text, index) => ({
+
+const timed = (words: string, duration: number, strong: string[] = []) => {
+  const tokens = words.split(' ');
+  const step = (duration - 0.5) / Math.max(1, tokens.length);
+  return tokens.map((text, index) => ({
     text,
-    at: Number((index * interval + 0.08).toFixed(3)),
-    strong: strong.includes(text.replace(/[,.?!]/g, '').toLowerCase()),
+    at: Math.round((0.12 + index * step) * 1000) / 1000,
+    strong: strong.includes(text.toLowerCase().replace(/[^a-z]/g, '')),
   }));
 };
 
-const beat = (
+const moment = (
   start: number,
   end: number,
   mode: EditorialBeat['mode'],
   words: string,
   kicker?: string,
   mark?: EditorialBeat['mark'],
-  emphasis: string[] = [],
+  strong: string[] = [],
 ): EditorialBeat => ({
   start,
   end,
   mode,
-  tokens: paced(words, end - start, emphasis),
+  tokens: timed(words, end - start, strong),
   kicker,
   mark,
 });
 
-export const BECKY_G_SECONDS = 43;
+export const BECKY_G_SECONDS = 27;
+
+// These phrases appear in the April 1, 2026 Call Her Daddy episode around
+// transcript chapter 42:19–43:33; the source video sync is UNVERIFIED.
 export const BECKY_G_BEATS: EditorialBeat[] = [
-  beat(0, 5, 'speaker',
-    'Becky G finally explained what happened after those public cheating allegations.',
-    'WHAT REALLY HAPPENED', undefined, ['cheating']),
-  beat(5, 10, 'type',
-    'Most people only saw the headlines. They missed her decision.',
-    'THE PUBLIC STORY', 'strike', ['missed']),
-  beat(10, 16, 'speaker',
-    'She revealed that she actually called off the engagement entirely.',
-    'THE REVELATION', undefined, ['off']),
-  beat(16, 21, 'type',
-    'And yes, she even took off her ring.',
-    'WHAT SHE DID', 'circle', ['ring']),
-  beat(21, 28, 'speaker',
-    "But the deepest pain wasn't just losing trust in someone else.",
-    'THE EMOTIONAL COST', undefined, ['trust']),
-  beat(28, 34, 'type',
-    'She said betrayal also made her question her own judgment.',
-    'AFTER THE BETRAYAL', 'underline', ['betrayal', 'judgment']),
-  beat(34, 39, 'speaker',
-    'The couple later chose to keep working on their relationship.',
-    'THE NUANCE', undefined, ['working']),
-  beat(39, 43, 'type',
-    'So would you ever stay?',
-    'YOUR OPINION', 'circle', ['stay']),
+  moment(0, 5, 'speaker', 'I called off my engagement.',
+    'WHAT SHE SAID', undefined, ['engagement']),
+  moment(5, 10, 'type', 'I took off my ring.',
+    'HER DECISION', 'circle', ['ring']),
+  moment(10, 15, 'speaker', 'The thing about betrayal',
+    'THE HARD TRUTH', undefined, ['betrayal']),
+  moment(15, 22, 'type', "You don't trust yourself anymore.",
+    'THE LINE THAT HITS', 'underline', ['trust', 'yourself']),
+  moment(22, 27, 'speaker', 'No, I come first.',
+    'CHOOSING HERSELF', undefined, ['first']),
 ];
 
 export const beckyGEditorialProps = {
   beats: BECKY_G_BEATS,
   totalSeconds: BECKY_G_SECONDS,
   sourceLabel: 'CALL HER DADDY · APR 2026',
-  seriesLabel: 'HOLLYWOOD / EXPLAINED',
+  seriesLabel: 'RELATIONSHIPS / REAL TALK',
   approximateTiming: true,
 } satisfies EditorialKineticProps;
