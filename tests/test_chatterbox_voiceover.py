@@ -88,8 +88,8 @@ class ChatterboxVoiceoverTests(unittest.TestCase):
                 sr = 24000
 
                 @classmethod
-                def from_pretrained(cls, **kwargs):
-                    calls["load"] = kwargs
+                def from_pretrained(cls, device: str, t3_model: str | None = None):
+                    calls["load"] = {"device": device, "t3_model": t3_model}
                     return cls()
 
                 def generate(self, narration, **kwargs):
