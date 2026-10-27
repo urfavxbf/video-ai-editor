@@ -41,16 +41,19 @@ export const BECKY_G_SECONDS = 27;
 // These phrases appear in the April 1, 2026 Call Her Daddy episode around
 // transcript chapter 42:19–43:33; the source video sync is UNVERIFIED.
 export const BECKY_G_BEATS: EditorialBeat[] = [
-  moment(0, 5, 'speaker', 'I called off my engagement.',
-    'WHAT SHE SAID', undefined, ['engagement']),
-  moment(5, 10, 'type', 'I took off my ring.',
-    'HER DECISION', 'circle', ['ring']),
-  moment(10, 15, 'speaker', 'The thing about betrayal',
-    'THE HARD TRUTH', undefined, ['betrayal']),
-  moment(15, 22, 'type', "You don't trust yourself anymore.",
-    'THE LINE THAT HITS', 'underline', ['trust', 'yourself']),
-  moment(22, 27, 'speaker', 'No, I come first.',
-    'CHOOSING HERSELF', undefined, ['first']),
+  // Quote-first hook: a universal lesson, not celebrity gossip.
+  // Source wording/order is based on the cited episode transcript, while
+  // durations remain visual storyboard estimates until real source alignment.
+  moment(0, 5, 'speaker', 'The thing about betrayal',
+    'THE MOMENT THAT CHANGES YOU', undefined, ['betrayal']),
+  moment(5, 12, 'type', "You don't trust yourself anymore.",
+    'THE LINE THAT STAYS WITH YOU', 'underline', ['trust', 'yourself']),
+  moment(12, 17, 'speaker', 'This is about me.',
+    'TURNING INWARD', undefined, ['me']),
+  moment(17, 22, 'type', 'No, I come first.',
+    'SELF RESPECT', 'circle', ['first']),
+  moment(22, 27, 'speaker', "The love isn't enough.",
+    'THE HARD REALIZATION', undefined, ['enough']),
 ];
 
 export const beckyGEditorialProps = {
