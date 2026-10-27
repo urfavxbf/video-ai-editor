@@ -1,0 +1,46 @@
+name: Package Video AI Editor 13 ChatGPT skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/package-chatgpt-skills.py'
+      - '.github/workflows/package-chatgpt-skills.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate and bundle all 13 installed skills
+        run: python3 scripts/package-chatgpt-skills.py
+      - name: Verify portable plugin bundle and individual uploads
+        run: |
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          from pathlib import Path
+          p = Path("out/chatgpt-skills/Video-AI-Editor-13-Skills-Plugin.zip")
+          with ZipFile(p) as z:
+              n = z.namelist()
+              assert "plugin.json" in n
+              assert ".codex-plugin/plugin.json" in n
+              assert len([x for x in n if x.startswith("skills/") and x.endswith("/SKILL.md") and x.count("/")==2])==13
+          x=Path("out/chatgpt-skills/individual-skill-uploads")
+          assert len(list(x.glob("*.zip")))==13
+          print("Packaging passed: 13 skills and plugin manifests")
+          PY
+      - name: Upload ready-to-install skill archives
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-video-ai-editor-13-skills
+          path: |
+            out/chatgpt-skills/Video-AI-Editor-13-Skills-Plugin.zip
+            out/chatgpt-skills/Video-AI-Editor-13-Individual-Skills.zip
+            out/chatgpt-skills/individual-skill-uploads/*.zip
+          retention-days: 14
+          if-no-files-found: error
