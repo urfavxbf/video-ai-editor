@@ -6,6 +6,8 @@ import { FxShowcase, showcaseDuration } from './fx/FxShowcase'
 import { FX_FPS, FX_H, FX_W } from './fx/shared'
 import { DudutPremium, DUDUT_DURATION, type DudutPremiumProps } from './podcast/DudutPremium'
 import { TomHollandAccent, TOM_HOLLAND_ACCENT_DURATION, type TomHollandAccentProps } from './podcast/TomHollandAccent'
+import {EditorialKinetic, EDITORIAL_FPS} from './podcast/EditorialKinetic'
+import {BECKY_G_SECONDS, beckyGEditorialProps} from './podcast/BeckyGEditorial'
 import { DudutV2, DUDUT_V2_DURATION, type DudutV2Props } from './podcast/DudutV2'
 import { DoorwayEffect, type DoorwayProps } from './original/DoorwayEffect'
 import { OfficialFeaturesDemo, OFFICIAL_FEATURE_DEMO_FRAMES } from './features/OfficialFeaturesDemo'
@@ -16,6 +18,7 @@ import './fonts'
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="BeckyGEditorial" component={EditorialKinetic} width={1080} height={1920} fps={EDITORIAL_FPS} durationInFrames={BECKY_G_SECONDS * EDITORIAL_FPS} defaultProps={beckyGEditorialProps} />
   <Composition id="TomHollandAccent" component={TomHollandAccent} width={1080} height={1920} fps={30} durationInFrames={TOM_HOLLAND_ACCENT_DURATION}
     defaultProps={{} satisfies TomHollandAccentProps} />
   <Composition id="ChallengerDeep" component={ChallengerDeep} width={1080} height={1920} fps={30} durationInFrames={2400}
