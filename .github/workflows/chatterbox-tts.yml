@@ -1,0 +1,41 @@
+name: Chatterbox voice-over integration
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/chatterbox_voiceover.py'
+      - 'tests/test_chatterbox_voiceover.py'
+      - 'src/edit/Edit.tsx'
+      - 'requirements-chatterbox.txt'
+      - '.github/workflows/chatterbox-tts.yml'
+  pull_request:
+    paths:
+      - 'scripts/chatterbox_voiceover.py'
+      - 'tests/test_chatterbox_voiceover.py'
+      - 'src/edit/Edit.tsx'
+      - 'requirements-chatterbox.txt'
+      - '.github/workflows/chatterbox-tts.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  adapter-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate adapter without downloading TTS model
+        run: |
+          python -m py_compile scripts/chatterbox_voiceover.py
+          python -m unittest discover -s tests -p 'test_chatterbox_voiceover.py' -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Validate Remotion audio integration
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck

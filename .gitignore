@@ -15,3 +15,7 @@ tools/face
 input/
 hyperframes-projects/
 __pycache__/
+
+# Locally generated voice-over and optional heavyweight TTS install
+.venv-chatterbox/
+public/voiceovers/

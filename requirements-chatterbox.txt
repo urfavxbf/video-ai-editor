@@ -1,0 +1,2 @@
+# Optional heavy GPU/CPU TTS dependency; isolate from the regular editor venv.
+chatterbox-tts==0.1.7
