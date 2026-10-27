@@ -47,7 +47,7 @@ jobs:
             job_file="$DISPATCH_JOB_PATH"
           else
             # Push-triggered imports create one new queue file per job.
-            job_file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" -- render-queue/ | grep -E '^render-queue/[a-z0-9-]+[.]json | head -1)"
+            job_file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" -- render-queue/ | grep -E '^render-queue/[a-z0-9-]+[.]json$' | head -1)"
           fi
           test -n "$job_file" || { echo "No render request found in this push."; exit 1; }
           echo "Processing render request: $(basename "$job_file")"
