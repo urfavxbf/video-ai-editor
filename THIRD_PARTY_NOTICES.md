@@ -22,6 +22,10 @@ The `remotion` and `@remotion/*` dependencies come from [remotion-dev/remotion](
 
 We consume Remotion as npm dependencies; we do not relicense it by including this project in a repository.
 
+## Optional VoxCPM2 speech model
+
+The integration script `scripts/voxcpm_voiceover.py` calls the [OpenBMB/VoxCPM](https://github.com/OpenBMB/VoxCPM) Python package and the `openbmb/VoxCPM2` model. No VoxCPM2 weights or upstream sources are bundled here. OpenBMB publishes its model and code under the **Apache-2.0** license, which applies to those external components; comply with its upstream notice and permitted-use requirements. This does not license the rest of Video AI Editor under Apache-2.0.
+
 ## Bundled fonts
 
 Inter, Montserrat and Caveat in `public/fonts/` retain their separate [SIL Open Font License notice](public/fonts/OFL.txt).
