@@ -1,0 +1,39 @@
+name: VoxCPM2 adapter tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_media.py'
+      - 'notebooks/VoxCPM2_Tagalog_GPU_QA.ipynb'
+      - '.github/workflows/voxcpm-voiceover.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_media.py'
+      - 'notebooks/VoxCPM2_Tagalog_GPU_QA.ipynb'
+      - '.github/workflows/voxcpm-voiceover.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  adapter-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile adapter
+        run: python -m py_compile scripts/voxcpm_voiceover.py
+      - name: Adapter unit tests (no GPU or model downloads)
+        run: python -m unittest discover -s tests -p 'test_voxcpm_voiceover.py' -v
+      - name: Validate Colab QA notebook JSON
+        run: python -m json.tool notebooks/VoxCPM2_Tagalog_GPU_QA.ipynb > /dev/null
+      - name: Real FFmpeg mux smoke tests (synthetic 2-second videos)
+        run: python -m unittest discover -s tests -p 'test_voxcpm_media.py' -v

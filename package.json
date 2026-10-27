@@ -7,6 +7,7 @@
     "studio": "remotion studio",
     "sample": "python3 scripts/make-sample.py public/sample && python3 scripts/make-fg.py public/sample/take.mp4 public/sample/masks public/sample/fg && python3 scripts/make-sticker-mattes.py public/sample/fg public/sample/sticker",
     "typecheck": "tsc --noEmit",
+    "voiceover": "python3 scripts/voxcpm_voiceover.py",
     "render:showcase": "remotion render FxShowcase out/showcase.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p",
     "render:edit": "remotion render ExampleEdit out/edit.mp4 --codec=h264 --crf=17 --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=320k",
     "stills": "node scripts/fx-stills.mjs",

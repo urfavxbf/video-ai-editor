@@ -8,6 +8,7 @@
 - **Video editing compositions** in `src/edit/` with a JSON cut list.
 - **Effects source code** in `src/fx/` with fonts, textures and sound effects in `public/`.
 - **Groq transcription helper** in `scripts/groq_transcribe.py` for Tagalog/Taglish captions.
+- **Optional VoxCPM2 voiceover generator** in `scripts/voxcpm_voiceover.py` for Tagalog narration, consent-based voice cloning and FFmpeg MP4 mixdown. Requires separate model installation and suitable compute; see [VoxCPM2 guide](docs/VOXCPM2.md).
 - **AI editing workflows and Claude skill** in `.claude/skills/ai-video-editor/`.
 - **12 official Remotion Agent Skills** in `.claude/skills/remotion-*/` (full source/reference files, pinned official import). See [the Remotion skills guide](docs/REMOTION_SKILLS.md).
 - **CineForge Pro all-in-one Skill** in [`.claude/skills/cineforge-pro/SKILL.md`](.claude/skills/cineforge-pro/SKILL.md): one portable skill merging the 12 official Remotion skill bodies and our professional `ai-video-editor` skill. The original 13 directories remain for auditing and maintenance; run `python3 scripts/build-cineforge-master-skill.py` to rebuild the master file.
@@ -36,7 +37,7 @@ npm run render:showcase
 npm run render:edit
 ```
 
-Install FFmpeg separately. See [AI editing setup](docs/AI_VIDEO_TOOLS.md) for Groq and HyperFrames configuration. Some subject-masking steps currently require macOS / Apple Vision; Android/Codespaces and Linux need a different segmentation provider for those specific effects. This repository is an editing toolkit, not yet an end-to-end one-tap automated video service.
+Install FFmpeg separately. For optional voiceover synthesis (Python and compatible model runtime required), run `npm run voiceover -- --help`; see [VoxCPM2 setup](docs/VOXCPM2.md). See [AI editing setup](docs/AI_VIDEO_TOOLS.md) for Groq and HyperFrames configuration. Some subject-masking steps currently require macOS / Apple Vision; Android/Codespaces and Linux need a different segmentation provider for those specific effects. This repository is an editing toolkit, not yet an end-to-end one-tap automated video service.
 
 ## Provenance and licenses
 
