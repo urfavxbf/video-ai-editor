@@ -11,7 +11,9 @@
     "render:edit": "remotion render ExampleEdit out/edit.mp4 --codec=h264 --crf=17 --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=320k",
     "stills": "node scripts/fx-stills.mjs",
     "bench": "node scripts/fx-bench.mjs",
-    "render:repo-showcase": "remotion render RepoShowcase out/repo-showcase.mp4 --codec=h264 --crf=21 --pixel-format=yuv420p"
+    "render:repo-showcase": "remotion render RepoShowcase out/repo-showcase.mp4 --codec=h264 --crf=21 --pixel-format=yuv420p",
+    "render:tom-holland": "remotion render TomHollandAccent out/tom-holland-accent-preview.mp4 --codec=h264 --crf=20 --pixel-format=yuv420p",
+    "render:becky-g": "remotion render BeckyGEditorial out/becky-g-editorial-preview.mp4 --codec=h264 --crf=19 --pixel-format=yuv420p"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.522",
