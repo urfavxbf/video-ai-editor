@@ -9,11 +9,14 @@ import { DudutV2, DUDUT_V2_DURATION, type DudutV2Props } from './podcast/DudutV2
 import { DoorwayEffect, type DoorwayProps } from './original/DoorwayEffect'
 import { OfficialFeaturesDemo, OFFICIAL_FEATURE_DEMO_FRAMES } from './features/OfficialFeaturesDemo'
 import { RepoShowcase, REPO_SHOWCASE_FRAMES } from './showcase/RepoShowcase'
+import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="ChallengerDeep" component={ChallengerDeep} width={1080} height={1920} fps={30} durationInFrames={2400}
+    defaultProps={{totalFrames:1350,captions:[],narrationAvailable:false} satisfies ChallengerProps} />
   <Composition id="RepoShowcase" component={RepoShowcase} width={1080} height={1920} fps={30} durationInFrames={REPO_SHOWCASE_FRAMES} />
 	<Composition id="OfficialFeaturesDemo" component={OfficialFeaturesDemo} width={1080} height={1920} fps={30} durationInFrames={OFFICIAL_FEATURE_DEMO_FRAMES} />
 	<Composition id="OriginalDoorway" component={DoorwayEffect} width={1080} height={1920} fps={30} durationInFrames={2400}
