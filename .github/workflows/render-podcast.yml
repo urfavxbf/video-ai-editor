@@ -32,15 +32,15 @@ jobs:
       - name: Retrieve Dudut source clip
         run: python3 scripts/prepare-render-source.py render-queue/dudut-20261027-premium.json
       - name: Render Dudut Premium
-        run: bash scripts/render-dudut.sh input/50812.mp4
+        run: bash scripts/render-dudut-v2.sh input/50812.mp4
       - name: Confirm MP4 properties
         run: |
-          test -s out/dudut-premium-1080x1920.mp4
+          test -s out/dudut-v2-cinematic-1080x1920.mp4
           ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 out/dudut-premium-1080x1920.mp4
       - name: Provide downloadable MP4
         uses: actions/upload-artifact@v4
         with:
-          name: dudut-premium-1080p
+          name: dudut-v2-cinematic-1080p
           path: out/dudut-premium-1080x1920.mp4
           retention-days: 14
           if-no-files-found: error
