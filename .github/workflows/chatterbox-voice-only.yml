@@ -23,14 +23,24 @@ jobs:
           python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
           python -m pip install -r requirements-chatterbox.txt
           python -m pip install --no-deps --force-reinstall git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2
-          command -v ffmpeg
+          python -m pip install imageio-ffmpeg==0.6.0
+          mkdir -p "$RUNNER_TEMP/ffmpeg-bin"
+          ln -s "$(python -c 'import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())')" "$RUNNER_TEMP/ffmpeg-bin/ffmpeg"
+          echo "$RUNNER_TEMP/ffmpeg-bin" >> "$GITHUB_PATH"
       - name: Synthesize full 30-second English voice
         env:
           HF_HUB_DISABLE_XET: '1'
           OMP_NUM_THREADS: '4'
         run: |
           python scripts/generate-motion30-voice.py
-          ffprobe -v error -show_entries format=duration -of default=nw=1 public/voiceovers/motion30.wav
+          python - <<'PY'
+          import wave
+          f='public/voiceovers/motion30.wav'
+          with wave.open(f, 'rb') as w:
+              d=w.getnframes()/w.getframerate()
+              print('Verified Chatterbox narration duration:', d)
+              assert abs(d-30)<.05
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: chatterbox-motion30-voice-only
