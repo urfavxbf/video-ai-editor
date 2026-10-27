@@ -1,76 +1,66 @@
-# Becky G — Trust After Betrayal (Editorial Podcast Short)
+# Becky G — Quote-First Podcast Short
 
-## Verified source and editorial boundaries
+## Creative direction
 
-- **Source:** [Becky G: Cheating & People Pleasing — Call Her Daddy (official video)](https://www.youtube.com/watch?v=YLAVyH-efSE).
-- **Published:** April 1, 2026.
-- **Research window:** [approximately 00:41:46 onward](https://www.youtube.com/watch?v=YLAVyH-efSE&t=2506s), "Navigating Public Heartbreak"; the following chapter starts at approximately 00:52:47. This is a **chapter range**, not a frame-verified extraction.
-- **Verified story:** Becky G said she called off her engagement and removed her ring after a public cheating scandal. She described how betrayal affected her trust in her own judgment. As of the interview, she and Sebastian Lletget were together and working on their relationship.
-- **Evidence:** [official SiriusXM episode page](https://www.siriusxm.com/blog/becky-g-call-her-daddy/), [People report](https://people.com/becky-g-reveals-called-off-her-engagement-after-fiances-cheating-allegations-11940944), [iHeart report](https://www.iheart.com/content/2026-04-02-becky-g-breaks-silence-on-ending-engagement-amid-cheating-claims/).
-- Do not present unproven allegations as adjudicated facts, manufacture a quote, or imply that the relationship ended permanently. The following is **original commentary**, not an interview transcript.
+This is a **quote-first** video, not a gossip recap or AI-voice imitation. Preserve Becky G's **real speaking voice**, facial expressions, pauses, and the full context of her interview. Alternate authentic speaker camera close-ups with original animated kinetic-typography cards (white paper background, black type, restrained red hand-drawn emphasis) inspired by the **editing principles** of the user's reference, not a copied design.
 
-## Production format
+**Default preview deliberately includes neither copyrighted podcast footage nor copyrighted podcast audio.** It is a silent motion storyboard with quotes/keywords only. It is not the publish-ready edit.
 
-- 43 seconds, 1080 × 1920, 30 fps, English.
-- Audio: original narrator reading the script below, with separate 1/4-beat emphasis around the engagement/ring revelation.
-- Visual treatment: minimalist black-and-white editorial design, paper typography cards, hand-drawn red circled/underlined terms, clean speaker close-ups, precise kinetic word timing, restrained sound design.
-- Speaker footage appears **only when lawfully licensed or otherwise authorized**. The silent default preview instead displays original microphone artwork.
-- No copying of Mark Soy assets, motion files, branding, watermark, or podcast source footage.
-- Any third-party content must have independently reviewed rights, not just an attribution tag; adding graphics/captions does not by itself create a license or guarantee fair use.
+## Source research and accuracy
 
-## Original voiceover script (43-second storyboard)
+- Episode: [Becky G: Cheating & People Pleasing — Call Her Daddy (official)](https://www.youtube.com/watch?v=YLAVyH-efSE), April 1, 2026.
+- [Transcript index / rough entry near 42:19](https://podscripts.co/podcasts/call-her-daddy/becky-g-cheating-people-pleasing).
+- **Research windows:** ~42:19, when she says she called off her engagement and removed her ring; ~42:53, when she describes the emotional effects of betrayal and the choice to prioritize herself. These are **transcript paragraph markers, not video frame-verified in-points**.
+- Cross-check: [iHeart's April 2 report](https://www.iheart.com/content/2026-04-02-becky-g-breaks-silence-on-ending-engagement-amid-cheating-claims/) and [official SiriusXM episode](https://www.siriusxm.com/blog/becky-g-call-her-daddy/).
+- Factual nuance: Becky said she called off her engagement; she also said she and Sebastian Lletget were still together as of the interview. Do **not** imply they permanently separated or add fictional dialogue. Frame allegations accurately.
+- **Copyright:** The source interview and audio are not licensed merely because they are public. Obtain permission/rights or appropriate legal review before importing source assets or distributing a derivative clip. Captions, credit, and edits alone do not grant a license or guarantee fair use.
 
-> Becky G finally explained what happened after those public cheating allegations.
->
-> Most people only saw the headlines. They missed her decision.
->
-> She revealed that she actually called off the engagement entirely.
->
-> And yes, she even took off her ring.
->
-> But the deepest pain wasn't just losing trust in someone else.
->
-> She said betrayal also made her question her own judgment.
->
-> The couple later chose to keep working on their relationship.
->
-> So would you ever stay?
+## Select the quote, then edit
 
-These lines are **original scripted commentary**, not quotes from Becky G. Record, then use transcription/forced alignment to replace the draft token timing before final delivery.
+Key quote: **"You don't trust yourself anymore."** This is Becky G's actual statement and the strongest emotional thesis. Open on the guest speaking or a tightly edited contextual statement. Avoid opening with narrator exposition.
 
-## Composition beats
+Approved short quotation/select phrase for on-screen emphasis:
+- Engagement revealed: "I called off my engagement."
+- Emotional emphasis: "I took off my ring."
+- Betrayal setup: "The thing about betrayal"
+- Main reveal: "You don't trust yourself anymore."
+- Choice to prioritize herself: "No, I come first."
 
-| Timeline | Visual | Emphasis |
+These snippets are NOT a contiguous verbatim transcript. The final audio must follow the real sequence and retain all context necessary for meaning; the final word-by-word captions must match everything audibly spoken, not merely the selected display phrases. Existing `BECKY_G_BEATS` are a storyboard, **not evidence of timing**.
+
+## Draft silent visual preview (27s)
+
+| Preview time | Mode | On-screen emphasis |
 |---|---|---|
-| 00:00–00:05 | Speaker / original mic if no licensed footage | The cheating allegations |
-| 00:05–00:10 | White type card, strike | Beyond the headlines |
-| 00:10–00:16 | Speaker shot | Called off engagement |
-| 00:16–00:21 | White type card, red circle | Ring reveal |
-| 00:21–00:28 | Speaker shot | Betrayal and trust |
-| 00:28–00:34 | White type card, red underline | Self-trust |
-| 00:34–00:39 | Speaker shot | Nuance / ongoing relationship |
-| 00:39–00:43 | White type card, red circle | Comment prompt |
+| 0–5s | Speaker close-up (or original mic illustration if no rights) | Engagement decision |
+| 5–10s | White kinetic typography + red circle | Ring |
+| 10–15s | Speaker close-up | Betrayal |
+| 15–22s | White typography + red underline | Trust yourself |
+| 22–27s | Speaker close-up | Choosing herself |
 
-## Preview and final delivery
+The editor may change all five segment lengths to match the real recording. A polished cut can run ~25–45 seconds depending on pauses and context; do **not** time-stretch quotations to fit a predetermined number.
 
-```bash
+## Render and media integration
+
+```sh
 npm ci
 npm run typecheck
 npm run render:becky-g
-# out/becky-g-editorial-preview.mp4
+# output: out/becky-g-editorial-preview.mp4
 ```
 
-The built-in preview is intentionally **silent and copyright-footage-free**. The narration and any cleared footage are separately supplied to `EditorialKinetic` as Remotion props. To render a deliverable:
+The silent preview requires no downloads, paid APIs, synthetic celebrity voice or source footage. To make a lawful source-driven cut:
 
-1. Produce a consenting narrator's voiceover, save under `public/`, and set `audioPath`.
-2. If authorized video is available, save under `public/`, set `videoPath`, and use `sourceStartSeconds`. Speaker-only shots use it; white cards still cover it.
-3. Align every `tokens[].at` position to actual speech, review pronunciation and captions, and switch `approximateTiming` to false only after checking.
-4. Review copyright clearance, factual framing, audio levels, 9:16 crop, final A/V sync and accessibility before distributing.
+1. Supply a rights-cleared interview clip under `public/` and pass its relative path as `videoPath`.
+2. Set `playSourceAudio: true` to use that clip's actual dialogue; or provide a separate `audioPath` (which automatically mutes the video track). **Never clone the celebrity's voice.**
+3. Map each segment's verified media in-point with `beats[].mediaStartSeconds` (or use continuous `sourceStartSeconds`), and ensure no words or contextual caveats are cut misleadingly. Typed phrases are not a substitute for complete word-aligned subtitles.
+4. Generate exact transcripts from authorized media; forced-align the real spoken words and adjust every `tokens[].at` timestamp. Only then set `approximateTiming=false`.
+5. QA for copyright/licensing, factual accuracy, source A/V sync, subtitle accuracy, speaker framing, crop, clean typography, natural pauses, and audio loudness. Remove preview-only labels.
 
 ## Proposed metadata
 
-- **Title:** Becky G Revealed What Happened After the Cheating Scandal
-- **Description:** Becky G opened up on Call Her Daddy about pausing her engagement, rebuilding trust, and choosing her own path after public cheating allegations. Our original commentary examines that complicated decision. Full interview: https://www.youtube.com/watch?v=YLAVyH-efSE
-- **Hashtags:** #BeckyG #CallHerDaddy #Relationships #CelebrityPodcast
+**Title:** Becky G on Betrayal: The Part Nobody Talks About
 
-Production disclaimer: This preview is a creative test, not a licensed republishing of the original podcast and not proof of automated full-video transcription.
+**Description:** Becky G discusses betrayal, self-trust, and reclaiming her decisions on Call Her Daddy. Watch the full original episode: https://www.youtube.com/watch?v=YLAVyH-efSE
+
+The description is for a cleared, contextually faithful edit. Source credit does not substitute for rights clearance.
