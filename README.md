@@ -9,6 +9,7 @@
 - **Groq transcription helper** in `scripts/groq_transcribe.py` for Tagalog/Taglish captions.
 - **AI editing workflows and Claude skill** in `.claude/skills/ai-video-editor/`.
 - **12 official Remotion Agent Skills** in `.claude/skills/remotion-*/` (full source/reference files, pinned official import). See [the Remotion skills guide](docs/REMOTION_SKILLS.md).
+- **CineForge Pro all-in-one Skill** in [`.claude/skills/cineforge-pro/SKILL.md`](.claude/skills/cineforge-pro/SKILL.md): one portable skill merging the 12 official Remotion skill bodies and our professional `ai-video-editor` skill. The original 13 directories remain for auditing and maintenance; run `python3 scripts/build-cineforge-master-skill.py` to rebuild the master file.
 - **7 official Remotion feature packages**, including captions, transitions, shapes, effects, motion blur, SFX and Player, with a working `OfficialFeaturesDemo` composition. See [feature details](docs/REMOTION_FEATURES.md).
 - **CI smoke tests** and dependency installation scripts.
 
