@@ -39,6 +39,10 @@ jobs:
           npx remotion render RepoShowcase out/repo-showcase-preview.mp4
           --codec=h264 --crf=21 --pixel-format=yuv420p
           --scale=0.5 --concurrency=2
+      - name: Install FFmpeg verification tool
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Check encoded video and duration
         run: |
           test -s out/repo-showcase-preview.mp4
