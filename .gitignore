@@ -1,0 +1,17 @@
+node_modules/
+out/
+.DS_Store
+*.log
+# Footage and everything derived from it stays local: the sample (npm run sample) and your own takes.
+public/sample/
+public/takes/
+# Compiled Swift tools
+tools/matte
+tools/face
+# AI video local files and credentials (never commit recordings or API keys)
+.venv/
+.env
+.env.*
+input/
+hyperframes-projects/
+__pycache__/
