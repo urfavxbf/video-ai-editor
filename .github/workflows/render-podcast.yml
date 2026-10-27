@@ -1,87 +1,46 @@
 name: Render Premium Podcast Short
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - 'render-queue/**'
   workflow_dispatch:
-    inputs:
-      job_path:
-        description: 'Existing render-queue/*.json request'
-        required: true
-        type: string
 
 permissions:
   contents: read
-
-concurrency:
-  group: premium-podcast-${{ github.ref }}-${{ github.run_id }}
-  cancel-in-progress: false
 
 jobs:
   render:
     runs-on: ubuntu-latest
     timeout-minutes: 50
     steps:
-      - name: Check out Video AI Editor
+      - name: Check out editing repository
         uses: actions/checkout@v4
-      - name: Set up Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
-      - name: Install FFmpeg and renderer
+          cache: 'npm'
+      - name: Install FFmpeg and Remotion
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y ffmpeg
           npm ci --no-audit --no-fund
           npx remotion browser ensure
-      - name: Validate and download the supplied footage
-        shell: bash
-        env:
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
-          DISPATCH_JOB_PATH: ${{ inputs.job_path }}
-        run: |
-          set -euo pipefail
-          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
-            job_file="$DISPATCH_JOB_PATH"
-          else
-            # Push-triggered imports create one new queue file per job.
-            job_file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" -- render-queue/ | grep -E '^render-queue/[a-z0-9-]+[.]json$' | head -1)"
-          fi
-          test -n "$job_file" || { echo "No render request found in this push."; exit 1; }
-          echo "Processing render request: $(basename "$job_file")"
-          python3 scripts/prepare-render-source.py "$job_file"
-      - name: Render Dudut cinematic podcast short
+      - name: Retrieve Dudut source clip
+        run: python3 scripts/prepare-render-source.py render-queue/dudut-20261027-premium.json
+      - name: Render Dudut Premium
         run: bash scripts/render-dudut.sh input/50812.mp4
-      - name: Verify finished MP4 integrity
+      - name: Confirm MP4 properties
         run: |
           test -s out/dudut-premium-1080x1920.mp4
           ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 out/dudut-premium-1080x1920.mp4
-          ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/dudut-premium-1080x1920.mp4
-      - name: Upload finished video for download
+      - name: Provide downloadable MP4
         uses: actions/upload-artifact@v4
         with:
-          name: dudut-premium-1080p-${{ github.run_number }}
-          path: out/dudut-premium-1080x1920.mp4
-          retention-days: 14
-          if-no-files-found: error
- | head -1)"
-          fi
-          test -n "$job_file" || { echo "No render request found in this push."; exit 1; }
-          echo "Processing render request: $(basename "$job_file")"
-          python3 scripts/prepare-render-source.py "$job_file"
-      - name: Render Dudut cinematic podcast short
-        run: bash scripts/render-dudut.sh input/50812.mp4
-      - name: Verify finished MP4 integrity
-        run: |
-          test -s out/dudut-premium-1080x1920.mp4
-          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 out/dudut-premium-1080x1920.mp4
-          ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate -of default=noprint_wrappers=1 out/dudut-premium-1080x1920.mp4
-      - name: Upload finished video for download
-        uses: actions/upload-artifact@v4
-        with:
-          name: dudut-premium-1080p-${{ github.run_number }}
+          name: dudut-premium-1080p
           path: out/dudut-premium-1080x1920.mp4
           retention-days: 14
           if-no-files-found: error
