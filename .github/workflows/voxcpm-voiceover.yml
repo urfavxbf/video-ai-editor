@@ -12,6 +12,7 @@ on:
     paths:
       - 'scripts/voxcpm_voiceover.py'
       - 'tests/test_voxcpm_voiceover.py'
+      - 'tests/test_voxcpm_media.py'
       - '.github/workflows/voxcpm-voiceover.yml'
 
 permissions:
