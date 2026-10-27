@@ -7,11 +7,13 @@ import { FX_FPS, FX_H, FX_W } from './fx/shared'
 import { DudutPremium, DUDUT_DURATION, type DudutPremiumProps } from './podcast/DudutPremium'
 import { DudutV2, DUDUT_V2_DURATION, type DudutV2Props } from './podcast/DudutV2'
 import { DoorwayEffect, type DoorwayProps } from './original/DoorwayEffect'
+import { OfficialFeaturesDemo, OFFICIAL_FEATURE_DEMO_FRAMES } from './features/OfficialFeaturesDemo'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+	<Composition id="OfficialFeaturesDemo" component={OfficialFeaturesDemo} width={1080} height={1920} fps={30} durationInFrames={OFFICIAL_FEATURE_DEMO_FRAMES} />
 	<Composition id="OriginalDoorway" component={DoorwayEffect} width={1080} height={1920} fps={30} durationInFrames={2400}
     defaultProps={{totalFrames:1230,captions:[],narrationAvailable:false} satisfies DoorwayProps} />
   <Composition id="FxShowcase" component={FxShowcase} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={showcaseDuration()} />
