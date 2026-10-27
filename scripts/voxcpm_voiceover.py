@@ -24,6 +24,8 @@ def create_parser() -> argparse.ArgumentParser:
     text = parser.add_mutually_exclusive_group(required=True)
     text.add_argument("--text", help="Narration text, including Tagalog/Taglish")
     text.add_argument("--text-file", type=Path, help="UTF-8 narration text file")
+    text.add_argument("--audio-file", type=Path,
+                      help="Existing WAV generated in the standalone upstream VoxCPM repository")
     parser.add_argument("--style", help="Optional natural-language voice/style description")
     parser.add_argument("--reference-audio", type=Path, help="Authorized WAV clip for voice cloning")
     parser.add_argument("--prompt-audio", type=Path, help="WAV clip for continuation cloning")
@@ -76,13 +78,23 @@ def validate_args(args: argparse.Namespace) -> Path | None:
             raise ValueError(f"Reference audio must be an existing WAV file: {audio}")
     if args.video_output and not args.video:
         raise ValueError("--video-output requires --video.")
+    if args.audio_file is not None:
+        if not args.audio_file.is_file() or args.audio_file.suffix.lower() != ".wav":
+            raise ValueError(f"--audio-file must be an existing WAV file: {args.audio_file}")
+        if not args.video:
+            raise ValueError("--audio-file requires --video to attach the WAV.")
+        if args.style or args.reference_audio or args.prompt_audio or args.prompt_text:
+            raise ValueError("--audio-file does not synthesize or clone speech; omit voice-design options.")
+        if args.output != Path("out/voiceover.wav"):
+            raise ValueError("--audio-file uses --video-output, not --output.")
     if args.video is not None and not args.video.is_file():
         raise ValueError(f"Video file not found: {args.video}")
     video_output = args.video_output
     if args.video and video_output is None:
         video_output = Path("out") / f"{args.video.stem}-voiced.mp4"
-    inputs = [a.resolve() for a in (args.video, args.reference_audio, args.prompt_audio) if a]
-    targets = [args.output]
+    inputs = [a.resolve() for a in (args.video, args.reference_audio, args.prompt_audio,
+                                    args.audio_file) if a]
+    targets = [] if args.audio_file is not None else [args.output]
     if video_output:
         targets.append(video_output)
     for target in targets:
@@ -90,7 +102,7 @@ def validate_args(args: argparse.Namespace) -> Path | None:
             raise ValueError(f"Output would overwrite an input: {target}")
         if target.exists() and not args.overwrite:
             raise FileExistsError(f"Output already exists: {target}. Pass --overwrite to replace it.")
-    if video_output and video_output.resolve() == args.output.resolve():
+    if video_output and args.audio_file is None and video_output.resolve() == args.output.resolve():
         raise ValueError("WAV and MP4 output paths must be different.")
     return video_output
 
@@ -188,11 +200,16 @@ def main(argv: list[str] | None = None) -> int:
     parser = create_parser()
     args = parser.parse_args(argv)
     try:
-        narration = prepare_text(args)
         video_output = validate_args(args)
-        synthesize(args, narration)
-        if args.video and video_output:
-            mux_video(args.video, args.output, video_output, args.original_volume)
+        if args.audio_file is not None:
+            # Standalone upstream repo generated the WAV. Do not load VoxCPM or torch here.
+            assert args.video is not None and video_output is not None
+            mux_video(args.video, args.audio_file, video_output, args.original_volume)
+        else:
+            narration = prepare_text(args)
+            synthesize(args, narration)
+            if args.video and video_output:
+                mux_video(args.video, args.output, video_output, args.original_volume)
         return 0
     except (ValueError, FileNotFoundError, FileExistsError, RuntimeError,
             OSError, subprocess.CalledProcessError) as exc:
