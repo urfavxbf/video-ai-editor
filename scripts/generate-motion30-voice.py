@@ -4,7 +4,6 @@ from pathlib import Path
 import os
 import subprocess
 import tempfile
-import wave
 
 LINES = [
     "Your next chapter doesn't start when everything is perfect. It starts when you move.",
@@ -17,8 +16,8 @@ DEST = Path("public/voiceovers/motion30.wav")
 
 
 def seconds(path: Path) -> float:
-    with wave.open(str(path), "rb") as w:
-        return w.getnframes() / w.getframerate()
+    import soundfile as sf
+    return float(sf.info(str(path)).duration)
 
 
 def ffmpeg(*args: str) -> None:
