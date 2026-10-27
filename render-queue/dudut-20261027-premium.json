@@ -1,0 +1,9 @@
+{
+  "job_id": "dudut-20261027-premium",
+  "preset": "dudut-premium",
+  "source_url": "https://storage.googleapis.com/vidiq-user-videos/3e327312-b8af-4860-8452-583f1f2482c3/a7613681-4076-4850-be73-aab58913f999.mp4?GoogleAccessId=ai-proxy-20261001%40studious-pen-429.vid.io.iam.gserviceaccount.com&Expires=1793686884&Signature=JCOwghxFVGdNJejFp8PgQVOska74KhVY3sDPR9lk2xmTWtVckE8bmYs669%2F7Km%2B%2FdZIPm4g2Fq96Mpjsx8KcV1%2BSEfyovmMQcfGd5%2FMSG0PPXYH3%2FmjXbwgw%2FhygXlkW3CEg8RZtCZEG%2Fnn3N4%2FuAXUxMUJcza80oqjjZGVqzsp16qD5mzXI0cjRQEgm4gcgxN1ExtzAqiJxIfRTlt9l3xDkQ28ugqT6g1pvoLFxaB%2BUqXln%2BWZDe%2FVVY7toK3%2BngF6M914HhZwxkp1jCBpDNfTCzK7nZxzTOUyyEUmSWM0HBuVmQFb2f2Bm7TGzVE65zQdUmlGu5hSFfh3u4BK5%2BQ%3D%3D",
+  "source_file": "50812.mp4",
+  "expected_duration_seconds": 93.7,
+  "output": "dudut-premium-1080x1920.mp4",
+  "note": "Temporary signed asset; never share a permanent master recording."
+}
