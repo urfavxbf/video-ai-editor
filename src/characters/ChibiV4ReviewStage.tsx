@@ -3,7 +3,7 @@ import {AbsoluteFill,useCurrentFrame} from 'remotion';
 import {ChibiV4Sprite,V4_PALETTE,type V4Character,getV4FrameCount} from './ChibiV4Sprite';
 
 /** New V4 dark-green/cyan chibi artwork review, separate from old V2 episodes. */
-export type ChibiV4ReviewProps = {assetsReady:boolean};
+export type ChibiV4ReviewProps = {assetsReady:boolean;normalizedReview?:boolean};
 export const CHIBI_V4_REVIEW_DURATION=540;
 const HOST_ACTIONS=['idle_normal','idle_talking','walk','run','jump','surprised'];
 const PIX_ACTIONS=['idle_sitting','meow_talk','walk','run_trot','jump_pounce','happy_excited'];
@@ -12,8 +12,9 @@ const Card:React.FC<{
   id:V4Character;
   action:string;
   assetsReady:boolean;
+  normalizedReview?:boolean;
   startFrame:number;
-}> = ({id,action,assetsReady,startFrame})=>{
+}> = ({id,action,assetsReady,normalizedReview,startFrame})=>{
   const hue=V4_PALETTE[id];
   const name=id==='urfavxbf'?'URFAVXBF':'PIX';
   const numFrames=getV4FrameCount(id,action);
@@ -29,7 +30,8 @@ const Card:React.FC<{
       display:'flex',alignItems:'center',justifyContent:'center',
     }}>
       <ChibiV4Sprite id={id} action={action} width={450} height={520}
-        startFrame={startFrame} assetsReady={assetsReady}/>
+        startFrame={startFrame} assetsReady={assetsReady}
+        normalizedReview={normalizedReview}/>
     </div>
     <div style={{
       position:'absolute',bottom:34,left:36,right:36,
@@ -43,7 +45,7 @@ const Card:React.FC<{
   </div>;
 };
 
-export const ChibiV4ReviewStage:React.FC<ChibiV4ReviewProps>=({assetsReady})=>{
+export const ChibiV4ReviewStage:React.FC<ChibiV4ReviewProps>=({assetsReady,normalizedReview=false})=>{
   const frame=useCurrentFrame();
   const index=Math.min(HOST_ACTIONS.length-1,Math.floor(frame/90));
   const first=index*90;
@@ -58,18 +60,18 @@ export const ChibiV4ReviewStage:React.FC<ChibiV4ReviewProps>=({assetsReady})=>{
       </span>
     </div>
     <div style={{position:'absolute',top:49,right:81,fontSize:18,color:'#9bbaa9'}}>
-      16:9 / 30 FPS / ORIGINAL V4 CONCEPT FRAME REFERENCES
+      16:9 / 30 FPS / V4 VERIFIED SOURCE POSES
     </div>
     <div style={{position:'absolute',top:155,left:68,right:68,
       display:'flex',gap:55,justifyContent:'space-between'}}>
       <Card id="urfavxbf" action={HOST_ACTIONS[index]}
-        assetsReady={assetsReady} startFrame={first}/>
+        assetsReady={assetsReady} normalizedReview={normalizedReview} startFrame={first}/>
       <Card id="pix" action={PIX_ACTIONS[index]}
         assetsReady={assetsReady} startFrame={first}/>
     </div>
     <div style={{position:'absolute',bottom:45,left:0,right:0,
       textAlign:'center',fontSize:18,color:'#b1cebe',letterSpacing:1}}>
-      DRAFT ART · no 8-frame claim when only 3–5 drawings exist · no phoneme lip-sync or completed character hair rig
+      DRAFT ART · unified alpha canvas optional · no new inbetweens or phoneme-aligned lip sync
     </div>
   </AbsoluteFill>;
 };
