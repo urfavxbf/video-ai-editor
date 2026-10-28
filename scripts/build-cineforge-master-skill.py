@@ -59,7 +59,7 @@ def main():
         raise ValueError("Pinned Remotion skill revision changed")
     header="""---
 name: cineforge-pro
-description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original English-language YouTube Shorts, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
+description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original English-language long-form YouTube videos starring UrFavXBF and PIX, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
 ---
 
 # CINEFORGE PRO — AI Video Director & Motion Studio
