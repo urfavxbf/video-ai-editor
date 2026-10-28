@@ -13,6 +13,7 @@ import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
 import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characters/CharacterAnimationLab'
 import {HeroCharacterStage, HERO_STAGE_DURATION, type HeroStageProps} from './characters/HeroCharacterStage'
 import {HeroAnimationReviewReel, HERO_REEL_FRAMES, type HeroAnimationReviewReelProps} from './characters/HeroAnimationReviewReel'
+import {ChibiV4ReviewStage,CHIBI_V4_REVIEW_DURATION,type ChibiV4ReviewProps} from './characters/ChibiV4ReviewStage'
 import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
 import './fonts'
@@ -24,6 +25,7 @@ import {YouTubeJourneyFullEpisode, type YouTubeJourneyFullEpisodeProps} from './
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="ChibiV4ReviewStage" component={ChibiV4ReviewStage} width={1920} height={1080} fps={30} durationInFrames={CHIBI_V4_REVIEW_DURATION} defaultProps={{assetsReady:false} satisfies ChibiV4ReviewProps}/>
   <Composition id="HeroAnimationReviewReel" component={HeroAnimationReviewReel} width={1920} height={1080} fps={30} durationInFrames={HERO_REEL_FRAMES} defaultProps={{assetsReady:false} satisfies HeroAnimationReviewReelProps}/>
   <Composition id="HeroCharacterStage" component={HeroCharacterStage} width={1920} height={1080} fps={30} durationInFrames={HERO_STAGE_DURATION} defaultProps={{assetsReady:false,voiceEvents:[],chapter:1,audio:[]} satisfies HeroStageProps} calculateMetadata={({props})=>({durationInFrames:props.durationFrames??HERO_STAGE_DURATION})}/>
   <Composition id="YouTubeJourneyVisualBoard" component={YouTubeJourneyVisualBoard} width={1920} height={1080} fps={30} durationInFrames={STORYBOARD_FRAMES}/>
