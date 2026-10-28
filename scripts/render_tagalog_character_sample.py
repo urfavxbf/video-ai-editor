@@ -25,6 +25,7 @@ OUT = Path("out/tagalog-character-voice-sample")
 
 def main() -> None:
     from voxcpm import VoxCPM
+    import torch
 
     OUT.mkdir(parents=True, exist_ok=True)
     print("Loading VoxCPM2 once for the approved Filipino character designs...", flush=True)
@@ -42,9 +43,10 @@ def main() -> None:
         profile = profile_for(speaker)
         print(f"Generating {speaker} with {profile['identifier']}", flush=True)
         designed = f"({profile['voice_design_prompt']}) {script}"
+        torch.manual_seed(42 + i)
         audio = np.asarray(
             model.generate(
-                text=designed, cfg_value=2.0, inference_timesteps=10, seed=42 + i,
+                text=designed, cfg_value=2.0, inference_timesteps=10,
             ),
             dtype=np.float32,
         ).reshape(-1)
