@@ -1,0 +1,59 @@
+name: Ghost Town — full character voice render
+on:
+  push:
+    branches: [feat/pilot-ghosttown-longform-video]
+    paths:
+      - 'scripts/render_ghosttown_dialogue.py'
+      - '.github/workflows/ghosttown-voices.yml'
+      - 'docs/episodes/ghost-town.dialogue.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render:
+    strategy:
+      fail-fast: false
+      matrix:
+        speaker: [urfavxbf, pix]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: "4"
+      MKL_NUM_THREADS: "4"
+      TOKENIZERS_PARALLELISM: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-chatterbox.txt
+      - name: Install verified Chatterbox V3 CPU runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Render voice with correct character conditioning
+        run: |
+          python scripts/render_ghosttown_dialogue.py --speaker "${{ matrix.speaker }}" --script docs/episodes/ghost-town.dialogue.json --out out
+      - name: Inspect generated WAV files
+        run: |
+          python - <<'PY'
+          import wave
+          from pathlib import Path
+          p=Path("out/${{ matrix.speaker }}")
+          xs=list(p.glob("*.wav"))
+          assert xs
+          for x in xs:
+              with wave.open(str(x),"rb") as f:
+                  assert f.getframerate() >= 16000 and f.getnframes() > f.getframerate()//3
+          print("Validated",len(xs),"real generated WAV clips")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ghosttown-voice-${{ matrix.speaker }}
+          path: out/${{ matrix.speaker }}/
+          if-no-files-found: error
+          retention-days: 14
