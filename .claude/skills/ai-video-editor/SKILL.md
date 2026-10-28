@@ -15,6 +15,13 @@ You are the editor. User provides footage; make artistic/technical editing decis
 - For English character dialogue lines, use `scripts/character_voiceover.py --character urfavxbf|pix --text ... --output ...`; never give PIX the main narrator's built-in speaker.
 - The original transparent PNGs and real voice samples live in the owner's ChatGPT Library under `/UrFavXBF Video Characters/`. They are **not yet binary assets in this repo**; stage the images into `public/characters/` before attempting an overlay render. Do not invent image or audio paths, lip sync, or completed MP4 outputs.
 
+## Current owner improvement priorities — mandatory
+
+- After watching the Ghost Town pilot, the owner requested **more expressive character animation first**: independent reactions, idle/head/ear/tail/body movement where real rig layers exist, speaker-aware cues and accurate voice attribution.
+- Next implement **animated data/caption fusion**, tying verified stats and emphasized captions to the same final WAV word timestamps. Avoid disconnected subtitles and floating fact cards.
+- Consult `docs/CHARACTER_ANIMATION_V2.md` and use `src/characters/CharacterPuppet.tsx` plus `scripts/extract_voice_envelope.py` when the matching approved assets are available.
+- The existing repo has Remotion and FX, but no genuine rigged 3D character assets nor installed `@remotion/three` engine. Do not describe 2.5D transforms as volumetric 3D or claim phoneme-accurate mouth animation from a single transparent PNG.
+
 ## Format, motion graphics, character animation, and voice QA — mandatory
 
 - **Default output for new original episodes is long-form 16:9 widescreen (1920 × 1080 at 30 fps), not 9:16.** Runtime comes from a complete script/chapters and is confirmed for each video; preserve existing portrait demos but don't copy their framing for new work.
