@@ -17,6 +17,11 @@ You are the editor. User provides footage; make artistic/technical editing decis
 
 ## Current owner improvement priorities — mandatory
 
+- **Newest approved visual identity:** use `super-pixel-glitch-v2` for new UrFavXBF + PIX videos. These are separate real transparent 2D pixel-art PNGs, expression portraits, animation-loop frames and glitch VFX; see `docs/PIXEL_GLITCH_CHARACTER_PACK.md` and `characters/registry.json`. Don't mistake a concept sheet for an overlay.
+- The binary pack is in the owner's ChatGPT Library (`/UrFavXBF Video Characters/Pixel Glitch V2/`), **not yet in GitHub**. Stage images at `public/characters/pixel-glitch/` first; prefer the `src/characters/PixelGlitchSprite.tsx` frame-driven talk/idle/react loops when using this asset set.
+- Keep Chatterbox `natural-storyteller-v1` for UrFavXBF and `pix-cute-female-emily-v1` for PIX. Glitch effects should decorate/react, not overwhelm character readability or captions.
+
+
 - After watching the Ghost Town pilot, the owner requested **more expressive character animation first**: independent reactions, idle/head/ear/tail/body movement where real rig layers exist, speaker-aware cues and accurate voice attribution.
 - Next implement **animated data/caption fusion**, tying verified stats and emphasized captions to the same final WAV word timestamps. Avoid disconnected subtitles and floating fact cards.
 - Consult `docs/CHARACTER_ANIMATION_V2.md` and use `src/characters/CharacterPuppet.tsx` plus `scripts/extract_voice_envelope.py` when the matching approved assets are available.

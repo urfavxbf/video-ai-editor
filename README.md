@@ -10,6 +10,12 @@
 
 **Long-form YouTube videos • 16:9 widescreen • 1920 × 1080 • 30 fps.** No fixed Short runtime; write a chaptered, dialogue-led episode appropriate to the subject. Use character interaction, the 21 Remotion effects selectively, scene-specific advanced motion graphics and reliable Chatterbox speaker/caption synchronization. Preserve the old 9:16 demos without treating them as production templates.
 
+## Official V2 visual style — super-pixel / glitch
+
+The owner has approved new **highly pixelated, neon glitch** designs for UrFavXBF and PIX. The separated transparent avatar PNGs, 12 expression portraits, 48 talk/idle/reaction frames, six character glitch variants and reusable VFX overlays are saved in the owner's ChatGPT Library at `/UrFavXBF Video Characters/Pixel Glitch V2/`. **The ZIP media binaries are not yet committed to GitHub**. `characters/registry.json` now records this V2 as the preferred visual version while retaining V1 for older episodes.
+
+Use `src/characters/PixelGlitchSprite.tsx` for frame-driven Remotion talking/idle/reaction loops, after staging `public/characters/pixel-glitch/` from the ZIP. Both existing Chatterbox voice identities remain unchanged. [Read the pack guide](docs/PIXEL_GLITCH_CHARACTER_PACK.md).
+
 ## Official characters — UrFavXBF and PIX
 
 This repository is the AI-operated video production workspace for the recurring duo **UrFavXBF** (main host) and **PIX** (his talking AI cat companion). UrFavXBF covers wisdom, science, mathematics, internet culture, AI and video editing; this is **not a science-only project**. PIX is an inquisitive, playful, cute female-voiced AI sidekick. Both characters speak **English**.

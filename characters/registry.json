@@ -72,5 +72,59 @@
     "legacy_portrait_demos_not_default": true,
     "video_codec": "h264",
     "audio_codec": "aac"
+  },
+  "preferred_visual_variant": "super-pixel-glitch-v2",
+  "visual_variant_package": {
+    "version": "super-pixel-glitch-v2",
+    "status": "approved new visual style and sample, binary assets in ChatGPT Library not yet committed to GitHub",
+    "library_root": "/UrFavXBF Video Characters/Pixel Glitch V2/",
+    "library_pack": "/UrFavXBF Video Characters/Pixel Glitch V2/PixelGlitch_Complete_Pack.zip",
+    "format": "separate RGBA transparent PNG sprites, 8-frame loops, glitch VFX, transparent head portraits",
+    "source": "a_detailed_high_contrast_neon_pixel_art_asset_pa.png",
+    "project_media_directory": "public/characters/pixel-glitch/",
+    "preview": "PixelGlitch_Animation_Sample_1080p.mp4",
+    "sample_resolution": "1920x1080",
+    "sample_fps": 30,
+    "characters": {
+      "urfavxbf": {
+        "base_path": "public/characters/pixel-glitch/urfavxbf/base.png",
+        "sha256": "b11936a4ace7c6cba1ee391ff768fce93bee80b2adf81b3a44a89cbaa4cf01b4",
+        "main_color": "black / bright yellow",
+        "facial_poses": [
+          "neutral",
+          "talk",
+          "excited",
+          "thinking",
+          "surprised",
+          "glitch"
+        ],
+        "loop_modes": [
+          "idle",
+          "talk",
+          "react"
+        ],
+        "voice_profile": "natural-storyteller-v1"
+      },
+      "pix": {
+        "base_path": "public/characters/pixel-glitch/pix/base.png",
+        "sha256": "cc5ecccdbb74b8c90ea3af09a0c75ff2c72db05fcdf0006fdc19255641304c6f",
+        "main_color": "white / cyan / yellow",
+        "facial_poses": [
+          "neutral",
+          "talk",
+          "happy",
+          "curious",
+          "surprised",
+          "glitch"
+        ],
+        "loop_modes": [
+          "idle",
+          "talk",
+          "react"
+        ],
+        "voice_profile": "pix-cute-female-emily-v1"
+      }
+    },
+    "note": "Preserve v1 visual records for old episodes; use this V2 sprite version for all new work after assets are staged. Mouth switches are approximate expression puppetry, not phoneme-viseme lip sync."
   }
 }

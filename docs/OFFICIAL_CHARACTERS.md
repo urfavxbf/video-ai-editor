@@ -4,6 +4,12 @@
 
 The second recurring character is **PIX**, UrFavXBF's cute, talking female-voiced AI pet. PIX is a bright, curious robotic cat who can question UrFavXBF, joke with him, and explain concepts alongside him. PIX does not replace the main host.
 
+## Visual version update — super-pixel glitch V2
+
+The owner approved the **super-pixelated, high-contrast glitch** appearances. Use the separately extracted V2 sprite pack as the preferred appearance for **new** episodes. Keep prior v1 images for replaying earlier footage and do not silently claim a 3D rig.
+
+The V2 full-body characters, expressions and talk/idle/react loops are in the owner's ChatGPT Library: `/UrFavXBF Video Characters/Pixel Glitch V2/`. See [the asset pack guide](PIXEL_GLITCH_CHARACTER_PACK.md) and the registry's `preferred_visual_variant` field. The Chatterbox voices have NOT changed.
+
 ## Canonical visual identity
 
 | Character | Appearance | Reusable overlay file |
