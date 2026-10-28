@@ -10,11 +10,15 @@ import { DoorwayEffect, type DoorwayProps } from './original/DoorwayEffect'
 import { OfficialFeaturesDemo, OFFICIAL_FEATURE_DEMO_FRAMES } from './features/OfficialFeaturesDemo'
 import { RepoShowcase, REPO_SHOWCASE_FRAMES } from './showcase/RepoShowcase'
 import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
+import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characters/CharacterAnimationLab'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="CharacterAnimationLab" component={CharacterAnimationLab}
+    width={1920} height={1080} fps={30} durationInFrames={240}
+    defaultProps={{assetsReady: false} satisfies CharacterAnimationLabProps} />
   <Composition id="ChallengerDeep" component={ChallengerDeep} width={1080} height={1920} fps={30} durationInFrames={2400}
     defaultProps={{totalFrames:1350,captions:[],narrationAvailable:false} satisfies ChallengerProps} />
   <Composition id="RepoShowcase" component={RepoShowcase} width={1080} height={1920} fps={30} durationInFrames={REPO_SHOWCASE_FRAMES} />
