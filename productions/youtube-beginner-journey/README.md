@@ -100,19 +100,20 @@ To use the workflow's audio artifact locally after the voice run succeeds:
 # Stage the two approved full-body PNGs in public/characters/:
 # UrFavXBF_Transparent.png and PIX_Transparent.png.
 # Validate the props before rendering:
-# python scripts/validate_youtube_journey_fullbody.py --props out/youtube-journey-preview.props.json \\
-#   --out out/youtube-journey-preview-ready.props.json
+python scripts/validate_youtube_journey_fullbody.py \\
+  --props out/youtube-journey-preview.props.json \\
+  --out out/youtube-journey-preview-ready.props.json
 npm ci
 npm run typecheck
 npx remotion render YouTubeJourneyPreview out/youtube-journey-preview.mp4 \
-  --props=out/youtube-journey-preview.props.json \
+  --props=out/youtube-journey-preview-ready.props.json \
   --codec=h264 --crf=19 --pixel-format=yuv420p \
   --audio-codec=aac
 ```
 
 Do not render with stand-in characters. Official full-body RGBA PNGs are
-external assets and are **not** present in this GitHub branch. Voice artifacts
-are also external until the CPU workflow completes successfully. No verified
+external assets and are **not** present in this GitHub branch. The full 68-WAV CPU synthesis workflow has succeeded; its short-lived
+GitHub Actions artifacts must still be downloaded into the rendering workspace. No verified
 MP4 exists from this commit alone. Recheck peak levels, exact captions,
 pronunciation, shot transitions, policies and runtime after audiovisual render.
 Do not upload to YouTube automatically.
