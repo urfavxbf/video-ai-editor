@@ -10,8 +10,8 @@ and PIX visible to either side and the captions in a protected footer.
 full-body sprites at these exact paths:
 
 ```text
-public/characters/UrFavXBF_Transparent.png
-public/characters/PIX_Transparent.png
+public/characters/pixel-glitch/urfavxbf/base.png
+public/characters/pixel-glitch/pix/base.png
 ```
 
 The character can breathe, bob, lean, sway, take small stylized steps,
@@ -34,7 +34,7 @@ Example `out/youtube-journey-fullbody-assets.json`:
 ```json
 {
   "urfavxbf": {
-    "assetPath": "characters/UrFavXBF_Transparent.png",
+    "assetPath": "characters/pixel-glitch/urfavxbf/base.png",
     "layeredRig": {
       "body": "characters/rigs/urfavxbf/body.png",
       "head": "characters/rigs/urfavxbf/head.png",
@@ -50,7 +50,7 @@ Example `out/youtube-journey-fullbody-assets.json`:
     }
   },
   "pix": {
-    "assetPath": "characters/PIX_Transparent.png",
+    "assetPath": "characters/pixel-glitch/pix/base.png",
     "layeredRig": {
       "body": "characters/rigs/pix/body.png",
       "head": "characters/rigs/pix/head.png",
@@ -93,6 +93,8 @@ mouth layers exist**—not phoneme-accurate lip-sync or a 3D skeleton.
 
 ## Validation / authorized rendering
 
+Both original Super Pixel V2 full-body PNGs were located in ChatGPT Library and their SHA-256 digests matched `characters/registry.json` exactly. The pack's separate 8-frame idle/talk/react loops are cropped HEAD animations, not independent whole-body motions.
+
 The approved images are currently **not stored in this GitHub branch**.
 Do not claim they were staged; the GitHub `public/` directory contains no
 `characters/` directory. Once official PNGs are provided:
@@ -115,7 +117,7 @@ npx remotion render YouTubeJourneyFullEpisode out/youtube-journey-full.mp4 \
   --codec=h264 --crf=18 --pixel-format=yuv420p --audio-codec=aac
 ```
 
-The validator checks that both expected RGBA PNG sprites exist, all rigged
+The validator checks SHA-256 fingerprints for the two official V2 base sprites, that both expected RGBA PNG sprites exist, all rigged
 limbs are present and aligned to the same canvas dimensions, and no path
 escapes `characters/`. It changes `assetsReady` only in a separate local
 **review** props file; it never sets `readyForPublishing`.
