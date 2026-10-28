@@ -6,6 +6,17 @@
 
 **English-only for new original videos**: scripts, narration, motion-design text, captions and publishing metadata. The approved English narrator is **Natural Storyteller** via Chatterbox Multilingual V3 (`natural-storyteller-v1`). Existing Tagalog/Taglish compositions remain unchanged as archived examples; this does not imply translating third-party footage or automatic publishing. See [English production policy](docs/ENGLISH_PRODUCTION_POLICY.md).
 
+## Official characters — UrFavXBF and PIX
+
+This repository is the AI-operated video production workspace for the recurring duo **UrFavXBF** (main host) and **PIX** (his talking AI cat companion). UrFavXBF covers wisdom, science, mathematics, internet culture, AI and video editing; this is **not a science-only project**. PIX is an inquisitive, playful, cute female-voiced AI sidekick. Both characters speak **English**.
+
+- **UrFavXBF**: transparent high-contrast pixel-art human overlay, black/yellow outfit; Chatterbox Multilingual V3 `natural-storyteller-v1` built-in English narrator.
+- **PIX**: transparent white/black/yellow/cyan robotic-cat overlay; Chatterbox Multilingual V3 `pix-cute-female-emily-v1` female reference voice.
+- **Voice samples**: real verified GitHub Actions WAVs ([UrFavXBF](https://github.com/urfavxbf/video-ai-editor/actions/runs/40607467395), [PIX](https://github.com/urfavxbf/video-ai-editor/actions/runs/40614959831)).
+- **Assets**: the two original transparent PNGs plus audio samples and a ZIP pack are saved to the owner's persistent **ChatGPT Library** under `/UrFavXBF Video Characters/`. These binary images are **not yet committed to GitHub**; [character registry](characters/registry.json) specifies required names and SHA-256 checksums for staging assets into `public/characters/` in a render workspace.
+
+See [official character setup](docs/OFFICIAL_CHARACTERS.md) and [PIX voice guide](docs/PIX_VOICE.md). The existing test/demo compositions remain for regression purposes; they do not define the project's subject or host.
+
 ## Included
 - **18-second original Remotion product reel** with kinetic typography, podcast mockups, Tagalog caption animation and stack overview. Run `npm run render:repo-showcase`; see [showcase guide](docs/SHOWCASE.md).
 - **21 Remotion motion effects**: Snap Zoom, Headline Storm, Liquid Glass, Frame Escape, Paper Cutout, Magazine Cover, Split and more.
