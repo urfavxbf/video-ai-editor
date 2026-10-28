@@ -1,5 +1,6 @@
 import React from 'react';
 import {Img, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {smoothVoiceEnergy} from './HeroPerformance';
 
 /**
  * Frame-deterministic 2.5D puppet. Single PNGs move as one piece; independent
@@ -76,11 +77,7 @@ export const findVoiceEvent = (id: CharacterId, frame: number, events: VoiceEven
 
 /** No invented spoken energy when WAV samples are unavailable. */
 export const voiceEnergyAtFrame = (frame: number, fps: number, event?: VoiceEvent): number => {
-  if (!event || !event.rms?.length || fps <= 0) return 0;
-  const rate = event.samplesPerSecond ?? 10;
-  if (!Number.isFinite(rate) || rate <= 0) return 0;
-  const sample = Math.floor(((frame - event.startFrame) * rate) / fps);
-  return clamp(event.rms[Math.max(0, Math.min(event.rms.length - 1, sample))] ?? 0);
+  return smoothVoiceEnergy(frame, fps, event);
 };
 
 export const reactionAtFrame = (frame: number, cues: ReactionCue[] = []): ReactionCue | undefined =>
@@ -114,27 +111,37 @@ export const getPuppetPose = (
   const tailRoll = Math.sin(t * (speaking ? 6 : 2.7)) * (speaking ? 7 : 4) + (excited ? 11 : 0);
   // Deliberate gesture changes, not a repeating full-body dance while listening.
   const activeVoice = speaking && energy > 0.12;
+  // Attack and release ease the gesture at clip boundaries. Silence does not
+  // trigger invented speech; waveform energy still comes from the real WAV.
+  const clipAge = event ? frame - event.startFrame : 0;
+  const clipRemaining = event ? event.endFrame - frame : 0;
+  const ease = (v: number) => {
+    const n = clamp(v, 0, 1);
+    return n*n*(3-2*n);
+  };
+  const gestureBlend = event
+    ? ease(clipAge/10) * ease(clipRemaining/10) : 0;
   const cadence = t * (cat ? 7.8 : 6.3);
   const walking = gesture === 'walk';
   const celebrating = gesture === 'celebrate' || excited;
   const explaining = gesture === 'explain' && activeVoice;
   const pointing = gesture === 'point';
-  const stride = walking ? Math.sin(cadence) * 12 : 0;
+  const stride = walking ? Math.sin(cadence) * 12 * gestureBlend : 0;
   const handBeat = activeVoice ? Math.sin(cadence * 1.12) * (4 + 15 * energy) : 0;
-  const leftArmRoll = (celebrating ? -36 : pointing ? -8 : explaining ? -16 : -2) - handBeat;
-  const rightArmRoll = (celebrating ? 39 : pointing ? 42 : explaining ? 14 : 2) + handBeat * 0.9;
+  const leftArmRoll = ((celebrating ? -36 : pointing ? -8 : explaining ? -16 : -2) - handBeat)*gestureBlend;
+  const rightArmRoll = ((celebrating ? 39 : pointing ? 42 : explaining ? 14 : 2) + handBeat * 0.9)*gestureBlend;
   const leftLegRoll = stride + (celebrating ? Math.sin(cadence)*6 : 0);
   const rightLegRoll = -stride + (celebrating ? Math.sin(cadence+1.5)*6 : 0);
   const stepLift = walking ? Math.abs(Math.sin(cadence)) * 6 : 0;
   const torsoRoll = (walking ? Math.sin(cadence)*1.1 : 0) + (explaining ? handBeat*0.06 : 0);
   // A single full-body image can LEAN or SHIFT as a unit; it cannot actually point an arm.
   // The separate limb layer path below uses the same cue for true joint rotation.
-  const x = walking ? Math.sin(cadence)*7
+  const x = (walking ? Math.sin(cadence)*7
     : pointing ? (cat ? -8 : 8)
-    : explaining ? Math.sin(cadence*0.5)*3 : 0;
-  const bodyLean = pointing ? (cat ? -4 : 5)
+    : explaining ? Math.sin(cadence*0.5)*3 : 0) * gestureBlend;
+  const bodyLean = (pointing ? (cat ? -4 : 5)
     : explaining ? Math.sin(cadence*0.65)*1.8
-    : celebrating ? Math.sin(cadence*0.7)*2.8 : 0;
+    : celebrating ? Math.sin(cadence*0.7)*2.8 : 0) * gestureBlend;
   const scale = 1 + Math.max(0, breath) * 0.004 + (celebrating ? 0.015 : 0);
   return {speaking, energy, x, y: y + reactionBounce - stepLift,
     roll: roll + torsoRoll + bodyLean, yaw, headRoll: headRoll + (explaining ? handBeat * 0.12 : 0),
