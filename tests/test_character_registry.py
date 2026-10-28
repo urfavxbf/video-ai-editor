@@ -32,6 +32,16 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertTrue(video["legacy_portrait_demos_not_default"])
         self.assertEqual(video["duration_policy"], "script-and-chapter-driven")
 
+    def test_both_enlarged_portraits_match_landscape_v3(self):
+        v = self.data["default_video"]
+        p = v["portrait_size"]
+        self.assertEqual(v["character_layout"], "animated-head-portraits-only")
+        self.assertEqual((p["width"], p["height"]), (414, 468))
+        self.assertEqual((p["left"], p["right"], p["top"]), (64, 64, 202))
+        self.assertGreater(p["width"], 306)
+        self.assertEqual(v["next_episode_candidate"], "y2038")
+        self.assertEqual(v["next_episode_status"], "proposed")
+
     def test_both_visuals_have_distinct_transparent_asset_footprints(self):
         a = self.data["characters"]
         self.assertNotEqual(a["urfavxbf"]["visual"]["sha256"], a["pix"]["visual"]["sha256"])
