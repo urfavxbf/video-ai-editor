@@ -1,0 +1,91 @@
+{
+  "id": "y2038",
+  "status": "proposed-pilot-with-preview",
+  "title": "The 2038 Problem: The Day Computers Travel Back to 1901",
+  "format": {
+    "type": "long-form-youtube",
+    "aspectRatio": "16:9",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "language": "en",
+    "targetMinutes": [
+      7,
+      9
+    ]
+  },
+  "style": "super-pixel-glitch-v2",
+  "layout": "animated-head-portraits-enlarged-35-percent",
+  "voiceProfiles": {
+    "urfavxbf": "natural-storyteller-v1",
+    "pix": "pix-cute-female-emily-v1"
+  },
+  "evidence": [
+    {
+      "claim": "Signed 32-bit POSIX times cannot represent 2038-01-19T03:14:08Z",
+      "url": "https://manpages.debian.org/unstable/manpages-dev/time.2.en.html"
+    },
+    {
+      "claim": "2038 rollover, risks for legacy 32-bit systems, mitigations",
+      "url": "https://docs.windriver.com/r/bundle/Wind_River_Linux_Release_Notes_LTS_24/page/pzy1736809478847.html"
+    },
+    {
+      "claim": "MIT Kerberos has 2038 considerations for 32-bit timestamp",
+      "url": "https://web.mit.edu/kerberos/krb5-current/doc/krb_appldev/y2038.html"
+    }
+  ],
+  "chapters": [
+    {
+      "title": "The Clock that Goes Backward",
+      "goal": "Cold-open 03:14:07 becomes 1901 on some systems",
+      "visual": "large pixel countdown, red alarm glitch, highlighted date"
+    },
+    {
+      "title": "Why Computers Count Seconds",
+      "goal": "Explain Unix epoch 1970 and representation",
+      "visual": "timeline animated 1970 to 2038; captions embedded in count"
+    },
+    {
+      "title": "Why 2,147,483,647 Matters",
+      "goal": "Show signed 32-bit integer and rollover",
+      "visual": "binary cells flip, number wraps, labels connected to spoken words"
+    },
+    {
+      "title": "What Could Actually Break",
+      "goal": "Concrete bounded risks: legacy embedded systems, timestamps, database and old software",
+      "visual": "animated schematic devices and clocks; avoid sensational worldwide collapse"
+    },
+    {
+      "title": "What About Modern Computers?",
+      "goal": "Explain 64-bit time and other mitigations; not every computer fails",
+      "visual": "32 vs 64-bit split infographic"
+    },
+    {
+      "title": "The Bug That Can Arrive Early",
+      "goal": "Explain future dates, timeouts and long-term systems facing date range sooner",
+      "visual": "forward-dated timeline card"
+    },
+    {
+      "title": "How Engineers Fix Time",
+      "goal": "Data types, libraries, time64, testing, legacy updates",
+      "visual": "upgrade counter, diagnostic tool mockups"
+    },
+    {
+      "title": "Question Everything",
+      "goal": "PIX and UrFavXBF recap with a thoughtful closing",
+      "visual": "glitch resolves into stable clock"
+    }
+  ],
+  "teaserTurns": [
+    {
+      "id": "pix",
+      "speaker": "pix",
+      "text": "Wait, UrFavXBF. You're telling me a computer could wake up in nineteen oh one?"
+    },
+    {
+      "id": "host",
+      "speaker": "urfavxbf",
+      "text": "Only some older systems. In twenty thirty-eight, a thirty-two-bit clock can run out of numbers. Watch what happens when its last second ticks forward."
+    }
+  ]
+}
