@@ -74,7 +74,11 @@ export const Y2038LongForm:React.FC<Y2038LongFormProps>=({
   const cues=timedCues?.length===Y2038_CUES.length
     ?Y2038_CUES.map((cue,i)=>({...cue,startFrame:timedCues[i].startFrame,endFrame:timedCues[i].endFrame}))
     :Y2038_CUES;
-  const cueIndex=Math.max(0,cues.findLastIndex(c=>frame>=c.startFrame));
+  let cueIndex = 0;
+  for (let i = 0; i < cues.length; i++) {
+    if (frame >= cues[i].startFrame) cueIndex = i;
+    else break;
+  }
   const cue=cues[cueIndex]??cues[cues.length-1];
   const accent=cue.speaker==='pix'?CYAN:GOLD;
   const words=cue.text.split(/\s+/u);
