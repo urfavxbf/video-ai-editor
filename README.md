@@ -60,6 +60,22 @@ The next visual pass will integrate **verified data directly into animated capti
 - **7 official Remotion feature packages**, including captions, transitions, shapes, effects, motion blur, SFX and Player, with a working `OfficialFeaturesDemo` composition. See [feature details](docs/REMOTION_FEATURES.md).
 - **CI smoke tests** and dependency installation scripts.
 
+## Character voice generation: Tagalog default + preserved English
+
+**Tagalog is the default** for UrFavXBF (Neon Storyteller) and PIX (Pixel Spark) using VoxCPM2 (official Tagalog support). **English is retained** as an explicit opt-in using the original Chatterbox V3 Natural Storyteller and Emily profiles; no old samples or settings were replaced.
+
+- Model-free checks: `python3 -m unittest discover -s scripts -p 'test_y2038_*.py' -v`
+- Single Tagalog WAV: `python scripts/character_voiceover.py --character pix --text 'Kumusta! Ako si PIX.' --output out/pix-tl.wav`
+- English preserved: `python scripts/character_voiceover.py --character urfavxbf --language en --text 'Hello!' --output out/urfavxbf-en.wav`
+- All 40 Tagalog episode cues (GPU Python 3.11 environment): `python scripts/y2038_export_voice_cues.py --generate --device cuda`
+- Resume from cue 10: `python scripts/y2038_export_voice_cues.py --generate --device cuda --start-cue 10`
+- After real WAVs exist: `python scripts/y2038_audio_props.py`
+- Render audio-backed episode: `npx remotion render Y2038LongForm out/y2038-voiced.mp4 --props=out/y2038/remotion-voice-props.json`
+
+The exporter now **loads VoxCPM2 once** and seeds PyTorch correctly (VoxCPM2's `generate()` accepts no `seed` keyword). The voice-audio packager reads real WAV durations, supplies measured RMS speaker envelopes, and sets the Remotion composition duration automatically; word-level caption alignment and listening QA are still required.
+
+GitHub Actions `.github/workflows/voxcpm-tagalog.yml` attempts two real Tagalog sample WAVs on a standard CPU runner; a full-episode workflow is available for a configured **self-hosted GPU** runner. Generated WAVs are downloadable workflow artifacts; no automatic upload to YouTube. See [Y2038 voice production runbook](docs/episodes/y2038-tl-production.md). Neither a generated file nor passing audio QA should be claimed until the actual run succeeds.
+
 ## Default Tagalog character voiceover
 
 ```bash

@@ -1,0 +1,62 @@
+name: Y2038 long-form verification
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/episodes/**'
+      - 'src/Root.tsx'
+      - 'scripts/y2038_export_voice_cues.py'
+      - 'scripts/y2038_audio_props.py'
+      - 'scripts/voxcpm_voiceover.py'
+      - 'scripts/test_y2038_voice_pipeline.py'
+      - 'scripts/stage_y2038_sprites.py'
+      - '.github/workflows/y2038-longform.yml'
+  push:
+    branches: ['feature/y2038-tagalog-longform']
+    paths:
+      - 'src/episodes/**'
+      - 'src/Root.tsx'
+      - 'scripts/y2038_export_voice_cues.py'
+      - 'scripts/y2038_audio_props.py'
+      - 'scripts/voxcpm_voiceover.py'
+      - 'scripts/test_y2038_voice_pipeline.py'
+      - 'scripts/stage_y2038_sprites.py'
+      - '.github/workflows/y2038-longform.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install pinned dependencies
+        run: npm ci --no-audit --no-fund
+      - name: TypeScript typecheck
+        run: npm run typecheck
+      - name: Verify Tagalog default, legacy English, and PCM16 sync
+        run: python3 -m unittest discover -s scripts -p 'test_y2038_*.py' -v
+      - name: Check cue manifest without paid TTS
+        run: |
+          python3 scripts/y2038_export_voice_cues.py
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          m = json.loads(Path("out/y2038/voice_manifest.json").read_text())
+          cues = m["cues"]
+          assert m["language"] == "tl"
+          assert len(cues) == 40
+          assert {c["speaker"] for c in cues} == {"pix", "urfavxbf"}
+          assert {c["chapter"] for c in cues} == set(range(1, 9))
+          seconds = m["estimated_total_frames"] / m["fps"]
+          assert 420 <= seconds <= 600, seconds
+          assert all(not c["timings_verified"] for c in cues)
+          print(f"Validated {len(cues)} cues, {seconds:.1f}s estimated.")
+          PY
