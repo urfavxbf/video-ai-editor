@@ -1,0 +1,62 @@
+name: Tagalog character voice audition — UrFavXBF + PIX
+
+on:
+  push:
+    branches:
+      - feat/filipino-two-character-voice-sample
+    paths:
+      - '.github/workflows/tagalog-character-sample.yml'
+      - 'scripts/render_tagalog_character_sample.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate-real-tagalog-wavs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 95
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      TOKENIZERS_PARALLELISM: 'false'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU PyTorch and pinned VoxCPM2 runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu \
+            torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-voxcpm.txt
+          python -c 'from voxcpm import VoxCPM; print("VoxCPM2 import verified")'
+      - name: Render the actual two-character Tagalog conversation
+        run: |
+          python scripts/render_tagalog_character_sample.py
+      - name: Validate audible WAV file headers and duration
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import wave
+          folder = Path("out/tagalog-character-voice-sample")
+          for stem in ("urfavxbf", "pix", "UrFavXBF-and-PIX-Tagalog-voice-test"):
+              f = folder / (stem + ".wav")
+              assert f.is_file() and f.stat().st_size > 4096, f
+              with wave.open(str(f), "rb") as wav:
+                  duration = wav.getnframes() / wav.getframerate()
+                  print(f.name, "duration", round(duration, 2), "seconds")
+                  assert duration >= 0.5
+                  assert wav.getframerate() >= 16000
+          assert (folder / "sample-dialogue.json").is_file()
+          PY
+      - name: Upload real WAVs and timing manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: UrFavXBF-PIX-Tagalog-voice-audition
+          path: out/tagalog-character-voice-sample/
+          if-no-files-found: error
+          retention-days: 14
