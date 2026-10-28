@@ -7,6 +7,12 @@ on:
       - 'src/episodes/**'
       - 'src/Root.tsx'
       - 'scripts/y2038_export_voice_cues.py'
+      - 'scripts/y2038_audio_props.py'
+      - 'scripts/voxcpm_voiceover.py'
+      - 'scripts/test_y2038_voice_pipeline.py'
+      - 'scripts/y2038_audio_props.py'
+      - 'scripts/voxcpm_voiceover.py'
+      - 'scripts/test_y2038_voice_pipeline.py'
       - 'scripts/stage_y2038_sprites.py'
       - '.github/workflows/y2038-longform.yml'
   push:
@@ -35,6 +41,8 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: TypeScript typecheck
         run: npm run typecheck
+      - name: Verify Tagalog default, legacy English, and PCM16 sync
+        run: python3 -m unittest discover -s scripts -p 'test_y2038_*.py' -v
       - name: Check cue manifest without paid TTS
         run: |
           python3 scripts/y2038_export_voice_cues.py
