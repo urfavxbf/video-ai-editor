@@ -20,8 +20,8 @@ from argparse import Namespace
 
 
 class BilingualVoicesTest(unittest.TestCase):
-    def test_tagalog_is_default_without_removing_english(self):
-        self.assertEqual(default_language(), "tl")
+    def test_english_is_default_without_removing_tagalog_option(self):
+        self.assertEqual(default_language(), "en")
         for character in ("urfavxbf", "pix"):
             p = profile_for(character)
             self.assertEqual(p["engine"], "voxcpm2")
