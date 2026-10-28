@@ -29,7 +29,7 @@ timestamps. The current existing voice artifact contains **six** selected lines
 from scenes 1, 5, 6: **47.9 s** including pauses and transitions, verified by
 the successful October 28 CPU GitHub Actions run.
 
-After WAVs exist for **all 68 lines**, run
+All **68 WAV lines** have now been generated and the assembled measured narration is **485.867 seconds**, not the target 690 seconds. Use
 `scripts/build_youtube_journey_full.py` to measure every real PCM sample,
 stage audio under gitignored `public/voiceovers/`, derive per-speaker
 audio-envelope events, and generate a draft full-composition props file.
@@ -43,8 +43,8 @@ merely to hit a schedule.**
   **1920×1080/30fps** for the 690-second storyboard. It intentionally contains
   no narration or official character PNGs and makes no claim of a finished MP4.
 - Six-audio-turn excerpt: `YouTubeJourneyPreview`. Its graphics use the
-  revised beat 1, 5, 6 treatments. The portraits load **only** from the official
-  Pixel Glitch V2 PNG pack; no full bodies and no stand-ins.
+  revised beat 1, 5, 6 treatments. The two **approved transparent full-body** character sprites load from
+  `public/characters/UrFavXBF_Transparent.png` and `public/characters/PIX_Transparent.png`; never substitute generic characters. Full-body puppet gestures are audio-reactive; independent limb animation requires aligned character rig layers.
 - Full-length production: `YouTubeJourneyFullEpisode`, registered with
   dynamic duration, character-specific real RMS energy and timing supplied
   by all 68 actual WAV files. It deliberately refuses an audio-backed render
@@ -54,9 +54,8 @@ merely to hit a schedule.**
   This is an editing draft, not a claim of word-aligned captions or visemes.
 - Rendering should pass TypeScript compilation, the eight frame stills, audio
   clip presence/duration checks, actual MP4 inspection and reviewed captions.
-  Official portrait PNGs remain an external staging requirement.
-- No GPU runner, no prebuilt video template, no full-body sprites, no automated
-  YouTube upload, and no unverified earnings claims.
+  Official full-body PNGs remain an external staging requirement; validate them using `scripts/validate_youtube_journey_fullbody.py` before marking render props `assetsReady=true`.
+- Full-body animated characters replace portrait-only characters, without a GPU runner or a video template. No automated YouTube upload and no unverified earnings claims. See `FULL_BODY_ANIMATION.md`.
 
 ### Commands when the full approved audio and portrait files are staged
 
