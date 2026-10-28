@@ -12,8 +12,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from validate_youtube_journey_fullbody import (
-    DEFAULT_ASSETS, authorize_props, check_png, safe_path, validate_assets,
+    DEFAULT_ASSETS, authorize_props, safe_path, validate_assets,
 )
+
+# Synthetic fixtures must never masquerade as the SHA-verified official V2 PNGs.
+FIXTURE_ASSETS = {
+    "urfavxbf": {"assetPath": "characters/urfavxbf-fixture.png"},
+    "pix": {"assetPath": "characters/pix-fixture.png"},
+}
 
 
 def write_png(path: Path, width: int = 128, height: int = 160) -> None:
@@ -39,9 +45,9 @@ class FullBodyAssetTests(unittest.TestCase):
     def test_flat_sprites_enable_whole_body_motion_not_false_limb_rig(self):
         with tempfile.TemporaryDirectory() as d:
             public = Path(d)
-            for a in DEFAULT_ASSETS.values():
+            for a in FIXTURE_ASSETS.values():
                 write_png(public / a["assetPath"])
-            modes = validate_assets(public, DEFAULT_ASSETS)
+            modes = validate_assets(public, FIXTURE_ASSETS)
             self.assertEqual(modes, {
                 "urfavxbf": "single-sprite-whole-body",
                 "pix": "single-sprite-whole-body",
@@ -50,6 +56,7 @@ class FullBodyAssetTests(unittest.TestCase):
                 "lines": [{"id": "YT-001"}],
                 "captionTiming": "estimated-unreviewed",
                 "readyForPublishing": False,
+                "fullBodyAssets": FIXTURE_ASSETS,
             })
             self.assertTrue(result["assetsReady"])
             self.assertEqual(result["captionTiming"], "estimated-unreviewed")
@@ -58,13 +65,13 @@ class FullBodyAssetTests(unittest.TestCase):
     def test_layered_rig_needs_six_aligned_transparent_pngs(self):
         with tempfile.TemporaryDirectory() as d:
             public = Path(d)
-            for a in DEFAULT_ASSETS.values():
+            for a in FIXTURE_ASSETS.values():
                 write_png(public / a["assetPath"])
             rig = {
                 p: f"characters/rigs/pix/{p}.png" for p in (
                     "body", "head", "leftArm", "rightArm", "leftLeg", "rightLeg")
             }
-            assets = json.loads(json.dumps(DEFAULT_ASSETS))
+            assets = json.loads(json.dumps(FIXTURE_ASSETS))
             assets["pix"]["layeredRig"] = rig
             for n in rig.values():
                 write_png(public / n)
