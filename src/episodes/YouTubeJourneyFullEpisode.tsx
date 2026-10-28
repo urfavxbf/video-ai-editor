@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame} from 'remotion';
-import {PixelGlitchPortrait} from '../characters/PixelGlitchPortrait';
+import {YouTubeJourneyFullBodyCharacters, type JourneyFullBodyAssetMap} from './YouTubeJourneyFullBodyCharacters';
 import {type VoiceEvent} from '../characters/CharacterPuppet';
 import {type PreviewLine} from './YouTubeJourneyPreview';
 import {JourneyVisualAid} from './YouTubeJourneyVisuals';
@@ -11,17 +11,18 @@ export type YouTubeJourneyFullEpisodeProps = {
   totalFrames: number;
   captionTiming: 'estimated-unreviewed' | 'reviewed-word-aligned';
   assetsReady: boolean;
+  fullBodyAssets?: JourneyFullBodyAssetMap;
 };
 
 const visualBeatFor = (chapter:number) => Math.min(chapter,8);
 
 export const YouTubeJourneyFullEpisode:React.FC<YouTubeJourneyFullEpisodeProps> = ({
-  lines, voiceEvents, captionTiming, assetsReady,
+  lines, voiceEvents, captionTiming, assetsReady, fullBodyAssets,
 }) => {
   const frame=useCurrentFrame();
   // Never produce an audio-backed final video with missing approved portraits.
   if (lines.length && !assetsReady) {
-    throw new Error('Approved PIX + UrFavXBF pixel glitch portrait PNGs must be staged before full-episode render');
+    throw new Error('Stage the approved transparent FULL-BODY UrFavXBF and PIX PNG assets before rendering the episode');
   }
   const currentLine=lines.find(l=>frame>=l.startFrame&&frame<l.endFrame);
   const preceding=[...lines].reverse().find(l=>l.startFrame<=frame);
@@ -47,14 +48,11 @@ export const YouTubeJourneyFullEpisode:React.FC<YouTubeJourneyFullEpisodeProps> 
     </div>
     <div style={{position:'absolute',left:64,top:108,right:64,fontSize:53,
       fontWeight:900,letterSpacing:-1}}>{title}</div>
-    {assetsReady?<>
-      <PixelGlitchPortrait id="urfavxbf" left={64} top={218}
-        voiceEvents={voiceEvents} showGlitch={false}
-        reactions={[{speaker:'urfavxbf',startFrame:0,endFrame:999999,reaction:chapter===6?'excited':'thinking'}]}/>
-      <PixelGlitchPortrait id="pix" right={64} top={218}
-        voiceEvents={voiceEvents} showGlitch={false}
-        reactions={[{speaker:'pix',startFrame:0,endFrame:999999,reaction:chapter===6?'surprised':'curious'}]}/>
-    </>:null}
+    {assetsReady ? <YouTubeJourneyFullBodyCharacters
+      voiceEvents={voiceEvents} chapter={chapter}
+      activeSpeaker={currentLine?.speaker}
+      assets={fullBodyAssets}
+    /> : null}
     <div style={{position:'absolute',left:515,width:890,top:230}}>
       <JourneyVisualAid beat={visualBeatFor(chapter)}
         chapter={chapter} localFrame={frame-chapterStart}/>
