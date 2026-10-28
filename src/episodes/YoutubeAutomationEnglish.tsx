@@ -43,7 +43,8 @@ const chip:React.CSSProperties={background:'rgba(5,19,36,.9)',padding:'12px 15px
 const HeadPortrait:React.FC<{id:Speaker;frame:number;voiceEvents:VoiceEvent[]}>=({id,frame,voiceEvents})=>{
   const isPix=id==='pix';
   const active=voiceEvents.find(e=>e.speaker===id&&frame>=e.startFrame&&frame<e.endFrame);
-  const energy=active?active.rms[Math.min(active.rms.length-1,Math.max(0,Math.floor((frame-active.startFrame)*active.samplesPerSecond/FPS)))]??0:0;
+  const levels=active?.rms??[];
+  const energy=active&&levels.length?levels[Math.min(levels.length-1,Math.max(0,Math.floor((frame-active.startFrame)*(active.samplesPerSecond??10)/FPS)))]??0:0;
   const talking=!!active&&energy>0.12&&(frame%7<5);
   const color=isPix?CYAN:GOLD;
   const bob=Math.sin(frame/15+(isPix?1.8:0))*4;
