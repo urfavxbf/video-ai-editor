@@ -19,6 +19,7 @@ on:
       - 'src/characters/ChibiV4Sprite.tsx'
       - 'src/characters/ChibiV4ReviewStage.tsx'
       - 'characters/chibi-v4-design.json'
+      - 'tests/test_chibi_v4_design.py'
       - 'characters/full-animation-set.json'
       - 'characters/registry.json'
       - 'src/Root.tsx'
@@ -56,6 +57,7 @@ on:
       - 'src/characters/ChibiV4Sprite.tsx'
       - 'src/characters/ChibiV4ReviewStage.tsx'
       - 'characters/chibi-v4-design.json'
+      - 'tests/test_chibi_v4_design.py'
       - 'characters/full-animation-set.json'
       - 'characters/registry.json'
       - 'src/Root.tsx'
@@ -101,6 +103,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_youtube_journey_*.py' -v
           python -m unittest discover -s tests -p 'test_full_animation_catalog.py' -v
           python scripts/validate_full_animation_set.py
+          python -m unittest discover -s tests -p 'test_chibi_v4_design.py' -v
           python -m py_compile scripts/validate_chibi_v4_assets.py
           python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py scripts/prepare_hero_stage.py scripts/rig_official_v2_characters.py scripts/validate_full_animation_set.py
       - uses: actions/setup-node@v4
