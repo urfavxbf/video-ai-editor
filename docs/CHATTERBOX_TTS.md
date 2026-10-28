@@ -1,3 +1,9 @@
+> **Production update (2026-10-28):** Chatterbox V3 is retained for
+> explicit **English** `--language en` character narration and old examples.
+> New UrFavXBF + PIX videos default to **Tagalog/Taglish** with VoxCPM2
+> voice-design profiles. See [multilingual voice policy](MULTILINGUAL_PRODUCTION_POLICY.md).
+> Do not attempt to force Tagalog through Malay `ms` in Chatterbox.
+
 # Chatterbox Multilingual V3 voice-over integration
 
 Voice-over generation uses the official [Resemble AI Chatterbox](https://github.com/resemble-ai/chatterbox) project pinned to an immutable GitHub source revision in `requirements-chatterbox.txt`. Its upstream project is MIT-licensed; we install it as an optional dependency rather than copying its source code.

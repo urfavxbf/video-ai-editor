@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "video-ai-editor",
-  "production_language": "en",
+  "production_language": "tl",
   "main_character": "urfavxbf",
   "companion_character": "pix",
   "assets_location": "ChatGPT Library /UrFavXBF Video Characters/; binaries must be staged into the listed public paths for Remotion",
@@ -21,6 +21,17 @@
         "sha256": "09fc91a64cd8c8cf281ae5ca101c452fb83fef1170f994bdd43dced9fe4f72de"
       },
       "voice": {
+        "engine": "voxcpm2",
+        "identifier": "urfavxbf-neon-storyteller-tl-v1",
+        "display_name": "UrFavXBF — Neon Storyteller",
+        "language": "tl",
+        "locale": "fil-PH",
+        "model_id": "openbmb/VoxCPM2",
+        "voice_design_prompt": "A young adult Filipino male voice with a warm medium-low pitch, slightly textured tone, charismatic and intelligent. Natural Metro Manila Tagalog accent, excellent Taglish pronunciation, confident storytelling, curious expressions, subtle humor, cinematic documentary narration. Never robotic or overly dramatic.",
+        "source": "VoxCPM2 text-based voice design; no third-party speaker reference",
+        "sample_status": "design-approved; no real Tagalog WAV rendered yet"
+      },
+      "english_voice": {
         "engine": "Chatterbox Multilingual V3",
         "identifier": "natural-storyteller-v1",
         "language": "en",
@@ -36,7 +47,7 @@
     "pix": {
       "name": "PIX",
       "role": "talking-ai-pet-sidekick",
-      "persona": "Inquisitive, cute, clever and playful AI companion who interacts with UrFavXBF in natural English dialogue",
+      "persona": "Inquisitive, cute, clever and playful AI companion who interacts with UrFavXBF in natural Tagalog/Taglish dialogue",
       "visual": {
         "kind": "transparent-cat-overlay",
         "style": "cute white and black robotic cat, yellow hoodie accents, bright cyan LEDs and headphones, expressive face",
@@ -47,6 +58,17 @@
         "sha256": "4b8e29235969e2a19d1d6b7853a9c3ec7ec6c881f11e0e1127c57b5646829f28"
       },
       "voice": {
+        "engine": "voxcpm2",
+        "identifier": "pix-pixel-spark-tl-v1",
+        "display_name": "PIX — Pixel Spark",
+        "language": "tl",
+        "locale": "fil-PH",
+        "model_id": "openbmb/VoxCPM2",
+        "voice_design_prompt": "A youthful adult-sounding Filipino female voice, bright and sweet, soft mid-high pitch, playful, curious, expressive and charming. Authentic Metro Manila Tagalog accent, natural Taglish pronunciation, energetic reactions, cheerful intelligence, lightly mischievous personality. Cute but never childish, shrill or robotic.",
+        "source": "VoxCPM2 text-based voice design; no third-party speaker reference",
+        "sample_status": "design-approved; no real Tagalog WAV rendered yet"
+      },
+      "english_voice": {
         "engine": "Chatterbox Multilingual V3",
         "identifier": "pix-cute-female-emily-v1",
         "language": "en",
@@ -67,7 +89,7 @@
     "width": 1920,
     "height": 1080,
     "fps": 30,
-    "language": "en",
+    "language": "tl",
     "duration_policy": "script-and-chapter-driven",
     "legacy_portrait_demos_not_default": true,
     "video_codec": "h264",
@@ -82,7 +104,10 @@
       "right": 64
     },
     "next_episode_candidate": "y2038",
-    "next_episode_status": "proposed"
+    "next_episode_status": "proposed",
+    "script_language": "tl",
+    "caption_language": "tl",
+    "metadata_language": "tl"
   },
   "preferred_visual_variant": "super-pixel-glitch-v2",
   "visual_variant_package": {
@@ -150,5 +175,9 @@
       "left": 64,
       "right": 64
     }
-  }
+  },
+  "supported_production_languages": [
+    "tl",
+    "en"
+  ]
 }
