@@ -19,3 +19,9 @@ __pycache__/
 # Locally generated voice-over and optional heavyweight TTS install
 .venv-chatterbox/
 public/voiceovers/
+
+# Original licensed/approved character art stays in the private render workspace.
+# Repo contains only manifests, SHA hashes, motion code, and tests.
+public/characters/pixel-glitch/
+public/characters/UrFavXBF_Transparent.png
+public/characters/PIX_Transparent.png
