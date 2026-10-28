@@ -10,13 +10,15 @@ import {type CharacterId, type VoiceEvent, findVoiceEvent, voiceEnergyAtFrame} f
  */
 export type HeroAnimationEntry = (typeof catalog.characters.urfavxbf)[number];
 export type HeroAnimationStatus =
-  | 'available-closeup' | 'available-composite' | 'needs-new-animation-art';
+  | 'available-closeup' | 'available-composite' | 'needs-new-animation-art'
+  | 'production-approved';
 export type HeroAnimationPresentation = 'closeup' | 'composite';
 
 type ClipSource =
   | {kind:'loop';mode:'idle'|'talk'|'react';frames:number;rate:number}
   | {kind:'portrait';expression:string}
-  | {kind:'fullbody';effect:'glitch'|'float'|'appear'|'disappear'};
+  | {kind:'fullbody';effect:'glitch'|'float'|'appear'|'disappear'}
+  | {kind:'approved-frames';action:string;frames:number;loop:boolean};
 
 export const animationCatalog = catalog;
 export const animationIds = (id:CharacterId):string[] => catalog.characters[id].map(a=>a.id);
@@ -46,6 +48,9 @@ export const requireRenderableHeroAnimation = (id:CharacterId, action:string):Cl
   if(entry.status==='needs-new-animation-art') {
     throw new Error(`${id}/${action}: original hand-authored animation frames missing; see full-animation-set.json`);
   }
+  if(entry.status==='production-approved') {
+    return {kind:'approved-frames',action,frames:entry.minimumFrames,loop:entry.loop};
+  }
   return sourceFor(id,action);
 };
 
@@ -72,10 +77,16 @@ export const HeroAnimationPlayer:React.FC<HeroAnimationPlayerProps>=({
   const energy=voiceEnergyAtFrame(frame,fps,event);
   const relative=Math.max(0,frame-startFrame);
   const base=`characters/pixel-glitch/${id}`;
-  const head=source.kind!=='fullbody';
+  const head=source.kind==='loop'||source.kind==='portrait';
+  const frameIndex=source.kind==='approved-frames'
+    ? (source.loop ? relative%source.frames : Math.min(relative,source.frames-1))
+    : 0;
   const spritePath=source.kind==='loop'?
     `${base}/loops/${source.mode}/${String(Math.floor(relative*source.rate/fps)%source.frames).padStart(2,'0')}.png`
-    :source.kind==='portrait'?`${base}/${source.expression}.png`:`${base}/base.png`;
+    :source.kind==='portrait'?`${base}/${source.expression}.png`
+    :source.kind==='approved-frames'?
+      `characters/animation-v4/${id}/${source.action}/${String(frameIndex).padStart(3,'0')}.png`
+      :`${base}/base.png`;
   const glitch=source.kind==='fullbody' && source.effect==='glitch';
   const fx=source.kind==='fullbody'?source.effect:null;
   const t=relative/fps;
