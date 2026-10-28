@@ -12,7 +12,7 @@ export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({lin
   const scene=f>=chapterBreakEnd?1:0;
   return <AbsoluteFill>
     <YouTubeJourneyStyleframes sceneOverride={scene} captionOverride={line?.text??''} speakerOverride={line?(line.speaker==='pix'?'PIX':'URFAVXBF'):''} voiceEvents={voiceEvents} preview sceneStart={scene===1?chapterBreakEnd:0}/>
-    {lines.map(l=><Sequence key={l.id} from={l.startFrame} durationInFrames={l.endFrame-l.startFrame}><Audio src={staticFile(l.file)}/></Sequence>)}
+    {lines.map(l=><Sequence key={l.id} from={l.startFrame} durationInFrames={l.endFrame-l.startFrame}><Audio src={staticFile(l.file)} volume={0.85}/></Sequence>)}
     {inBreak?<AbsoluteFill style={{background:'#060d19',justifyContent:'center',alignItems:'center',color:'white',fontFamily:'Inter',gap:24}}><div style={{fontSize:22,letterSpacing:5,color:'#27e8fd'}}>LATER IN THE EPISODE</div><div style={{fontSize:72,fontWeight:900}}>THE MONETIZATION GATES</div><div style={{fontSize:25,color:'#96a8c3'}}>Preview excerpt · requirements and speaker handoff</div></AbsoluteFill>:null}
   </AbsoluteFill>;
 };
