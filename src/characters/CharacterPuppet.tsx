@@ -127,9 +127,17 @@ export const getPuppetPose = (
   const rightLegRoll = -stride + (celebrating ? Math.sin(cadence+1.5)*6 : 0);
   const stepLift = walking ? Math.abs(Math.sin(cadence)) * 6 : 0;
   const torsoRoll = (walking ? Math.sin(cadence)*1.1 : 0) + (explaining ? handBeat*0.06 : 0);
+  // A single full-body image can LEAN or SHIFT as a unit; it cannot actually point an arm.
+  // The separate limb layer path below uses the same cue for true joint rotation.
+  const x = walking ? Math.sin(cadence)*7
+    : pointing ? (cat ? -8 : 8)
+    : explaining ? Math.sin(cadence*0.5)*3 : 0;
+  const bodyLean = pointing ? (cat ? -4 : 5)
+    : explaining ? Math.sin(cadence*0.65)*1.8
+    : celebrating ? Math.sin(cadence*0.7)*2.8 : 0;
   const scale = 1 + Math.max(0, breath) * 0.004 + (celebrating ? 0.015 : 0);
-  return {speaking, energy, x: 0, y: y + reactionBounce - stepLift,
-    roll: roll + torsoRoll, yaw, headRoll: headRoll + (explaining ? handBeat * 0.12 : 0),
+  return {speaking, energy, x, y: y + reactionBounce - stepLift,
+    roll: roll + torsoRoll + bodyLean, yaw, headRoll: headRoll + (explaining ? handBeat * 0.12 : 0),
     tailRoll, scale, leftArmRoll, rightArmRoll, leftLegRoll, rightLegRoll};
 };
 
@@ -181,7 +189,7 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
   const pop = 0.92 + 0.08 * clamp(frame / Math.max(1, fadeInFrames));
   const fade = clamp(frame / Math.max(1, fadeInFrames));
   const outer = [
-    `translate3d(0, ${pose.y.toFixed(2)}px, 0)`,
+    `translate3d(${pose.x.toFixed(2)}px, ${pose.y.toFixed(2)}px, 0)`,
     `rotateY(${pose.yaw.toFixed(2)}deg)`,
     `rotateZ(${(pose.roll * activeCue).toFixed(2)}deg)`,
     `scale(${(pose.scale * pop).toFixed(4)})`,
