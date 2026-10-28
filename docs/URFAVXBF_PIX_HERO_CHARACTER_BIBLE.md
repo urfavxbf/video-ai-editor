@@ -1,3 +1,5 @@
+> **Articulated V3.2 implementation (29 October 2026):** The first original-art 2.5D cutout rig has now been authored and CPU-validated. UrFavXBF has independent head, two arms and two legs; seated PIX has independent head, two visible forelegs and tail. Both have separate torso and hidden joint underlay. The source-preserving extractor is `scripts/rig_official_v2_characters.py`, the default runtime manifest is `src/characters/OfficialV2Rig.ts`, and the output neutral pose is **pixel-identical to the approved source art**. Joint angles are deliberately constrained to reduce seams. This is NOT a full 3D skeletal rig, articulated hind legs for PIX, or phoneme-correct facial lip sync. Review the rendered preview and owner's acceptance before labeling it production locked.
+
 # THE OFFICIAL HERO CHARACTER BIBLE — URFAVXBF × PIX
 
 **Status:** Character performance system V3 in development, artwork identity approved;
@@ -49,12 +51,23 @@ idle sway, voice-linked y movement, posture, micro-squash, stepping,
 momentary chromatic glitch and expression *through movement*, not fake mouth
 art. This is GPU-free and deterministic at 30 fps.
 
-**V3.2 — rig-ready, asset-gated:**
-`CharacterPuppet` supports separately rotatable shared-canvas transparent
-`head`, `body`, `leftArm`, `rightArm`, `leftLeg`, `rightLeg`,
-`tail`, and paired closed/open mouth layers. These are NOT present in the
-approved pack. The existing eight-frame idle/talk/react sprite loops are
-**HEAD ONLY**, unsuitable for whole-body articulation.
+**V3.2 — implemented original cutout layers, asset-gated:**
+`rig_official_v2_characters.py` hand-traces the official 560×768 RGBA art into
+aligned transparent `head`, `body`, `leftArm`, `rightArm`, host `leftLeg`
+and `rightLeg`, PIX `tail` and hidden `underlay` files. The original source
+is copied **byte for byte**. At zero joint rotation, compositing the cutouts
+reproduces the original source image exactly. The neutral reference PNG and a
+SHA-pinned manifest are output for inspection.
+
+The Remotion `CharacterPuppet` reads `OfficialV2Rig.ts` by default on the
+character stage and YouTube episode. Separate head/arms/leg pivots are
+calibrated to the actual canvas and rotation is constrained: head ±3°,
+UrFavXBF arms ±6°, legs ±3°, PIX forelegs ±3.5°, tail ±8°.
+
+**Not implemented:** independently visible PIX hind legs, open/closed mouth
+viseme art, true 3D skeleton, inverse kinematics, or original facial emotion
+sheet matching the exact full-body face. Head-only expression sprite loops
+cannot be pasted onto bodies without duplicate outlines.
 
 Do **not** auto-create arbitrary rig layers and claim true arm/leg movement.
 Creating clean segmentation, missing torso fill, joint pivots, expression
@@ -92,11 +105,14 @@ have been audited or that a GPU service is available.
 - [x] Preserve identities, pixel aesthetic, English voice profiles.
 - [x] Shared, reusable voice-informed motion profiles and episode integration.
 - [x] Character-only workbench and 15-second local audio-visual motion test.
-- [ ] Review actual Remotion render with both sprite binaries staged.
+- [ ] Review actual Remotion render with both rigged sprite binaries staged
+      (the standalone local cutout rig demo is not the Remotion CI render).
 - [ ] Visually confirm **each** reaction, clipping, subtitle safety and camera
       framing for at least one speaking/listening handoff.
-- [ ] Obtain clean cut-out **head/arms/legs** layers if separate-joint acting
-      is required, then quality-review anatomical pivots and seams.
+- [x] Generate original-art cut-out **head/arms/legs/tail** layers and exact
+      neutral composite; bounded pivots and hidden joint patches in runtime.
+- [ ] Complete final aesthetic review of **moving** arm/neck/foreleg seams,
+      and commission artist correction if any seam is distracting.
 - [ ] Confirm any new expressions/mouth assets are original and aligned,
       with explicit approval of facial continuity.
 - [ ] Final owner approval of character aesthetic and acting style.
@@ -128,3 +144,34 @@ regenerating the envelope; merely extending durations in JSON is invalid.
 **Media policy:** no commercial music, model-based copies or third-party
 character replacement. The official V2 art may be composited in a private
 review video but not silently published to YouTube.
+
+## Generate the layered production rig
+
+Install CPU image requirements and stage the two approved full-body PNGs (the
+source files live in ChatGPT Library and are not checked into GitHub):
+
+```bash
+python -m pip install -r requirements-character-rig.txt
+python scripts/rig_official_v2_characters.py \
+  --urfavxbf /private/UrFavXBF_SuperPixel_Transparent.png \
+  --pix /private/PIX_SuperPixel_Transparent.png \
+  --out public/characters/pixel-glitch
+
+# The output contains:
+#   urfavxbf/base.png, rig/{underlay,body,head,leftArm,rightArm,leftLeg,rightLeg}.png
+#   pix/base.png, rig/{underlay,body,head,leftArm,rightArm,tail}.png
+#   rig-assets.json, rig-provenance.json
+python scripts/prepare_hero_stage.py \
+  --host-png /private/UrFavXBF_SuperPixel_Transparent.png \
+  --pix-png /private/PIX_SuperPixel_Transparent.png \
+  --host-wav /private/UrFavXBF_Chatterbox_Natural_Storyteller_Sample.wav \
+  --pix-wav /private/PIX_Chatterbox_V3_Emily_Sample.wav
+npx remotion render HeroCharacterStage out/heroes-rigged.mp4 \
+  --props=out/hero-stage.props.json --codec=h264 --crf=18
+```
+
+`prepare_hero_stage.py` now **refuses** to create an authorized voiced
+review unless the layered rigs exist, except when an explicit `--flat-review`
+flag is used. The episode validator also requires the rig by default. This
+guarantees new production work cannot accidentally claim a flat PNG has
+independently moving arms and legs.
