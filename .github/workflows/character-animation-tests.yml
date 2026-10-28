@@ -1,0 +1,51 @@
+name: Speaker-aware character animation tests
+
+on:
+  pull_request:
+    paths:
+      - "src/characters/**"
+      - "src/Root.tsx"
+      - "scripts/extract_voice_envelope.py"
+      - "tests/test_extract_voice_envelope.py"
+      - ".github/workflows/character-animation-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/characters/**"
+      - "src/Root.tsx"
+      - "scripts/extract_voice_envelope.py"
+      - "tests/test_extract_voice_envelope.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  puppet-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test WAV envelope extraction on generated fixture audio
+        run: |
+          python -m unittest discover -s tests -p 'test_extract_voice_envelope.py' -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install Remotion runtime and typecheck puppet components
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck
+      - name: Render assetless 16:9 workbench frame as integration smoke
+        run: |
+          npx remotion still CharacterAnimationLab out/animation-workbench.png --frame=120 --scale=0.5
+          test -s out/animation-workbench.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: character-animation-workbench-test
+          path: out/animation-workbench.png
+          retention-days: 7

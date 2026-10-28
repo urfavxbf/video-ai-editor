@@ -47,6 +47,10 @@ python scripts/character_voiceover.py --character pix \
 
 PIX's source recording is an openly available synthetic voice reference with MIT [attribution and provenance](PIX_VOICE.md). Do not use unrelated private recordings or claim that the same waveform is guaranteed across synthesis attempts.
 
+## Animation improvement priority
+
+The owner requested stronger animation following the completed Ghost Town pilot: show more head/ear/tail motion, expressive gestures, speaker reactions and voice-driven timing. Keep both official images and Chatterbox voices unchanged. The current Remotion [CharacterPuppet](../src/characters/CharacterPuppet.tsx) is a 2.5D stepping stone; true 3D models require approved volumetric meshes, skeletons and facial rigs. See [CHARACTER_ANIMATION_V2.md](CHARACTER_ANIMATION_V2.md). Fusion of data and captions is the next step after character animation.
+
 ## Production quality standard and pilot
 
 For all new videos, follow [the advanced motion/animation/voice QA standard](PRODUCTION_STANDARD.md). The first **widescreen long-form** episode concept is **“Is the Internet Becoming a Ghost Town?”** (English, 16:9 / 1920 × 1080 / 30 fps, two speakers, an expanded chaptered narrative, cinematic pixel-art character overlays on realistic backgrounds, interactive animated internet/AI graphics). Episode runtime is story-driven, not ~40–50 seconds. The studio has **21 effects** and **13 agent skills**; only use those effects that add visual meaning. Real mouth/viseme lip sync requires actual sprites or a rig and is not supplied by the two static transparent PNGs alone.
