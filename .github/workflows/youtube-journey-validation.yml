@@ -1,0 +1,52 @@
+name: YouTube beginner journey — validation
+
+on:
+  push:
+    branches: [episode/youtube-beginner-journey]
+    paths:
+      - 'src/episodes/YouTubeJourneyPreview.tsx'
+      - 'src/Root.tsx'
+      - 'scripts/build_youtube_journey_preview.py'
+      - 'scripts/render_youtube_journey_voices.py'
+      - 'tests/test_youtube_journey_preview.py'
+      - 'productions/youtube-beginner-journey/**'
+      - '.github/workflows/youtube-journey-validation.yml'
+  pull_request:
+    paths:
+      - 'src/episodes/YouTubeJourneyPreview.tsx'
+      - 'src/Root.tsx'
+      - 'scripts/build_youtube_journey_preview.py'
+      - 'scripts/render_youtube_journey_voices.py'
+      - 'tests/test_youtube_journey_preview.py'
+      - 'productions/youtube-beginner-journey/**'
+      - '.github/workflows/youtube-journey-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: youtube-journey-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test real-WAV timeline and creative contract (no model download)
+        run: |
+          python -m unittest discover -s tests -p 'test_youtube_journey_preview.py' -v
+          python -m py_compile scripts/build_youtube_journey_preview.py scripts/render_youtube_journey_voices.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked Remotion dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Typecheck existing and new compositions
+        run: npm run typecheck
