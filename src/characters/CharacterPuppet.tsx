@@ -31,6 +31,8 @@ export type LayeredPuppetRig = {
   /** Torso-only image, NOT a duplicate already containing the articulated limbs. */
   body: string;
   head: string;
+  /** Hidden joint backfill behind all articulated parts; same native canvas size. */
+  underlay?: string;
   leftArm?: string;
   rightArm?: string;
   leftLeg?: string;
@@ -210,15 +212,15 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
 
   // Both approved V2 leads are pixel-art, not just the host.
   const crisp = true;
-  const headPivot = layeredRig?.headPivotPercent ?? (id === 'pix' ? [51, 48] : [51, 22]);
-  const tailPivot = layeredRig?.tailPivotPercent ?? [39, 77];
+  const headPivot = layeredRig?.headPivotPercent ?? (id === 'pix' ? [44, 69] : [54, 43]);
+  const tailPivot = layeredRig?.tailPivotPercent ?? [66, 71];
   const armPivots = {
-    left: layeredRig?.leftArmPivotPercent ?? [33, 38],
-    right: layeredRig?.rightArmPivotPercent ?? [68, 38],
+    left: layeredRig?.leftArmPivotPercent ?? (id === 'pix' ? [31, 74] : [37, 47]),
+    right: layeredRig?.rightArmPivotPercent ?? (id === 'pix' ? [50, 75] : [72, 48]),
   };
   const legPivots = {
-    left: layeredRig?.leftLegPivotPercent ?? [43, 69],
-    right: layeredRig?.rightLegPivotPercent ?? [57, 69],
+    left: layeredRig?.leftLegPivotPercent ?? [41, 73],
+    right: layeredRig?.rightLegPivotPercent ?? [63, 73],
   };
   // Energy can ONLY switch an open/closed mouth with actual provided mouth layer assets.
   // This is approximate mouth flapping, not phoneme-to-viseme alignment.
@@ -255,40 +257,41 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
           <FullCanvasLayer src={assetPath} crisp={crisp}/>
         ) : (
           <>
+            {layeredRig.underlay && <FullCanvasLayer src={layeredRig.underlay} crisp={crisp}/>}
             {layeredRig.tail && (
               <FullCanvasLayer
                 src={layeredRig.tail}
                 crisp={crisp}
                 origin={`${tailPivot[0]}% ${tailPivot[1]}%`}
-                transform={`rotate(${pose.tailRoll.toFixed(2)}deg)`}
+                transform={`rotate(${(Math.max(-8, Math.min(8, pose.tailRoll))).toFixed(2)}deg)`}
               />
             )}
             {layeredRig.leftLeg && (
               <FullCanvasLayer src={layeredRig.leftLeg} crisp={crisp}
                 origin={`${legPivots.left[0]}% ${legPivots.left[1]}%`}
-                transform={`rotate(${pose.leftLegRoll.toFixed(2)}deg)`}/>
+                transform={`rotate(${(Math.max(-3, Math.min(3, pose.leftLegRoll))).toFixed(2)}deg)`}/>
             )}
             {layeredRig.rightLeg && (
               <FullCanvasLayer src={layeredRig.rightLeg} crisp={crisp}
                 origin={`${legPivots.right[0]}% ${legPivots.right[1]}%`}
-                transform={`rotate(${pose.rightLegRoll.toFixed(2)}deg)`}/>
+                transform={`rotate(${(Math.max(-3, Math.min(3, pose.rightLegRoll))).toFixed(2)}deg)`}/>
             )}
             <FullCanvasLayer src={layeredRig.body} crisp={crisp}/>
             {layeredRig.leftArm && (
               <FullCanvasLayer src={layeredRig.leftArm} crisp={crisp}
                 origin={`${armPivots.left[0]}% ${armPivots.left[1]}%`}
-                transform={`rotate(${pose.leftArmRoll.toFixed(2)}deg)`}/>
+                transform={`rotate(${(Math.max(id === 'pix' ? -3.5 : -6, Math.min(id === 'pix' ? 3.5 : 6, pose.leftArmRoll))).toFixed(2)}deg)`}/>
             )}
             {layeredRig.rightArm && (
               <FullCanvasLayer src={layeredRig.rightArm} crisp={crisp}
                 origin={`${armPivots.right[0]}% ${armPivots.right[1]}%`}
-                transform={`rotate(${pose.rightArmRoll.toFixed(2)}deg)`}/>
+                transform={`rotate(${(Math.max(id === 'pix' ? -3.5 : -6, Math.min(id === 'pix' ? 3.5 : 6, pose.rightArmRoll))).toFixed(2)}deg)`}/>
             )}
             <FullCanvasLayer
               src={layeredRig.head}
               crisp={crisp}
               origin={`${headPivot[0]}% ${headPivot[1]}%`}
-              transform={`rotate(${pose.headRoll.toFixed(2)}deg)`}
+              transform={`rotate(${(Math.max(-3, Math.min(3, pose.headRoll))).toFixed(2)}deg)`}
             />
             {hasMouthLayers && (
               <FullCanvasLayer src={mouthIsOpen ? layeredRig.mouthOpen! : layeredRig.mouthClosed!} crisp={crisp}/>
