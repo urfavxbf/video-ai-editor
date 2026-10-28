@@ -5,16 +5,16 @@
 ## Storytelling & first pilot
 
 - Show **UrFavXBF** and **PIX** as two distinct recurring personalities; the host explains and PIX prompts, reacts, questions or adds humor. Do not replace either speaker with generic narration.
-- The agreed pilot direction is **“Is the Internet Becoming a Ghost Town?”**, an approximately **40–50-second**, English-only vertical Short about bots and internet authenticity. Connect internet/AI curiosity with a lesson in critical thinking. The science niche is **not** the channel identity; UrFavXBF covers wisdom, science, math, the internet, AI and editing.
+- The agreed **first long-form episode** is **“Is the Internet Becoming a Ghost Town?”**, an English-language widescreen video about bots, real vs automated web activity, AI and internet authenticity. Build a full explanatory story with room for dialogue, visuals, nuance and takeaways; **do not reuse the retired 40–50-second Short outline as the episode duration**. The final runtime is story-driven and is set per production, not hard-coded in this standard. The science niche is **not** the channel identity; UrFavXBF covers wisdom, science, math, the internet, AI and editing.
 - Treat any numerical claims about bot traffic as *unverified until checked against a dated primary source*. Clearly distinguish **share of web traffic** from **share of people, accounts or comments**. Do not automatically embed a percentage in the render without source and date verification.
-- Use a tight hook, dialogue-led explanation and punchy ending. Avoid a long generic introduction or repetitive templates.
+- Structure a **long-form narrative**: compelling cold open, premise, contextual explanation, evidence, examples, escalating questions, counterpoints and memorable conclusion. Split into titled chapters or sequences as appropriate; keep scene transitions and graphics motivated by changing ideas. Avoid slow generic introductions, unnecessary padding or an endless Shorts-style sequence of cuts.
 
 ## Advanced motion graphics — required quality bar
 
 - Design **custom scene-specific motion**, not a slideshow or static speaking PNGs. Integrate characters into grounded live-action/realistic footage or cinematic backgrounds using appropriate occlusion, shadows, lighting, depth ordering and compositing.
 - Combine purposeful **kinetic typography**, UI/HUD overlays, infographics, animated counters, charts, tracked labels, parallax / 2.5D depth, masks/reveals, smooth camera moves, motion blur, spring physics, morph/scale transitions and synced sound effects when narratively useful.
-- Use the existing **21 Remotion motion effects** in `src/fx/` as an available creative toolbox. **Select effects to serve the scene; do not force all 21 into one Short**. Study and adapt the effects without destroying their reusable source components.
-- Maintain coherent high-contrast **black/yellow** identity for UrFavXBF and **white/black/yellow/cyan** accents for PIX; ensure pixel-art edges stay intentionally crisp when scaled. Text remains legible in phone-safe regions.
+- Use the existing **21 Remotion motion effects** in `src/fx/` as an available creative toolbox. **Select effects to serve each scene; do not force all 21 into one video**. Study and adapt the effects without destroying their reusable source components. For longer chapters, alternate graphic-heavy passages with quieter compositions so viewers can follow the explanation.
+- Maintain coherent high-contrast **black/yellow** identity for UrFavXBF and **white/black/yellow/cyan** accents for PIX; ensure pixel-art edges stay intentionally crisp when scaled. Compose for a **16:9 landscape canvas**, including legible full-width charts and safe lower thirds, rather than vertical phone-safe framing.
 - Inspiration by technique: interactive mathematical animation (Alan Becker), footage-plus-game HUD visualization (TierZoo), expressive character reactions (Danno / Riggy), and professional kinetic motion polish (Ben Marriott). Do not reproduce their characters, shots or copyrighted animations.
 
 ## Character animation and identity integrity
@@ -29,14 +29,16 @@
 
 - **UrFavXBF**: approved Chatterbox Multilingual V3, profile `natural-storyteller-v1`, English, built-in speaker.
 - **PIX**: Chatterbox Multilingual V3, profile `pix-cute-female-emily-v1`, English, pinned synthetic female Emily voice reference. Prefer the character-aware CLI `scripts/character_voiceover.py` to avoid assigning the wrong speaker.
-- Generate **distinct WAV lines**, mark the speaker and exact script for each line, retain real start/end times, and sequence them with visual reactions. Avoid accidental overwriting, speech clipping, double audio or overlapping lines.
+- Generate **distinct WAV lines or manageable chapter-sized segments**, mark the speaker and exact script for each line, retain real start/end times, and sequence them with visual reactions. Use the existing Chatterbox long-form chunking where appropriate. Avoid accidental overwriting, speech clipping, double audio, overlapping lines or voice drift between chapters.
 - **Check voice accuracy by listening**: no missing or invented words, no swapped lines, corrected pronunciation of UrFavXBF, PIX and technical terms, appropriate expressive delivery, no unexplained shifts of voice identity. Chatterbox can vary across generations; voice presets alone do not prove audible quality.
 - Build **word-aligned captions from the actual final generated audio** (forced alignment or transcript with human review). Captions, kinetic text, scene changes and reaction animation must track the audible speech; do not invent word timestamps. Check SRT/caption line wrapping, safe-area placement and readability.
 - Music and SFX must be licensed and mixed below speech. No auto-upload or publishing without explicit authorization.
 
 ## Video output and acceptance checklist
 
-Default new original Short: **9:16 / 1080 × 1920 / 30 fps**, unless the owner specifies another delivery profile.
+**Default for all new original videos: long-form YouTube, 16:9 landscape / 1920 × 1080 / 30 fps**, H.264 MP4 with AAC audio unless a particular delivery requires another format. The episode duration is set from a developed script and storyboard; do not assume a Short-length limit. Existing 9:16 compositions remain legacy/demo assets and are **not** the new-video default.
+
+For each episode, plan the overall timeline, chapter transitions, recurring graphics, two-character screen geography and audio pacing across the **entire** runtime. Avoid simply stretching a short-form sequence or scaling 1080 × 1920 graphics into landscape.
 
 Before declaring the video complete:
 1. Confirm **both approved images** are actually present and rendered with transparent backgrounds, consistent pixelated styling and no cropping/off-screen errors.
