@@ -69,7 +69,7 @@ class FullBodyAssetTests(unittest.TestCase):
                 write_png(public / a["assetPath"])
             rig = {
                 p: f"characters/rigs/pix/{p}.png" for p in (
-                    "body", "head", "leftArm", "rightArm", "leftLeg", "rightLeg")
+                    "body", "head", "leftArm", "rightArm", "leftLeg", "rightLeg", "tail", "underlay")
             }
             assets = json.loads(json.dumps(FIXTURE_ASSETS))
             assets["pix"]["layeredRig"] = rig
