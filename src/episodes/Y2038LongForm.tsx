@@ -14,6 +14,9 @@ export type Y2038LongFormProps={
   reactions?:PortraitReactionCue[];
   /** Optional rendered WAV/MP3 tracks placed in public/; cueIndex is zero-based. */
   voiceClips?:Array<{cueIndex:number;path:string}>;
+  /** Original low-volume score placed in public/, optional until mastered. */
+  backgroundMusicPath?:string;
+  backgroundMusicVolume?:number;
 };
 export {Y2038_TOTAL_FRAMES};
 
@@ -60,6 +63,7 @@ const showPanel = (chapter:number, frame:number, start:number, speaker:string, a
 
 export const Y2038LongForm:React.FC<Y2038LongFormProps>=({
   assetsReady,voiceEvents=[],reactions=[],voiceClips=[],
+  backgroundMusicPath,backgroundMusicVolume=0.25,
 })=>{
   const frame=useCurrentFrame();
   const cueIndex=Math.max(0,Y2038_CUES.findIndex(c=>frame>=c.startFrame&&frame<c.endFrame));
@@ -118,6 +122,7 @@ export const Y2038LongForm:React.FC<Y2038LongFormProps>=({
     <div style={{position:'absolute',bottom:40,left:64,fontSize:17,color:'#83C6D5'}}>
       SIGNED 32-BIT TIME • SYSTEMS VARY • UTC
     </div>
+    {backgroundMusicPath?<Audio src={staticFile(backgroundMusicPath)} loop volume={backgroundMusicVolume}/>:null}
     {voiceClips.map(clip=>{
       const c=Y2038_CUES[clip.cueIndex];
       return c?<Sequence key={clip.cueIndex} from={c.startFrame} durationInFrames={c.endFrame-c.startFrame}>
