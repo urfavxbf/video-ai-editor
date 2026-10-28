@@ -1,6 +1,8 @@
 import React from 'react';
-import {CharacterPuppet, type BodyGesture, type CharacterId,
-  type LayeredPuppetRig, type ReactionCue, type VoiceEvent} from '../characters/CharacterPuppet';
+import {useCurrentFrame} from 'remotion';
+import {CharacterPuppet, type CharacterId,
+  type LayeredPuppetRig, type VoiceEvent} from '../characters/CharacterPuppet';
+import {HERO_IDENTITY, heroGestureFor, listeningReactionCues} from '../characters/HeroPerformance';
 
 /**
  * Verified Super Pixel/Glitch V2 transparent full-body sprites, not head-only loop PNGs.
@@ -14,30 +16,9 @@ export type JourneyFullBodyAsset = {
 export type JourneyFullBodyAssetMap = Record<CharacterId, JourneyFullBodyAsset>;
 
 export const DEFAULT_JOURNEY_FULL_BODY_ASSETS: JourneyFullBodyAssetMap = {
-  urfavxbf: {assetPath: 'characters/pixel-glitch/urfavxbf/base.png'},
-  pix: {assetPath: 'characters/pixel-glitch/pix/base.png'},
+  urfavxbf: {assetPath: HERO_IDENTITY.urfavxbf.assetPath},
+  pix: {assetPath: HERO_IDENTITY.pix.assetPath},
 };
-
-const actionFor = (chapter: number, speaker: CharacterId, active: boolean): BodyGesture => {
-  if (!active) return 'idle';
-  if (chapter === 1) return speaker === 'pix' ? 'celebrate' : 'explain';
-  if (chapter === 2) return speaker === 'pix' ? 'walk' : 'explain';
-  if (chapter === 3 || chapter === 4) return 'point';
-  if (chapter === 5 || chapter === 6) return speaker === 'pix' ? 'point' : 'explain';
-  if (chapter === 7) return 'explain';
-  if (chapter === 8) return 'point';
-  return speaker === 'pix' ? 'celebrate' : 'explain';
-};
-
-const listeningReactions = (
-  id: CharacterId,
-  events: VoiceEvent[],
-  chapter: number,
-): ReactionCue[] => events.filter(e=>e.speaker!==id).map((e,i)=>({
-  atFrame: e.startFrame,
-  durationFrames: Math.min(42, Math.max(10, e.endFrame-e.startFrame)),
-  kind: chapter===6 ? 'surprised' : i%3===0 ? 'curious' : 'agree',
-}));
 
 export type JourneyFullBodyCharactersProps = {
   voiceEvents: VoiceEvent[];
@@ -49,15 +30,17 @@ export type JourneyFullBodyCharactersProps = {
 /** Character-only staging, leaving the 890px diagram area and caption zone legible. */
 export const YouTubeJourneyFullBodyCharacters: React.FC<JourneyFullBodyCharactersProps> = ({
   voiceEvents, chapter, activeSpeaker, assets=DEFAULT_JOURNEY_FULL_BODY_ASSETS,
-}) => <React.Fragment>
+}) => {
+  const frame = useCurrentFrame();
+  return <React.Fragment>
   <CharacterPuppet
     id="urfavxbf"
     assetPath={assets.urfavxbf.assetPath}
     layeredRig={assets.urfavxbf.layeredRig}
     width={438} height={670} left={30} bottom={204}
     voiceEvents={voiceEvents}
-    bodyGesture={actionFor(chapter,'urfavxbf',activeSpeaker==='urfavxbf')}
-    reactions={listeningReactions('urfavxbf',voiceEvents,chapter)}
+    bodyGesture={heroGestureFor('urfavxbf',chapter,activeSpeaker,frame,voiceEvents)}
+    reactions={listeningReactionCues('urfavxbf',voiceEvents,chapter)}
     fadeInFrames={13}
   />
   <CharacterPuppet
@@ -66,8 +49,8 @@ export const YouTubeJourneyFullBodyCharacters: React.FC<JourneyFullBodyCharacter
     layeredRig={assets.pix.layeredRig}
     width={412} height={645} right={30} bottom={206}
     voiceEvents={voiceEvents}
-    bodyGesture={actionFor(chapter,'pix',activeSpeaker==='pix')}
-    reactions={listeningReactions('pix',voiceEvents,chapter)}
+    bodyGesture={heroGestureFor('pix',chapter,activeSpeaker,frame,voiceEvents)}
+    reactions={listeningReactionCues('pix',voiceEvents,chapter)}
     fadeInFrames={16}
   />
   <div style={{position:'absolute',left:37,bottom:180,
@@ -81,3 +64,4 @@ export const YouTubeJourneyFullBodyCharacters: React.FC<JourneyFullBodyCharacter
     PIX
   </div>
 </React.Fragment>;
+};
