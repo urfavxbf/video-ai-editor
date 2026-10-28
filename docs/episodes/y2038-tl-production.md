@@ -39,7 +39,7 @@ Primary technical references:
 - `src/episodes/Y2038LongForm.tsx`: Remotion composition registered as `Y2038LongForm`.
 - `scripts/y2038_export_voice_cues.py`: prepares Tagalog voice text files and JSON manifest.
 - `scripts/stage_y2038_sprites.py`: safely stages approved PNG expression assets from the owner's Library ZIP.
-- The existing V2 sprite ZIP remains in Library; no generated character art or model weights are added to GitHub.
+- Original ambient score generator available at `scripts/y2038_generate_ambient.py` (no third-party music).\n- The existing V2 sprite ZIP remains in Library; no generated character art or model weights are added to GitHub.
 
 ## Rendering in Codespaces / Linux
 
@@ -47,10 +47,11 @@ Primary technical references:
 npm ci
 python3 scripts/stage_y2038_sprites.py --zip /path/to/PixelGlitch_Complete_Pack.zip
 python3 scripts/y2038_export_voice_cues.py
+python3 scripts/y2038_generate_ambient.py --seconds 480
 npm run typecheck
 npx remotion render Y2038LongForm out/y2038-visual-workprint.mp4 \
   --codec=h264 --crf=20 --pixel-format=yuv420p \
-  --props='{"assetsReady":true}'
+  --props='{"assetsReady":true,"backgroundMusicPath":"audio/y2038-ambient.wav"}'
 ```
 
 To synthesize candidate voice tracks on a compatible GPU-enabled runtime:
