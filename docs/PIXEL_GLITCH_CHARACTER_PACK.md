@@ -1,3 +1,5 @@
+> **Current hero update (29 October 2026):** The two approved Super Pixel V2 **full-body** PNGs are now the default character identity for new videos. This supersedes the archived portrait-only directive below. The pack's 8-frame talk/idle/react loops contain **head-only** expressions, not articulated whole-body motion. See [the official hero bible](URFAVXBF_PIX_HERO_CHARACTER_BIBLE.md).
+
 > **Update (28 October 2026):** The preferred production layout is now **animated head portraits only**. Do not show the full-body V2 sprites in new videos. See [the portrait-only policy](PIXEL_GLITCH_PORTRAITS_ONLY.md). The pack retains full-body originals as archived raw source material.
 
 # Super Pixel / Glitch V2 — character asset pack
