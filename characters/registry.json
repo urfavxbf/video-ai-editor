@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "project": "video-ai-editor",
-  "production_language": "tl",
+  "production_language": "en",
   "main_character": "urfavxbf",
   "companion_character": "pix",
   "assets_location": "ChatGPT Library /UrFavXBF Video Characters/; binaries must be staged into the listed public paths for Remotion",
@@ -89,7 +89,7 @@
     "width": 1920,
     "height": 1080,
     "fps": 30,
-    "language": "tl",
+    "language": "en",
     "duration_policy": "script-and-chapter-driven",
     "legacy_portrait_demos_not_default": true,
     "video_codec": "h264",
@@ -105,9 +105,10 @@
     },
     "next_episode_candidate": "y2038",
     "next_episode_status": "proposed",
-    "script_language": "tl",
-    "caption_language": "tl",
-    "metadata_language": "tl"
+    "script_language": "en",
+    "caption_language": "en",
+    "metadata_language": "en",
+    "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending."
   },
   "preferred_visual_variant": "super-pixel-glitch-v2",
   "visual_variant_package": {
