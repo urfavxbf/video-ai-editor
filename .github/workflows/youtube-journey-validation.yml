@@ -10,14 +10,19 @@ on:
       - 'src/episodes/YouTubeJourneyFullBodyCharacters.tsx'
       - 'src/episodes/YouTubeJourneyStyleframes.tsx'
       - 'src/characters/CharacterPuppet.tsx'
+      - 'src/characters/HeroPerformance.ts'
+      - 'src/characters/HeroCharacterStage.tsx'
+      - 'characters/registry.json'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
       - 'scripts/build_youtube_journey_full.py'
       - 'scripts/validate_youtube_journey_fullbody.py'
+      - 'scripts/prepare_hero_stage.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
       - 'tests/test_youtube_journey_fullbody.py'
+      - 'tests/test_youtube_journey_hero.py'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
   pull_request:
@@ -28,14 +33,19 @@ on:
       - 'src/episodes/YouTubeJourneyFullBodyCharacters.tsx'
       - 'src/episodes/YouTubeJourneyStyleframes.tsx'
       - 'src/characters/CharacterPuppet.tsx'
+      - 'src/characters/HeroPerformance.ts'
+      - 'src/characters/HeroCharacterStage.tsx'
+      - 'characters/registry.json'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
       - 'scripts/build_youtube_journey_full.py'
       - 'scripts/validate_youtube_journey_fullbody.py'
+      - 'scripts/prepare_hero_stage.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
       - 'tests/test_youtube_journey_fullbody.py'
+      - 'tests/test_youtube_journey_hero.py'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
   workflow_dispatch:
@@ -59,7 +69,7 @@ jobs:
       - name: Test real-WAV timeline and creative contract (no model download)
         run: |
           python -m unittest discover -s tests -p 'test_youtube_journey_*.py' -v
-          python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py
+          python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py scripts/prepare_hero_stage.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -77,6 +87,11 @@ jobs:
               --frame=$((second*30)) --scale=0.5
             test -s "out/youtube-journey-visuals/beat-${second}.png"
           done
+      - name: Render independent character-focused stage frame (no private assets)
+        run: |
+          npx remotion still HeroCharacterStage out/hero-character-stage-reference.png \
+            --frame=90 --scale=0.5
+          test -s out/hero-character-stage-reference.png
       - uses: actions/upload-artifact@v4
         with:
           name: youtube-journey-eight-original-visual-beats
