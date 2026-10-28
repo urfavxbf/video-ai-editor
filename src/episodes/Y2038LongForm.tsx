@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Img, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
 import {PixelGlitchPortrait, type PortraitReactionCue} from '../characters/PixelGlitchPortrait';
 import {PORTRAIT_LAYOUT} from '../characters/portraitLayout';
 import type {VoiceEvent} from '../characters/CharacterPuppet';
@@ -14,6 +14,10 @@ export type Y2038LongFormProps={
   reactions?:PortraitReactionCue[];
   /** Optional rendered WAV/MP3 tracks placed in public/; cueIndex is zero-based. */
   voiceClips?:Array<{cueIndex:number;path:string}>;
+  /** Real WAV clip-level boundaries from scripts/y2038_audio_props.py. */
+  timedCues?:Array<{startFrame:number;endFrame:number}>;
+  totalFrames?:number;
+  audioLanguage?:'tl' | 'en';
   /** Original low-volume score placed in public/, optional until mastered. */
   backgroundMusicPath?:string;
   backgroundMusicVolume?:number;
@@ -62,17 +66,21 @@ const showPanel = (chapter:number, frame:number, start:number, speaker:string, a
 };
 
 export const Y2038LongForm:React.FC<Y2038LongFormProps>=({
-  assetsReady,voiceEvents=[],reactions=[],voiceClips=[],
+  assetsReady,voiceEvents=[],reactions=[],voiceClips=[],timedCues,
+  totalFrames, audioLanguage='tl',
   backgroundMusicPath,backgroundMusicVolume=0.25,
 })=>{
   const frame=useCurrentFrame();
-  const cueIndex=Math.max(0,Y2038_CUES.findIndex(c=>frame>=c.startFrame&&frame<c.endFrame));
-  const cue=Y2038_CUES[cueIndex]??Y2038_CUES[Y2038_CUES.length-1];
+  const cues=timedCues?.length===Y2038_CUES.length
+    ?Y2038_CUES.map((cue,i)=>({...cue,startFrame:timedCues[i].startFrame,endFrame:timedCues[i].endFrame}))
+    :Y2038_CUES;
+  const cueIndex=Math.max(0,cues.findLastIndex(c=>frame>=c.startFrame));
+  const cue=cues[cueIndex]??cues[cues.length-1];
   const accent=cue.speaker==='pix'?CYAN:GOLD;
   const words=cue.text.split(/\s+/u);
-  // Visual-only approximation. Once audio is ready, replace with word-aligned captions.
+  // Cue-level paging is provisional; word alignment needs a dedicated pass.
   const pages=Math.ceil(words.length/11);
-  const wordPage=Math.min(pages-1,Math.floor((frame-cue.startFrame)/(cue.endFrame-cue.startFrame)*pages));
+  const wordPage=Math.min(pages-1,Math.max(0,Math.floor((frame-cue.startFrame)/Math.max(1,cue.endFrame-cue.startFrame)*pages)));
   const subtitle=words.slice(wordPage*11,wordPage*11+11).join(' ');
   const lower=subtitle.toLocaleLowerCase('en');
   const triggers=['2038','1901','64-bit','32-bit','2,147,483,647','1970','2040'];
@@ -107,7 +115,7 @@ export const Y2038LongForm:React.FC<Y2038LongFormProps>=({
         background:'rgba(2,11,26,.94)',position:'relative',boxShadow:`0 0 24px ${accent}22`}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
           <span style={{fontSize:20,color:accent,fontWeight:900,letterSpacing:1}}>
-            {cue.speaker==='pix'?'PIX':'URFAVXBF'} // TAGALOG
+            {cue.speaker==='pix'?'PIX':'URFAVXBF'} // {audioLanguage==='tl'?'TAGALOG':'ENGLISH'}
           </span>
           {featured?<span style={{fontSize:20,color:accent,fontWeight:900}}>{featured.toUpperCase()}</span>:null}
         </div>
@@ -116,7 +124,7 @@ export const Y2038LongForm:React.FC<Y2038LongFormProps>=({
     </div>
     <div style={{position:'absolute',bottom:26,left:64,right:64,height:8,
       background:'rgba(8,56,77,.88)',borderRadius:8}}>
-      <div style={{height:'100%',width:`${Math.round(frame/Y2038_TOTAL_FRAMES*10000)/100}%`,
+      <div style={{height:'100%',width:`${Math.round(frame/(totalFrames??Y2038_TOTAL_FRAMES)*10000)/100}%`,
         background:'linear-gradient(90deg,#FFDF35,#20DFFF)',borderRadius:8}}/>
     </div>
     <div style={{position:'absolute',bottom:40,left:64,fontSize:17,color:'#83C6D5'}}>
@@ -124,7 +132,7 @@ export const Y2038LongForm:React.FC<Y2038LongFormProps>=({
     </div>
     {backgroundMusicPath?<Audio src={staticFile(backgroundMusicPath)} loop volume={backgroundMusicVolume}/>:null}
     {voiceClips.map(clip=>{
-      const c=Y2038_CUES[clip.cueIndex];
+      const c=cues[clip.cueIndex];
       return c?<Sequence key={clip.cueIndex} from={c.startFrame} durationInFrames={c.endFrame-c.startFrame}>
         <Audio src={staticFile(clip.path)}/></Sequence>:null;
     })}
