@@ -457,7 +457,7 @@
         "minimumFrames": 9,
         "status": "available-composite",
         "loop": false,
-        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+        "notes": "RGB/scanline composite only; does NOT imply independently animated hair strands."
       }
     ],
     "pix": [
@@ -542,12 +542,12 @@
         "id": "head_tilt",
         "label": "Curious head tilt",
         "category": "ai-pet",
-        "assetClass": "existing-expression",
+        "assetClass": "pose-sequence",
         "proposedFps": 30,
         "minimumFrames": 24,
-        "status": "available-closeup",
+        "status": "needs-new-animation-art",
         "loop": false,
-        "notes": "Existing portrait PNG is a valid expression CLOSE-UP, not a facial layer aligned to a full-body rig."
+        "notes": "Curious head portrait exists, but a genuine head-tilt *motion* requires new sequential drawings. Never substitute a static curious facial image for a tilt."
       },
       {
         "id": "paw_raise_point",
