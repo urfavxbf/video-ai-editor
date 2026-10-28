@@ -1,5 +1,7 @@
 # Video AI Editor
 
+> **Current production setting (October 28, 2026): English voices are the default.** The user paused Tagalog voice synthesis because there is no budget for a GPU runner. Use the previously approved Chatterbox English speakers: UrFavXBF Natural Storyteller and PIX Emily. Keep VoxCPM2 Tagalog voice designs and source code for future explicit opt-in only. The Tagalog GitHub Actions workflow is manual-only; no automatic TTS generation or paid GPU runner is authorized. Earlier references below to Tagalog being the default describe the prior experimental configuration and are superseded by this setting.
+
 **Video AI Editor** is an independent video-editing workspace maintained in [urfavxbf/video-ai-editor](https://github.com/urfavxbf/video-ai-editor), built around Remotion motion graphics and FFmpeg processing, with **16:9 cinematic long-form YouTube episodes** as the default for new UrFavXBF + PIX productions. Existing vertical clips and Shorts are retained as legacy examples.
 
 ## Production direction (new content)
