@@ -49,7 +49,7 @@ PIX's source recording is an openly available synthetic voice reference with MIT
 
 ## Production quality standard and pilot
 
-For all new videos, follow [the advanced motion/animation/voice QA standard](PRODUCTION_STANDARD.md). The current pilot concept is **“Is the Internet Becoming a Ghost Town?”** (English, ~40–50s, two speakers, cinematic pixel-art character overlays on realistic backgrounds, interactive animated internet/AI graphics). The studio has **21 effects** and **13 agent skills**; only use those effects that add visual meaning. Real mouth/viseme lip sync requires actual sprites or a rig and is not supplied by the two static transparent PNGs alone.
+For all new videos, follow [the advanced motion/animation/voice QA standard](PRODUCTION_STANDARD.md). The first **widescreen long-form** episode concept is **“Is the Internet Becoming a Ghost Town?”** (English, 16:9 / 1920 × 1080 / 30 fps, two speakers, an expanded chaptered narrative, cinematic pixel-art character overlays on realistic backgrounds, interactive animated internet/AI graphics). Episode runtime is story-driven, not ~40–50 seconds. The studio has **21 effects** and **13 agent skills**; only use those effects that add visual meaning. Real mouth/viseme lip sync requires actual sprites or a rig and is not supplied by the two static transparent PNGs alone.
 
 ## Video editing policy
 
