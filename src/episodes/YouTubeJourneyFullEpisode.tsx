@@ -24,7 +24,7 @@ export const YouTubeJourneyFullEpisode:React.FC<YouTubeJourneyFullEpisodeProps> 
     throw new Error('Approved PIX + UrFavXBF pixel glitch portrait PNGs must be staged before full-episode render');
   }
   const currentLine=lines.find(l=>frame>=l.startFrame&&frame<l.endFrame);
-  const preceding=lines.findLast(l=>l.startFrame<=frame);
+  const preceding=[...lines].reverse().find(l=>l.startFrame<=frame);
   const chapter=currentLine?.scene ?? preceding?.scene ?? 1;
   const chapterStart=lines.find(l=>l.scene===chapter)?.startFrame ?? 0;
   const caption=currentLine?.captions.find(c=>frame>=c.startFrame&&frame<c.endFrame)?.text ?? '';
