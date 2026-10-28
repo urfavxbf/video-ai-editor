@@ -3,16 +3,91 @@ import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame} from 'remoti
 import {YouTubeJourneyStyleframes} from './YouTubeJourneyStyleframes';
 import {type VoiceEvent} from '../characters/CharacterPuppet';
 
-export type PreviewLine = {id:string;speaker:'pix'|'urfavxbf';text:string;startFrame:number;endFrame:number;file:string;scene:number};
-export type YouTubeJourneyPreviewProps = {lines:PreviewLine[];voiceEvents:VoiceEvent[];totalFrames:number;chapterBreakStart:number;chapterBreakEnd:number};
-export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({lines,voiceEvents,chapterBreakStart,chapterBreakEnd}) => {
-  const f=useCurrentFrame();
-  const line=lines.find(l=>f>=l.startFrame&&f<l.endFrame);
-  const inBreak=f>=chapterBreakStart&&f<chapterBreakEnd;
-  const scene=f>=chapterBreakEnd?1:0;
-  return <AbsoluteFill>
-    <YouTubeJourneyStyleframes sceneOverride={scene} captionOverride={line?.text??''} speakerOverride={line?(line.speaker==='pix'?'PIX':'URFAVXBF'):''} voiceEvents={voiceEvents} preview sceneStart={scene===1?chapterBreakEnd:0}/>
-    {lines.map(l=><Sequence key={l.id} from={l.startFrame} durationInFrames={l.endFrame-l.startFrame}><Audio src={staticFile(l.file)} volume={0.85}/></Sequence>)}
-    {inBreak?<AbsoluteFill style={{background:'#060d19',justifyContent:'center',alignItems:'center',color:'white',fontFamily:'Inter',gap:24}}><div style={{fontSize:22,letterSpacing:5,color:'#27e8fd'}}>LATER IN THE EPISODE</div><div style={{fontSize:72,fontWeight:900}}>THE MONETIZATION GATES</div><div style={{fontSize:25,color:'#96a8c3'}}>Preview excerpt · requirements and speaker handoff</div></AbsoluteFill>:null}
+export type PreviewCaption = {text: string; startFrame: number; endFrame: number};
+export type PreviewLine = {
+  id: string;
+  speaker: 'pix' | 'urfavxbf';
+  text: string;
+  startFrame: number;
+  endFrame: number;
+  file: string;
+  scene: number;
+  captions: PreviewCaption[];
+};
+export type PreviewSection = {scene: number; startFrame: number; endFrame: number};
+export type YouTubeJourneyPreviewProps = {
+  lines: PreviewLine[];
+  sections: PreviewSection[];
+  voiceEvents: VoiceEvent[];
+  totalFrames: number;
+  captionTiming: string;
+};
+
+const visualScene = (chapter: number) => chapter === 5 ? 1 : chapter === 6 ? 2 : 0;
+const labelFor = (chapter: number) => chapter === 5
+  ? 'HOW MONETIZATION WORKS'
+  : 'WHAT A VIEW REALLY PAYS';
+
+const PreviewCut: React.FC<{chapter: number; progress: number}> = ({chapter, progress}) => (
+  <AbsoluteFill style={{
+    background: '#060d19', display: 'flex', alignItems: 'center',
+    justifyContent: 'center', fontFamily: 'Inter', color: '#f1f6ff',
+    overflow: 'hidden',
+  }}>
+    <div style={{
+      position: 'absolute', left: '16%', right: '16%', top: '50%',
+      height: 2, background: '#27e8fd', opacity: 0.7,
+      transform: `scaleX(${Math.min(1, progress * 2)})`,
+    }}/>
+    <div style={{position: 'absolute', top: 295, letterSpacing: 6, color: '#27e8fd', fontSize: 22}}>
+      EDITED CHAPTER EXCERPT
+    </div>
+    <div style={{position: 'absolute', top: 375, fontWeight: 900, fontSize: 68,
+      transform: `translateY(${Math.max(0, 1 - progress * 2) * 25}px)`}}>
+      {labelFor(chapter)}
+    </div>
+    <div style={{position: 'absolute', top: 690, fontSize: 24, color: '#96a8c3'}}>
+      Preview sequencing · not a continuous conversation
+    </div>
+  </AbsoluteFill>
+);
+
+/** Audio timings are measured from decoded WAV samples, never guessed from script length. */
+export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({
+  lines, sections, voiceEvents, captionTiming,
+}) => {
+  const frame = useCurrentFrame();
+  const section = sections.find(s => frame >= s.startFrame && frame < s.endFrame);
+  const next = sections.find(s => s.startFrame > frame);
+  const activeLine = lines.find(l => frame >= l.startFrame && frame < l.endFrame);
+  const activeCaption = activeLine?.captions.find(c => frame >= c.startFrame && frame < c.endFrame);
+  const caption = activeCaption?.text ?? '';
+  const scene = visualScene(section?.scene ?? sections[sections.length - 1]?.scene ?? 1);
+  const speaker = activeLine ? (activeLine.speaker === 'pix' ? 'PIX' : 'URFAVXBF') : '';
+
+  return <AbsoluteFill style={{background: '#060d19'}}>
+    {section ? <YouTubeJourneyStyleframes
+      sceneOverride={scene}
+      captionOverride={caption}
+      speakerOverride={speaker}
+      voiceEvents={voiceEvents}
+      sceneStart={section.startFrame}
+      preview
+    /> : next ? <PreviewCut
+      chapter={next.scene}
+      progress={(frame - (sections.find(s => s.endFrame <= frame)?.endFrame ?? 0)) /
+        Math.max(1, next.startFrame - (sections.find(s => s.endFrame <= frame)?.endFrame ?? 0))}
+    /> : <AbsoluteFill style={{
+      background: '#060d19', color: '#f1f6ff', justifyContent: 'center',
+      alignItems: 'center', fontFamily: 'Inter', fontSize: 60, fontWeight: 900,
+    }}>ONE USEFUL VIDEO AT A TIME.</AbsoluteFill>}
+    {lines.map(l => <Sequence key={l.id} from={l.startFrame}
+      durationInFrames={l.endFrame - l.startFrame}>
+      <Audio src={staticFile(l.file)} volume={0.85}/>
+    </Sequence>)}
+    {section && captionTiming !== 'reviewed-word-aligned' ? <div style={{
+      position: 'absolute', right: 65, bottom: 38, color: '#96a8c3',
+      fontFamily: 'Inter', fontSize: 14, letterSpacing: 1,
+    }}>DRAFT CAPTION TIMING · HUMAN QC REQUIRED</div> : null}
   </AbsoluteFill>;
 };
