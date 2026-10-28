@@ -17,6 +17,10 @@
 - Maintain coherent high-contrast **black/yellow** identity for UrFavXBF and **white/black/yellow/cyan** accents for PIX; ensure pixel-art edges stay intentionally crisp when scaled. Compose for a **16:9 landscape canvas**, including legible full-width charts and safe lower thirds, rather than vertical phone-safe framing.
 - Inspiration by technique: interactive mathematical animation (Alan Becker), footage-plus-game HUD visualization (TierZoo), expressive character reactions (Danno / Riggy), and professional kinetic motion polish (Ben Marriott). Do not reproduce their characters, shots or copyrighted animations.
 
+## Owner feedback after Ghost Town pilot — priority changes
+
+The first pilot had strong overall motion design, but both characters need visibly more expressive **independent** animation. **Implement and review character animation before data-caption fusion.** Save the second improvement too: infographic data, facts and key numbers should interact with the *same animated captions and speaker timing*, not live in detached panels. The detailed work plan, current 2.5D prototype and real 3D rig prerequisites are in [CHARACTER_ANIMATION_V2.md](CHARACTER_ANIMATION_V2.md). Do not call perspective-spun 2D PNGs true 3D models.
+
 ## Character animation and identity integrity
 
 - Load the **actual approved transparent PNG overlays** listed in `characters/registry.json`, after staging the binaries from the owner's ChatGPT Library into `public/characters/` for a render. Verify each fingerprint where supported. The repository does **not** currently contain those binary images.
