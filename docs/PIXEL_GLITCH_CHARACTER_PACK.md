@@ -2,7 +2,7 @@
 
 # Super Pixel / Glitch V2 — character asset pack
 
-**Status:** Approved visual direction for future UrFavXBF + PIX videos. Previous v1 PNGs remain in the registry for reproducing older edits. **Both canonical Chatterbox V3 English voice profiles remain unchanged.**
+**Status:** Approved visual direction for future UrFavXBF + PIX videos. Previous v1 PNGs remain in the registry for reproducing older edits. **The two original Chatterbox V3 English voice profiles remain available for legacy work; the new Tagalog default uses separate VoxCPM2 Neon Storyteller / Pixel Spark text-based voice designs.**
 
 ## Saved binary assets
 
@@ -44,11 +44,11 @@ For data+caption fusion, read approved transcripts with actual timestamps; anima
 
 ## Voice profile identity
 
-UrFavXBF remains `natural-storyteller-v1` (Chatterbox Multilingual V3), and PIX remains `pix-cute-female-emily-v1`. Do not replace either voice because of the new visual design.
+UrFavXBF remains `natural-storyteller-v1` (Chatterbox Multilingual V3), and PIX remains `pix-cute-female-emily-v1`. Do not confuse the archived English voices with the approved new Tagalog VoxCPM2 default designs. No Tagalog voice WAVs have been auditioned yet.
 
 ## Versioning and continuity
 
 - `characters/registry.json` now identifies `super-pixel-glitch-v2` as the preferred new visual version and records SHA-256 digests for the two new full-body base assets. The v1 avatar entries are preserved for prior renders.
-- Current default original videos stay English-only and 16:9 / 1920×1080 / 30fps.
+- Current new original videos default to Tagalog/Taglish (English optional) and stay 16:9 / 1920×1080 / 30fps.
 - The source sprite images are 2D pixel art. To obtain true skeleton animation and facial rigging, additional source layers or Blender/GLB models are required; see `docs/CHARACTER_ANIMATION_V2.md`.
 - Avoid copying the visual style/source code from third-party creators. The pixel illustrations here were generated for this project's characters.

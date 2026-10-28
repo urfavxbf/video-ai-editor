@@ -1,6 +1,6 @@
 # Official UrFavXBF and PIX — production character bible
 
-**Approved 2026-10-28.** The project's main topic is the character **UrFavXBF**, a creator and knowledgeable explorer of wisdom, science, math, the internet, AI, and editing. This is not a science-only content project. All new original video dialogue, narration, screen text, captions and metadata are **English only**.
+**Approved 2026-10-28.** The project's main topic is the character **UrFavXBF**, a creator and knowledgeable explorer of wisdom, science, math, the internet, AI, and editing. This is not a science-only content project. New original video dialogue, narration, screen text, captions and metadata are **Tagalog/Taglish by default**; English is optional per production.
 
 The second recurring character is **PIX**, UrFavXBF's cute, talking female-voiced AI pet. PIX is a bright, curious robotic cat who can question UrFavXBF, joke with him, and explain concepts alongside him. PIX does not replace the main host.
 
@@ -8,7 +8,7 @@ The second recurring character is **PIX**, UrFavXBF's cute, talking female-voice
 
 The owner approved the **super-pixelated, high-contrast glitch** appearances. Use the separately extracted V2 sprite pack as the preferred appearance for **new** episodes. Keep prior v1 images for replaying earlier footage and do not silently claim a 3D rig.
 
-The V2 full-body characters, expressions and talk/idle/react loops are in the owner's ChatGPT Library: `/UrFavXBF Video Characters/Pixel Glitch V2/`. See [the asset pack guide](PIXEL_GLITCH_CHARACTER_PACK.md) and the registry's `preferred_visual_variant` field. The Chatterbox voices have NOT changed.
+The V2 full-body characters, expressions and talk/idle/react loops are in the owner's ChatGPT Library: `/UrFavXBF Video Characters/Pixel Glitch V2/`. See [the asset pack guide](PIXEL_GLITCH_CHARACTER_PACK.md) and the registry's `preferred_visual_variant` field. The previously verified Chatterbox **English** voices remain unchanged. The new **default Tagalog** voice-design profiles use VoxCPM2; neither has a verified recorded Tagalog sample yet.
 
 ## Canonical visual identity
 
@@ -35,27 +35,32 @@ These are **still assets**, not a rigged/animated talking character or working l
 
 ## Canonical voice mapping
 
-| Character | Chatterbox Multilingual V3 voice | How selected |
+| Character | New default (Tagalog/Taglish) | Legacy English |
 |---|---|---|
-| UrFavXBF | `natural-storyteller-v1` | Built-in V3 speaker, `0.5` exaggeration, `0.5` CFG |
-| PIX | `pix-cute-female-emily-v1` | Pinned synthetic female Emily reference, `0.65` exaggeration, `0.35` CFG |
+| UrFavXBF | VoxCPM2 `urfavxbf-neon-storyteller-tl-v1` — **Neon Storyteller**, warm medium-low Filipino male voice-design description | Chatterbox V3 `natural-storyteller-v1` built-in |
+| PIX | VoxCPM2 `pix-pixel-spark-tl-v1` — **Pixel Spark**, bright playful adult-sounding Filipino female voice-design description | Chatterbox V3 `pix-cute-female-emily-v1` consent-cleared synthetic reference |
 
-Both language IDs are `en`. Both voice identities have **successfully rendered real audio samples**: [UrFavXBF](https://github.com/urfavxbf/video-ai-editor/actions/runs/40607467395), [PIX](https://github.com/urfavxbf/video-ai-editor/actions/runs/40614959831). A validated WAV is not a guarantee of natural expressive delivery or complete end-to-end video production; QC listening and video export checks remain necessary.
+See [`characters/registry.json`](../characters/registry.json) for the precise approved
+VoxCPM2 voice-design prompts. The text descriptions are approved, but **no Tagalog
+WAV or stable speaker embedding has been rendered/auditioned yet**. The previous
+[UrFavXBF](https://github.com/urfavxbf/video-ai-editor/actions/runs/40607467395) and
+[PIX](https://github.com/urfavxbf/video-ai-editor/actions/runs/40614959831)
+samples validate only the historical **English** voices.
 
-Generate a fresh character-specific line with Chatterbox installed:
+Tagalog synthesis (default; needs optional VoxCPM2 runtime and model weights):
 
 ```bash
-python scripts/character_voiceover.py --character urfavxbf \
-  --text "Hey PIX, ready to explore something new?" --output out/urfavxbf.wav
-python scripts/character_voiceover.py --character pix \
-  --text "Always! I've already got three questions!" --output out/pix.wav
+python scripts/character_voiceover.py --character urfavxbf --text "Alam mo ba, PIX?" --output out/urfavxbf-tl.wav
+python scripts/character_voiceover.py --character pix --text "Hala, seryoso?!" --output out/pix-tl.wav
 ```
 
-PIX's source recording is an openly available synthetic voice reference with MIT [attribution and provenance](PIX_VOICE.md). Do not use unrelated private recordings or claim that the same waveform is guaranteed across synthesis attempts.
+English remains available via `--language en` and Chatterbox dependencies.
+See [multilingual production policy](MULTILINGUAL_PRODUCTION_POLICY.md) for setup and
+commercial-use/consent requirements. No model weights or generated WAVs are committed.
 
 ## Animation improvement priority
 
-The owner requested stronger animation following the completed Ghost Town pilot: show more head/ear/tail motion, expressive gestures, speaker reactions and voice-driven timing. Keep both official images and Chatterbox voices unchanged. The current Remotion [CharacterPuppet](../src/characters/CharacterPuppet.tsx) is a 2.5D stepping stone; true 3D models require approved volumetric meshes, skeletons and facial rigs. See [CHARACTER_ANIMATION_V2.md](CHARACTER_ANIMATION_V2.md). Fusion of data and captions is the next step after character animation.
+The owner requested stronger animation following the completed Ghost Town pilot: show more head/ear/tail motion, expressive gestures, speaker reactions and voice-driven timing. Keep the official visual identities unchanged and preserve both historical English Chatterbox speaker presets; default to the new Tagalog voice designs. The current Remotion [CharacterPuppet](../src/characters/CharacterPuppet.tsx) is a 2.5D stepping stone; true 3D models require approved volumetric meshes, skeletons and facial rigs. See [CHARACTER_ANIMATION_V2.md](CHARACTER_ANIMATION_V2.md). Fusion of data and captions is the next step after character animation.
 
 ## Production quality standard and pilot
 

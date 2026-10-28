@@ -1,6 +1,6 @@
 ---
 name: ai-video-editor
-description: Create long-form English YouTube videos starring UrFavXBF and PIX in cinematic 16:9 landscape with advanced motion graphics, 21 reusable Remotion effects, distinct Chatterbox V3 voices, synchronized captions, character reactions and verified MP4; also edit supplied footage faithfully.
+description: Create long-form Tagalog/Taglish-default YouTube videos starring UrFavXBF and PIX in cinematic 16:9 landscape with advanced motion graphics, 21 reusable Remotion effects, distinct Chatterbox V3 voices, synchronized captions, character reactions and verified MP4; also edit supplied footage faithfully.
 ---
 
 # AI Video Editor – Professional 2026 Workflow
@@ -9,10 +9,10 @@ You are the editor. User provides footage; make artistic/technical editing decis
 
 ## Official two-character production identity
 
-- **UrFavXBF** is the recurring main human presenter and is knowledgeable across wisdom, science, math, internet culture, AI, and editing. Do not label the channel science-only. Use the approved high-contrast black/yellow pixel-art transparent character image and Chatterbox `natural-storyteller-v1` English narration.
-- **PIX** is UrFavXBF's separate talking robotic-cat AI pet, with white/black/yellow/cyan visual identity and a cute feminine English voice, `pix-cute-female-emily-v1`, synthesized by Chatterbox V3 from the pinned synthetic Emily reference.
+- **UrFavXBF** is the recurring main human presenter and is knowledgeable across wisdom, science, math, internet culture, AI, and editing. Do not label the channel science-only. Use the approved high-contrast black/yellow pixel-art portrait and VoxCPM2 Tagalog `urfavxbf-neon-storyteller-tl-v1` Neon Storyteller voice design by default; preserve Chatterbox `natural-storyteller-v1` only for explicit English releases.
+- **PIX** is UrFavXBF's separate talking robotic-cat AI pet, with cyan/lavender pixel-glitch visual identity and a bright feminine Filipino VoxCPM2 `pix-pixel-spark-tl-v1` Pixel Spark voice design by default; preserve the synthetic Emily-reference Chatterbox V3 `pix-cute-female-emily-v1` voice for explicit English releases.
 - The owner approved and saved both characters/voice identities on 2026-10-28. Read `characters/registry.json` and `docs/OFFICIAL_CHARACTERS.md` before composing new stories. Preserve each character's face, costume and voice conditioning across scenes.
-- For English character dialogue lines, use `scripts/character_voiceover.py --character urfavxbf|pix --text ... --output ...`; never give PIX the main narrator's built-in speaker.
+- For new Tagalog character dialogue, use `scripts/character_voiceover.py --character urfavxbf|pix --text ... --output ...` (default `tl`, VoxCPM2). For legacy English Chatterbox voices, supply `--language en`; never give PIX the male narrator's conditioning.
 - The original transparent PNGs and real voice samples live in the owner's ChatGPT Library under `/UrFavXBF Video Characters/`. They are **not yet binary assets in this repo**; stage the images into `public/characters/` before attempting an overlay render. Do not invent image or audio paths, lip sync, or completed MP4 outputs.
 
 ## Current owner improvement priorities — mandatory
@@ -26,7 +26,7 @@ You are the editor. User provides footage; make artistic/technical editing decis
 
 - **Newest approved visual identity:** use `super-pixel-glitch-v2` for new UrFavXBF + PIX videos. These are separate real transparent 2D pixel-art PNGs, expression portraits, animation-loop frames and glitch VFX; see `docs/PIXEL_GLITCH_CHARACTER_PACK.md` and `characters/registry.json`. Don't mistake a concept sheet for an overlay.
 - The binary pack is in the owner's ChatGPT Library (`/UrFavXBF Video Characters/Pixel Glitch V2/`), **not yet in GitHub**. Stage images at `public/characters/pixel-glitch/` first; prefer the `src/characters/PixelGlitchSprite.tsx` frame-driven talk/idle/react loops when using this asset set.
-- Keep Chatterbox `natural-storyteller-v1` for UrFavXBF and `pix-cute-female-emily-v1` for PIX. Glitch effects should decorate/react, not overwhelm character readability or captions.
+- Keep VoxCPM2 Tagalog voice designs `urfavxbf-neon-storyteller-tl-v1` for UrFavXBF and `pix-pixel-spark-tl-v1` for PIX as the new defaults. Existing Chatterbox English voice identities stay available only with explicit `--language en`. Glitch effects should decorate/react, not overwhelm captions.
 
 
 - After watching the Ghost Town pilot, the owner requested **more expressive character animation first**: independent reactions, idle/head/ear/tail/body movement where real rig layers exist, speaker-aware cues and accurate voice attribution.
@@ -41,15 +41,15 @@ You are the editor. User provides footage; make artistic/technical editing decis
 
 - Apply `docs/PRODUCTION_STANDARD.md` as the **acceptance criteria for every new UrFavXBF + PIX video**: cinematic advanced motion design, appropriate selections from all **21 available effects** in `src/fx/`, character-specific animation/reactions and accurate audio-to-caption-to-animation timing.
 - The 21 entries in `src/fx/` are motion-effect implementations, **not 21 separate agent skills**; CineForge Pro consolidates the custom editing skill plus 12 official Remotion skills. Use both the effect library and relevant agent guidance.
-- For the first **long-form 16:9 episode**, use **“Is the Internet Becoming a Ghost Town?”**, English dialogue, chaptered storytelling, detailed interactive internet/AI graphics and grounded fact-checking of bot traffic claims; do not confuse bot traffic with human accounts. **Do not use the obsolete 40–50-second Short duration.**
+- For the first **long-form 16:9 episode**, treat **“Is the Internet Becoming a Ghost Town?”** as a historical English pilot; for new episodes, use Tagalog/Taglish dialogue and chaptered storytelling, detailed interactive internet/AI graphics and grounded fact-checking of bot traffic claims; do not confuse bot traffic with human accounts. **Do not use the obsolete 40–50-second Short duration.**
 - Before rendering, **verify both PNGs are staged** and generate separate lines for each voice via `scripts/character_voiceover.py`. Validate the speaker-to-WAV mapping, voice pronunciation, actual word alignment and reactive animation; never claim real lip sync from still PNGs without a mouth rig/sprites.
 - Preview and verify the final MP4 with real audio and visual QA; polish is not satisfied by passing unit tests alone.
 
 ## Production language policy
 
-- For **all new original productions**, use **English only** for scripts, narration, on-screen graphics, captions, YouTube titles, descriptions, and SEO metadata. The approved default narration is Chatterbox Multilingual V3's `natural-storyteller-v1` English voice. Never describe voice synthesis as a complete rendered video.
-- Existing Filipino/Tagalog/Taglish sample compositions are preserved as legacy projects, not templates for the language of new work.
-- When the user supplies an existing interview or recording, preserve its authentic speech and quotations. Do not invent English dialogue, silently translate, or redub the source without explicit permission; use English-language footage for an English-only new release, or request a separate editorial decision when the footage conflicts with the policy.
+- For **all new original productions**, use **Tagalog/Taglish (`tl`) by default** for scripts, narration, on-screen graphics, captions, YouTube titles, descriptions, and SEO metadata. UrFavXBF uses VoxCPM2 Neon Storyteller, PIX uses VoxCPM2 Pixel Spark; these are approved text voice designs, **not yet verified audible Tagalog samples**. English remains an explicit `--language en` alternative using the previous Chatterbox voices. Read `docs/MULTILINGUAL_PRODUCTION_POLICY.md`. Never describe a TTS voice design as a completed audio/video render.
+- Preserve both historical Tagalog/Taglish and English compositions as legacy projects; new productions follow the chosen language, Tagalog/Taglish by default.
+- When supplied existing interviews or recordings, preserve authentic speech and quotations. Never invent dialogue or silently translate/redub without appropriate rights and explicit authorization, regardless of language.
 - Check narration intelligibility, voice identity, word-level caption sync, soundtrack balance, output dimensions, and encoded MP4 audio/video before describing a production as delivered.
 
 ## Tools

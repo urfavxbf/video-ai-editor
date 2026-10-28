@@ -2,7 +2,7 @@
 
 # UrFavXBF + PIX — production quality standard
 
-**Owner direction recorded:** 2026-10-28. This is the default brief for every new original English-language video featuring UrFavXBF (main host) and PIX (female-voiced AI cat sidekick). AI agents should consult this before creating a screenplay, timeline or rendered video. Keep all visual work original and treat cited creators as technique references, not designs to copy.
+**Owner direction recorded:** 2026-10-28. This is the default brief for every new original Tagalog/Taglish video (English remains opt-in) featuring UrFavXBF (main host) and PIX (female-voiced AI cat sidekick). AI agents should consult this before creating a screenplay, timeline or rendered video. Keep all visual work original and treat cited creators as technique references, not designs to copy.
 
 ## Storytelling & first pilot
 
@@ -33,8 +33,8 @@ The first pilot had strong overall motion design, but both characters need visib
 
 ## Voice identity, accuracy & music
 
-- **UrFavXBF**: approved Chatterbox Multilingual V3, profile `natural-storyteller-v1`, English, built-in speaker.
-- **PIX**: Chatterbox Multilingual V3, profile `pix-cute-female-emily-v1`, English, pinned synthetic female Emily voice reference. Prefer the character-aware CLI `scripts/character_voiceover.py` to avoid assigning the wrong speaker.
+- **UrFavXBF**: default VoxCPM2 `urfavxbf-neon-storyteller-tl-v1`, Filipino Neon Storyteller voice design; English legacy Chatterbox `natural-storyteller-v1` available explicitly.
+- **PIX**: default VoxCPM2 `pix-pixel-spark-tl-v1`, Filipino Pixel Spark voice design; English legacy Chatterbox `pix-cute-female-emily-v1` available explicitly. Prefer the character-aware CLI `scripts/character_voiceover.py` to avoid assigning the wrong speaker.
 - Generate **distinct WAV lines or manageable chapter-sized segments**, mark the speaker and exact script for each line, retain real start/end times, and sequence them with visual reactions. Use the existing Chatterbox long-form chunking where appropriate. Avoid accidental overwriting, speech clipping, double audio, overlapping lines or voice drift between chapters.
 - **Check voice accuracy by listening**: no missing or invented words, no swapped lines, corrected pronunciation of UrFavXBF, PIX and technical terms, appropriate expressive delivery, no unexplained shifts of voice identity. Chatterbox can vary across generations; voice presets alone do not prove audible quality.
 - Build **word-aligned captions from the actual final generated audio** (forced alignment or transcript with human review). Captions, kinetic text, scene changes and reaction animation must track the audible speech; do not invent word timestamps. Check SRT/caption line wrapping, safe-area placement and readability.
@@ -48,7 +48,7 @@ For each episode, plan the overall timeline, chapter transitions, recurring grap
 
 Before declaring the video complete:
 1. Confirm **both approved images** are actually present and rendered with transparent backgrounds, consistent pixelated styling and no cropping/off-screen errors.
-2. Confirm **both approved Chatterbox voices** are audible with the right speakers and English speech; independently listen and compare the spoken audio with the locked script.
+2. Confirm **both approved character voice designs** produce understandable Tagalog/Taglish audio, distinct speaker identities and accurate captions; independently listen and compare with the locked script. Existing verified Chatterbox WAVs are English-only and do not validate the new Tagalog designs.
 3. Confirm credible character motion, clearly differentiated speaker turns and character-reactive motion graphics. Check no distracting or excessive effect stacking.
 4. Preview representative and transition frames; verify typography, overlays, motion timing, camera/effect continuity and zero missing assets.
 5. Validate actual MP4 video + audio streams, encoding, dimensions, length, audio balance, speech-to-caption alignment and playback using ffprobe and preview.

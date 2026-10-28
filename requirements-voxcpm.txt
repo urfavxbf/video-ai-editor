@@ -1,0 +1,4 @@
+# Optional Tagalog/Taglish TTS inference; install in a separate Python 3.11 env.
+# VoxCPM2 code and weights: Apache-2.0. GPU inference is recommended.
+voxcpm==2.0.3
+soundfile>=0.12,<1

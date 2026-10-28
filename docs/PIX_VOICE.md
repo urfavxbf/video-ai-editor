@@ -1,3 +1,10 @@
+> **2026-10-28 update:** PIX's new default for Tagalog/Taglish videos is
+> **Pixel Spark**, a VoxCPM2 text-based voice design profile. This document
+> records the *English-only legacy* Chatterbox Emily reference. See
+> [multilingual policy](MULTILINGUAL_PRODUCTION_POLICY.md) and
+> [official character registry](../characters/registry.json).
+> The new Tagalog voice has not yet been auditioned as a real WAV.
+
 # PIX voice — Chatterbox Multilingual V3
 
 **Character**: PIX, the speaking AI cat sidekick of UrFavXBF. PIX is an English-speaking female-voiced companion: cute, bright, inquisitive, playful and distinctly different from UrFavXBF's narration.
