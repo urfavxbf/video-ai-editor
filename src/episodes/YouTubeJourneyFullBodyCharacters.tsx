@@ -2,7 +2,8 @@ import React from 'react';
 import {useCurrentFrame} from 'remotion';
 import {CharacterPuppet, type CharacterId,
   type LayeredPuppetRig, type VoiceEvent} from '../characters/CharacterPuppet';
-import {HERO_IDENTITY, heroGestureFor, listeningReactionCues} from '../characters/HeroPerformance';
+import {heroGestureFor, listeningReactionCues} from '../characters/HeroPerformance';
+import {OFFICIAL_V2_RIGS} from '../characters/OfficialV2Rig';
 
 /**
  * Verified Super Pixel/Glitch V2 transparent full-body sprites, not head-only loop PNGs.
@@ -15,10 +16,7 @@ export type JourneyFullBodyAsset = {
 };
 export type JourneyFullBodyAssetMap = Record<CharacterId, JourneyFullBodyAsset>;
 
-export const DEFAULT_JOURNEY_FULL_BODY_ASSETS: JourneyFullBodyAssetMap = {
-  urfavxbf: {assetPath: HERO_IDENTITY.urfavxbf.assetPath},
-  pix: {assetPath: HERO_IDENTITY.pix.assetPath},
-};
+export const DEFAULT_JOURNEY_FULL_BODY_ASSETS: JourneyFullBodyAssetMap = OFFICIAL_V2_RIGS;
 
 export type JourneyFullBodyCharactersProps = {
   voiceEvents: VoiceEvent[];
