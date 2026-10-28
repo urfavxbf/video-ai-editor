@@ -3,7 +3,7 @@ import {CharacterPuppet, type BodyGesture, type CharacterId,
   type LayeredPuppetRig, type ReactionCue, type VoiceEvent} from '../characters/CharacterPuppet';
 
 /**
- * Approved existing transparent full-body sprites, not head portrait PNGs.
+ * Verified Super Pixel/Glitch V2 transparent full-body sprites, not head-only loop PNGs.
  * Rig layers are optional and must represent the SAME original character;
  * never auto-generate replacement art or pretend a flat PNG has separate arms.
  */
@@ -14,8 +14,8 @@ export type JourneyFullBodyAsset = {
 export type JourneyFullBodyAssetMap = Record<CharacterId, JourneyFullBodyAsset>;
 
 export const DEFAULT_JOURNEY_FULL_BODY_ASSETS: JourneyFullBodyAssetMap = {
-  urfavxbf: {assetPath: 'characters/UrFavXBF_Transparent.png'},
-  pix: {assetPath: 'characters/PIX_Transparent.png'},
+  urfavxbf: {assetPath: 'characters/pixel-glitch/urfavxbf/base.png'},
+  pix: {assetPath: 'characters/pixel-glitch/pix/base.png'},
 };
 
 const actionFor = (chapter: number, speaker: CharacterId, active: boolean): BodyGesture => {
