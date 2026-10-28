@@ -62,6 +62,7 @@ export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({
   const activeLine = lines.find(l => frame >= l.startFrame && frame < l.endFrame);
   const activeCaption = activeLine?.captions.find(c => frame >= c.startFrame && frame < c.endFrame);
   const caption = activeCaption?.text ?? '';
+  const previousEnd = sections.reduce((latest, s) => s.endFrame <= frame ? Math.max(latest, s.endFrame) : latest, 0);
   const scene = visualScene(section?.scene ?? sections[sections.length - 1]?.scene ?? 1);
   const speaker = activeLine ? (activeLine.speaker === 'pix' ? 'PIX' : 'URFAVXBF') : '';
 
@@ -75,8 +76,7 @@ export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({
       preview
     /> : next ? <PreviewCut
       chapter={next.scene}
-      progress={(frame - (sections.find(s => s.endFrame <= frame)?.endFrame ?? 0)) /
-        Math.max(1, next.startFrame - (sections.find(s => s.endFrame <= frame)?.endFrame ?? 0))}
+      progress={(frame - previousEnd) / Math.max(1, next.startFrame - previousEnd)}
     /> : <AbsoluteFill style={{
       background: '#060d19', color: '#f1f6ff', justifyContent: 'center',
       alignItems: 'center', fontFamily: 'Inter', fontSize: 60, fontWeight: 900,
@@ -86,7 +86,7 @@ export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({
       <Audio src={staticFile(l.file)} volume={0.85}/>
     </Sequence>)}
     {section && captionTiming !== 'reviewed-word-aligned' ? <div style={{
-      position: 'absolute', right: 65, bottom: 38, color: '#96a8c3',
+      position: 'absolute', right: 65, top: 209, color: '#96a8c3',
       fontFamily: 'Inter', fontSize: 14, letterSpacing: 1,
     }}>DRAFT CAPTION TIMING · HUMAN QC REQUIRED</div> : null}
   </AbsoluteFill>;
