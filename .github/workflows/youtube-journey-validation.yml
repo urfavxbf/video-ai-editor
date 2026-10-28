@@ -16,6 +16,9 @@ on:
       - 'src/characters/FullAnimationLibrary.tsx'
       - 'src/characters/HeroAnimationReviewReel.tsx'
       - 'src/characters/HeroAnimationTimeline.tsx'
+      - 'src/characters/ChibiV4Sprite.tsx'
+      - 'src/characters/ChibiV4ReviewStage.tsx'
+      - 'characters/chibi-v4-design.json'
       - 'characters/full-animation-set.json'
       - 'characters/registry.json'
       - 'src/Root.tsx'
@@ -25,6 +28,7 @@ on:
       - 'scripts/prepare_hero_stage.py'
       - 'scripts/rig_official_v2_characters.py'
       - 'scripts/validate_full_animation_set.py'
+      - 'scripts/validate_chibi_v4_assets.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
@@ -49,6 +53,9 @@ on:
       - 'src/characters/FullAnimationLibrary.tsx'
       - 'src/characters/HeroAnimationReviewReel.tsx'
       - 'src/characters/HeroAnimationTimeline.tsx'
+      - 'src/characters/ChibiV4Sprite.tsx'
+      - 'src/characters/ChibiV4ReviewStage.tsx'
+      - 'characters/chibi-v4-design.json'
       - 'characters/full-animation-set.json'
       - 'characters/registry.json'
       - 'src/Root.tsx'
@@ -58,6 +65,7 @@ on:
       - 'scripts/prepare_hero_stage.py'
       - 'scripts/rig_official_v2_characters.py'
       - 'scripts/validate_full_animation_set.py'
+      - 'scripts/validate_chibi_v4_assets.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
@@ -93,6 +101,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_youtube_journey_*.py' -v
           python -m unittest discover -s tests -p 'test_full_animation_catalog.py' -v
           python scripts/validate_full_animation_set.py
+          python -m py_compile scripts/validate_chibi_v4_assets.py
           python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py scripts/prepare_hero_stage.py scripts/rig_official_v2_characters.py scripts/validate_full_animation_set.py
       - uses: actions/setup-node@v4
         with:
@@ -120,6 +129,10 @@ jobs:
         run: |
           npx remotion still HeroAnimationReviewReel out/hero-animation-review-staging.png --frame=20 --scale=0.5
           test -s out/hero-animation-review-staging.png
+      - name: Render new dark-green Chibi V4 asset-staging preview
+        run: |
+          npx remotion still ChibiV4ReviewStage out/chibi-v4-staging-reference.png --frame=40 --scale=0.5
+          test -s out/chibi-v4-staging-reference.png
       - uses: actions/upload-artifact@v4
         with:
           name: youtube-journey-eight-original-visual-beats
