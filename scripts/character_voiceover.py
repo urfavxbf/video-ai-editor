@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Route UrFavXBF/PIX dialogue to Tagalog VoxCPM2 by default or legacy English Chatterbox.
+"""Route UrFavXBF/PIX dialogue to English Chatterbox by default or optional Tagalog VoxCPM2.
 
 Default voice identities are stored in characters/registry.json. Importing this
 module does not download model weights; Tagalog is never routed as Malay.
@@ -22,10 +22,10 @@ def default_language() -> str:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="Synthesize UrFavXBF or PIX dialogue (Tagalog by default).")
+    p = argparse.ArgumentParser(description="Synthesize UrFavXBF or PIX dialogue (English by default, Tagalog optional).")
     p.add_argument("--character", required=True, choices=("urfavxbf", "pix"))
     p.add_argument("--language", choices=("tl", "en"), default=default_language(),
-                   help="Tagalog/Taglish (tl, default) or legacy English (en).")
+                   help="Tagalog/Taglish (tl, optional) or English (en, default).")
     t = p.add_mutually_exclusive_group(required=True)
     t.add_argument("--text")
     t.add_argument("--text-file", type=Path)
