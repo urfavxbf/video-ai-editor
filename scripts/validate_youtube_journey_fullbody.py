@@ -21,6 +21,25 @@ REQUIRED_LIMBS = ("body", "head", "leftArm", "rightArm", "leftLeg", "rightLeg")
 # PIX is a seated cat: two visible forelegs and tail, but no separately visible
 # hind limbs in the canonical 2D artwork. Never pretend nonexistent legs are rigged.
 PIX_REQUIRED_LIMBS = ("body", "head", "leftArm", "rightArm", "tail")
+# Mirrored with src/characters/OfficialV2Rig.ts and generated rig-assets.json.
+# Default episode renders now require actual articulated layers, not a flat PNG.
+def _rig_for(character: str) -> dict:
+    suffix = f"characters/pixel-glitch/{character}/rig/"
+    keys = ("body", "head", "leftArm", "rightArm", "leftLeg", "rightLeg") if character == "urfavxbf" else (
+        "body", "head", "leftArm", "rightArm", "tail")
+    pivots = ({"headPivotPercent": [54,43], "leftArmPivotPercent": [37,47],
+               "rightArmPivotPercent": [72,48], "leftLegPivotPercent": [41,73],
+               "rightLegPivotPercent": [63,73]} if character == "urfavxbf" else
+              {"headPivotPercent": [44,69], "leftArmPivotPercent": [31,74],
+               "rightArmPivotPercent": [50,75], "tailPivotPercent": [66,71]})
+    return {
+        "assetPath": DEFAULT_ASSETS[character]["assetPath"],
+        "layeredRig": {"underlay": suffix+"underlay.png",
+                       **{k:suffix+k+".png" for k in keys},
+                       **pivots},
+    }
+
+DEFAULT_FULL_BODY_RIG_ASSETS = {key: _rig_for(key) for key in ("urfavxbf", "pix")}
 OPTIONAL_LIMBS = ("underlay", "tail", "leftLeg", "rightLeg", "mouthClosed", "mouthOpen")
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 
@@ -95,7 +114,7 @@ def validate_assets(public_root: Path, assets: dict) -> dict[str, str]:
 def authorize_props(public_root: Path, props: dict) -> dict:
     if not isinstance(props.get("lines"), list) or not props["lines"]:
         raise ValueError("Only a complete voiced props manifest may be authorized")
-    assets = props.get("fullBodyAssets") or DEFAULT_ASSETS
+    assets = props.get("fullBodyAssets") or DEFAULT_FULL_BODY_RIG_ASSETS
     modes = validate_assets(public_root, assets)
     result = dict(props)
     result["fullBodyAssets"] = assets
