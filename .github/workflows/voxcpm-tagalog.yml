@@ -1,0 +1,94 @@
+name: Tagalog voice synthesis (VoxCPM2)
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Generate 2 Tagalog voice samples (CPU) or the full episode (GPU)'
+        required: true
+        type: choice
+        default: sample
+        options: [sample, full]
+  push:
+    branches: ['feature/y2038-tagalog-longform']
+    paths:
+      - '.github/workflows/voxcpm-tagalog.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vox-tl-${{ github.ref }}-${{ inputs.scope || 'sample' }}
+  cancel-in-progress: false
+
+jobs:
+  sample:
+    # Automatically try two real voice samples when this workflow is added,
+    # then permit manual re-runs without altering existing English voices.
+    if: github.event_name == 'push' || inputs.scope == 'sample'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU PyTorch
+        run: python -m pip install torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+      - name: Install pinned VoxCPM2 runtime
+        run: python -m pip install -r requirements-voxcpm.txt
+      - name: Generate REAL Tagalog voice from both characters (2 cues)
+        env:
+          HF_HOME: ${{ runner.temp }}/hf-cache
+        run: |
+          python scripts/y2038_export_voice_cues.py --generate --device cpu --max-cues 2
+      - name: Validate generated WAV assets
+        run: |
+          python - <<'PY'
+          import wave
+          from pathlib import Path
+          expected = [Path('out/y2038/voices/000_pix.wav'), Path('out/y2038/voices/001_urfavxbf.wav')]
+          for p in expected:
+              with wave.open(str(p), 'rb') as w:
+                  assert w.getnframes() > w.getframerate() // 5, p
+                  assert w.getsampwidth() == 2, p
+                  print(p, round(w.getnframes() / w.getframerate(), 2), 'seconds')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: urfavxbf-pix-tagalog-voice-samples
+          path: |
+            out/y2038/voices/*.wav
+            out/y2038/voices/*.json
+            out/y2038/voice_manifest.json
+          if-no-files-found: error
+          retention-days: 14
+
+  full-episode:
+    # GPU runner label requires an already configured and trusted self-hosted runner.
+    # Never silently run 2B x 40 dialogue synthesis on underpowered shared CPU.
+    if: github.event_name == 'workflow_dispatch' && inputs.scope == 'full'
+    runs-on: [self-hosted, linux, x64, gpu]
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install VoxCPM2 runtime
+        run: python -m pip install -r requirements-voxcpm.txt
+      - name: Generate all Tagalog dialogue with one loaded model
+        run: python scripts/y2038_export_voice_cues.py --generate --device cuda
+      - name: Package real WAV for 16:9 Remotion render
+        run: python scripts/y2038_audio_props.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: y2038-tagalog-40-voice-tracks
+          path: |
+            out/y2038/remotion-voice-props.json
+            out/y2038/voice_manifest.json
+            out/y2038/voices/
+            public/episodes/y2038/tl/
+          if-no-files-found: error
+          retention-days: 14
