@@ -1,0 +1,121 @@
+{
+  "id": "ghost-town-001",
+  "title": "Is the Internet Becoming a Ghost Town?",
+  "format": {
+    "type": "long-form-youtube",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "language": "en"
+  },
+  "sources": [
+    {
+      "title": "2026 Thales Bad Bot Report",
+      "url": "https://cpl.thalesgroup.com/resources/application-security/2026-bad-bot-report"
+    },
+    {
+      "title": "Cloudflare Radar Year in Review 2025",
+      "url": "https://blog.cloudflare.com/radar-2025-year-in-review/"
+    }
+  ],
+  "turns": [
+    {
+      "id": "t00",
+      "order": 0,
+      "speaker": "pix",
+      "chapter": "COLD OPEN",
+      "text": "UrFavXBF... is the internet turning into a ghost town? I just got twelve replies from accounts that all said the exact same thing."
+    },
+    {
+      "id": "t01",
+      "order": 1,
+      "speaker": "urfavxbf",
+      "chapter": "COLD OPEN",
+      "text": "Picture a crowded digital city. Millions of clicks, comments, searches and visits. It looks alive. But what if the loudest part of the crowd isn't human at all? The answer is more surprising, and more complicated, than you might think."
+    },
+    {
+      "id": "t02",
+      "order": 2,
+      "speaker": "pix",
+      "chapter": "THE BIG NUMBER",
+      "text": "Wait. Are you saying half the people on the internet are robots?"
+    },
+    {
+      "id": "t03",
+      "order": 3,
+      "speaker": "urfavxbf",
+      "chapter": "THE BIG NUMBER",
+      "text": "Not people. Traffic. According to the twenty twenty-six Thales Bad Bot Report, bots accounted for fifty-three percent of the web traffic measured in twenty twenty-five. That means automated requests, not that fifty-three percent of accounts are fake, or that half your friends are machines. One bot can send thousands of requests, while one person might send only a few."
+    },
+    {
+      "id": "t04",
+      "order": 4,
+      "speaker": "pix",
+      "chapter": "THE USEFUL MACHINES",
+      "text": "So some bots are actually helpful? Like little digital assistants?"
+    },
+    {
+      "id": "t05",
+      "order": 5,
+      "speaker": "urfavxbf",
+      "chapter": "THE USEFUL MACHINES",
+      "text": "Absolutely. Search-engine crawlers help people find websites. Monitoring bots check whether services are running. Accessibility and security tools can automate useful tasks. A bot is simply software that carries out actions automatically. Calling every bot evil would be like calling every vehicle a getaway car."
+    },
+    {
+      "id": "t06",
+      "order": 6,
+      "speaker": "pix",
+      "chapter": "THE DARK SIDE",
+      "text": "Okay, but what about the creepy ones? The bots with tiny villain capes?"
+    },
+    {
+      "id": "t07",
+      "order": 7,
+      "speaker": "urfavxbf",
+      "chapter": "THE DARK SIDE",
+      "text": "Those are a real problem. The same Thales report estimated that bad bots generated forty percent of web traffic. They can scrape information, hammer login pages, abuse online services and imitate legitimate visitors. Some attackers use automation to make activity look normal. But remember: malicious traffic and social-media comments are different measurements."
+    },
+    {
+      "id": "t08",
+      "order": 8,
+      "speaker": "pix",
+      "chapter": "THE AI TWIST",
+      "text": "And now AI makes the whole thing even harder to recognize, right?"
+    },
+    {
+      "id": "t09",
+      "order": 9,
+      "speaker": "urfavxbf",
+      "chapter": "THE AI TWIST",
+      "text": "AI adds another layer. Software can summarize pages, crawl the web, and help people research a question. Cloudflare reported that automated AI user-action crawling grew sharply in twenty twenty-five. But even that doesn't prove your social feed is mostly fake. Different reports observe different networks and different types of requests. Measurements have boundaries."
+    },
+    {
+      "id": "t10",
+      "order": 10,
+      "speaker": "pix",
+      "chapter": "THE HUMAN QUESTION",
+      "text": "So a busy screen isn't the same thing as a real conversation."
+    },
+    {
+      "id": "t11",
+      "order": 11,
+      "speaker": "urfavxbf",
+      "chapter": "THE HUMAN QUESTION",
+      "text": "Exactly. Numbers can describe a network without describing trust. When you see a viral claim, ask three questions. Where did this information come from? What is actually being counted? And can an independent source confirm it? If someone says fifty-three percent of the internet is fake, stop. They have turned traffic data into a claim about people."
+    },
+    {
+      "id": "t12",
+      "order": 12,
+      "speaker": "pix",
+      "chapter": "THE TAKEAWAY",
+      "text": "Source. Measurement. Confirmation. Got it. I am officially suspicious of dramatic percentages!"
+    },
+    {
+      "id": "t13",
+      "order": 13,
+      "speaker": "urfavxbf",
+      "chapter": "THE TAKEAWAY",
+      "text": "The internet isn't empty. Real humans are still here, building, learning and connecting. But we're sharing the space with more machines than ever. The real superpower isn't spotting every bot. It's knowing when to slow down, ask better questions, and think for yourself. I'm UrFavXBF, and this is PIX. Question everything."
+    }
+  ]
+}
