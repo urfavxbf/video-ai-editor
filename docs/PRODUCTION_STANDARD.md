@@ -1,3 +1,5 @@
+> **Character layout update:** User approved **head portraits only**, one on either side of the motion-graphics field. Eliminate the full-body character overlays from future videos. Keep animated face sprites and actual Chatterbox speaker attribution. See [PIXEL_GLITCH_PORTRAITS_ONLY.md](PIXEL_GLITCH_PORTRAITS_ONLY.md).
+
 # UrFavXBF + PIX — production quality standard
 
 **Owner direction recorded:** 2026-10-28. This is the default brief for every new original English-language video featuring UrFavXBF (main host) and PIX (female-voiced AI cat sidekick). AI agents should consult this before creating a screenplay, timeline or rendered video. Keep all visual work original and treat cited creators as technique references, not designs to copy.

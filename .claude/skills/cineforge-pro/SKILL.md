@@ -56,6 +56,9 @@ You are the editor. User provides footage; make artistic/technical editing decis
 
 #### Current owner improvement priorities — mandatory
 
+- **Latest explicit user layout decision**: use ONLY the **animated super-pixel/glitch HEAD PORTRAITS** of UrFavXBF (left) and PIX (right). Do **not** composite their large full-body sprites or bottom nameplates in new videos. See `docs/PIXEL_GLITCH_PORTRAITS_ONLY.md` and the `PixelPortraitHUD` / `PixelGlitchPortrait` Remotion components.
+
+
 - **Newest approved visual identity:** use `super-pixel-glitch-v2` for new UrFavXBF + PIX videos. These are separate real transparent 2D pixel-art PNGs, expression portraits, animation-loop frames and glitch VFX; see `docs/PIXEL_GLITCH_CHARACTER_PACK.md` and `characters/registry.json`. Don't mistake a concept sheet for an overlay.
 - The binary pack is in the owner's ChatGPT Library (`/UrFavXBF Video Characters/Pixel Glitch V2/`), **not yet in GitHub**. Stage images at `public/characters/pixel-glitch/` first; prefer the `src/characters/PixelGlitchSprite.tsx` frame-driven talk/idle/react loops when using this asset set.
 - Keep Chatterbox `natural-storyteller-v1` for UrFavXBF and `pix-cute-female-emily-v1` for PIX. Glitch effects should decorate/react, not overwhelm character readability or captions.

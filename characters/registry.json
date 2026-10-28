@@ -71,7 +71,8 @@
     "duration_policy": "script-and-chapter-driven",
     "legacy_portrait_demos_not_default": true,
     "video_codec": "h264",
-    "audio_codec": "aac"
+    "audio_codec": "aac",
+    "character_layout": "animated-head-portraits-only"
   },
   "preferred_visual_variant": "super-pixel-glitch-v2",
   "visual_variant_package": {
@@ -125,6 +126,11 @@
         "voice_profile": "pix-cute-female-emily-v1"
       }
     },
-    "note": "Preserve v1 visual records for old episodes; use this V2 sprite version for all new work after assets are staged. Mouth switches are approximate expression puppetry, not phoneme-viseme lip sync."
+    "note": "Preserve v1 visual records for old episodes; use this V2 sprite version for all new work after assets are staged. Mouth switches are approximate expression puppetry, not phoneme-viseme lip sync.",
+    "default_layout": "animated-head-portraits-only",
+    "full_body_rendering_default": false,
+    "portrait_component": "src/characters/PixelGlitchPortrait.tsx",
+    "portrait_composition": "PixelPortraitHUD",
+    "sample_library_path": "/UrFavXBF Video Characters/Pixel Glitch V2/PixelGlitch_PortraitsOnly_Sample_1080p.mp4"
   }
 }

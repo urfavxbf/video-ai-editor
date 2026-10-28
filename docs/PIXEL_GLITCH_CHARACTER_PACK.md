@@ -1,3 +1,5 @@
+> **Update (28 October 2026):** The preferred production layout is now **animated head portraits only**. Do not show the full-body V2 sprites in new videos. See [the portrait-only policy](PIXEL_GLITCH_PORTRAITS_ONLY.md). The pack retains full-body originals as archived raw source material.
+
 # Super Pixel / Glitch V2 — character asset pack
 
 **Status:** Approved visual direction for future UrFavXBF + PIX videos. Previous v1 PNGs remain in the registry for reproducing older edits. **Both canonical Chatterbox V3 English voice profiles remain unchanged.**
