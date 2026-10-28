@@ -7,6 +7,14 @@ description: Edit user-provided podcast, interview or talking-head video into pr
 
 You are the editor. User provides footage; make artistic/technical editing decisions, without inventing source material.
 
+## Official two-character production identity
+
+- **UrFavXBF** is the recurring main human presenter and is knowledgeable across wisdom, science, math, internet culture, AI, and editing. Do not label the channel science-only. Use the approved high-contrast black/yellow pixel-art transparent character image and Chatterbox `natural-storyteller-v1` English narration.
+- **PIX** is UrFavXBF's separate talking robotic-cat AI pet, with white/black/yellow/cyan visual identity and a cute feminine English voice, `pix-cute-female-emily-v1`, synthesized by Chatterbox V3 from the pinned synthetic Emily reference.
+- The owner approved and saved both characters/voice identities on 2026-10-28. Read `characters/registry.json` and `docs/OFFICIAL_CHARACTERS.md` before composing new stories. Preserve each character's face, costume and voice conditioning across scenes.
+- For English short-form voice lines, use `scripts/character_voiceover.py --character urfavxbf|pix --text ... --output ...`; never give PIX the main narrator's built-in speaker.
+- The original transparent PNGs and real voice samples live in the owner's ChatGPT Library under `/UrFavXBF Video Characters/`. They are **not yet binary assets in this repo**; stage the images into `public/characters/` before attempting an overlay render. Do not invent image or audio paths, lip sync, or completed MP4 outputs.
+
 ## Production language policy
 
 - For **all new original productions**, use **English only** for scripts, narration, on-screen graphics, captions, YouTube titles, descriptions, and SEO metadata. The approved default narration is Chatterbox Multilingual V3's `natural-storyteller-v1` English voice. Never describe voice synthesis as a complete rendered video.
