@@ -58,6 +58,8 @@ To synthesize candidate voice tracks on a compatible GPU-enabled runtime:
 
 ```bash
 python3 scripts/y2038_export_voice_cues.py --generate --device cuda
+python3 scripts/y2038_audio_props.py
+npx remotion render Y2038LongForm out/y2038-voiced.mp4 --props=out/y2038/remotion-voice-props.json
 ```
 
 This command uses the existing approved Tagalog VoxCPM2 router; it is not a cloud TTS service. Generation may require sizable downloads, memory and compute. Do not substitute unapproved English samples.
@@ -74,3 +76,27 @@ This command uses the existing approved Tagalog VoxCPM2 router; it is not a clou
 ### Status
 
 **Episode source ready for review and rendering.** The example visual preview is NOT a completed voiceover documentary. A final voiced MP4 cannot be asserted until the approved Tagalog WAVs are rendered and verified.
+
+
+## Bilingual voices and Actions execution (2026-10-28)
+
+The two original English Chatterbox V3 profiles remain unchanged and available by explicit `--language en`. `characters/registry.json` selects VoxCPM2 Tagalog (`tl`) by default. The VoxCPM2 2.0.3 API does not take a `seed` parameter: the generator now seeds PyTorch, and the episode batch **loads the model only once**.
+
+For an *individual* synthetic speech sample:
+
+```bash
+python scripts/character_voiceover.py --character urfavxbf \
+  --text "Alam mo ba, PIX? May misteryo sa computer." --output out/urfavxbf-tl.wav
+python scripts/character_voiceover.py --character pix \
+  --text "Hala, seryoso? Tara, alamin natin!" --output out/pix-tl.wav
+```
+
+Use Python 3.11 with `pip install -r requirements-voxcpm.txt`, plus a suitable GPU for efficient inference. Optional CPU inference may be extremely slow and memory-intensive with the 2B-parameter checkpoint.
+
+A dedicated `.github/workflows/voxcpm-tagalog.yml` workflow:
+- **sample:** Standard GitHub-hosted CPU runner, first two dialogue WAVs (one PIX, one UrFavXBF), 180-minute cutoff; uploads real outputs as artifacts only if successful.
+- **full:** Requires a preconfigured trusted self-hosted Linux runner labeled `gpu`; creates all 40 dialogue WAVs and a measured Remotion props JSON.
+- No external TTS account, fees or voice rights for the English profiles are silently altered.
+- Never claim the WAVs or MP4 have been generated until the workflow shows success. A successful artifact still requires listening/QC before being approved as final character voices.
+
+Run model-free CI at any time: `python3 -m unittest discover -s scripts -p 'test_y2038_*.py' -v`.
