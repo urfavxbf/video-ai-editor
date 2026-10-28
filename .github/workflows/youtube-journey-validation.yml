@@ -7,12 +7,17 @@ on:
       - 'src/episodes/YouTubeJourneyPreview.tsx'
       - 'src/episodes/YouTubeJourneyVisuals.tsx'
       - 'src/episodes/YouTubeJourneyFullEpisode.tsx'
+      - 'src/episodes/YouTubeJourneyFullBodyCharacters.tsx'
+      - 'src/episodes/YouTubeJourneyStyleframes.tsx'
+      - 'src/characters/CharacterPuppet.tsx'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
       - 'scripts/build_youtube_journey_full.py'
+      - 'scripts/validate_youtube_journey_fullbody.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
+      - 'tests/test_youtube_journey_fullbody.py'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
   pull_request:
@@ -20,12 +25,17 @@ on:
       - 'src/episodes/YouTubeJourneyPreview.tsx'
       - 'src/episodes/YouTubeJourneyVisuals.tsx'
       - 'src/episodes/YouTubeJourneyFullEpisode.tsx'
+      - 'src/episodes/YouTubeJourneyFullBodyCharacters.tsx'
+      - 'src/episodes/YouTubeJourneyStyleframes.tsx'
+      - 'src/characters/CharacterPuppet.tsx'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
       - 'scripts/build_youtube_journey_full.py'
+      - 'scripts/validate_youtube_journey_fullbody.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
+      - 'tests/test_youtube_journey_fullbody.py'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
   workflow_dispatch:
@@ -49,7 +59,7 @@ jobs:
       - name: Test real-WAV timeline and creative contract (no model download)
         run: |
           python -m unittest discover -s tests -p 'test_youtube_journey_*.py' -v
-          python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py
+          python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
