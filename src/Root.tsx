@@ -20,7 +20,8 @@ const spec = edit as EditSpec
 
 export const Root = () => <>
   <Composition id="Y2038LongForm" component={Y2038LongForm} width={1920} height={1080} fps={30} durationInFrames={Y2038_TOTAL_FRAMES}
-    defaultProps={{assetsReady: false} satisfies Y2038LongFormProps} />
+    defaultProps={{assetsReady: false} satisfies Y2038LongFormProps}
+    calculateMetadata={({props}) => ({durationInFrames: Math.max(30, props.totalFrames ?? Y2038_TOTAL_FRAMES)})} />
   <Composition id="Y2038Teaser" component={Y2038Teaser} width={1920} height={1080} fps={30} durationInFrames={720}
     defaultProps={{assetsReady: false} satisfies Y2038TeaserProps} />
   <Composition id="PixelPortraitHUD" component={PixelPortraitHUD}
