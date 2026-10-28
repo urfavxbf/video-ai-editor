@@ -148,7 +148,7 @@ def synthesize(args: argparse.Namespace) -> tuple[Path, Path]:
                                      suffix=".wav", delete=False) as handle:
         temp_wav = Path(handle.name)
     try:
-        torchaudio.save(str(temp_wav), data, model.sr)
+        torchaudio.save(str(temp_wav), data, model.sr, encoding="PCM_S", bits_per_sample=16)
         if temp_wav.stat().st_size <= 44:
             raise RuntimeError("Empty WAV generated")
         temp_wav.replace(args.output)
