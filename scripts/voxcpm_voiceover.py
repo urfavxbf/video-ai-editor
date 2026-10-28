@@ -97,6 +97,7 @@ def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str]) -> Pa
     try:
         import numpy as np
         import soundfile as sf
+        import torch
         from voxcpm import VoxCPM
     except ImportError as exc:
         raise RuntimeError("Install optional VoxCPM2 dependencies: pip install -r requirements-voxcpm.txt") from exc
@@ -114,8 +115,9 @@ def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str]) -> Pa
     for i, chunk in enumerate(chunks):
         # Official VoxCPM2 voice-design syntax: parenthesized description before text.
         designed_text = f"({profile['voice_design_prompt']}) {chunk}"
+        torch.manual_seed(args.seed + i)
         audio = np.asarray(model.generate(
-            text=designed_text, cfg_value=2.0, inference_timesteps=10, seed=args.seed + i
+            text=designed_text, cfg_value=2.0, inference_timesteps=10
         ), dtype=np.float32).reshape(-1)
         if audio.size < rate // 5 or not np.isfinite(audio).all():
             raise RuntimeError(f"Invalid audio returned for chunk {i + 1}")
