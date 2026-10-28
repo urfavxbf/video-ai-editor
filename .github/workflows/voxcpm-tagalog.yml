@@ -9,10 +9,6 @@ on:
         type: choice
         default: sample
         options: [sample, full]
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/voxcpm-tagalog.yml'
 
 permissions:
   contents: read
@@ -23,9 +19,9 @@ concurrency:
 
 jobs:
   sample:
-    # Automatically try two real voice samples when this workflow changes,
-    # then permit manual re-runs without altering existing English voices.
-    if: github.event_name == 'pull_request' || inputs.scope == 'sample'
+    # Tagalog synthesis is PAUSED and must be explicitly manually requested.
+    # Never start a paid GPU or automatic Tagalog inference.
+    if: inputs.scope == 'sample'
     runs-on: ubuntu-24.04
     timeout-minutes: 180
     steps:
