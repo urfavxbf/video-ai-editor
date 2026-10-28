@@ -5,15 +5,14 @@
 - Beginner journey: PIX creates an everyday-tech channel; UrFavXBF guides her.
 - English script, captions, graphics and existing approved English voices.
 - Balanced explanation with short playful banter.
-- 1920×1080, 30 fps, portrait-only V2 character identity.
+- 1920×1080, 30 fps, **approved transparent full-body** UrFavXBF + PIX with audio-driven 2.5D gestures; no portrait-only framing.
 - Target 10–12 minutes; final duration follows measured dialogue, not padded pacing.
 - Main branch remains unchanged during production.
 
 ## Source and assets
 Inspected base: f6b80619c64ef1bd7cc2e5410dc897a6d1ab8e08.
 No AGENTS.md appears in its complete recursive tree.
-Approved pack: PixelGlitch_Complete_Pack.zip, under /UrFavXBF Video Characters/Pixel Glitch V2/.
-Stage its urfavxbf and pix directories under public/characters/pixel-glitch/.
+Full-body asset paths from the existing character puppet contract: `public/characters/UrFavXBF_Transparent.png` and `public/characters/PIX_Transparent.png`. Stage approved RGBA files there; neither is present in GitHub `public/` yet. Optional layered rig art may be provided through `fullBodyAssets` in render props.
 Never commit recordings, model weights or generated videos to Git.
 
 ## Story choreography
@@ -32,8 +31,8 @@ Never commit recordings, model weights or generated videos to Git.
 ## Visual system
 Dark navy (#060d19), near-white (#f1f6ff), host yellow (#ffda00), PIX cyan (#27e8fd).
 Inter typography; 52px chapter titles, 24–38px information, 34px captions in styleframes.
-Canonical 414×468 portraits at left/right, central 890px graphic field.
-Keep chapter titles above portraits and captions below the graphic field.
+Full-body puppets at left/right (host 438×670, PIX 412×645); central 890px graphic field stays readable.
+Keep chapter titles above characters and captions below the graphic field. Limbs animate independently only when their transparent rig layers have been staged and validated.
 Glitch only as a motivated brief transition; no repeated flashing.
 Use frame-derived easing and registered Remotion compositions.
 Styleframe composition is visual development only, not a narrated video.
@@ -47,7 +46,7 @@ PIX: pix-cute-female-emily-v1, en, exaggeration 0.65, cfg 0.35, verified Emily r
 Never substitute another voice engine without an explicit creative decision.
 Generate isolated WAV per line; measure decoded sample counts.
 Set listener reactions by story meaning; derive talk state from actual isolated voice energy.
-Existing portrait puppetry is audio-reactive, not phoneme/viseme lip sync.
+Full-body 2.5D puppetry is audio-reactive and gesture-based, not volumetric 3D or phoneme/viseme lip-sync. A single character PNG receives whole-body motion only; articulated arm/leg/head movement requires verified separate aligned rig layers.
 Preserve watermarking and applicable voice/model licenses.
 Word captions require reviewed alignment. Null timing fields deliberately prevent false sync claims.
 
@@ -98,8 +97,11 @@ To use the workflow's audio artifact locally after the voice run succeeds:
 # Download/extract the artifact so these paths exist:
 # out/youtube-journey-preview.props.json
 # public/voiceovers/youtube-beginner-journey/preview/{pix,urfavxbf}/YT-xxx.wav
-# Extract the two approved portrait directories from the original character
-# pack to public/characters/pixel-glitch/{pix,urfavxbf}/
+# Stage the two approved full-body PNGs in public/characters/:
+# UrFavXBF_Transparent.png and PIX_Transparent.png.
+# Validate the props before rendering:
+# python scripts/validate_youtube_journey_fullbody.py --props out/youtube-journey-preview.props.json \\
+#   --out out/youtube-journey-preview-ready.props.json
 npm ci
 npm run typecheck
 npx remotion render YouTubeJourneyPreview out/youtube-journey-preview.mp4 \
@@ -108,7 +110,7 @@ npx remotion render YouTubeJourneyPreview out/youtube-journey-preview.mp4 \
   --audio-codec=aac
 ```
 
-Do not render with stand-in full-body characters. Official portrait PNGs are
+Do not render with stand-in characters. Official full-body RGBA PNGs are
 external assets and are **not** present in this GitHub branch. Voice artifacts
 are also external until the CPU workflow completes successfully. No verified
 MP4 exists from this commit alone. Recheck peak levels, exact captions,
@@ -123,3 +125,34 @@ Do not upload to YouTube automatically.
 - Typecheck Remotion changes and inspect all three rendered styleframes.
 - After real audio exists: audit speaker identity, missing words, silence, caption offset, peaks and measured duration.
 - Final MP4 requires ffprobe plus beginning/middle/end and risky-shot playback.
+
+## Updated character direction: full-body animated
+
+Per the owner's latest direction, all YouTube-beginner-journey production
+compositions now stage **full-body UrFavXBF and PIX**, not only their heads.
+`src/episodes/YouTubeJourneyFullBodyCharacters.tsx` places both characters in
+the side columns, leaves the central motion graphic area clear, and drives
+reactions and gestures from the measured English WAV envelopes.
+
+The existing `CharacterPuppet.tsx` now supports:
+- Breathing, micro-sway, anticipatory bounces, body lean, stepping and simple
+  presenter movements on an entire transparent full-body sprite.
+- Optional individually rotating transparent **head, left/right arms,
+  left/right legs**, animated tail and open/closed mouth layers when those
+  official sprites are actually available.
+- Per-speaker RMS-informed movement and chapter-specific pointing, explaining,
+  walking and celebratory gestures. A listener stays relatively still,
+  responding to the other speaker instead of always dancing.
+- 30fps deterministic Remotion animation that does not require GPU models.
+
+**Important asset distinction:** one flat PNG cannot yield genuine independent
+limb movements. To get arms, legs, and head to move on their own, provide
+transparent cutout layers aligned to a shared canvas, with the torso layer
+not duplicating them. The authorized render props can include
+`fullBodyAssets.{urfavxbf,pix}.layeredRig`. See
+`FULL_BODY_ANIMATION.md` for layout, PNG validation, and commands.
+
+The 68 actual English dialogue WAVs have already been generated successfully:
+the measured episode is **485.867s (8:05.867)**, compared with the
+11:30 storyboard timing target. Do not stretch narration or pad frames just
+to meet that target. Captions remain editorially estimated pending human QC.
