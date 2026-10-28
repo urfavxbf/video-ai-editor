@@ -23,6 +23,12 @@ This repository is the AI-operated video production workspace for the recurring 
 
 See [official character setup](docs/OFFICIAL_CHARACTERS.md) and [PIX voice guide](docs/PIX_VOICE.md). The existing test/demo compositions remain for regression purposes; they do not define the project's subject or host.
 
+## Character animation v2 — active priority
+
+Based on the owner's Ghost Town pilot feedback, character animation is now the **first improvement**, before caption-and-data fusion. The current implementation adds a [speaker-aware 2.5D Remotion character puppet](src/characters/CharacterPuppet.tsx), a [1920×1080 animation workbench](src/characters/CharacterAnimationLab.tsx), and a [real-WAV motion envelope extractor](scripts/extract_voice_envelope.py). These are **not 3D skeletal rigs or verified lip-sync**; the canonical PNGs must be staged from the owner's asset Library.
+
+The next visual pass will integrate **verified data directly into animated captions**, tied to actual word timestamps, rather than stacking independent infographic and subtitle panels. See [Animation V2 roadmap](docs/CHARACTER_ANIMATION_V2.md) for capabilities, delivery gates, and the proper `@remotion/three` + GLB / Blender rig path to real 3D characters.
+
 ## Included
 - **18-second original Remotion product reel** with kinetic typography, podcast mockups, Tagalog caption animation and stack overview. Run `npm run render:repo-showcase`; see [showcase guide](docs/SHOWCASE.md).
 - **21 Remotion motion effects**: Snap Zoom, Headline Storm, Liquid Glass, Frame Escape, Paper Cutout, Magazine Cover, Split and more.
