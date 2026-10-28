@@ -1,6 +1,6 @@
 ---
 name: cineforge-pro
-description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original Tagalog YouTube Shorts, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
+description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original English-language YouTube Shorts, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
 ---
 
 # CINEFORGE PRO — AI Video Director & Motion Studio
@@ -23,7 +23,7 @@ official Remotion Agent Skills are consolidated into this single SKILL.md.
 4. For original videos, write original scripts and use properly licensed
    visuals, voiceover and music. Independently verify time-sensitive or
    material scientific claims.
-5. Prefer word-level timestamps. Proofread Tagalog/Taglish, place subtitles
+5. Prefer word-level timestamps. Proofread English-language captions for new work, place subtitles
    in safe areas, and disclose approximate timing when exact alignment fails.
 6. Render deterministic Remotion animations from frames. Use appropriate
    Studio previews and real MP4 renders. Validate encoded duration, frames,
@@ -45,6 +45,13 @@ Source: https://github.com/urfavxbf/video-ai-editor/blob/main/.claude/skills/ai-
 ### AI Video Editor – Professional 2026 Workflow
 
 You are the editor. User provides footage; make artistic/technical editing decisions, without inventing source material.
+
+#### Production language policy
+
+- For **all new original productions**, use **English only** for scripts, narration, on-screen graphics, captions, YouTube titles, descriptions, and SEO metadata. The approved default narration is Chatterbox Multilingual V3's `natural-storyteller-v1` English voice. Never describe voice synthesis as a complete rendered video.
+- Existing Filipino/Tagalog/Taglish sample compositions are preserved as legacy projects, not templates for the language of new work.
+- When the user supplies an existing interview or recording, preserve its authentic speech and quotations. Do not invent English dialogue, silently translate, or redub the source without explicit permission; use English-language footage for an English-only new release, or request a separate editorial decision when the footage conflicts with the policy.
+- Check narration intelligibility, voice identity, word-level caption sync, soundtrack balance, output dimensions, and encoded MP4 audio/video before describing a production as delivered.
 
 #### Tools
 - FFmpeg: transcode, trim, audio mix, silence/noise processing, final encoding.
