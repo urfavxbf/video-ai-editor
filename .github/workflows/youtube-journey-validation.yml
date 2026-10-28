@@ -13,6 +13,9 @@ on:
       - 'src/characters/HeroPerformance.ts'
       - 'src/characters/HeroCharacterStage.tsx'
       - 'src/characters/OfficialV2Rig.ts'
+      - 'src/characters/FullAnimationLibrary.tsx'
+      - 'src/characters/HeroAnimationReviewReel.tsx'
+      - 'characters/full-animation-set.json'
       - 'characters/registry.json'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
@@ -20,12 +23,14 @@ on:
       - 'scripts/validate_youtube_journey_fullbody.py'
       - 'scripts/prepare_hero_stage.py'
       - 'scripts/rig_official_v2_characters.py'
+      - 'scripts/validate_full_animation_set.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
       - 'tests/test_youtube_journey_fullbody.py'
       - 'tests/test_youtube_journey_hero.py'
       - 'tests/test_youtube_journey_rig.py'
+      - 'tests/test_full_animation_catalog.py'
       - 'requirements-character-rig.txt'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
@@ -40,6 +45,9 @@ on:
       - 'src/characters/HeroPerformance.ts'
       - 'src/characters/HeroCharacterStage.tsx'
       - 'src/characters/OfficialV2Rig.ts'
+      - 'src/characters/FullAnimationLibrary.tsx'
+      - 'src/characters/HeroAnimationReviewReel.tsx'
+      - 'characters/full-animation-set.json'
       - 'characters/registry.json'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
@@ -47,12 +55,14 @@ on:
       - 'scripts/validate_youtube_journey_fullbody.py'
       - 'scripts/prepare_hero_stage.py'
       - 'scripts/rig_official_v2_characters.py'
+      - 'scripts/validate_full_animation_set.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
       - 'tests/test_youtube_journey_fullbody.py'
       - 'tests/test_youtube_journey_hero.py'
       - 'tests/test_youtube_journey_rig.py'
+      - 'tests/test_full_animation_catalog.py'
       - 'requirements-character-rig.txt'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
@@ -79,7 +89,9 @@ jobs:
       - name: Test real-WAV timeline and creative contract (no model download)
         run: |
           python -m unittest discover -s tests -p 'test_youtube_journey_*.py' -v
-          python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py scripts/prepare_hero_stage.py scripts/rig_official_v2_characters.py
+          python -m unittest discover -s tests -p 'test_full_animation_catalog.py' -v
+          python scripts/validate_full_animation_set.py
+          python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py scripts/prepare_hero_stage.py scripts/rig_official_v2_characters.py scripts/validate_full_animation_set.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -102,6 +114,10 @@ jobs:
           npx remotion still HeroCharacterStage out/hero-character-stage-reference.png \
             --frame=90 --scale=0.5
           test -s out/hero-character-stage-reference.png
+      - name: Render source-honest 48-frame close-up sprite review placeholder
+        run: |
+          npx remotion still HeroAnimationReviewReel out/hero-animation-review-staging.png --frame=20 --scale=0.5
+          test -s out/hero-animation-review-staging.png
       - uses: actions/upload-artifact@v4
         with:
           name: youtube-journey-eight-original-visual-beats
