@@ -36,7 +36,7 @@ export const YouTubeJourneyStyleframes: React.FC<JourneySceneProps> = ({sceneOve
         <div style={{fontSize:26,lineHeight:1.4,color:muted,marginTop:24}}>Views ÷ 1,000 × RPM<br/>Revenue before creator expenses and taxes.</div>
       </>}
     </div>
-    <div style={{position:'absolute',left:64,right:64,bottom:preview?65:80,borderTop:'1px solid #35455c',paddingTop:30}}><div style={{fontSize:19,color:scene===0?yellow:cyan,fontWeight:800,letterSpacing:3,marginBottom:14}}>{speakerOverride ?? (scene===0?'URFAVXBF':'PIX')}</div><div style={{fontSize:preview?28:34,fontWeight:600,lineHeight:1.25,maxWidth:1730}}>{caption}</div></div>
+    <div style={{position:'absolute',left:64,right:64,bottom:preview?65:80,borderTop:'1px solid #35455c',paddingTop:30}}><div style={{fontSize:19,color:(speakerOverride?speakerOverride==='URFAVXBF':scene===0)?yellow:cyan,fontWeight:800,letterSpacing:3,marginBottom:14}}>{speakerOverride ?? (scene===0?'URFAVXBF':'PIX')}</div><div style={{fontSize:preview?28:34,fontWeight:600,lineHeight:1.25,maxWidth:1730}}>{caption}</div></div>
     <div style={{position:'absolute',bottom:23,left:64,right:64,display:'flex',justifyContent:'space-between',fontSize:16,color:muted}}><span>{preview?'PRODUCTION PREVIEW / CHAPTER EXCERPTS':'VISUAL DEVELOPMENT / STATIC STYLEFRAME'}</span><span>{scene===1?'Policy checked 28 Oct 2026 · support.google.com/youtube/answer/13429240':scene===2?'Invented RPM values · no income guarantee':'How YouTube Actually Works—and How Creators Make Money'}</span></div>
   </AbsoluteFill>;
 };
