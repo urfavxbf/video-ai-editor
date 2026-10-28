@@ -1,4 +1,5 @@
 import React from 'react';
+import {PORTRAIT_LAYOUT} from './portraitLayout';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {type VoiceEvent} from './CharacterPuppet';
 import {PixelGlitchPortrait, type PortraitReactionCue} from './PixelGlitchPortrait';
@@ -44,16 +45,16 @@ export const PixelPortraitHUD: React.FC<PixelPortraitHUDProps> = ({
       </div>
       {assetsReady ? (
         <>
-          <PixelGlitchPortrait id="urfavxbf" left={115} top={226}
+          <PixelGlitchPortrait id="urfavxbf" left={PORTRAIT_LAYOUT.left} top={PORTRAIT_LAYOUT.top}
             voiceEvents={voiceEvents} reactions={reactions}/>
-          <PixelGlitchPortrait id="pix" right={105} top={226}
+          <PixelGlitchPortrait id="pix" right={PORTRAIT_LAYOUT.right} top={PORTRAIT_LAYOUT.top}
             voiceEvents={voiceEvents} reactions={reactions}/>
         </>
       ) : (
         <>
           {(['URFAVXBF', 'PIX'] as const).map((name, i) => (
-            <div key={name} style={{position:'absolute', top:226, left:i===0?115:undefined,
-              right:i===1?105:undefined, width:306, height:346, boxSizing:'border-box',
+            <div key={name} style={{position:'absolute', top:PORTRAIT_LAYOUT.top, left:i===0?PORTRAIT_LAYOUT.left:undefined,
+              right:i===1?PORTRAIT_LAYOUT.right:undefined, width:PORTRAIT_LAYOUT.width, height:PORTRAIT_LAYOUT.height, boxSizing:'border-box',
               border:`3px dashed ${i===0?YELLOW:CYAN}`, borderRadius:20,
               color:i===0?YELLOW:CYAN, fontSize:23, display:'flex', alignItems:'center',
               justifyContent:'center', textAlign:'center', padding:24}}>
