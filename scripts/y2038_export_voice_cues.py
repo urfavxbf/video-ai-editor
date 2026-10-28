@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
 import sys
 from pathlib import Path
 
@@ -66,29 +65,53 @@ def main() -> int:
     parser.add_argument("--generate", action="store_true", help="Run approved Tagalog VoxCPM2 voice synthesis")
     parser.add_argument("--device", choices=("auto", "cuda", "cpu", "mps"), default="auto")
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--max-cues", type=int, default=0, help="Generate only first N cues (0 = all)")
+    parser.add_argument("--start-cue", type=int, default=0, help="First zero-based cue to synthesize")
     args = parser.parse_args()
     cues = read_cues()
     manifest = write_manifest(cues, args.output)
     duration = manifest[-1]["estimated_end_frame"] / 30
     print(f"Prepared {len(manifest)} cues, {duration:.1f}s estimated. WAVs not yet generated.")
     if args.generate:
-        voices = args.output / "voices"
-        voices.mkdir(parents=True, exist_ok=True)
-        for item in manifest:
-            destination = args.output / item["intended_wav"]
-            if destination.exists() and not args.overwrite:
-                print(f"Skip existing {destination}")
-                continue
-            command = [
-                sys.executable, str(ROOT / "scripts/character_voiceover.py"),
-                "--character", item["speaker"], "--language", "tl",
-                "--text-file", str(args.output / item["text_file"]),
-                "--output", str(destination), "--device", args.device,
-            ]
-            if args.overwrite:
-                command += ["--overwrite"]
-            subprocess.run(command, check=True)
-        print("Synthesized audio candidates. Listen and verify before use.")
+        # Load VoxCPM2 ONCE for the entire episode, not once per line.
+        from argparse import Namespace
+        from voxcpm import VoxCPM
+        from voxcpm_voiceover import profile_for, synthesize, split_text
+
+        if args.start_cue < 0 or args.start_cue >= len(manifest):
+            raise ValueError("--start-cue is outside the episode cue range")
+        if args.max_cues < 0:
+            raise ValueError("--max-cues must be >= 0")
+        end_index = min(len(manifest), args.start_cue + (args.max_cues or len(manifest)))
+        selected = manifest[args.start_cue:end_index]
+        profiles = {speaker: profile_for(speaker) for speaker in ("urfavxbf", "pix")}
+        if {p["model_id"] for p in profiles.values()} != {"openbmb/VoxCPM2"}:
+            raise ValueError("Voice presets are not pinned to the expected model")
+        pending = [
+            m for m in selected
+            if args.overwrite or not (args.output / m["intended_wav"]).is_file()
+        ]
+        if not pending:
+            print("All selected WAV files already exist. No checkpoint load needed.")
+        else:
+            # CPU and MPS do not benefit from torch.compile; avoid huge startup costs.
+            import torch
+            model = VoxCPM.from_pretrained(
+                "openbmb/VoxCPM2", device=args.device, load_denoiser=False,
+                optimize=args.device == "cuda" or (args.device == "auto" and torch.cuda.is_available())
+            )
+            for item in pending:
+                speaker = item["speaker"]
+                destination = args.output / item["intended_wav"]
+                transcript = (args.output / item["text_file"]).read_text(encoding="utf-8")
+                options = Namespace(
+                    character=speaker, text=transcript, text_file=None,
+                    output=destination, device=args.device, seed=4200 + item["index"] * 7,
+                    max_chars=320, pause_ms=250, overwrite=args.overwrite,
+                )
+                synthesize(options, profiles[speaker], split_text(transcript), model=model)
+                print(f"Generated cue {item['index'] + 1}/{len(manifest)}: {destination}", flush=True)
+        print("Voice candidates are ready for audio QA. Do not call timings word-aligned.")
     return 0
 
 
