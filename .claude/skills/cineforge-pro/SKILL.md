@@ -54,6 +54,14 @@ You are the editor. User provides footage; make artistic/technical editing decis
 - For English short-form voice lines, use `scripts/character_voiceover.py --character urfavxbf|pix --text ... --output ...`; never give PIX the main narrator's built-in speaker.
 - The original transparent PNGs and real voice samples live in the owner's ChatGPT Library under `/UrFavXBF Video Characters/`. They are **not yet binary assets in this repo**; stage the images into `public/characters/` before attempting an overlay render. Do not invent image or audio paths, lip sync, or completed MP4 outputs.
 
+#### Motion graphics, character animation, and voice QA — mandatory
+
+- Apply `docs/PRODUCTION_STANDARD.md` as the **acceptance criteria for every new UrFavXBF + PIX video**: cinematic advanced motion design, appropriate selections from all **21 available effects** in `src/fx/`, character-specific animation/reactions and accurate audio-to-caption-to-animation timing.
+- The 21 entries in `src/fx/` are motion-effect implementations, **not 21 separate agent skills**; CineForge Pro consolidates the custom editing skill plus 12 official Remotion skills. Use both the effect library and relevant agent guidance.
+- For the pilot, use **“Is the Internet Becoming a Ghost Town?”**, ~40–50 seconds, English dialogue, interactive internet/AI overlays and grounded fact-checking of bot traffic claims; do not confuse bot traffic with human accounts.
+- Before rendering, **verify both PNGs are staged** and generate separate lines for each voice via `scripts/character_voiceover.py`. Validate the speaker-to-WAV mapping, voice pronunciation, actual word alignment and reactive animation; never claim real lip sync from still PNGs without a mouth rig/sprites.
+- Preview and verify the final MP4 with real audio and visual QA; polish is not satisfied by passing unit tests alone.
+
 #### Production language policy
 
 - For **all new original productions**, use **English only** for scripts, narration, on-screen graphics, captions, YouTube titles, descriptions, and SEO metadata. The approved default narration is Chatterbox Multilingual V3's `natural-storyteller-v1` English voice. Never describe voice synthesis as a complete rendered video.

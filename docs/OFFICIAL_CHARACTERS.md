@@ -47,6 +47,10 @@ python scripts/character_voiceover.py --character pix \
 
 PIX's source recording is an openly available synthetic voice reference with MIT [attribution and provenance](PIX_VOICE.md). Do not use unrelated private recordings or claim that the same waveform is guaranteed across synthesis attempts.
 
+## Production quality standard and pilot
+
+For all new videos, follow [the advanced motion/animation/voice QA standard](PRODUCTION_STANDARD.md). The current pilot concept is **“Is the Internet Becoming a Ghost Town?”** (English, ~40–50s, two speakers, cinematic pixel-art character overlays on realistic backgrounds, interactive animated internet/AI graphics). The studio has **21 effects** and **13 agent skills**; only use those effects that add visual meaning. Real mouth/viseme lip sync requires actual sprites or a rig and is not supplied by the two static transparent PNGs alone.
+
 ## Video editing policy
 
 An AI agent is the editor: choose story beats, cue effects and camera moves, apply each character's **own** overlay and **own** voice. Keep both roles consistent, avoid repeatedly stacking effects, and do not switch who is speaking without matching the narration. Preserve third-party source dialogue and ask for permission before translating/revoicing it. Never upload to YouTube without explicit authorization.
