@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
-      HF_HOME: ${{ runner.temp }}/huggingface
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
       OMP_NUM_THREADS: "4"
       MKL_NUM_THREADS: "4"
       TOKENIZERS_PARALLELISM: "false"
