@@ -109,6 +109,15 @@ def generate(args: argparse.Namespace) -> Path:
             "environment and install requirements-chatterbox.txt."
         ) from exc
 
+    # PyPI 0.1.7 predates the V3 selector even though upstream's source
+    # pyproject continues to report 0.1.7. Fail clearly before model download.
+    from inspect import signature
+    if "t3_model" not in signature(ChatterboxMultilingualTTS.from_pretrained).parameters:
+        raise RuntimeError(
+            "The installed Chatterbox package does not support Multilingual V3. "
+            "Reinstall the pinned GitHub source in requirements-chatterbox.txt."
+        )
+
     device = choose_device(torch, args.device)
     print(f"Loading Chatterbox Multilingual V3 on {device}...", file=sys.stderr)
     model = ChatterboxMultilingualTTS.from_pretrained(
@@ -131,7 +140,7 @@ def generate(args: argparse.Namespace) -> Path:
     ) as handle:
         temporary = Path(handle.name)
     try:
-        torchaudio.save(str(temporary), waveform.detach().cpu(), model.sr)
+        torchaudio.save(str(temporary), waveform.detach().cpu(), model.sr, encoding="PCM_S", bits_per_sample=16)
         if temporary.stat().st_size <= 44:
             raise RuntimeError("Chatterbox produced an empty WAV file.")
         temporary.replace(destination)

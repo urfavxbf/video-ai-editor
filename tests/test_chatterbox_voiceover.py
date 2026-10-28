@@ -88,8 +88,8 @@ class ChatterboxVoiceoverTests(unittest.TestCase):
                 sr = 24000
 
                 @classmethod
-                def from_pretrained(cls, **kwargs):
-                    calls["load"] = kwargs
+                def from_pretrained(cls, device: str, t3_model: str | None = None):
+                    calls["load"] = {"device": device, "t3_model": t3_model}
                     return cls()
 
                 def generate(self, narration, **kwargs):
@@ -103,7 +103,9 @@ class ChatterboxVoiceoverTests(unittest.TestCase):
             )
             torchaudio = types.ModuleType("torchaudio")
 
-            def fake_save(path, tensor, rate):
+            def fake_save(path, tensor, rate, **kwargs):
+                calls["encoding"] = kwargs.get("encoding")
+                calls["bits"] = kwargs.get("bits_per_sample")
                 calls["save_rate"] = rate
                 Path(path).write_bytes(b"RIFF" + b"\0" * 60)
 
@@ -129,6 +131,8 @@ class ChatterboxVoiceoverTests(unittest.TestCase):
             self.assertTrue(output.is_file())
             self.assertEqual(calls["load"], {"device": "cpu", "t3_model": "v3"})
             self.assertEqual(calls["save_rate"], 24000)
+            self.assertEqual(calls["encoding"], "PCM_S")
+            self.assertEqual(calls["bits"], 16)
             self.assertEqual(
                 calls["generation"][1]["audio_prompt_path"],
                 str(audio_reference)

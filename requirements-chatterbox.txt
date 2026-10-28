@@ -1,2 +1,9 @@
-# Optional heavy GPU/CPU TTS dependency; isolate from the regular editor venv.
-chatterbox-tts==0.1.7
+# Separate, optional TTS runtime: keep off the default editor / CI installation.
+#
+# PyPI chatterbox-tts==0.1.7 was published before Multilingual V3 support.
+# The GitHub commit below implements ChatterboxMultilingualTTS.from_pretrained(
+#     device=..., t3_model="v3"
+# ).
+# Pin the immutable source revision: upstream pyproject still identifies itself as
+# version 0.1.7, so a PyPI version constraint alone cannot guarantee V3 support.
+chatterbox-tts @ git+https://github.com/resemble-ai/chatterbox.git@5de7a54aa4e5e2baadb0182dde554908b48b85c2
