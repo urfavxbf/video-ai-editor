@@ -93,18 +93,21 @@ def validate(args: argparse.Namespace) -> tuple[dict, list[str]]:
     return profile, chunks
 
 
-def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str]) -> Path:
+def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str], model=None) -> Path:
     try:
         import numpy as np
         import soundfile as sf
-        from voxcpm import VoxCPM
+        import torch
     except ImportError as exc:
         raise RuntimeError("Install optional VoxCPM2 dependencies: pip install -r requirements-voxcpm.txt") from exc
 
-    device_options = {"device": args.device, "load_denoiser": False}
-    if args.device == "cpu":
-        device_options["optimize"] = False
-    model = VoxCPM.from_pretrained(profile["model_id"], **device_options)
+    # Reusing a preloaded model prevents 40 full checkpoint reloads per episode.
+    if model is None:
+        from voxcpm import VoxCPM
+        device_options = {"device": args.device, "load_denoiser": False}
+        if args.device in {"cpu", "mps"} or (args.device == "auto" and not torch.cuda.is_available()):
+            device_options["optimize"] = False
+        model = VoxCPM.from_pretrained(profile["model_id"], **device_options)
     rate = int(model.tts_model.sample_rate)
     if rate < 16000:
         raise RuntimeError("Unexpected model sample rate")
@@ -114,8 +117,12 @@ def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str]) -> Pa
     for i, chunk in enumerate(chunks):
         # Official VoxCPM2 voice-design syntax: parenthesized description before text.
         designed_text = f"({profile['voice_design_prompt']}) {chunk}"
+        # Official VoxCPM2 generate() does NOT accept a seed keyword. Seed PyTorch instead.
+        torch.manual_seed(args.seed + i)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(args.seed + i)
         audio = np.asarray(model.generate(
-            text=designed_text, cfg_value=2.0, inference_timesteps=10, seed=args.seed + i
+            text=designed_text, cfg_value=2.0, inference_timesteps=10
         ), dtype=np.float32).reshape(-1)
         if audio.size < rate // 5 or not np.isfinite(audio).all():
             raise RuntimeError(f"Invalid audio returned for chunk {i + 1}")
