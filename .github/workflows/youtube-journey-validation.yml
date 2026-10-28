@@ -5,19 +5,27 @@ on:
     branches: [episode/youtube-beginner-journey]
     paths:
       - 'src/episodes/YouTubeJourneyPreview.tsx'
+      - 'src/episodes/YouTubeJourneyVisuals.tsx'
+      - 'src/episodes/YouTubeJourneyFullEpisode.tsx'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
+      - 'scripts/build_youtube_journey_full.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
+      - 'tests/test_youtube_journey_full.py'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
   pull_request:
     paths:
       - 'src/episodes/YouTubeJourneyPreview.tsx'
+      - 'src/episodes/YouTubeJourneyVisuals.tsx'
+      - 'src/episodes/YouTubeJourneyFullEpisode.tsx'
       - 'src/Root.tsx'
       - 'scripts/build_youtube_journey_preview.py'
+      - 'scripts/build_youtube_journey_full.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
+      - 'tests/test_youtube_journey_full.py'
       - 'productions/youtube-beginner-journey/**'
       - '.github/workflows/youtube-journey-validation.yml'
   workflow_dispatch:
@@ -40,8 +48,8 @@ jobs:
           python-version: '3.11'
       - name: Test real-WAV timeline and creative contract (no model download)
         run: |
-          python -m unittest discover -s tests -p 'test_youtube_journey_preview.py' -v
-          python -m py_compile scripts/build_youtube_journey_preview.py scripts/render_youtube_journey_voices.py
+          python -m unittest discover -s tests -p 'test_youtube_journey_*.py' -v
+          python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -50,3 +58,18 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Typecheck existing and new compositions
         run: npm run typecheck
+      - name: Render all eight assetless visual-design reference frames
+        run: |
+          mkdir -p out/youtube-journey-visuals
+          for second in 20 85 180 265 375 475 560 645; do
+            npx remotion still YouTubeJourneyVisualBoard \
+              "out/youtube-journey-visuals/beat-${second}.png" \
+              --frame=$((second*30)) --scale=0.5
+            test -s "out/youtube-journey-visuals/beat-${second}.png"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-journey-eight-original-visual-beats
+          path: out/youtube-journey-visuals/*.png
+          retention-days: 14
+          if-no-files-found: error
