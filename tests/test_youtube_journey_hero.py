@@ -81,7 +81,7 @@ class HeroIdentityTests(unittest.TestCase):
             # Tests ONLY: substitute both reference fingerprints with fixtures.
             # Production pins always stay the official V2 hashes.
             with patch.dict(OFFICIAL_V2_SHA256,{"urfavxbf":fixture_sha,"pix":fixture_sha}):
-                manifest=hero.prepare(a,b,host,pix,root/"public",2,20)
+                manifest=hero.prepare(a,b,host,pix,root/"public",2,20,require_rig=False)
             self.assertEqual([e["speaker"] for e in manifest["voiceEvents"]],
                              ["urfavxbf","pix"])
             self.assertEqual([e["startFrame"] for e in manifest["voiceEvents"]],[2,20])
@@ -90,6 +90,7 @@ class HeroIdentityTests(unittest.TestCase):
             self.assertEqual(manifest["durationFrames"],84)
             self.assertTrue(manifest["assetsReady"])
             self.assertEqual(manifest["projectStatus"],"character-motion-review-only")
+            self.assertEqual(manifest["assets"],hero.DEFAULT_ASSETS)
             for name in ("urfavxbf","pix"):
                 self.assertTrue((root/"public"/DEFAULT_ASSETS[name]["assetPath"]).exists())
 
@@ -103,7 +104,7 @@ class HeroIdentityTests(unittest.TestCase):
             fake=hashlib.sha256(a.read_bytes()).hexdigest()
             with patch.dict(OFFICIAL_V2_SHA256,{"urfavxbf":fake,"pix":fake}):
                 with self.assertRaisesRegex(ValueError,"Voices overlap"):
-                    hero.prepare(a,b,h,p,root/"public",2,10)
+                    hero.prepare(a,b,h,p,root/"public",2,10,require_rig=False)
 
 
 if __name__=="__main__":unittest.main()
