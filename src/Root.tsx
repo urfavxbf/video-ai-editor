@@ -14,10 +14,12 @@ import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characte
 import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
 import './fonts'
+import {YouTubeJourneyStyleframes} from './episodes/YouTubeJourneyStyleframes'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="YouTubeJourneyStyleframes" component={YouTubeJourneyStyleframes} width={1920} height={1080} fps={30} durationInFrames={270} />
   <Composition id="Y2038Teaser" component={Y2038Teaser} width={1920} height={1080} fps={30} durationInFrames={720}
     defaultProps={{assetsReady: false} satisfies Y2038TeaserProps} />
   <Composition id="PixelPortraitHUD" component={PixelPortraitHUD}
