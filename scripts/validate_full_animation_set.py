@@ -18,7 +18,7 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 MANIFEST=ROOT/"characters"/"full-animation-set.json"
 IDS={"urfavxbf","pix"}
-STATUSES={"available-closeup","available-composite","needs-new-animation-art"}
+STATUSES={"available-closeup","available-composite","needs-new-animation-art","production-approved"}
 CLASSES={"existing-head-loop","existing-expression","composite-vfx",
          "full-body-cycle","pose-sequence","viseme","facial-cycle",
          "hair-cycle","paired-staging"}
@@ -35,7 +35,7 @@ CANONICAL={
 }
 
 
-def validate_manifest(manifest:dict)->dict:
+def validate_manifest(manifest:dict, animation_assets:Path|None=None)->dict:
     if manifest.get("fps")!=30 or manifest.get("version")!="1.0.0":
         raise ValueError("Invalid animation catalog version or frame rate")
     if set(manifest.get("characters",{}))!=IDS:
@@ -55,7 +55,22 @@ def validate_manifest(manifest:dict)->dict:
                 raise ValueError("Unknown status or asset type")
             if item["minimumFrames"]<1 or item["proposedFps"]!=30:
                 raise ValueError("Invalid frame contract")
-            if item["assetClass"] in {"viseme","hair-cycle","full-body-cycle",
+            if item["status"]=="production-approved":
+                approval=item.get("approval",{})
+                if approval.get("ownerApproved") is not True or not approval.get("reviewedFrameRange"):
+                    raise ValueError(f"{character}/{item['id']}: owner visual approval required")
+                hashes=approval.get("frameSha256",[])
+                if not isinstance(hashes,list) or len(hashes)!=item["minimumFrames"]:
+                    raise ValueError(f"{character}/{item['id']}: every original frame must be SHA pinned")
+                if animation_assets is None:
+                    raise ValueError(f"{character}/{item['id']}: approved art must be verified locally")
+                for i,sha in enumerate(hashes):
+                    frame=(animation_assets/character/item["id"]/f"{i:03d}.png")
+                    if not frame.is_file() or frame.is_symlink() or len(sha)!=64 or hashlib.sha256(frame.read_bytes()).hexdigest()!=sha:
+                        raise ValueError(f"{character}/{item['id']}: frame {i} missing or altered")
+                    if png_dimensions(frame.read_bytes())!=(560,768):
+                        raise ValueError(f"{character}/{item['id']}: frame {i} must be 560x768")
+            elif item["assetClass"] in {"viseme","hair-cycle","full-body-cycle",
                                       "pose-sequence","paired-staging","facial-cycle"}:
                 if item["status"]!="needs-new-animation-art":
                     raise ValueError(f"{character}/{item['id']} falsely marked ready")
@@ -118,9 +133,10 @@ def verify_sprite_zip(path:Path)->dict:
 def main()->int:
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--sprite-pack",type=Path)
+    p.add_argument("--animation-assets",type=Path,help="Private public/characters/animation-v4 root used to verify all future approved frame hashes")
     args=p.parse_args()
     try:
-        s=validate_manifest(json.loads(MANIFEST.read_text(encoding="utf-8")))
+        s=validate_manifest(json.loads(MANIFEST.read_text(encoding="utf-8")),args.animation_assets)
         print(json.dumps({"catalog":s,
              "art_verified":verify_sprite_zip(args.sprite_pack) if args.sprite_pack else
                "not supplied (use --sprite-pack to check 48 real frames)"},indent=2))
