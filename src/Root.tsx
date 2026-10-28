@@ -13,11 +13,16 @@ import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
 import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characters/CharacterAnimationLab'
 import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
+import {YoutubeAutomationEnglish, YOUTUBE_AUTOMATION_DEFAULT_FRAMES, type YoutubeAutomationEnglishProps} from './episodes/YoutubeAutomationEnglish'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="YoutubeAutomationEnglish" component={YoutubeAutomationEnglish} width={1920} height={1080} fps={30}
+    durationInFrames={YOUTUBE_AUTOMATION_DEFAULT_FRAMES}
+    calculateMetadata={({props})=>({durationInFrames: Math.max(30,props.totalFrames??YOUTUBE_AUTOMATION_DEFAULT_FRAMES)})}
+    defaultProps={{assetsReady:false} satisfies YoutubeAutomationEnglishProps} />
   <Composition id="Y2038Teaser" component={Y2038Teaser} width={1920} height={1080} fps={30} durationInFrames={720}
     defaultProps={{assetsReady: false} satisfies Y2038TeaserProps} />
   <Composition id="PixelPortraitHUD" component={PixelPortraitHUD}

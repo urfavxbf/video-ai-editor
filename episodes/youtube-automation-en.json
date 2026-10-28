@@ -1,0 +1,260 @@
+{
+  "episodeId": "youtube-automation-english",
+  "title": "How YouTube Automation Works & How to Earn From It",
+  "language": "en",
+  "voiceEngine": "Chatterbox Multilingual V3",
+  "format": "16:9 1080p",
+  "fps": 30,
+  "voices": {
+    "urfavxbf": "natural-storyteller-v1",
+    "pix": "pix-cute-female-emily-v1"
+  },
+  "cues": [
+    {
+      "speaker": "pix",
+      "chapter": "THE PROMISE",
+      "title": "IS THIS PASSIVE INCOME?",
+      "stat": "AUTOMATION IS NOT MAGIC",
+      "text": "UrFavXBF, people say you can create a YouTube channel, automate everything, and make money while you sleep. Is this a real business, or just another internet promise?"
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "THE PROMISE",
+      "title": "THE REAL MEANING",
+      "stat": "TOOLS + PROCESS + PEOPLE",
+      "text": "It's a real production approach, PIX, but not a money machine. YouTube automation means building repeatable systems for research, writing, narration, visuals, editing, publishing, and analytics. Creative judgment is still essential."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "THE PROMISE",
+      "title": "OUR ROADMAP",
+      "stat": "WORKFLOW • REVENUE • RISKS",
+      "text": "Okay. Show us exactly how a channel produces a video without showing the creator's face, how the revenue works, and how a beginner can start without an expensive setup."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 1: CHOOSE A NICHE",
+      "stat": "KNOW YOUR VIEWER",
+      "text": "First, choose a topic and audience you understand. Technology explainers, software guides, historical mysteries, or practical skills can work. The goal is a repeatable audience promise, not chasing every trending keyword."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 2: RESEARCH DEMAND",
+      "stat": "SEARCH QUESTIONS, NOT VIEWS",
+      "text": "Next, look for questions people actually ask. Study search results, comments, and similar creators. Find the missing explanation you can deliver more clearly, instead of copying a video that already exists."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 3: CHECK FACTS",
+      "stat": "SOURCE FIRST",
+      "text": "Research comes before the script. AI can help organize material, but verify dates, prices, policies, and statistics against reliable sources. A confident synthetic voice can still read a false claim."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 4: WRITE A STORY",
+      "stat": "HOOK → VALUE → PAYOFF",
+      "text": "Then write the narration. Open with a specific problem, explain what viewers need to know, and finish with a useful takeaway. An empty hook and a generic list won't keep people watching."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 5: RECORD VOICES",
+      "stat": "LICENSED NARRATION",
+      "text": "Use your own voice, or a synthetic voice you're licensed to use. Listen for pronunciation, pacing, and emotion. The video we're building uses two distinct English character voices instead of anonymous robotic narration."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 6: BUILD VISUALS",
+      "stat": "EXPLAIN WITH IMAGES",
+      "text": "Create original animations, charts, demonstrations, and licensed footage. Every visual should explain something, reinforce the story, or give the audience a reason to keep watching."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 7: EDIT THE STORY",
+      "stat": "RETENTION > DECORATION",
+      "text": "Edit for clarity. Match captions to speech, remove awkward gaps, use music responsibly, and show the important data at the right moment. Fancy transitions do not rescue a confusing script."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 8: PACKAGE THE VIDEO",
+      "stat": "TITLE + THUMBNAIL",
+      "text": "Design an honest title and thumbnail. Make one clear promise, then deliver it in the video. A clickbait promise can bring the wrong viewers and damage trust."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "HOW IT WORKS",
+      "title": "STEP 9: LEARN FROM DATA",
+      "stat": "ANALYTICS DRIVE ITERATION",
+      "text": "After publishing, review click-through rate, audience retention, returning viewers, and comments. Those signals tell you which parts worked. Automate boring steps, not the process of learning."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "HOW CREATORS EARN",
+      "title": "ADS ARE ONLY ONE SOURCE",
+      "stat": "FOUR REVENUE ROUTES",
+      "text": "Now the big question. Where does the money actually come from? Is it only advertising, or can a channel earn even before it qualifies for ads?"
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "HOW CREATORS EARN",
+      "title": "REVENUE STREAM 1",
+      "stat": "YOUTUBE ADS",
+      "text": "Ad revenue is one source. A channel must meet eligibility requirements, be accepted into the Partner Program, and enable the appropriate monetization features. Views alone do not guarantee ad payments."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "HOW CREATORS EARN",
+      "title": "REVENUE STREAM 2",
+      "stat": "AFFILIATE COMMISSIONS",
+      "text": "Another option is affiliate marketing. Recommend products you genuinely understand, disclose that a link may earn a commission, and explain who the product helps. Trust is more valuable than random links."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "HOW CREATORS EARN",
+      "title": "REVENUE STREAM 3",
+      "stat": "SPONSORSHIPS",
+      "text": "Sponsors may pay for access to a relevant audience. Rates depend on the niche, reach, engagement, and contract. Paid promotion also needs appropriate disclosure."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "HOW CREATORS EARN",
+      "title": "REVENUE STREAM 4",
+      "stat": "PRODUCTS + FAN SUPPORT",
+      "text": "Creators can sell useful digital products, templates, or services. Eligible creators can also offer memberships or viewer support. These income sources need genuine value and customer service."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "THE REAL RULES",
+      "title": "EARLIER ACCESS",
+      "stat": "500 SUBSCRIBERS",
+      "text": "As of October twenty twenty six, eligible creators may access certain fan funding and Shopping features starting at five hundred subscribers, three recent public uploads, and either three thousand qualified long-form watch hours or three million qualified Shorts views."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "THE REAL RULES",
+      "title": "AD REVENUE TODAY",
+      "stat": "1,000 SUBSCRIBERS",
+      "text": "The current main YouTube ad threshold is one thousand subscribers and either four thousand qualified public watch hours in the past year, or ten million qualified Shorts views in ninety days."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "THE REAL RULES",
+      "title": "A 2027 POLICY CHANGE",
+      "stat": "FEBRUARY 1, 2027",
+      "text": "YouTube has announced new thresholds for new applicants beginning February first, twenty twenty seven. In addition to one thousand subscribers, the new target is eight thousand qualified long-form hours, or twenty million qualified Shorts views. Always check the latest official rules."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "THE REAL RULES",
+      "title": "NUMBERS ARE NOT APPROVAL",
+      "stat": "CHANNEL REVIEW",
+      "text": "And reaching a threshold is not automatic approval. YouTube reviews a channel's originality, eligibility, and policy compliance. Shorts feed watch time does not count toward the long-form watch-hours requirement."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "THE EARNINGS MATH",
+      "title": "RPM EXPLAINED",
+      "stat": "EARNINGS PER 1,000 VIEWS",
+      "text": "Here's how people estimate ad income. RPM means revenue per thousand views, after YouTube's share and across relevant revenue sources. Actual rates vary by audience, season, topic, and monetization."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "THE EARNINGS MATH",
+      "title": "LET'S DO THE MATH",
+      "stat": "100,000 VIEWS • $2 RPM",
+      "text": "Imagine one hundred thousand views, with a hypothetical two dollar RPM. One hundred thousand divided by one thousand equals one hundred. Multiply by two dollars, and the illustrative result is two hundred dollars."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "THE EARNINGS MATH",
+      "title": "REVENUE IS NOT PROFIT",
+      "stat": "COSTS STILL COUNT",
+      "text": "But that's not profit. Subtract software, editing, research, equipment, licensing, taxes, or contractor costs. The two dollar RPM is only an example, not a reliable forecast."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "THE EARNINGS MATH",
+      "title": "THE HIDDEN COST",
+      "stat": "TIME IS AN INVESTMENT",
+      "text": "And even if you use free tools, your time has a cost. A failed video can earn nothing. The smartest beginners test one format before committing to expensive subscriptions."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "WHAT CAN GO WRONG",
+      "title": "THE REUSED CONTENT TRAP",
+      "stat": "ORIGINALITY IS CRITICAL",
+      "text": "YouTube's monetization policies prohibit mass-produced, repetitive or inauthentic content with little original value. Reusing clips without meaningful commentary or transformation can also make a channel ineligible."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "WHAT CAN GO WRONG",
+      "title": "THE COPYRIGHT TRAP",
+      "stat": "LICENSE EVERY ASSET",
+      "text": "Don't assume a clip, song, or voice sample is free because you found it online. Track licenses and permissions, and don't copy other creators' videos with only superficial edits."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "WHAT CAN GO WRONG",
+      "title": "THE AI QUALITY TRAP",
+      "stat": "HUMAN REVIEW REQUIRED",
+      "text": "AI tools can generate bland scripts, factual mistakes, and strange pronunciations. Review the research, listen to the narration, and watch the final edit before publishing."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "WHAT CAN GO WRONG",
+      "title": "THE PASSIVE INCOME MYTH",
+      "stat": "NO GUARANTEED RETURNS",
+      "text": "Automation reduces repetitive work. It cannot automatically create trust, creativity, loyal viewers, or guaranteed revenue. Building a channel is a real business experiment."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "A NO-BUDGET PLAN",
+      "title": "WEEK ONE: PLAN",
+      "stat": "PICK ONE CLEAR NICHE",
+      "text": "For a practical zero-budget start, choose one niche, list ten genuine audience questions, then select your three strongest video ideas. Research carefully and design a reusable production checklist."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "A NO-BUDGET PLAN",
+      "title": "WEEK TWO: PILOT",
+      "stat": "PUBLISH ONE GOOD VIDEO",
+      "text": "Produce one solid pilot with an original script, clean narration, helpful graphics, readable captions, and a truthful thumbnail. A strong first video teaches you more than ten rushed uploads."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "A NO-BUDGET PLAN",
+      "title": "WEEKS THREE AND FOUR",
+      "stat": "MEASURE • IMPROVE",
+      "text": "Review the audience retention curve and feedback. Improve your strongest format and publish at a pace you can sustain. Spend money only after you identify a real bottleneck."
+    },
+    {
+      "speaker": "pix",
+      "chapter": "FINAL TAKEAWAY",
+      "title": "VALUE BEFORE VOLUME",
+      "stat": "CREATORS BUILD SYSTEMS",
+      "text": "So the secret isn't pressing one button fifty times. It's building a system that helps you make genuinely valuable videos without wasting effort. That actually sounds achievable."
+    },
+    {
+      "speaker": "urfavxbf",
+      "chapter": "FINAL TAKEAWAY",
+      "title": "YOUR NEXT ACTION",
+      "stat": "START SMALL, LEARN FAST",
+      "text": "Exactly. Choose your audience, make something original, track what viewers respond to, and repeat what works. I'm UrFavXBF, that's PIX, and now you know how YouTube automation really works."
+    }
+  ],
+  "sourceLinks": [
+    "https://support.google.com/youtube/answer/72851",
+    "https://support.google.com/youtube/answer/94522",
+    "https://support.google.com/youtube/answer/12843009",
+    "https://support.google.com/youtube/answer/1311392"
+  ],
+  "reviewedAsOf": "2026-10-28",
+  "publishAutomatically": false
+}
