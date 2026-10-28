@@ -2,13 +2,25 @@
 
 Voice-over generation uses the official [Resemble AI Chatterbox](https://github.com/resemble-ai/chatterbox) project pinned to an immutable GitHub source revision in `requirements-chatterbox.txt`. Its upstream project is MIT-licensed; we install it as an optional dependency rather than copying its source code.
 
+## Approved default voice — Natural Storyteller
+
+The owner approved the real Chatterbox V3 GitHub Actions test voice on 2026-10-28 as the recurring narrator for this project. The built-in V3 speaker conditioning used in that sample is now the project's **default English narrator**, identified by `natural-storyteller-v1` in `scripts/chatterbox_voice_profile.py`. Both short-form and long-form CLIs and the browser-triggered GitHub Actions narration workflow select this profile automatically when no reference audio is supplied:
+
+- Model: Resemble AI Chatterbox Multilingual V3 (pinned source dependency)
+- Conditioning: V3 built-in speaker (no cloned third-party voice)
+- Language: English (`en`); Tagalog remains unsupported
+- Expressiveness / classifier-free guidance: `0.5 / 0.5`, matching the approved initial sample
+- Output: 16-bit PCM WAV, with long-form timestamp manifest
+
+These settings preserve the speaker conditioning and match the approved sample's generation setup. **They do not guarantee sample-identical speech**: the generative model may vary intonation, pacing or individual utterances. Listen to final narration before publication. A permitted `--voice-reference` may be used for a deliberately different narrator, but will not alter the default profile. Do not substitute an unrelated TTS service without the owner's approval.
+
 ## Supported scope
 
 - Generate one narrated WAV file from a short script (up to 700 characters).
 - Optional reference recording for consistent **authorized** speaker voice cloning.
 - Choose a supported language and CPU, CUDA, or Apple MPS.
 - Overlay that WAV on any Remotion `ExampleEdit` composition and control the source-audio level.
-- Supports on-demand local CLI synthesis and a manual GitHub Actions **Generate Chatterbox V3 narration** workflow after it is merged to the default branch. This does not provide a hosted low-latency TTS API or automatically verified natural-sounding audio.
+- Supports on-demand local CLI synthesis and a manual GitHub Actions **Generate Chatterbox V3 narration** workflow on the default branch. This does not provide a hosted low-latency TTS API or automatically verified natural-sounding audio.
 
 **Tagalog is not officially supported.** The multilingual V3 language list contains Malay (`ms`) and English (`en`), but not Filipino/Tagalog (`tl`). Do not label `ms` as Tagalog support. You can experiment with a Tagalog script tagged as `ms` only with the understanding that accent, transcription, and pronunciation may be incorrect. Manually review every output before publication.
 
@@ -88,7 +100,7 @@ The CLI loads Chatterbox V3 once, chunks on sentences or word boundaries (never 
 
 ### Android / browser — manual GitHub Actions narration
 
-After this branch is merged into `main`, open the GitHub repository in a browser, navigate to **Actions → Generate Chatterbox V3 narration → Run workflow**. Paste an English script into the narration input and run. The workflow installs the pinned upstream Chatterbox V3, synthesizes with the built-in voice on a CPU runner, and publishes a downloadable artifact named `chatterbox-v3-narration` containing the WAV and timing JSON. GitHub Actions may consume included minutes or billable runner time; CPU model inference can be resource-intensive or time out. If a run fails, inspect its job logs; **never present an ungenerated audio link as though it succeeded**. This workflow does not clone arbitrary speakers or accept remote voice-reference URLs, to avoid handling biometric recordings in Actions logs or public artifacts.
+Open the GitHub repository in a browser, navigate to **Actions → Generate Chatterbox V3 narration → Run workflow**. Paste an English script into the narration input and run. The workflow installs the pinned upstream Chatterbox V3, synthesizes with the built-in voice on a CPU runner, and publishes a downloadable artifact named `chatterbox-v3-narration` containing the WAV and timing JSON. GitHub Actions may consume included minutes or billable runner time; CPU model inference can be resource-intensive or time out. If a run fails, inspect its job logs; **never present an ungenerated audio link as though it succeeded**. This workflow does not clone arbitrary speakers or accept remote voice-reference URLs, to avoid handling biometric recordings in Actions logs or public artifacts.
 
 ### Real-audio verification gate
 
@@ -99,6 +111,6 @@ After this branch is merged into `main`, open the GitHub repository in a browser
 - Only clone your own voice or one with explicit speaker authorization.
 - Chatterbox audio contains upstream Perth watermarking; keep it intact.
 - For monetized content, review the upstream MIT license and any voice-recording rights.
-- For long scripts, split into scene-sized segments. This CLI exports a single WAV per invocation, with no automatic stitching.
+- For long scripts, use `scripts/chatterbox_longform.py`, which chunks and stitches audio with a single model load; short-form `scripts/chatterbox_voiceover.py` accepts one script up to 700 characters.
 - Generated audio lives under ignored `public/voiceovers/`; do not commit generated files or large model weights.
-- GitHub CI uses mocked audio/model tests and **does not** download models or verify audible output. Validate pronunciation, audio duration, and audio/video synchronization with a real synthesis run before releasing videos.
+- The lightweight Chatterbox adapter CI tests use mocks; a separate real-audio smoke workflow downloads model weights and verifies an actual WAV. Both still require human listening review for natural speech quality. Validate pronunciation, audio duration, and audio/video synchronization with a real synthesis run before releasing videos.

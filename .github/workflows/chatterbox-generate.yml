@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       narration:
-        description: 'English narration text (e.g. one short chapter); longer scripts are split automatically'
+        description: 'English narration using approved Natural Storyteller default (long scripts split automatically)'
         required: true
         type: string
         default: 'Imagine looking up tonight and discovering the Moon is gone. What changes on Earth?'
@@ -61,7 +61,7 @@ jobs:
             torch==2.6.0 torchaudio==2.6.0
           python -m pip install -r requirements-chatterbox.txt
           python scripts/check_chatterbox_v3.py
-      - name: Generate English narration
+      - name: Generate English narration (approved Natural Storyteller voice)
         run: |
           python scripts/chatterbox_longform.py \
             --text-file input/narration.txt \

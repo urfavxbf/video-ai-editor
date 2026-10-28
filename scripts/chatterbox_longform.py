@@ -17,6 +17,7 @@ from pathlib import Path
 from chatterbox_voiceover import (
     LANGUAGES, MAX_TEXT_LENGTH, choose_device,
 )
+from chatterbox_voice_profile import DEFAULT_NARRATOR
 
 DEFAULT_CHUNK_LIMIT = 320
 
@@ -63,14 +64,14 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Generate long-form Chatterbox V3 voice-over.")
     p.add_argument("--text-file", required=True, type=Path)
     p.add_argument("--output", required=True, type=Path)
-    p.add_argument("--language-id", default="en", choices=sorted(LANGUAGES))
+    p.add_argument("--language-id", default=DEFAULT_NARRATOR.language, choices=sorted(LANGUAGES))
     p.add_argument("--voice-reference", type=Path, default=None,
                    help="Optional reference audio with explicit speaker consent.")
     p.add_argument("--device", choices=("auto", "cpu", "cuda", "mps"), default="auto")
     p.add_argument("--max-chars", type=int, default=DEFAULT_CHUNK_LIMIT)
     p.add_argument("--pause-ms", type=int, default=280)
-    p.add_argument("--exaggeration", type=float, default=0.5)
-    p.add_argument("--cfg-weight", type=float, default=0.5)
+    p.add_argument("--exaggeration", type=float, default=DEFAULT_NARRATOR.exaggeration)
+    p.add_argument("--cfg-weight", type=float, default=DEFAULT_NARRATOR.cfg_weight)
     p.add_argument("--overwrite", action="store_true")
     return p
 
@@ -107,7 +108,9 @@ def synthesize(args: argparse.Namespace) -> tuple[Path, Path]:
     if device == "cpu":
         torch.set_num_threads(min(4, torch.get_num_threads()))
     print(f"Loading Chatterbox Multilingual V3 once on {device}", file=sys.stderr)
-    model = ChatterboxMultilingualTTS.from_pretrained(device=device, t3_model="v3")
+    model = ChatterboxMultilingualTTS.from_pretrained(device=device, t3_model=DEFAULT_NARRATOR.checkpoint)
+    if args.voice_reference is None:
+        print(f"Using {DEFAULT_NARRATOR.display_name} with built-in speaker", file=sys.stderr)
     pause_samples = round(args.pause_ms * model.sr / 1000)
     pause = torch.zeros((1, pause_samples), dtype=torch.float32)
     joined: list = []
@@ -157,6 +160,8 @@ def synthesize(args: argparse.Namespace) -> tuple[Path, Path]:
 
     manifest_path.write_text(json.dumps({
         "engine": "Chatterbox Multilingual V3", "language": args.language_id,
+        "voice_profile": DEFAULT_NARRATOR.identifier if args.voice_reference is None else "authorized-reference",
+        "voice_source": DEFAULT_NARRATOR.source if args.voice_reference is None else "user-provided",
         "sample_rate": model.sr, "duration_seconds": round(samples / model.sr, 3),
         "chunks": chapters, "review_required": True,
     }, indent=2) + "\n", encoding="utf-8")

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+from chatterbox_voice_profile import DEFAULT_NARRATOR
 import sys
 import tempfile
 
@@ -28,7 +29,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", required=True, type=Path, help="Destination .wav path."
     )
     parser.add_argument(
-        "--language-id", default="en", choices=sorted(LANGUAGES),
+        "--language-id", default=DEFAULT_NARRATOR.language, choices=sorted(LANGUAGES),
         help="Official Chatterbox language code (Tagalog/tl is not supported).",
     )
     parser.add_argument(
@@ -40,10 +41,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="Inference device. Auto prefers CUDA, then Apple MPS, then CPU.",
     )
     parser.add_argument(
-        "--exaggeration", type=float, default=0.5, help="Expressiveness 0 to 1."
+        "--exaggeration", type=float, default=DEFAULT_NARRATOR.exaggeration, help="Expressiveness 0 to 1."
     )
     parser.add_argument(
-        "--cfg-weight", type=float, default=0.5, help="CFG weight 0 to 1."
+        "--cfg-weight", type=float, default=DEFAULT_NARRATOR.cfg_weight, help="CFG weight 0 to 1."
     )
     parser.add_argument(
         "--overwrite", action="store_true", help="Replace an existing WAV."
@@ -121,8 +122,10 @@ def generate(args: argparse.Namespace) -> Path:
     device = choose_device(torch, args.device)
     print(f"Loading Chatterbox Multilingual V3 on {device}...", file=sys.stderr)
     model = ChatterboxMultilingualTTS.from_pretrained(
-        device=device, t3_model="v3"
+        device=device, t3_model=DEFAULT_NARRATOR.checkpoint
     )
+    if args.voice_reference is None:
+        print(f"Voice profile: {DEFAULT_NARRATOR.display_name} (built-in speaker)", file=sys.stderr)
     options = {
         "language_id": args.language_id,
         "exaggeration": args.exaggeration,
