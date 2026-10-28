@@ -8,13 +8,14 @@ Never mark missing assets as ready or generate substituted characters.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import struct
 from pathlib import Path, PurePosixPath
 
 DEFAULT_ASSETS = {
-    "urfavxbf": {"assetPath": "characters/UrFavXBF_Transparent.png"},
-    "pix": {"assetPath": "characters/PIX_Transparent.png"},
+    "urfavxbf": {"assetPath": "characters/pixel-glitch/urfavxbf/base.png"},
+    "pix": {"assetPath": "characters/pixel-glitch/pix/base.png"},
 }
 REQUIRED_LIMBS = ("body", "head", "leftArm", "rightArm", "leftLeg", "rightLeg")
 OPTIONAL_LIMBS = ("tail", "mouthClosed", "mouthOpen")
@@ -50,6 +51,12 @@ def check_png(public_root: Path, name: str) -> tuple[int, int]:
     return width, height
 
 
+OFFICIAL_V2_SHA256 = {
+    "urfavxbf": "b11936a4ace7c6cba1ee391ff768fce93bee80b2adf81b3a44a89cbaa4cf01b4",
+    "pix": "cc5ecccdbb74b8c90ea3af09a0c75ff2c72db05fcdf0006fdc19255641304c6f",
+}
+
+
 def validate_assets(public_root: Path, assets: dict) -> dict[str, str]:
     if set(assets) != {"urfavxbf", "pix"}:
         raise ValueError("Exactly urfavxbf and pix full-body assets are required")
@@ -58,6 +65,11 @@ def validate_assets(public_root: Path, assets: dict) -> dict[str, str]:
         if not isinstance(config, dict) or not isinstance(config.get("assetPath"), str):
             raise ValueError(f"Missing approved full-body sprite for {character}")
         check_png(public_root, config["assetPath"])
+        # Pin the real V2 base sprites, not merely any valid transparent PNG.
+        if config["assetPath"] == DEFAULT_ASSETS[character]["assetPath"]:
+            actual = hashlib.sha256(safe_path(public_root, config["assetPath"]).read_bytes()).hexdigest()
+            if actual != OFFICIAL_V2_SHA256[character]:
+                raise ValueError(f"{character}: V2 full-body artwork SHA-256 mismatch")
         rig = config.get("layeredRig")
         if rig is None:
             modes[character] = "single-sprite-whole-body"
