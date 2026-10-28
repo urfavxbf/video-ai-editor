@@ -1,0 +1,8 @@
+interface:
+  display_name: "Original Motion Director"
+  short_description: "Original motion design with voice-synced characters"
+  default_prompt: "Use $original-motion-director to create an original video; ask me to choose the creative direction."
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
+policy:
+  allow_implicit_invocation: true
