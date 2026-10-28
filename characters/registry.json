@@ -204,6 +204,12 @@
       "tl"
     ],
     "all_new_episodes": true,
-    "artist_approval_required_for_new_rig": true
-  }
+    "artist_approval_required_for_new_rig": true,
+    "next_art_style": "dark-green UrFavXBF chibi / cyan-purple PIX chibi",
+    "new_art_review_composition": "ChibiV4ReviewStage"
+  },
+  "preferred_next_visual_style": "chibi-pixel-v4-dark-green",
+  "preferred_next_visual_style_status": "draft-sprite-pack; source reference approved; per-frame production QA pending",
+  "preferred_next_visual_asset_spec": "characters/chibi-v4-design.json",
+  "visual_migration_policy": "Do not use black/yellow V2 look for newly produced episode artwork after V4 is approved. Until manually reviewed and full sprite sequences exist, legacy renders remain pinned to V2 and V4 is in a separate review composition. Never silently substitute yellow V2 bodies for V4 sprites."
 }
