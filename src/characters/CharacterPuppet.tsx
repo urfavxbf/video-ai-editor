@@ -194,16 +194,22 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
     ? Math.min(1, (frame - reaction.atFrame) / Math.max(1, Math.min(8, reaction.durationFrames)))
     : 1;
   const pop = 0.92 + 0.08 * clamp(frame / Math.max(1, fadeInFrames));
+  const squash = pose.energy * (id === 'pix' ? 0.018 : 0.009);
+  const onsetGlitch = Boolean(event && frame >= event.startFrame &&
+    frame < event.startFrame + 2 && frame > 0);
   const fade = clamp(frame / Math.max(1, fadeInFrames));
   const outer = [
     `translate3d(${pose.x.toFixed(2)}px, ${pose.y.toFixed(2)}px, 0)`,
     `rotateY(${pose.yaw.toFixed(2)}deg)`,
     `rotateZ(${(pose.roll * activeCue).toFixed(2)}deg)`,
     `scale(${(pose.scale * pop).toFixed(4)})`,
+    `scaleX(${(1 - squash*0.45).toFixed(4)})`,
+    `scaleY(${(1 + squash).toFixed(4)})`,
     mirror ? 'scaleX(-1)' : '',
   ].filter(Boolean).join(' ');
 
-  const crisp = id === 'urfavxbf';
+  // Both approved V2 leads are pixel-art, not just the host.
+  const crisp = true;
   const headPivot = layeredRig?.headPivotPercent ?? (id === 'pix' ? [51, 48] : [51, 22]);
   const tailPivot = layeredRig?.tailPivotPercent ?? [39, 77];
   const armPivots = {
@@ -240,7 +246,10 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
       <div style={{
         position: 'absolute', inset: 0, transform: outer,
         transformStyle: 'preserve-3d', transformOrigin: '50% 85%',
-        filter: id === 'pix' ? 'drop-shadow(0 0 13px rgba(0,210,235,0.16))' : 'drop-shadow(0 0 12px rgba(255,190,0,0.10))',
+        filter: onsetGlitch
+          ? 'drop-shadow(3px 0 rgba(39,232,253,0.45)) drop-shadow(-3px 0 rgba(255,77,207,0.30))'
+          : id === 'pix' ? 'drop-shadow(0 0 13px rgba(0,210,235,0.16))'
+            : 'drop-shadow(0 0 12px rgba(255,190,0,0.10))',
       }}>
         {!layeredRig ? (
           <FullCanvasLayer src={assetPath} crisp={crisp}/>
