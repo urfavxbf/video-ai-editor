@@ -1,3 +1,5 @@
+> **Archive notice (29 October 2026):** This document records the previous portrait-only decision. It has now been **superseded** for all new videos by the owner's full-body protagonist direction. Use [URFAVXBF_PIX_HERO_CHARACTER_BIBLE.md](URFAVXBF_PIX_HERO_CHARACTER_BIBLE.md). Keep this file only for historical reproduction of old videos.
+
 > **Sizing update:** Enlarge **both** head portraits to 414 × 468 px (approximately 35% wider). Left at 64 px, right at 64 px, top at 202 px, center infographic field x=515–1405. See [portraitLayout.ts](../src/characters/portraitLayout.ts). No full-body avatars.
 
 # Pixel Glitch V2 — portraits-only layout (owner-approved)
