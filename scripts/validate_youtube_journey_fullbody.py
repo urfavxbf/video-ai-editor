@@ -18,7 +18,10 @@ DEFAULT_ASSETS = {
     "pix": {"assetPath": "characters/pixel-glitch/pix/base.png"},
 }
 REQUIRED_LIMBS = ("body", "head", "leftArm", "rightArm", "leftLeg", "rightLeg")
-OPTIONAL_LIMBS = ("tail", "mouthClosed", "mouthOpen")
+# PIX is a seated cat: two visible forelegs and tail, but no separately visible
+# hind limbs in the canonical 2D artwork. Never pretend nonexistent legs are rigged.
+PIX_REQUIRED_LIMBS = ("body", "head", "leftArm", "rightArm", "tail")
+OPTIONAL_LIMBS = ("underlay", "tail", "leftLeg", "rightLeg", "mouthClosed", "mouthOpen")
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 
 
@@ -74,11 +77,12 @@ def validate_assets(public_root: Path, assets: dict) -> dict[str, str]:
         if rig is None:
             modes[character] = "single-sprite-whole-body"
             continue
-        if not isinstance(rig, dict) or any(not rig.get(k) for k in REQUIRED_LIMBS):
-            raise ValueError(f"{character} rig requires torso, head, both arms and both legs")
-        dims = {check_png(public_root, rig[k]) for k in REQUIRED_LIMBS}
+        required = PIX_REQUIRED_LIMBS if character == "pix" else REQUIRED_LIMBS
+        if not isinstance(rig, dict) or any(not rig.get(k) for k in required):
+            raise ValueError(f"{character} rig missing required aligned original body parts: {required}")
+        dims = {check_png(public_root, rig[k]) for k in required}
         for k in OPTIONAL_LIMBS:
-            if rig.get(k):
+            if k not in required and rig.get(k):
                 dims.add(check_png(public_root, rig[k]))
         if len(dims) != 1:
             raise ValueError(f"{character} rig PNG layers must have the same canvas size")
