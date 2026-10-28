@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {JourneyVisualAid} from './YouTubeJourneyVisuals';
-import {PixelGlitchPortrait} from '../characters/PixelGlitchPortrait';
+import {YouTubeJourneyFullBodyCharacters, type JourneyFullBodyAssetMap} from './YouTubeJourneyFullBodyCharacters';
 import {type VoiceEvent} from '../characters/CharacterPuppet';
 
 export type PreviewCaption = {text: string; startFrame: number; endFrame: number};
@@ -22,6 +22,8 @@ export type YouTubeJourneyPreviewProps = {
   voiceEvents: VoiceEvent[];
   totalFrames: number;
   captionTiming: string;
+  assetsReady?: boolean;
+  fullBodyAssets?: JourneyFullBodyAssetMap;
 };
 
 const labelFor = (chapter: number) => chapter === 5
@@ -54,9 +56,12 @@ const PreviewCut: React.FC<{chapter: number; progress: number}> = ({chapter, pro
 
 /** Audio timings are measured from decoded WAV samples, never guessed from script length. */
 export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({
-  lines, sections, voiceEvents, captionTiming,
+  lines, sections, voiceEvents, captionTiming, assetsReady=false, fullBodyAssets,
 }) => {
   const frame = useCurrentFrame();
+  if (lines.length && !assetsReady) {
+    throw new Error('Approved full-body character PNGs must be staged before rendering the voiced preview');
+  }
   const section = sections.find(s => frame >= s.startFrame && frame < s.endFrame);
   const next = sections.find(s => s.startFrame > frame);
   const activeLine = lines.find(l => frame >= l.startFrame && frame < l.endFrame);
@@ -76,10 +81,11 @@ export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({
       <div style={{position:'absolute',left:64,top:110,fontSize:52,fontWeight:900}}>
         {scene===5?'TWO MONETIZATION GATES':scene===6?'HOW RPM CHANGES EARNINGS':'AFTER YOU HIT UPLOAD'}
       </div>
-      <PixelGlitchPortrait id="urfavxbf" left={64} top={220} showGlitch={false}
-        voiceEvents={voiceEvents} reactions={[{speaker:'urfavxbf',startFrame:0,endFrame:999999,reaction:'thinking'}]}/>
-      <PixelGlitchPortrait id="pix" right={64} top={220} showGlitch={false}
-        voiceEvents={voiceEvents} reactions={[{speaker:'pix',startFrame:0,endFrame:999999,reaction:scene===6?'surprised':'curious'}]}/>
+      <YouTubeJourneyFullBodyCharacters
+        voiceEvents={voiceEvents} chapter={scene}
+        activeSpeaker={activeLine?.speaker}
+        assets={fullBodyAssets}
+      />
       <div style={{position:'absolute',left:515,top:230,width:890}}>
         <JourneyVisualAid beat={scene===5?5:scene===6?6:1}
           chapter={scene} localFrame={frame-section.startFrame}/>
