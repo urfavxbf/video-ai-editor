@@ -103,7 +103,9 @@ class ChatterboxVoiceoverTests(unittest.TestCase):
             )
             torchaudio = types.ModuleType("torchaudio")
 
-            def fake_save(path, tensor, rate, **kwargs):\n                calls["encoding"] = kwargs.get("encoding")\n                calls["bits"] = kwargs.get("bits_per_sample")
+            def fake_save(path, tensor, rate, **kwargs):
+                calls["encoding"] = kwargs.get("encoding")
+                calls["bits"] = kwargs.get("bits_per_sample")
                 calls["save_rate"] = rate
                 Path(path).write_bytes(b"RIFF" + b"\0" * 60)
 
@@ -128,7 +130,9 @@ class ChatterboxVoiceoverTests(unittest.TestCase):
             self.assertEqual(result, output)
             self.assertTrue(output.is_file())
             self.assertEqual(calls["load"], {"device": "cpu", "t3_model": "v3"})
-            self.assertEqual(calls["save_rate"], 24000)\n            self.assertEqual(calls["encoding"], "PCM_S")\n            self.assertEqual(calls["bits"], 16)
+            self.assertEqual(calls["save_rate"], 24000)
+            self.assertEqual(calls["encoding"], "PCM_S")
+            self.assertEqual(calls["bits"], 16)
             self.assertEqual(
                 calls["generation"][1]["audio_prompt_path"],
                 str(audio_reference)
