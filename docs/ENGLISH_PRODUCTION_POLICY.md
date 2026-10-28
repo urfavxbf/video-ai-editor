@@ -6,6 +6,10 @@ As of October 28, 2026, the owner has chosen **English-only** as the production 
 
 New original video productions center on **UrFavXBF** and his talking AI cat **PIX**. Wisdom, science, math, internet culture, AI, and editing are possible areas of expertise, not separate mascot identities or a science-only channel. UrFavXBF uses the approved Chatterbox `natural-storyteller-v1` English narrator; PIX uses the independently configured Chatterbox V3 female-voiced `pix-cute-female-emily-v1` preset. See [character registry](../characters/registry.json).
 
+## Long-form delivery format
+
+The owner has confirmed that **all new original UrFavXBF + PIX videos are long-form YouTube episodes**, **16:9 landscape at 1920 × 1080 and 30 fps** by default. Develop story-driven chapters, extended character exchanges and cinematic motion graphics instead of a 9:16 Short. The existing portrait compositions are legacy project samples and should not be deleted for this policy change. The story/script determines the episode length unless the owner specifies one. See [production standard](PRODUCTION_STANDARD.md).
+
 ## Defaults for every new production
 
 - Write English scripts, English spoken narration, English animated captions and graphics, and English YouTube titles, descriptions, and discoverability metadata.
