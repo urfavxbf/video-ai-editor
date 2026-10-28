@@ -17,13 +17,14 @@ import wave
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from extract_voice_envelope import voice_event_from_wav
-from validate_youtube_journey_fullbody import DEFAULT_ASSETS, OFFICIAL_V2_SHA256, validate_assets
+from validate_youtube_journey_fullbody import DEFAULT_ASSETS, DEFAULT_FULL_BODY_RIG_ASSETS, OFFICIAL_V2_SHA256, validate_assets
 
 FPS = 30
 
 
 def prepare(host_png: Path, pix_png: Path, host_wav: Path, pix_wav: Path,
-            public: Path, host_start: int = 30, pix_start: int = 190) -> dict:
+            public: Path, host_start: int = 30, pix_start: int = 190,
+            require_rig: bool = True) -> dict:
     if host_start < 0 or pix_start <= host_start:
         raise ValueError("PIX voice must begin after host voice")
     sources = {"urfavxbf": host_png, "pix": pix_png}
@@ -38,7 +39,8 @@ def prepare(host_png: Path, pix_png: Path, host_wav: Path, pix_wav: Path,
         path.parent.mkdir(parents=True,exist_ok=True)
         if source.resolve() != path.resolve():
             shutil.copy2(source,path)
-    modes=validate_assets(public,DEFAULT_ASSETS)
+    active_assets = DEFAULT_FULL_BODY_RIG_ASSETS if require_rig else DEFAULT_ASSETS
+    modes=validate_assets(public,active_assets)
     events,clips=[],[]
     for name, wav, start in [
         ("urfavxbf",host_wav,host_start),("pix",pix_wav,pix_start)
@@ -68,6 +70,7 @@ def prepare(host_png: Path, pix_png: Path, host_wav: Path, pix_wav: Path,
         "audio":clips,
         "durationFrames":max(c["endFrame"] for c in clips)+40,
         "assetValidation":modes,
+        "assets":active_assets,
         "projectStatus":"character-motion-review-only",
     }
 
@@ -80,10 +83,13 @@ def main():
     p.add_argument("--out",type=Path,default=Path("out/hero-stage.props.json"))
     p.add_argument("--host-start-frame",type=int,default=30)
     p.add_argument("--pix-start-frame",type=int,default=190)
+    p.add_argument("--flat-review",action="store_true",
+        help="Opt out of independently rigged assets for an explicitly flat preview only")
     args=p.parse_args()
     try:
         props=prepare(args.host_png,args.pix_png,args.host_wav,args.pix_wav,
-            args.public,args.host_start_frame,args.pix_start_frame)
+            args.public,args.host_start_frame,args.pix_start_frame,
+            require_rig=not args.flat_review)
         args.out.parent.mkdir(parents=True,exist_ok=True)
         args.out.write_text(json.dumps(props,indent=2)+"\n",encoding="utf-8")
         print(f"Validated two official V2 characters and real audio: {props['durationFrames']/FPS:.2f}s draft")
