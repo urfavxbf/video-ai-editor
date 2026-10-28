@@ -72,7 +72,17 @@
     "legacy_portrait_demos_not_default": true,
     "video_codec": "h264",
     "audio_codec": "aac",
-    "character_layout": "animated-head-portraits-only"
+    "character_layout": "animated-head-portraits-only",
+    "portrait_size": {
+      "width": 414,
+      "height": 468,
+      "relative_increase_width_percent": 35.3,
+      "top": 202,
+      "left": 64,
+      "right": 64
+    },
+    "next_episode_candidate": "y2038",
+    "next_episode_status": "proposed"
   },
   "preferred_visual_variant": "super-pixel-glitch-v2",
   "visual_variant_package": {
@@ -131,6 +141,14 @@
     "full_body_rendering_default": false,
     "portrait_component": "src/characters/PixelGlitchPortrait.tsx",
     "portrait_composition": "PixelPortraitHUD",
-    "sample_library_path": "/UrFavXBF Video Characters/Pixel Glitch V2/PixelGlitch_PortraitsOnly_Sample_1080p.mp4"
+    "sample_library_path": "/UrFavXBF Video Characters/Pixel Glitch V2/PixelGlitch_PortraitsOnly_Sample_1080p.mp4",
+    "default_portrait_size": {
+      "width": 414,
+      "height": 468,
+      "relative_increase_width_percent": 35.3,
+      "top": 202,
+      "left": 64,
+      "right": 64
+    }
   }
 }
