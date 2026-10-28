@@ -16,10 +16,14 @@ import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
 import './fonts'
 import {YouTubeJourneyStyleframes} from './episodes/YouTubeJourneyStyleframes'
 import {YouTubeJourneyPreview, type YouTubeJourneyPreviewProps} from './episodes/YouTubeJourneyPreview'
+import {YouTubeJourneyVisualBoard, STORYBOARD_FRAMES} from './episodes/YouTubeJourneyVisuals'
+import {YouTubeJourneyFullEpisode, type YouTubeJourneyFullEpisodeProps} from './episodes/YouTubeJourneyFullEpisode'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="YouTubeJourneyVisualBoard" component={YouTubeJourneyVisualBoard} width={1920} height={1080} fps={30} durationInFrames={STORYBOARD_FRAMES}/>
+  <Composition id="YouTubeJourneyFullEpisode" component={YouTubeJourneyFullEpisode} width={1920} height={1080} fps={30} durationInFrames={30} defaultProps={{lines:[],voiceEvents:[],totalFrames:30,captionTiming:'estimated-unreviewed',assetsReady:false} satisfies YouTubeJourneyFullEpisodeProps} calculateMetadata={({props})=>({durationInFrames:props.totalFrames})}/>
   <Composition id="YouTubeJourneyPreview" component={YouTubeJourneyPreview} width={1920} height={1080} fps={30} durationInFrames={30} defaultProps={{lines:[],sections:[],voiceEvents:[],totalFrames:30,captionTiming:'estimated-unreviewed'} satisfies YouTubeJourneyPreviewProps} calculateMetadata={({props})=>({durationInFrames:props.totalFrames})}/>
   <Composition id="YouTubeJourneyStyleframes" component={YouTubeJourneyStyleframes} width={1920} height={1080} fps={30} durationInFrames={270} />
   <Composition id="Y2038Teaser" component={Y2038Teaser} width={1920} height={1080} fps={30} durationInFrames={720}
