@@ -2,6 +2,10 @@
 
 As of October 28, 2026, the owner has chosen **English-only** as the production language for **new original videos** created by AI agents using Video AI Editor. The intent is to reach potential viewers beyond one local-language audience; broader reach is an opportunity, not a guaranteed outcome.
 
+## Official on-screen speakers
+
+New original video productions center on **UrFavXBF** and his talking AI cat **PIX**. Wisdom, science, math, internet culture, AI, and editing are possible areas of expertise, not separate mascot identities or a science-only channel. UrFavXBF uses the approved Chatterbox `natural-storyteller-v1` English narrator; PIX uses the independently configured Chatterbox V3 female-voiced `pix-cute-female-emily-v1` preset. See [character registry](../characters/registry.json).
+
 ## Defaults for every new production
 
 - Write English scripts, English spoken narration, English animated captions and graphics, and English YouTube titles, descriptions, and discoverability metadata.
