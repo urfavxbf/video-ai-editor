@@ -2,6 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {CharacterPuppet, type CharacterId, type LayeredPuppetRig, type VoiceEvent} from './CharacterPuppet';
 import {HERO_IDENTITY, heroGestureFor, heroStateAt, listeningReactionCues, smooth01} from './HeroPerformance';
+import {OFFICIAL_V2_RIGS} from './OfficialV2Rig';
 
 /**
  * Reusable 16:9 character-first workbench.
@@ -57,8 +58,8 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
   const host=heroStateAt('urfavxbf',chapter,frame,fps,voiceEvents);
   const pix=heroStateAt('pix',chapter,frame,fps,voiceEvents);
   const fade=smooth01(frame/23);
-  const hostAsset=assets?.urfavxbf??{assetPath:HERO_IDENTITY.urfavxbf.assetPath};
-  const pixAsset=assets?.pix??{assetPath:HERO_IDENTITY.pix.assetPath};
+  const hostAsset=assets?.urfavxbf??OFFICIAL_V2_RIGS.urfavxbf;
+  const pixAsset=assets?.pix??OFFICIAL_V2_RIGS.pix;
   if (audio.length && !assetsReady) {
     throw new Error('Stage approved SHA-verified V2 full-body PNGs before any voiced hero render');
   }
