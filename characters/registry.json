@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "project": "video-ai-editor",
+  "production_language": "en",
+  "main_character": "urfavxbf",
+  "companion_character": "pix",
+  "assets_location": "ChatGPT Library /UrFavXBF Video Characters/; binaries must be staged into the listed public paths for Remotion",
+  "approved_on": "2026-10-28",
+  "characters": {
+    "urfavxbf": {
+      "name": "UrFavXBF",
+      "role": "primary-on-screen-host",
+      "persona": "Versatile thinker and creator covering wisdom, science, mathematics, internet culture, AI and video editing; never science-only",
+      "visual": {
+        "kind": "transparent-pixel-art-overlay",
+        "style": "pixelated human character, high-contrast black and bright yellow streetwear, messy black hair, backpack and sneakers",
+        "public_path": "public/characters/UrFavXBF_Transparent.png",
+        "library_path": "/UrFavXBF Video Characters/UrFavXBF_Transparent.png",
+        "width": 1110,
+        "height": 1417,
+        "sha256": "09fc91a64cd8c8cf281ae5ca101c452fb83fef1170f994bdd43dced9fe4f72de"
+      },
+      "voice": {
+        "engine": "Chatterbox Multilingual V3",
+        "identifier": "natural-storyteller-v1",
+        "language": "en",
+        "profile_path": "scripts/chatterbox_voice_profile.py",
+        "source": "approved built-in speaker",
+        "exaggeration": 0.5,
+        "cfg_weight": 0.5,
+        "sample_library_path": "/UrFavXBF Video Characters/UrFavXBF_Chatterbox_Natural_Storyteller_Sample.wav",
+        "sample_sha256": "701270b711ac2c44c4e3158d89f74220129c8fec3ae945c5bd3c83e3a7fdf089",
+        "successful_audio_run": "https://github.com/urfavxbf/video-ai-editor/actions/runs/40607467395"
+      }
+    },
+    "pix": {
+      "name": "PIX",
+      "role": "talking-ai-pet-sidekick",
+      "persona": "Inquisitive, cute, clever and playful AI companion who interacts with UrFavXBF in natural English dialogue",
+      "visual": {
+        "kind": "transparent-cat-overlay",
+        "style": "cute white and black robotic cat, yellow hoodie accents, bright cyan LEDs and headphones, expressive face",
+        "public_path": "public/characters/PIX_Transparent.png",
+        "library_path": "/UrFavXBF Video Characters/PIX_Transparent.png",
+        "width": 1199,
+        "height": 1312,
+        "sha256": "4b8e29235969e2a19d1d6b7853a9c3ec7ec6c881f11e0e1127c57b5646829f28"
+      },
+      "voice": {
+        "engine": "Chatterbox Multilingual V3",
+        "identifier": "pix-cute-female-emily-v1",
+        "language": "en",
+        "profile_path": "scripts/pix_voice_profile.py",
+        "source": "approved female synthetic Emily reference",
+        "reference_source": "devnen/Chatterbox-TTS-Server @ 915ae289340e10c6047f27f47e22eae9bf350c32 voices/Emily.wav",
+        "exaggeration": 0.65,
+        "cfg_weight": 0.35,
+        "sample_library_path": "/UrFavXBF Video Characters/PIX_Chatterbox_V3_Emily_Sample.wav",
+        "sample_sha256": "60de53f726de4ee37d7e8d14c93dbc23ac4e15348f642412d541575bf81ac2e0",
+        "successful_audio_run": "https://github.com/urfavxbf/video-ai-editor/actions/runs/40614959831"
+      }
+    }
+  }
+}
