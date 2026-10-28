@@ -1,0 +1,33 @@
+name: Approved Chatterbox narrator — tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/chatterbox_*.py'
+      - 'scripts/check_chatterbox_v3.py'
+      - 'tests/test_chatterbox_*.py'
+      - '.github/workflows/chatterbox-voice-profile-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/chatterbox_*.py'
+      - 'scripts/check_chatterbox_v3.py'
+      - 'tests/test_chatterbox_*.py'
+      - '.github/workflows/chatterbox-voice-profile-tests.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  narrator-config:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile TTS scripts
+        run: python -m compileall -q scripts/chatterbox_voice_profile.py scripts/chatterbox_voiceover.py scripts/chatterbox_longform.py
+      - name: Test profile, adapters, chunking and preflight without model downloads
+        run: python -m unittest discover -s tests -p 'test_chatterbox_*.py' -v
