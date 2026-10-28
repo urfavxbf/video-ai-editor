@@ -23,6 +23,15 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(set(d["characters"]), {"urfavxbf", "pix"})
         self.assertEqual(d["production_language"], "en")
 
+    def test_longform_landscape_delivery_default(self):
+        video = self.data["default_video"]
+        self.assertEqual(video["type"], "long-form-youtube")
+        self.assertEqual(video["aspect_ratio"], "16:9")
+        self.assertEqual((video["width"], video["height"], video["fps"]), (1920, 1080, 30))
+        self.assertEqual(video["language"], "en")
+        self.assertTrue(video["legacy_portrait_demos_not_default"])
+        self.assertEqual(video["duration_policy"], "script-and-chapter-driven")
+
     def test_both_visuals_have_distinct_transparent_asset_footprints(self):
         a = self.data["characters"]
         self.assertNotEqual(a["urfavxbf"]["visual"]["sha256"], a["pix"]["visual"]["sha256"])
