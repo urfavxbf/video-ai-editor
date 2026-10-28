@@ -56,6 +56,10 @@ You are the editor. User provides footage; make artistic/technical editing decis
 
 #### Current owner improvement priorities — mandatory
 
+- The owner wants **both animated PIX/UrFavXBF head portraits enlarged by about 35%** for new landscape videos; use `src/characters/portraitLayout.ts` (414 × 468 px with center-safe left/right positions) and keep the full-body sprites hidden.
+- Next researched candidate: `docs/episodes/y2038.md` (Year 2038 signed 32-bit Unix time problem). Use the `Y2038Teaser` Remotion scene and independently verified facts; do not claim all computers will fail or that the full episode is complete.
+
+
 - **Latest explicit user layout decision**: use ONLY the **animated super-pixel/glitch HEAD PORTRAITS** of UrFavXBF (left) and PIX (right). Do **not** composite their large full-body sprites or bottom nameplates in new videos. See `docs/PIXEL_GLITCH_PORTRAITS_ONLY.md` and the `PixelPortraitHUD` / `PixelGlitchPortrait` Remotion components.
 
 
