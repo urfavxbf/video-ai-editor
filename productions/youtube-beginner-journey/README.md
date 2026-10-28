@@ -57,6 +57,64 @@ Include speaker handoff, pause, listener response, dense numeric graphic and a t
 Before full rendering, review audiovisual playback and collect approval or performance/pacing revisions.
 Do not treat approval of this written concept as approval of an unseen preview.
 
+## Implemented audio-driven preview checkpoint
+
+The branch now includes `YouTubeJourneyPreview`, an editorial preview
+composition. It uses six **real** short Chatterbox V3 WAV clips after synthesis,
+in three deliberately separated excerpts: opening (YT-001..003), early YPP gate
+(YT-029), and hypothetical RPM example plus yacht callback (YT-039, YT-042).
+A brief chapter card explicitly labels each non-contiguous jump so the edit
+never pretends these lines formed a continuous dialogue.
+
+- `scripts/render_youtube_journey_voices.py` loads Chatterbox V3 once per
+  speaker. UrFavXBF uses the approved English built-in Natural Storyteller
+  identity; PIX uses the SHA-verified, licensed Emily reference. Generated
+  WAVs and model weights are never committed.
+- `scripts/build_youtube_journey_preview.py` reads PCM sample counts from
+  each WAV, places each line at measured 30fps frame positions, extracts
+  speaker-specific measured RMS envelopes, and stages audio under the
+  gitignored `public/voiceovers/` path. It fails on missing/invalid WAVs
+  or mismatched IDs/voice profiles. It prints the measured duration and
+  whether it meets the target 45–75 seconds; `--strict-duration` can enforce
+  that limit after an editorial revision.
+- `src/episodes/YouTubeJourneyPreview.tsx` plays the actual WAVs using
+  Remotion's `Audio`/`Sequence` elements and drives portrait reactions
+  with the corresponding measured speaker envelope.
+- Caption blocks are **editorially estimated from line duration** and visibly
+  marked `DRAFT CAPTION TIMING`. They are NOT word-level alignment and the
+  preview must not be presented as publish-ready. Obtain reviewed alignment
+  and audition audio before a full final render.
+- GitHub Actions `YouTube beginner journey — validation` tests the timeline
+  using fixture WAVs and runs TypeScript typecheck, without a model download.
+  `YouTube beginner journey — CPU English preview voices` synthesizes only
+  the preview excerpts using CPU runners and uploads short-lived separate
+  speaker artifacts and the measured Remotion props manifest. Model or
+  media artifacts are not committed. This workflow may fail or be slow on
+  CPU; it is not a guarantee of successful inference.
+
+To use the workflow's audio artifact locally after the voice run succeeds:
+
+```bash
+# Download/extract the artifact so these paths exist:
+# out/youtube-journey-preview.props.json
+# public/voiceovers/youtube-beginner-journey/preview/{pix,urfavxbf}/YT-xxx.wav
+# Extract the two approved portrait directories from the original character
+# pack to public/characters/pixel-glitch/{pix,urfavxbf}/
+npm ci
+npm run typecheck
+npx remotion render YouTubeJourneyPreview out/youtube-journey-preview.mp4 \
+  --props=out/youtube-journey-preview.props.json \
+  --codec=h264 --crf=19 --pixel-format=yuv420p \
+  --audio-codec=aac
+```
+
+Do not render with stand-in full-body characters. Official portrait PNGs are
+external assets and are **not** present in this GitHub branch. Voice artifacts
+are also external until the CPU workflow completes successfully. No verified
+MP4 exists from this commit alone. Recheck peak levels, exact captions,
+pronunciation, shot transitions, policies and runtime after audiovisual render.
+Do not upload to YouTube automatically.
+
 ## Validation
 - Readable English script and structured dialogue must agree line-for-line.
 - No duplicate line IDs, unknown speakers or blank/oversized lines.
