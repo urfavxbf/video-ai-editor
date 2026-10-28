@@ -1,9 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame} from 'remotion';
 import episode from '../../episodes/youtube-automation-en.json';
-import {PixelGlitchPortrait} from '../characters/PixelGlitchPortrait';
 import type {VoiceEvent} from '../characters/CharacterPuppet';
-import {PORTRAIT_LAYOUT} from '../characters/portraitLayout';
 
 type Speaker='pix'|'urfavxbf';
 type Cue={speaker:Speaker;chapter:string;title:string;stat:string;text:string};
@@ -42,6 +40,33 @@ const highlights:Record<string,string[]>={
 };
 const chip:React.CSSProperties={background:'rgba(5,19,36,.9)',padding:'12px 15px',borderRadius:10,fontSize:17,
   fontWeight:850,letterSpacing:1,border:'1px solid rgba(51,222,244,.5)'};
+const HeadPortrait:React.FC<{id:Speaker;frame:number;voiceEvents:VoiceEvent[]}>=({id,frame,voiceEvents})=>{
+  const isPix=id==='pix';
+  const active=voiceEvents.find(e=>e.speaker===id&&frame>=e.startFrame&&frame<e.endFrame);
+  const energy=active?active.rms[Math.min(active.rms.length-1,Math.max(0,Math.floor((frame-active.startFrame)*active.samplesPerSecond/FPS)))]??0:0;
+  const talking=!!active&&energy>0.12&&(frame%7<5);
+  const color=isPix?CYAN:GOLD;
+  const bob=Math.sin(frame/15+(isPix?1.8:0))*4;
+  return <div style={{position:'absolute',top:202,left:isPix?undefined:64,right:isPix?64:undefined,
+    width:414,height:468,boxSizing:'border-box',border:'3px solid '+color,borderRadius:24,
+    transform:'translateY('+bob+'px)',background:'#061522',overflow:'hidden',
+    boxShadow:'0 0 '+(10+energy*27)+'px '+color+'77'}}>
+    <div style={{position:'absolute',top:12,left:12,width:384,height:388,
+      backgroundImage:'url('+staticFile('episodes/youtube-automation/'+id+'-atlas.png')+')',
+      backgroundRepeat:'no-repeat',backgroundPosition:talking?'100% 0%':'0% 0%',
+      backgroundSize:'200% 100%',imageRendering:'pixelated'}}/>
+    <div style={{position:'absolute',bottom:0,width:'100%',height:61,
+      background:'#020B19',color,display:'flex',alignItems:'center',justifyContent:'space-between',
+      padding:'0 18px',boxSizing:'border-box',fontSize:24,fontWeight:900,letterSpacing:1}}>
+      <span>{isPix?'PIX':'URFAVXBF'}</span>
+      <div style={{display:'flex',height:27,alignItems:'flex-end',gap:5}}>
+        {[0,1,2,3,4].map(n=><div key={n} style={{width:7,background:color,
+          height:6+(active?Math.round(energy*20*Math.abs(Math.sin(frame/4+n))):0)}}/>)}
+      </div>
+    </div>
+  </div>;
+};
+
 export const YoutubeAutomationEnglish:React.FC<YoutubeAutomationEnglishProps>=({
   assetsReady,voiceEvents=[],voiceClips=[],timedCues,totalFrames,soundtrack,soundtrackVolume=0.16,
 })=>{
@@ -77,10 +102,8 @@ export const YoutubeAutomationEnglish:React.FC<YoutubeAutomationEnglishProps>=({
       <div style={{fontSize:23,fontWeight:900,letterSpacing:2}}>YOUTUBE AUTOMATION / EXPLAINED</div>
       <div style={{fontSize:18,color:'#8CCCDD',fontWeight:800}}>ORIGINAL ENGLISH DOCUMENTARY</div>
     </div>
-    {assetsReady?<><PixelGlitchPortrait id="urfavxbf" left={PORTRAIT_LAYOUT.left} top={PORTRAIT_LAYOUT.top}
-        voiceEvents={voiceEvents}/>
-      <PixelGlitchPortrait id="pix" right={PORTRAIT_LAYOUT.right} top={PORTRAIT_LAYOUT.top}
-        voiceEvents={voiceEvents}/></>:
+    {assetsReady?<><HeadPortrait id="urfavxbf" frame={frame} voiceEvents={voiceEvents}/>
+      <HeadPortrait id="pix" frame={frame} voiceEvents={voiceEvents}/></>:
     (['URFAVXBF','PIX'] as const).map((name,i)=><div key={name}
       style={{position:'absolute',top:202,left:i===0?64:undefined,right:i===1?64:undefined,
         width:414,height:468,borderRadius:25,border:'3px dashed '+(i===0?GOLD:CYAN),
@@ -113,13 +136,13 @@ export const YoutubeAutomationEnglish:React.FC<YoutubeAutomationEnglishProps>=({
       <div style={{marginTop:18,border:'2px solid '+accent,borderRadius:18,
         background:'rgba(2,12,28,.96)',padding:'15px 23px 20px',height:158,boxSizing:'border-box'}}>
         <div style={{color:accent,fontSize:18,fontWeight:950,letterSpacing:2}}>
-          {cue.speaker==='pix'?'PIX / PIXEL SPARK COMPANION':'URFAVXBF / NATURAL STORYTELLER'}
+          {cue.speaker==='pix'?'PIX / EMILY VOICE':'URFAVXBF / NATURAL STORYTELLER'}
         </div>
         <div style={{fontSize:29,fontWeight:800,lineHeight:1.35,marginTop:15}}>{caption}</div>
       </div>
     </div>
     <div style={{position:'absolute',bottom:44,left:64,fontSize:18,color:'#84C6D7',fontWeight:700}}>
-      {cue.chapter.toUpperCase()} · ENGLISH · CHatterbox V3
+      {cue.chapter.toUpperCase()} · ENGLISH · CHATTERBOX V3
     </div>
     <div style={{position:'absolute',bottom:20,left:64,right:64,height:9,borderRadius:8,background:'#15344A'}}>
       <div style={{width:(Math.min(100,frame/total*100))+'%',height:'100%',borderRadius:8,
