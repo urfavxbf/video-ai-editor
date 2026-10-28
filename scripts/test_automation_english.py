@@ -26,7 +26,7 @@ class AutomationEnglishTests(unittest.TestCase):
         self.assertEqual({c["speaker"] for c in cues},{"urfavxbf","pix"})
         self.assertGreater(sum(len(c["text"].split()) for c in cues),900)
         self.assertTrue(any("2027" in c["stat"] for c in cues))
-        self.assertTrue(any("200" in c["text"] for c in cues))
+        self.assertTrue(any("two hundred dollars" in c["text"] for c in cues))
 
     def test_existing_english_character_defaults_preserved(self):
         from character_voiceover import default_language
