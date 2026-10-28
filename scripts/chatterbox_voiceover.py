@@ -140,7 +140,7 @@ def generate(args: argparse.Namespace) -> Path:
     ) as handle:
         temporary = Path(handle.name)
     try:
-        torchaudio.save(str(temporary), waveform.detach().cpu(), model.sr)
+        torchaudio.save(str(temporary), waveform.detach().cpu(), model.sr, encoding="PCM_S", bits_per_sample=16)
         if temporary.stat().st_size <= 44:
             raise RuntimeError("Chatterbox produced an empty WAV file.")
         temporary.replace(destination)
