@@ -1,0 +1,82 @@
+name: PIX Chatterbox cute female voice sample
+
+on:
+  push:
+    branches: [feat/pix-chatterbox-cute-female-voice]
+    paths:
+      - '.github/workflows/pix-chatterbox-voice-sample.yml'
+      - 'scripts/pix_voice_profile.py'
+      - 'scripts/prepare_pix_reference.py'
+      - 'tests/test_pix_voice_profile.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-pix-sample:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      TOKENIZERS_PARALLELISM: 'false'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements-chatterbox.txt
+      - name: Verify voice profile without model installation
+        run: python -m unittest discover -s tests -p 'test_pix_voice_profile.py' -v
+      - name: Download pinned, MIT-licensed synthetic reference
+        run: python scripts/prepare_pix_reference.py
+      - name: Install pinned CPU Chatterbox Multilingual V3
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Synthesize actual PIX English dialogue with Chatterbox V3
+        run: |
+          python - <<'PY'
+          import subprocess
+          import sys
+          sys.path.insert(0, "scripts")
+          from pix_voice_profile import PIX_CANDIDATE, PIX_SAMPLE_SCRIPT
+          subprocess.run([
+              sys.executable, "scripts/chatterbox_voiceover.py",
+              "--text", PIX_SAMPLE_SCRIPT,
+              "--output", "out/pix-cute-female-chatterbox.wav",
+              "--voice-reference", "input/pix-reference.wav",
+              "--language-id", PIX_CANDIDATE.language,
+              "--exaggeration", str(PIX_CANDIDATE.exaggeration),
+              "--cfg-weight", str(PIX_CANDIDATE.cfg_weight),
+              "--device", "cpu",
+          ], check=True)
+          PY
+      - name: Verify real WAV output is not empty or silent
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import audioop
+          import wave
+          wav = Path("out/pix-cute-female-chatterbox.wav")
+          assert wav.stat().st_size > 20_000, "No synthesized audio"
+          with wave.open(str(wav), "rb") as f:
+              duration = f.getnframes() / f.getframerate()
+              samples = f.readframes(f.getnframes())
+              assert f.getsampwidth() == 2
+              assert 1.0 < duration < 45.0
+              assert audioop.rms(samples, 2) > 80, "Output appears silent"
+              print("Generated actual Chatterbox speech:", round(duration, 2), "seconds")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pix-cute-female-chatterbox-voice-sample
+          path: out/pix-cute-female-chatterbox.wav
+          if-no-files-found: error
+          retention-days: 14
