@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {type VoiceEvent} from '../characters/CharacterPuppet';
-import {PixelGlitchPortrait} from '../characters/PixelGlitchPortrait';
+import {YouTubeJourneyFullBodyCharacters} from './YouTubeJourneyFullBodyCharacters';
 
 const yellow = '#ffda00';
 const cyan = '#27e8fd';
@@ -9,8 +9,8 @@ const muted = '#96a8c3';
 const Panel: React.FC<React.PropsWithChildren<{accent?: string}>> = ({children,accent=cyan}) => <div style={{background:'#101e32',border:`2px solid ${accent}55`,borderRadius:24,padding:30}}>{children}</div>;
 
 /** Original episode layout studies. Static editorial frames, not timed speech. */
-export type JourneySceneProps = {sceneOverride?: number; captionOverride?: string; speakerOverride?: string; voiceEvents?: VoiceEvent[]; preview?: boolean; sceneStart?: number};
-export const YouTubeJourneyStyleframes: React.FC<JourneySceneProps> = ({sceneOverride,captionOverride,speakerOverride,voiceEvents=[],preview=false,sceneStart=0}) => {
+export type JourneySceneProps = {sceneOverride?: number; captionOverride?: string; speakerOverride?: string; voiceEvents?: VoiceEvent[]; preview?: boolean; sceneStart?: number; assetsReady?: boolean};
+export const YouTubeJourneyStyleframes: React.FC<JourneySceneProps> = ({sceneOverride,captionOverride,speakerOverride,voiceEvents=[],preview=false,sceneStart=0,assetsReady=false}) => {
   const frame = useCurrentFrame();
   const scene = sceneOverride ?? Math.min(2,Math.floor(frame/90));
   const reveal = preview ? interpolate(frame-sceneStart,[0,18],[0,1],{extrapolateLeft:"clamp",extrapolateRight:"clamp"}) : 1;
@@ -20,8 +20,15 @@ export const YouTubeJourneyStyleframes: React.FC<JourneySceneProps> = ({sceneOve
     <div style={{position:'absolute',inset:0,backgroundImage:'radial-gradient(ellipse at 50% 38%, #16324b 0%, transparent 65%)'}} />
     <div style={{position:'absolute',top:49,left:64,right:64,display:'flex',justifyContent:'space-between',fontSize:19,letterSpacing:3,fontWeight:700,color:muted}}><span>URFAVXBF + PIX / CREATOR FIELD GUIDE</span><span>ENGLISH · 16:9</span></div>
     <div style={{position:'absolute',top:108,left:64,right:64,fontSize:52,fontWeight:900,letterSpacing:-1}}>{title}</div>
-    <PixelGlitchPortrait id="urfavxbf" left={64} top={240} showGlitch={false} voiceEvents={voiceEvents} reactions={[{speaker:'urfavxbf',startFrame:0,endFrame:999999,reaction:scene===2?'excited':'thinking'}]} />
-    <PixelGlitchPortrait id="pix" right={64} top={240} showGlitch={false} voiceEvents={voiceEvents} reactions={[{speaker:'pix',startFrame:0,endFrame:999999,reaction:scene===2?'surprised':'curious'}]} />
+    {assetsReady ? <YouTubeJourneyFullBodyCharacters
+      voiceEvents={voiceEvents} chapter={scene===1?5:scene===2?6:1}
+      activeSpeaker={speakerOverride==='PIX'?'pix':speakerOverride==='URFAVXBF'?'urfavxbf':undefined}
+    /> : <>
+      <div style={{position:'absolute',left:62,top:400,width:410,
+        textAlign:'center',fontSize:20,color:yellow}}>URFAVXBF / FULL BODY</div>
+      <div style={{position:'absolute',right:62,top:400,width:410,
+        textAlign:'center',fontSize:20,color:cyan}}>PIX / FULL BODY</div>
+    </>}
     <div style={{position:'absolute',left:515,width:890,top:240,opacity:reveal,transform:`translateY(${(1-reveal)*18}px)`}}>
       <div style={{fontSize:18,fontWeight:800,letterSpacing:3,color:cyan,marginBottom:20}}>0{scene===0?1:scene===1?5:6} / {['THE FIRST UPLOAD','MONETIZATION','THE EARNINGS QUESTION'][scene]}</div>
       {scene===0 ? <>
