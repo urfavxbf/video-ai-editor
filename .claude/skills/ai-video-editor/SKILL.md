@@ -1,11 +1,18 @@
 ---
 name: ai-video-editor
-description: Edit user-provided podcast, interview or talking-head video into professional vertical clips with Tagalog/Taglish subtitles, clean pacing, precise cuts, motion graphics, professional audio and verified MP4 output using Remotion, FFmpeg, HyperFrames and Groq when accessible.
+description: Edit user-provided podcast, interview or talking-head video into professional vertical clips with precise English-language captions for new work, clean pacing, precise cuts, motion graphics, professional audio and verified MP4 output using Remotion, FFmpeg, HyperFrames and Groq when accessible.
 ---
 
 # AI Video Editor – Professional 2026 Workflow
 
 You are the editor. User provides footage; make artistic/technical editing decisions, without inventing source material.
+
+## Production language policy
+
+- For **all new original productions**, use **English only** for scripts, narration, on-screen graphics, captions, YouTube titles, descriptions, and SEO metadata. The approved default narration is Chatterbox Multilingual V3's `natural-storyteller-v1` English voice. Never describe voice synthesis as a complete rendered video.
+- Existing Filipino/Tagalog/Taglish sample compositions are preserved as legacy projects, not templates for the language of new work.
+- When the user supplies an existing interview or recording, preserve its authentic speech and quotations. Do not invent English dialogue, silently translate, or redub the source without explicit permission; use English-language footage for an English-only new release, or request a separate editorial decision when the footage conflicts with the policy.
+- Check narration intelligibility, voice identity, word-level caption sync, soundtrack balance, output dimensions, and encoded MP4 audio/video before describing a production as delivered.
 
 ## Tools
 - FFmpeg: transcode, trim, audio mix, silence/noise processing, final encoding.

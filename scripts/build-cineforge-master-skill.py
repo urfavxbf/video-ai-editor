@@ -59,7 +59,7 @@ def main():
         raise ValueError("Pinned Remotion skill revision changed")
     header="""---
 name: cineforge-pro
-description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original Tagalog YouTube Shorts, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
+description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original English-language YouTube Shorts, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
 ---
 
 # CINEFORGE PRO — AI Video Director & Motion Studio
@@ -82,7 +82,7 @@ official Remotion Agent Skills are consolidated into this single SKILL.md.
 4. For original videos, write original scripts and use properly licensed
    visuals, voiceover and music. Independently verify time-sensitive or
    material scientific claims.
-5. Prefer word-level timestamps. Proofread Tagalog/Taglish, place subtitles
+5. Prefer word-level timestamps. Proofread English-language captions for new work, place subtitles
    in safe areas, and disclose approximate timing when exact alignment fails.
 6. Render deterministic Remotion animations from frames. Use appropriate
    Studio previews and real MP4 renders. Validate encoded duration, frames,

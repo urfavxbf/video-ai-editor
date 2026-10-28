@@ -2,6 +2,10 @@
 
 **Video AI Editor** is an independent video-editing workspace maintained in [urfavxbf/video-ai-editor](https://github.com/urfavxbf/video-ai-editor), built around Remotion motion graphics and FFmpeg processing for vertical videos, podcast clips and Shorts.
 
+## Production direction (new content)
+
+**English-only for new original videos**: scripts, narration, motion-design text, captions and publishing metadata. The approved English narrator is **Natural Storyteller** via Chatterbox Multilingual V3 (`natural-storyteller-v1`). Existing Tagalog/Taglish compositions remain unchanged as archived examples; this does not imply translating third-party footage or automatic publishing. See [English production policy](docs/ENGLISH_PRODUCTION_POLICY.md).
+
 ## Included
 - **18-second original Remotion product reel** with kinetic typography, podcast mockups, Tagalog caption animation and stack overview. Run `npm run render:repo-showcase`; see [showcase guide](docs/SHOWCASE.md).
 - **21 Remotion motion effects**: Snap Zoom, Headline Storm, Liquid Glass, Frame Escape, Paper Cutout, Magazine Cover, Split and more.
