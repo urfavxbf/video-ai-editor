@@ -1,0 +1,57 @@
+{
+  "visualVersion": "chibi-pixel-v4-dark-green",
+  "status": "draft-artwork-awaiting-cleanup-and-owner-preview",
+  "sourceArtwork": "User-approved chibi dark-green concept newly generated 2026-10-29",
+  "assetBundle": "UrFavXBF_PIX_Chibi_V4_Draft_Sprite_Pack.zip (conversation download; not stored in git)",
+  "publicFolder": "public/characters/animation-v4/",
+  "timelineComponent": "ChibiV4ReviewStage",
+  "characters": {
+    "urfavxbf": {
+      "role": "Main storyteller",
+      "style": "dark-green chibi cyber hoodie, neon-green eyes, black-green messy hair, green X headphones",
+      "colorHex": "#6ffb8b"
+    },
+    "pix": {
+      "role": "AI cat companion",
+      "style": "cyan-white chibi cat, purple/pink accents, neon headset and glitches",
+      "colorHex": "#70e8ff"
+    }
+  },
+  "recordedMotionCounts": {
+    "urfavxbf": {
+      "actions": 23,
+      "frames": 85
+    },
+    "pix": {
+      "actions": 24,
+      "frames": 86
+    }
+  },
+  "facialReferencesPerCharacter": 10,
+  "mouthReferenceTilesPerCharacter": 15,
+  "frameCanvas": [
+    64,
+    78
+  ],
+  "expressionReferenceCanvas": [
+    78,
+    83
+  ],
+  "mouthReferenceCanvas": [
+    56,
+    25
+  ],
+  "renderStage": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "gating": {
+    "sourcePosesAreDraft": true,
+    "visemesAreNotFaceAligned": true,
+    "fullFrameDrawingsStillNeeded": true,
+    "productionApproved": false,
+    "doNotSilentlySubstituteOldV2": true
+  },
+  "useAs": "visual-direction and isolated draft-sprite review only; not yet default for long-form production"
+}
