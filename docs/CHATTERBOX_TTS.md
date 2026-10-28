@@ -8,7 +8,7 @@ Voice-over generation uses the official [Resemble AI Chatterbox](https://github.
 - Optional reference recording for consistent **authorized** speaker voice cloning.
 - Choose a supported language and CPU, CUDA, or Apple MPS.
 - Overlay that WAV on any Remotion `ExampleEdit` composition and control the source-audio level.
-- This is an on-demand CLI integration, **not** a hosted TTS service, a one-tap browser tool, automatic timestamp alignment, or proof of real-world synthesized audio quality.
+- Supports on-demand local CLI synthesis and a manual GitHub Actions **Generate Chatterbox V3 narration** workflow after it is merged to the default branch. This does not provide a hosted low-latency TTS API or automatically verified natural-sounding audio.
 
 **Tagalog is not officially supported.** The multilingual V3 language list contains Malay (`ms`) and English (`en`), but not Filipino/Tagalog (`tl`). Do not label `ms` as Tagalog support. You can experiment with a Tagalog script tagged as `ms` only with the understanding that accent, transcription, and pronunciation may be incorrect. Manually review every output before publication.
 
@@ -72,6 +72,27 @@ npm run render:edit
 ~~~
 
 Narration is audio-only. Word-by-word captions still require reviewed timestamps from transcription / forced alignment, not guessed timings. The existing `scripts/groq_transcribe.py` can transcribe a generated WAV; inspect the words against the original script for accuracy.
+
+## Long-form narration — one model load, one output WAV
+
+The video editor no longer requires manually synthesizing and stitching individual chapters. Save English narration in a UTF-8 text file, then run:
+
+~~~bash
+.venv-chatterbox/bin/python scripts/chatterbox_longform.py \\
+  --text-file input/moon-script.txt \\
+  --language-id en --device auto --max-chars 320 --pause-ms 280 \\
+  --output public/voiceovers/moon-english.wav
+~~~
+
+The CLI loads Chatterbox V3 once, chunks on sentences or word boundaries (never splitting words), checks audio samples, joins chunks with a small pause, and writes both `moon-english.wav` and `moon-english.json`. The manifest records *chunk* timings only: it is **not** verified word alignment. The audio retains upstream watermarking. For a different voice, add `--voice-reference input/consented-speaker.wav`; **never commit reference recordings**.
+
+### Android / browser — manual GitHub Actions narration
+
+After this branch is merged into `main`, open the GitHub repository in a browser, navigate to **Actions → Generate Chatterbox V3 narration → Run workflow**. Paste an English script into the narration input and run. The workflow installs the pinned upstream Chatterbox V3, synthesizes with the built-in voice on a CPU runner, and publishes a downloadable artifact named `chatterbox-v3-narration` containing the WAV and timing JSON. GitHub Actions may consume included minutes or billable runner time; CPU model inference can be resource-intensive or time out. If a run fails, inspect its job logs; **never present an ungenerated audio link as though it succeeded**. This workflow does not clone arbitrary speakers or accept remote voice-reference URLs, to avoid handling biometric recordings in Actions logs or public artifacts.
+
+### Real-audio verification gate
+
+`.github/workflows/chatterbox-v3-audio-smoke.yml` provides an English **real model synthesis** smoke test on CPU; unlike the adapter unit tests, this installs the source and downloads model weights. It then checks the resulting WAV and uploads it as `chatterbox-v3-english-voice-sample`. A green build is still insufficient to guarantee narration quality—listen for hallucinations, pronunciation and natural pacing before final video publication.
 
 ## Quality, ownership, and operational notes
 
