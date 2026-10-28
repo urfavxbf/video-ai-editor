@@ -10,6 +10,10 @@
 
 **Long-form YouTube videos • 16:9 widescreen • 1920 × 1080 • 30 fps.** No fixed Short runtime; write a chaptered, dialogue-led episode appropriate to the subject. Use character interaction, the 21 Remotion effects selectively, scene-specific advanced motion graphics and reliable Chatterbox speaker/caption synchronization. Preserve the old 9:16 demos without treating them as production templates.
 
+## Larger portraits + next episode candidate
+
+Owner requested enlarging **both** already-approved animated pixel-glitch face portraits: now **414 × 468 px** (from 306 × 346), on a 1920 × 1080 video with balanced side placements, unobstructed center HUD/captions, and no full bodies. Shared settings: [portraitLayout.ts](src/characters/portraitLayout.ts). Proposed next topic: [The 2038 Problem — The Day Computers Travel Back to 1901](docs/episodes/y2038.md), an evidence-checked 7–9-minute chaptered technology mystery. The [Y2038Teaser](src/episodes/Y2038Teaser.tsx) composition uses a visual countdown plus numeric overflow tied to subtitle cues.
+
 ## New default layout — animated portraits only
 
 The owner reviewed the Pixel Glitch sample and requested that **full-body overlays be removed from new videos**. Only the **two animated head portraits** may appear at the left/right of the 16:9 data-and-caption HUD. Keep the separate approved UrFavXBF and PIX expression sprites, voice-driven talk states, neon outlines, and high-contrast glitch details. **Do not insert full-body sprite layers or their bottom nameplates** into the new video timeline.
