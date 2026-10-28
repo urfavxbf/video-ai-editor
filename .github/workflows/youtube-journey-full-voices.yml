@@ -1,0 +1,120 @@
+name: YouTube beginner journey — full English CPU dialogue
+
+on:
+  push:
+    branches: [episode/youtube-beginner-journey]
+    paths:
+      - '.github/workflows/youtube-journey-full-voices.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  speak:
+    name: Chatterbox V3 / ${{ matrix.speaker }} / shard ${{ matrix.shard }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        speaker: [urfavxbf, pix]
+        shard: [0, 1]
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      TOKENIZERS_PARALLELISM: 'false'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements-chatterbox.txt
+      - name: Install pinned, approved Chatterbox Multilingual V3 on CPU
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Synthesize one disjoint shard with character-specific identity
+        run: |
+          python scripts/render_youtube_journey_voices.py \
+            --scope full \
+            --speaker "${{ matrix.speaker }}" \
+            --shard-index "${{ matrix.shard }}" \
+            --shard-count 2 \
+            --out out/youtube-journey-voices-full
+      - name: Validate real WAVs and profile identity
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import sys
+          sys.path.insert(0,'scripts')
+          from build_youtube_journey_preview import inspect_wav
+          p=Path('out/youtube-journey-voices-full/${{ matrix.speaker }}')
+          m=json.loads((p/'manifest-${{ matrix.shard }}.json').read_text())
+          assert m['scope']=='full' and m['shard_index']==int('${{ matrix.shard }}')
+          assert m['human_review_required'] and len(m['clips'])>=8
+          for clip in m['clips']:
+              samples,rate=inspect_wav(p/clip['file'])
+              assert samples>rate//3
+          print('Measured',len(m['clips']),'real WAVs for ${{ matrix.speaker }}')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-journey-full-${{ matrix.speaker }}-${{ matrix.shard }}
+          path: out/youtube-journey-voices-full/${{ matrix.speaker }}/
+          if-no-files-found: error
+          retention-days: 14
+
+  timeline:
+    name: Measure and assemble 68 real WAVs / never fabricate timing
+    needs: speak
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: youtube-journey-full-urfavxbf-*
+          path: out/youtube-journey-voices-full/urfavxbf
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: youtube-journey-full-pix-*
+          path: out/youtube-journey-voices-full/pix
+          merge-multiple: true
+      - name: Assemble real timecodes and report 11:30 storyboard drift
+        run: |
+          python scripts/build_youtube_journey_full.py \
+            --audio-root out/youtube-journey-voices-full \
+            --output out/youtube-journey-full.props.json
+      - name: Validate 68 turns and release safety gates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          props=json.loads(Path('out/youtube-journey-full.props.json').read_text())
+          assert len(props['lines'])==68
+          assert len(props['chapters'])==9
+          assert not props['assetsReady'] and not props['readyForPublishing']
+          assert props['captionTiming']=='estimated-unreviewed'
+          assert all(Path('public',x['file']).is_file() for x in props['lines'])
+          print('Complete draft audio:',props['durationSeconds'],'seconds')
+          print('Storyboard reference only:',props['storyboardDurationSeconds'],'seconds')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-journey-full-draft-68-wavs-and-timeline
+          path: |
+            out/youtube-journey-full.props.json
+            public/voiceovers/youtube-beginner-journey/full/
+          if-no-files-found: error
+          retention-days: 14
