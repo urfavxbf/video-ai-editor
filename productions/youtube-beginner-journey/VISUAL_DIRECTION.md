@@ -44,7 +44,7 @@ merely to hit a schedule.**
   no narration or official character PNGs and makes no claim of a finished MP4.
 - Six-audio-turn excerpt: `YouTubeJourneyPreview`. Its graphics use the
   revised beat 1, 5, 6 treatments. The two **approved transparent full-body** character sprites load from
-  `public/characters/UrFavXBF_Transparent.png` and `public/characters/PIX_Transparent.png`; never substitute generic characters. Full-body puppet gestures are audio-reactive; independent limb animation requires aligned character rig layers.
+  `public/characters/pixel-glitch/urfavxbf/base.png` and `public/characters/pixel-glitch/pix/base.png`; never substitute generic characters. Full-body puppet gestures are audio-reactive; independent limb animation requires aligned character rig layers.
 - Full-length production: `YouTubeJourneyFullEpisode`, registered with
   dynamic duration, character-specific real RMS energy and timing supplied
   by all 68 actual WAV files. It deliberately refuses an audio-backed render
@@ -65,7 +65,7 @@ python scripts/build_youtube_journey_full.py \
   --output out/youtube-journey-full.props.json
 
 # Manually inspect + audition the measured props, then stage approved
-# public/characters/pixel-glitch/{pix,urfavxbf}/*.png.
+# public/characters/pixel-glitch/{pix,urfavxbf}/base.png (official full-body V2 files; do not use head-only loop frames).
 # Set assetsReady=true in the local props only after verifying those files.
 npm ci
 npm run typecheck
