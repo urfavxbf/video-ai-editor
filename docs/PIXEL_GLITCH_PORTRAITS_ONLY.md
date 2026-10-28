@@ -1,3 +1,5 @@
+> **Sizing update:** Enlarge **both** head portraits to 414 × 468 px (approximately 35% wider). Left at 64 px, right at 64 px, top at 202 px, center infographic field x=515–1405. See [portraitLayout.ts](../src/characters/portraitLayout.ts). No full-body avatars.
+
 # Pixel Glitch V2 — portraits-only layout (owner-approved)
 
 ## Latest layout requirement — 28 October 2026

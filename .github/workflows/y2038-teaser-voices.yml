@@ -1,0 +1,70 @@
+name: Y2038 enlarged-portrait teaser Chatterbox voices
+on:
+  push:
+    branches: [feat/larger-portraits-y2038-episode]
+    paths:
+      - "docs/episodes/y2038.json"
+      - ".github/workflows/y2038-teaser-voices.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  voice:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        speaker: [pix, urfavxbf]
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: "4"
+      MKL_NUM_THREADS: "4"
+      TOKENIZERS_PARALLELISM: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-chatterbox.txt
+      - name: Install real Chatterbox Multilingual V3
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Synthesize official speaker identity
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import subprocess
+          import sys
+          data=json.loads(Path("docs/episodes/y2038.json").read_text(encoding="utf-8"))
+          speaker="${{ matrix.speaker }}"
+          line=next(t["text"] for t in data["teaserTurns"] if t["speaker"] == speaker)
+          args=[sys.executable,"scripts/character_voiceover.py",
+                "--character",speaker,"--text",line,
+                "--output",f"out/y2038-{speaker}.wav","--device","cpu"]
+          subprocess.run(args,check=True)
+          PY
+      - name: Verify real voice WAV
+        run: |
+          python - <<'PY'
+          import wave
+          from pathlib import Path
+          f=Path("out/y2038-${{ matrix.speaker }}.wav")
+          with wave.open(str(f),"rb") as w:
+              assert w.getnframes() > w.getframerate() * 2
+              assert w.getnchannels() in (1,2)
+              print("Verified Chatterbox WAV duration",w.getnframes()/w.getframerate())
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: y2038-teaser-${{ matrix.speaker }}
+          path: out/y2038-${{ matrix.speaker }}.wav
+          if-no-files-found: error
+          retention-days: 14

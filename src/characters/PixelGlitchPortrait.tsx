@@ -1,4 +1,5 @@
 import React from 'react';
+import {PORTRAIT_LAYOUT} from './portraitLayout';
 import {Img, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {type CharacterId, type VoiceEvent, findVoiceEvent, voiceEnergyAtFrame} from './CharacterPuppet';
 
@@ -22,7 +23,7 @@ export type PixelGlitchPortraitProps = {
   right?: number;
   top?: number;
   bottom?: number;
-  /** Outer framed dimensions. The default 306 x 346 maps to the 1080p sample. */
+  /** Approved enlarged head portraits for 16:9, with central infographics unobstructed. */
   width?: number;
   height?: number;
   voiceEvents?: VoiceEvent[];
@@ -64,7 +65,7 @@ export const portraitStateAtFrame = (
 
 export const PixelGlitchPortrait: React.FC<PixelGlitchPortraitProps> = ({
   id, left, right, top, bottom,
-  width = 306, height = 346, voiceEvents = [], reactions = [],
+  width = PORTRAIT_LAYOUT.width, height = PORTRAIT_LAYOUT.height, voiceEvents = [], reactions = [],
   showGlitch = true, assetPrefix = 'characters/pixel-glitch',
 }) => {
   const frame = useCurrentFrame();
