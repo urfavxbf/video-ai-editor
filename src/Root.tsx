@@ -11,11 +11,15 @@ import { OfficialFeaturesDemo, OFFICIAL_FEATURE_DEMO_FRAMES } from './features/O
 import { RepoShowcase, REPO_SHOWCASE_FRAMES } from './showcase/RepoShowcase'
 import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
 import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characters/CharacterAnimationLab'
+import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="PixelPortraitHUD" component={PixelPortraitHUD}
+    width={1920} height={1080} fps={30} durationInFrames={240}
+    defaultProps={{assetsReady: false} satisfies PixelPortraitHUDProps} />
   <Composition id="CharacterAnimationLab" component={CharacterAnimationLab}
     width={1920} height={1080} fps={30} durationInFrames={240}
     defaultProps={{assetsReady: false} satisfies CharacterAnimationLabProps} />
