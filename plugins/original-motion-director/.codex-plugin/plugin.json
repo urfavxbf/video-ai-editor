@@ -1,0 +1,31 @@
+{
+  "name": "original-motion-director",
+  "version": "1.0.0",
+  "description": "Original motion-graphics workflows with guided choices and voice-synchronized character performance.",
+  "author": {
+    "name": "urfavxbf"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Original Motion Director",
+    "shortDescription": "Original animated video design",
+    "longDescription": "Create original motion-graphics productions with guided creative choices, storyboards, character performance, voice and caption synchronization, and render quality checks. Built around urfavxbf/video-ai-editor. Reuses approved character assets and low-level effects without premade video templates. This skills-only plugin uses tools available in your ChatGPT or Codex session; it does not include a render server, voice models, paid compute, or character media. Rendering requires repository access, compatible tools and approved assets. Phoneme-accurate lip sync requires suitable mouth shapes or a rig and verification.",
+    "developerName": "urfavxbf",
+    "category": "Creativity",
+    "capabilities": [
+      "Plan original motion graphics",
+      "Guide voice and character synchronization",
+      "Review video quality",
+      "Use video-ai-editor workflows"
+    ],
+    "defaultPrompt": [
+      "Plan an original UrFavXBF and PIX video and give me creative choices.",
+      "Help synchronize my final voice tracks, character animation, and captions.",
+      "Review my video preview for motion design, readability, and timing issues."
+    ],
+    "brandColor": "#146C80",
+    "brandColorDark": "#27E8FD",
+    "logo": "./assets/logo-light.svg",
+    "composerIcon": "./assets/icon.svg"
+  }
+}
