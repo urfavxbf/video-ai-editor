@@ -72,7 +72,7 @@ class BilingualVoicesTest(unittest.TestCase):
                     handle.setnchannels(1)
                     handle.setsampwidth(2)
                     handle.setframerate(16000)
-                    handle.writeframes((b"\\x00\\x00") * 8000)
+                    handle.writeframes(bytes(16000))
             props = package(root / "voice_manifest.json", root / "props.json", root / "public")
             self.assertEqual(props["audioLanguage"], "tl")
             self.assertEqual(props["captionAlignment"], "cue_level_only")
