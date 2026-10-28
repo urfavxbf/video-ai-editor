@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -134,7 +135,8 @@ def extract(character:str, source:Path, public_characters_dir:Path) -> dict:
     root=public_characters_dir/character
     rig_dir=root/"rig"
     rig_dir.mkdir(parents=True,exist_ok=True)
-    image.save(root/"base.png")
+    if source.resolve() != (root/"base.png").resolve():
+        shutil.copy2(source,root/"base.png")  # Preserve byte-exact canonical PNG SHA-256
     for key,layer in layers.items():
         layer.save(rig_dir/f"{key}.png",compress_level=9)
     neutral=Image.new("RGBA",image.size)
