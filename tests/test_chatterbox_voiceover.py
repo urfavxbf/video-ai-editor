@@ -8,6 +8,7 @@ import unittest
 from unittest.mock import patch
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "chatterbox_voiceover.py"
+sys.path.insert(0, str(MODULE_PATH.parent))  # Resolve shared narrator configuration.
 SPEC = importlib.util.spec_from_file_location("chatterbox_voiceover", MODULE_PATH)
 voiceover = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(voiceover)
