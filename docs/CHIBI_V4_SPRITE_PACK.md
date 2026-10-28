@@ -1,3 +1,5 @@
+> **Quality correction (29 October 2026):** The first V4 motion frames are ONLY **64×78 actual source pixels**, padded to 128×128 in the normalized QA pack. The local MP4 previews were **1280×720**, not 1920×1080. Nearest-neighbor scaling preserved pixel edges but cannot recreate missing face, mouth, or hair detail. The illustrated poster is also NOT a source for true high-detail full-body frames. Do NOT call the cropped pack “1080p-ready”. `scripts/validate_chibi_v4_production.py` now blocks such false claims: require separately authored original transparent master artwork at >=512×768 per full-body character and >=384×384 per facial/viseme layer, authentic per-file fingerprints, actual 1920×1080 video export, plus owner approval. **No current V4 draft image passes that production-ready gate**. Concept approval is not art-production approval.
+
 # Chibi Pixel Art V4 — dark-green UrFavXBF and PIX
 
 The owner approved the newly illustrated **dark-green chibi pixel-art** aesthetic
