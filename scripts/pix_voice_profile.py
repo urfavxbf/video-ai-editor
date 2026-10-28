@@ -1,9 +1,9 @@
-"""Candidate Chatterbox V3 English voice for PIX, UrFavXBF's talking AI pet.
+"""Approved default Chatterbox V3 English voice for PIX, UrFavXBF's talking AI pet.
 
 This is intentionally independent of DEFAULT_NARRATOR; Chatterbox's V3 built-in
 voice is not a catalogue of selectable cute/female speakers. PIX uses a pinned,
 openly licensed synthetic female reference to condition Chatterbox V3.
-Listen to a real test render before treating the candidate as approved.
+A real Chatterbox WAV sample passed workflow checks, and the owner requested that\nthis two-character setup be saved on 2026-10-28. Final audio still requires QC.
 """
 from dataclasses import dataclass
 
@@ -24,7 +24,7 @@ class PixVoiceProfile:
 
 PIX_CANDIDATE = PixVoiceProfile(
     identifier="pix-cute-female-emily-v1",
-    display_name="PIX — Cute AI Companion (Emily candidate)",
+    display_name="PIX — Cute AI Companion (Emily reference)",
     engine="chatterbox-multilingual",
     checkpoint="v3",
     language="en",
@@ -46,3 +46,6 @@ PIX_SAMPLE_SCRIPT = (
     "Got a big question? Let's figure it out together! "
     "Ooh, I love this part!"
 )
+
+# Stable default for all new PIX dialogue. Keep the previous name for older jobs.
+DEFAULT_PIX = PIX_CANDIDATE
