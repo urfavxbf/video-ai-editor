@@ -52,20 +52,27 @@ export type ChibiV4SpriteProps = {
   playbackFps?:number;
   /** True ONLY after the new V4 assets have been staged and SHA validated. */
   assetsReady:boolean;
+  /** Use source-preserving 128x128 normalized QA poses, staged separately. */
+  normalizedReview?:boolean;
 };
 
 export const ChibiV4Sprite:React.FC<ChibiV4SpriteProps> = ({
-  id,action,width,height,startFrame=0,playbackFps=8,assetsReady,
+  id,action,width,height,startFrame=0,playbackFps=8,assetsReady,normalizedReview=false,
 })=>{
   const currentFrame=useCurrentFrame();
   const {fps}=useVideoConfig();
   const count=getV4FrameCount(id,action);
   const elapsed=Math.max(0,currentFrame-startFrame);
-  const frame=Math.floor(elapsed*Math.max(1,playbackFps)/fps)%count;
-  const path=`characters/animation-v4/${id}/${action}/${String(frame).padStart(3,'0')}.png`;
+  const frameIndex=Math.floor(elapsed*Math.max(1,playbackFps)/fps);
+  // One-shots must stop on their last real drawing; no fake jumps repeating.
+  const loop=/^(idle_|walk$|run$|run_trot$|meow_talk$|tail_wag$|glitch_idle$|float$)/.test(action);
+  const frame=loop ? frameIndex%count : Math.min(count-1,frameIndex);
+  const prefix=normalizedReview?'characters/animation-v4-normalized':'characters/animation-v4';
+  const path=`${prefix}/${id}/${action}/${String(frame).padStart(3,'0')}.png`;
   return <div data-character={id} data-v4-action={action}
     data-review-state="source-extracted-draft"
     data-real-drawn-frames={count}
+    data-source-variant={normalizedReview?'normalized-qa':'original-draft'}
     style={{width,height,position:'relative',pointerEvents:'none'}}>
     {assetsReady ? <Img src={staticFile(path)} style={{
       width:'100%',height:'100%',objectFit:'contain',
