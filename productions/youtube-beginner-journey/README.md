@@ -12,7 +12,7 @@
 ## Source and assets
 Inspected base: f6b80619c64ef1bd7cc2e5410dc897a6d1ab8e08.
 No AGENTS.md appears in its complete recursive tree.
-Full-body asset paths from the existing character puppet contract: `public/characters/UrFavXBF_Transparent.png` and `public/characters/PIX_Transparent.png`. Stage approved RGBA files there; neither is present in GitHub `public/` yet. Optional layered rig art may be provided through `fullBodyAssets` in render props.
+Approved Super Pixel/Glitch V2 full-body sources exist in ChatGPT Library (checksums verified): `UrFavXBF_SuperPixel_Transparent.png` and `PIX_SuperPixel_Transparent.png`. Stage exact copies as `public/characters/pixel-glitch/urfavxbf/base.png` and `public/characters/pixel-glitch/pix/base.png`. The GitHub branch intentionally stores no original media. Optional layered rig art may be provided via `fullBodyAssets` in render props. Optional layered rig art may be provided through `fullBodyAssets` in render props.
 Never commit recordings, model weights or generated videos to Git.
 
 ## Story choreography
@@ -97,8 +97,9 @@ To use the workflow's audio artifact locally after the voice run succeeds:
 # Download/extract the artifact so these paths exist:
 # out/youtube-journey-preview.props.json
 # public/voiceovers/youtube-beginner-journey/preview/{pix,urfavxbf}/YT-xxx.wav
-# Stage the two approved full-body PNGs in public/characters/:
-# UrFavXBF_Transparent.png and PIX_Transparent.png.
+# Copy official V2 full-body sprite PNGs (NOT head-only loop frames) as:
+# public/characters/pixel-glitch/urfavxbf/base.png
+# public/characters/pixel-glitch/pix/base.png
 # Validate the props before rendering:
 python scripts/validate_youtube_journey_fullbody.py \\
   --props out/youtube-journey-preview.props.json \\
@@ -146,8 +147,7 @@ The existing `CharacterPuppet.tsx` now supports:
   responding to the other speaker instead of always dancing.
 - 30fps deterministic Remotion animation that does not require GPU models.
 
-**Important asset distinction:** one flat PNG cannot yield genuine independent
-limb movements. To get arms, legs, and head to move on their own, provide
+**Important asset distinction:** the V2 pack's 8-frame idle/talk/react loops are HEAD-ONLY, not full-body animations. One full-body PNG can sway, bob and bounce as a whole but cannot yield genuine independent limb movements. To get arms, legs, and head to move on their own, provide
 transparent cutout layers aligned to a shared canvas, with the torso layer
 not duplicating them. The authorized render props can include
 `fullBodyAssets.{urfavxbf,pix}.layeredRig`. See
