@@ -1,0 +1,105 @@
+name: YouTube Automation — English Chatterbox video
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'episodes/youtube-automation-en.json'
+      - 'scripts/generate_automation_english.py'
+      - 'scripts/package_automation_english.py'
+      - 'scripts/stage_automation_atlases.py'
+      - 'scripts/test_automation_english.py'
+      - 'src/episodes/YoutubeAutomationEnglish.tsx'
+      - 'src/Root.tsx'
+      - 'assets/automation/**'
+      - '.github/workflows/youtube-automation-english.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: english-chatterbox-automation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Validate English script and approved character voice identities
+        run: python scripts/generate_automation_english.py --validate-only
+      - name: Verify lightweight portrait assets and voice tests
+        run: |
+          python scripts/stage_automation_atlases.py
+          python -m unittest discover -s scripts -p 'test_automation_english.py' -v
+      - name: Remotion / TypeScript verification
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck
+
+  render:
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install known-working pinned CPU Chatterbox V3 environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Generate ALL real English dialogues from the two original Chatterbox voices
+        env:
+          HF_HOME: ${{ runner.temp }}/hf-cache
+          OMP_NUM_THREADS: '4'
+        run: |
+          python scripts/generate_automation_english.py --device cpu
+      - name: Build voice-accurate timeline and stage approved pixel head portraits
+        run: |
+          python scripts/package_automation_english.py
+          python scripts/stage_automation_atlases.py --props out/youtube-automation/voice-props.json
+      - name: Install video editor
+        run: npm ci --no-audit --no-fund
+      - name: Render actual voiced 16:9 MP4 (no YouTube upload)
+        run: |
+          npx remotion render YoutubeAutomationEnglish out/youtube-automation-english-chatterbox.mp4 --props=out/youtube-automation/voice-props.json --codec=h264 --crf=22 --pixel-format=yuv420p --audio-codec=aac --concurrency=2
+      - name: Verify MP4 has H.264 video and AAC audio
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          f=Path("out/youtube-automation-english-chatterbox.mp4")
+          assert f.is_file() and f.stat().st_size > 1_000_000
+          m=json.loads(subprocess.check_output(["ffprobe","-v","error","-show_streams","-show_format","-of","json",str(f)]))
+          types={s["codec_type"]:s["codec_name"] for s in m["streams"]}
+          assert types.get("video") == "h264",types
+          assert types.get("audio") == "aac",types
+          assert float(m["format"]["duration"]) > 180
+          print("Verified English-voiced MP4:",f,round(float(m["format"]["duration"]),1),"seconds")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-automation-english-chatterbox-voiced-video
+          path: |
+            out/youtube-automation-english-chatterbox.mp4
+            out/youtube-automation/voice-props.json
+            out/youtube-automation/voices/*.wav
+          if-no-files-found: error
+          retention-days: 14
