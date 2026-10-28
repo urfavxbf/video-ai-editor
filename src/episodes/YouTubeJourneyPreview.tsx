@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame} from 'remotion';
-import {YouTubeJourneyStyleframes} from './YouTubeJourneyStyleframes';
+import {JourneyVisualAid} from './YouTubeJourneyVisuals';
+import {PixelGlitchPortrait} from '../characters/PixelGlitchPortrait';
 import {type VoiceEvent} from '../characters/CharacterPuppet';
 
 export type PreviewCaption = {text: string; startFrame: number; endFrame: number};
@@ -23,7 +24,6 @@ export type YouTubeJourneyPreviewProps = {
   captionTiming: string;
 };
 
-const visualScene = (chapter: number) => chapter === 5 ? 1 : chapter === 6 ? 2 : 0;
 const labelFor = (chapter: number) => chapter === 5
   ? 'HOW MONETIZATION WORKS'
   : 'WHAT A VIEW REALLY PAYS';
@@ -63,18 +63,37 @@ export const YouTubeJourneyPreview: React.FC<YouTubeJourneyPreviewProps> = ({
   const activeCaption = activeLine?.captions.find(c => frame >= c.startFrame && frame < c.endFrame);
   const caption = activeCaption?.text ?? '';
   const previousEnd = sections.reduce((latest, s) => s.endFrame <= frame ? Math.max(latest, s.endFrame) : latest, 0);
-  const scene = visualScene(section?.scene ?? sections[sections.length - 1]?.scene ?? 1);
+  const scene = section?.scene ?? sections[sections.length - 1]?.scene ?? 1;
   const speaker = activeLine ? (activeLine.speaker === 'pix' ? 'PIX' : 'URFAVXBF') : '';
 
   return <AbsoluteFill style={{background: '#060d19'}}>
-    {section ? <YouTubeJourneyStyleframes
-      sceneOverride={scene}
-      captionOverride={caption}
-      speakerOverride={speaker}
-      voiceEvents={voiceEvents}
-      sceneStart={section.startFrame}
-      preview
-    /> : next ? <PreviewCut
+    {section ? <AbsoluteFill style={{color:'#f1f6ff',fontFamily:'Inter',
+      background:'radial-gradient(ellipse at 50% 40%,#17364b 0%,#060d19 76%)'}}>
+      <div style={{position:'absolute',left:64,top:50,right:64,display:'flex',
+        justifyContent:'space-between',fontSize:18,letterSpacing:2,color:'#96a8c3'}}>
+        <span>URFAVXBF × PIX / CREATOR FIELD GUIDE</span><span>ENGLISH · VISUAL PREVIEW</span>
+      </div>
+      <div style={{position:'absolute',left:64,top:110,fontSize:52,fontWeight:900}}>
+        {scene===5?'TWO MONETIZATION GATES':scene===6?'HOW RPM CHANGES EARNINGS':'AFTER YOU HIT UPLOAD'}
+      </div>
+      <PixelGlitchPortrait id="urfavxbf" left={64} top={220} showGlitch={false}
+        voiceEvents={voiceEvents} reactions={[{speaker:'urfavxbf',startFrame:0,endFrame:999999,reaction:'thinking'}]}/>
+      <PixelGlitchPortrait id="pix" right={64} top={220} showGlitch={false}
+        voiceEvents={voiceEvents} reactions={[{speaker:'pix',startFrame:0,endFrame:999999,reaction:scene===6?'surprised':'curious'}]}/>
+      <div style={{position:'absolute',left:515,top:230,width:890}}>
+        <JourneyVisualAid beat={scene===5?5:scene===6?6:1}
+          chapter={scene} localFrame={frame-section.startFrame}/>
+      </div>
+      <div style={{position:'absolute',bottom:85,left:64,right:64,minHeight:105,
+        borderTop:'1px solid #35485e',paddingTop:17,background:'rgba(6,13,25,.88)'}}>
+        <div style={{fontSize:17,letterSpacing:2.5,color:speaker==='PIX'?'#27e8fd':'#ffda00',
+          fontWeight:900}}>{speaker}</div>
+        <div style={{fontSize:30,fontWeight:700,marginTop:6}}>{caption}</div>
+      </div>
+      <div style={{position:'absolute',left:64,bottom:30,fontSize:16,color:'#96a8c3'}}>
+        PRODUCTION PREVIEW · SELECTED EXCERPTS
+      </div>
+    </AbsoluteFill> : next ? <PreviewCut
       chapter={next.scene}
       progress={(frame - previousEnd) / Math.max(1, next.startFrame - previousEnd)}
     /> : <AbsoluteFill style={{
