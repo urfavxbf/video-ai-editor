@@ -1,0 +1,116 @@
+name: YouTube beginner journey — CPU English preview voices
+
+on:
+  push:
+    branches: [episode/youtube-beginner-journey]
+    paths:
+      - 'scripts/render_youtube_journey_voices.py'
+      - '.github/workflows/youtube-journey-voices.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: youtube-journey-voices-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthesize:
+    name: Approved Chatterbox voice — ${{ matrix.speaker }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        speaker: [urfavxbf, pix]
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: '4'
+      MKL_NUM_THREADS: '4'
+      TOKENIZERS_PARALLELISM: 'false'
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements-chatterbox.txt
+      - name: Install approved Chatterbox Multilingual V3 on CPU
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Synthesize real English speech from approved character profiles
+        run: |
+          python scripts/render_youtube_journey_voices.py --speaker "${{ matrix.speaker }}" --out out/youtube-journey-voices
+      - name: Verify every generated WAV has measurable audio
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'scripts')
+          from build_youtube_journey_preview import inspect_wav
+          p=Path("out/youtube-journey-voices/${{ matrix.speaker }}")
+          manifest=json.loads((p/"manifest.json").read_text())
+          assert manifest["human_review_required"] is True
+          for clip in manifest["clips"]:
+              samples, sr=inspect_wav(p/clip["file"])
+              assert samples > sr//3
+          print('Validated', len(manifest['clips']), 'actual WAV files')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-journey-voice-${{ matrix.speaker }}
+          path: out/youtube-journey-voices/${{ matrix.speaker }}/
+          retention-days: 7
+          if-no-files-found: error
+
+  assemble:
+    name: Assemble measured editorial timeline (no unapproved character imagery)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    needs: synthesize
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-journey-voice-urfavxbf
+          path: out/youtube-journey-voices/urfavxbf
+      - uses: actions/download-artifact@v4
+        with:
+          name: youtube-journey-voice-pix
+          path: out/youtube-journey-voices/pix
+      - name: Measure, copy, and sequence real voice clips for Remotion
+        run: |
+          python scripts/build_youtube_journey_preview.py \
+            --audio-root out/youtube-journey-voices \
+            --public-root public \
+            --output out/youtube-journey-preview.props.json
+      - name: Check exact speakers and clip counts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('out/youtube-journey-preview.props.json').read_text())
+          assert len(p['lines'])==6 and len(p['sections'])==3
+          assert p['captionTiming']=='estimated-unreviewed'
+          assert all(Path('public',x['file']).is_file() for x in p['lines'])
+          assert all(x['endFrame']>x['startFrame'] for x in p['lines'])
+          print('Measured runtime:',p['durationSeconds'],'seconds; target:',p['targetDurationMet'])
+          print('Human review remains mandatory for voice identity, timing and captions.')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: youtube-journey-preview-audio-and-timeline
+          path: |
+            public/voiceovers/youtube-beginner-journey/preview/
+            out/youtube-journey-preview.props.json
+          retention-days: 7
+          if-no-files-found: error

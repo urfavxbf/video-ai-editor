@@ -1,0 +1,101 @@
+{
+  "episode": "youtube-beginner-journey",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "targetDurationSeconds": 690,
+  "timecodeStatus": "EDITORIAL TARGETS ONLY: actual picture cuts must follow measured dialogue WAV lengths; never stretch speech",
+  "beats": [
+    {
+      "index": 1,
+      "startSeconds": 0,
+      "endSeconds": 40,
+      "label": "THE FIRST UPLOAD",
+      "story": "PIX uploads her first video and waits for money. Nothing happens.",
+      "visual": "An imaginary money counter appears, collapses, and gives way to the question: What actually happens after Upload?",
+      "scenes": [
+        1
+      ]
+    },
+    {
+      "index": 2,
+      "startSeconds": 40,
+      "endSeconds": 130,
+      "label": "ONE CLEAR PROMISE",
+      "story": "PIX narrows her channel from everything to beginner-friendly technology explanations.",
+      "visual": "Scattered topic cards organize around one viewer and one clear promise.",
+      "scenes": [
+        2
+      ]
+    },
+    {
+      "index": 3,
+      "startSeconds": 130,
+      "endSeconds": 230,
+      "label": "THREE WAYS TO DISCOVER",
+      "story": "Home, Suggested and Search are different viewing situations.",
+      "visual": "One upload travels into three separate contexts. Do not invent a recommendation score.",
+      "scenes": [
+        3
+      ]
+    },
+    {
+      "index": 4,
+      "startSeconds": 230,
+      "endSeconds": 310,
+      "label": "MAKE THE PROMISE CLEAR",
+      "story": "PIX improves her title, thumbnail and first seconds.",
+      "visual": "Vague title transforms to a specific phone-storage promise; a stalled intro becomes an immediate demonstration.",
+      "scenes": [
+        4
+      ]
+    },
+    {
+      "index": 5,
+      "startSeconds": 310,
+      "endSeconds": 430,
+      "label": "TWO MONETIZATION GATES",
+      "story": "PIX discovers early-access versus ad-revenue eligibility.",
+      "visual": "Two independently timed eligibility gates with OR conditions, qualifying time windows and review disclaimer.",
+      "scenes": [
+        5
+      ]
+    },
+    {
+      "index": 6,
+      "startSeconds": 430,
+      "endSeconds": 520,
+      "label": "SAME VIEWS, DIFFERENT RPM",
+      "story": "Different monetized RPM assumptions produce different hypothetical earnings.",
+      "visual": "50,000 views at invented $2 versus $5 RPM produces $100 versus $250; not a forecast.",
+      "scenes": [
+        6
+      ]
+    },
+    {
+      "index": 7,
+      "startSeconds": 520,
+      "endSeconds": 600,
+      "label": "MORE THAN ADS",
+      "story": "Revenue branches include Premium, memberships, sponsorships, affiliate offers and products.",
+      "visual": "Connected revenue branches reveal obligations, eligibility or sustained effort.",
+      "scenes": [
+        7
+      ]
+    },
+    {
+      "index": 8,
+      "startSeconds": 600,
+      "endSeconds": 690,
+      "label": "MAKE THE NEXT VIDEO",
+      "story": "PIX rejects recycled shortcuts and builds a practical first-month improvement loop.",
+      "visual": "Original research and explanatory graphics become an audience → useful videos → analytics → improve plan; finish with the next phone-storage video instead of the money counter.",
+      "scenes": [
+        8,
+        9
+      ]
+    }
+  ]
+}

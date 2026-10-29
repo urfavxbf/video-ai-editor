@@ -11,13 +11,31 @@ import { OfficialFeaturesDemo, OFFICIAL_FEATURE_DEMO_FRAMES } from './features/O
 import { RepoShowcase, REPO_SHOWCASE_FRAMES } from './showcase/RepoShowcase'
 import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
 import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characters/CharacterAnimationLab'
+import {HeroCharacterStage, HERO_STAGE_DURATION, type HeroStageProps} from './characters/HeroCharacterStage'
+import {HeroAnimationReviewReel, HERO_REEL_FRAMES, type HeroAnimationReviewReelProps} from './characters/HeroAnimationReviewReel'
+import {ChibiV4ReviewStage,CHIBI_V4_REVIEW_DURATION,type ChibiV4ReviewProps} from './characters/ChibiV4ReviewStage'
+import {ImportedSpriteAnimation,type ImportedSpriteAnimationProps} from './characters/ImportedSpriteAnimation'
+import {V4FacialReviewStage,V4_FACIAL_REVIEW_FRAMES,type V4FacialReviewProps} from './characters/V4FacialReviewStage'
 import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
 import './fonts'
+import {YouTubeJourneyStyleframes} from './episodes/YouTubeJourneyStyleframes'
+import {YouTubeJourneyPreview, type YouTubeJourneyPreviewProps} from './episodes/YouTubeJourneyPreview'
+import {YouTubeJourneyVisualBoard, STORYBOARD_FRAMES} from './episodes/YouTubeJourneyVisuals'
+import {YouTubeJourneyFullEpisode, type YouTubeJourneyFullEpisodeProps} from './episodes/YouTubeJourneyFullEpisode'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="V4FacialReviewStage" component={V4FacialReviewStage} width={1920} height={1080} fps={30} durationInFrames={V4_FACIAL_REVIEW_FRAMES} defaultProps={{assetsReady:false,artApproved:false,voiceEvents:[]} satisfies V4FacialReviewProps}/>
+  <Composition id="ImportedSpriteAnimationReview" component={ImportedSpriteAnimation} width={1920} height={1080} fps={30} durationInFrames={300} defaultProps={{character:'urfavxbf',action:'idle_normal',durationsMs:[125],loop:true,assetsReady:false} satisfies ImportedSpriteAnimationProps}/>
+  <Composition id="ChibiV4ReviewStage" component={ChibiV4ReviewStage} width={1920} height={1080} fps={30} durationInFrames={CHIBI_V4_REVIEW_DURATION} defaultProps={{assetsReady:false} satisfies ChibiV4ReviewProps}/>
+  <Composition id="HeroAnimationReviewReel" component={HeroAnimationReviewReel} width={1920} height={1080} fps={30} durationInFrames={HERO_REEL_FRAMES} defaultProps={{assetsReady:false} satisfies HeroAnimationReviewReelProps}/>
+  <Composition id="HeroCharacterStage" component={HeroCharacterStage} width={1920} height={1080} fps={30} durationInFrames={HERO_STAGE_DURATION} defaultProps={{assetsReady:false,voiceEvents:[],chapter:1,audio:[]} satisfies HeroStageProps} calculateMetadata={({props})=>({durationInFrames:props.durationFrames??HERO_STAGE_DURATION})}/>
+  <Composition id="YouTubeJourneyVisualBoard" component={YouTubeJourneyVisualBoard} width={1920} height={1080} fps={30} durationInFrames={STORYBOARD_FRAMES}/>
+  <Composition id="YouTubeJourneyFullEpisode" component={YouTubeJourneyFullEpisode} width={1920} height={1080} fps={30} durationInFrames={30} defaultProps={{lines:[],voiceEvents:[],totalFrames:30,captionTiming:'estimated-unreviewed',assetsReady:false} satisfies YouTubeJourneyFullEpisodeProps} calculateMetadata={({props})=>({durationInFrames:props.totalFrames})}/>
+  <Composition id="YouTubeJourneyPreview" component={YouTubeJourneyPreview} width={1920} height={1080} fps={30} durationInFrames={30} defaultProps={{lines:[],sections:[],voiceEvents:[],totalFrames:30,captionTiming:'estimated-unreviewed'} satisfies YouTubeJourneyPreviewProps} calculateMetadata={({props})=>({durationInFrames:props.totalFrames})}/>
+  <Composition id="YouTubeJourneyStyleframes" component={YouTubeJourneyStyleframes} width={1920} height={1080} fps={30} durationInFrames={270} />
   <Composition id="Y2038Teaser" component={Y2038Teaser} width={1920} height={1080} fps={30} durationInFrames={720}
     defaultProps={{assetsReady: false} satisfies Y2038TeaserProps} />
   <Composition id="PixelPortraitHUD" component={PixelPortraitHUD}

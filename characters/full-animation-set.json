@@ -1,0 +1,885 @@
+{
+  "version": "1.0.0",
+  "fps": 30,
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "alpha": true
+  },
+  "source": "PixelGlitch_SpritePack/manifest.json + owner's complete animation-set request",
+  "policy": {
+    "neverSubstituteArt": true,
+    "neverClaimFullBodyFromHeadOnly": true,
+    "sourceV2Sha256": {
+      "urfavxbf": "b11936a4ace7c6cba1ee391ff768fce93bee80b2adf81b3a44a89cbaa4cf01b4",
+      "pix": "cc5ecccdbb74b8c90ea3af09a0c75ff2c72db05fcdf0006fdc19255641304c6f"
+    },
+    "requiredVisemeAlignment": "phoneme/word timestamps, not RMS-alone",
+    "hair": "hair animation must preserve signature hairstyle; no generic overlay",
+    "masterLayout": "two-storyteller-heroes"
+  },
+  "existingSprites": {
+    "pathPrefix": "characters/pixel-glitch",
+    "headLoopDimension": [
+      384,
+      384
+    ],
+    "loopFrames": 8,
+    "loopFps": {
+      "idle": 5,
+      "talk": 8,
+      "react": 8
+    },
+    "urfavxbf": {
+      "expressions": [
+        "neutral",
+        "talk",
+        "excited",
+        "thinking",
+        "surprised",
+        "glitch"
+      ],
+      "loops": [
+        "idle",
+        "talk",
+        "react"
+      ]
+    },
+    "pix": {
+      "expressions": [
+        "neutral",
+        "talk",
+        "happy",
+        "curious",
+        "surprised",
+        "glitch"
+      ],
+      "loops": [
+        "idle",
+        "talk",
+        "react"
+      ]
+    }
+  },
+  "characters": {
+    "urfavxbf": [
+      {
+        "id": "idle_normal",
+        "label": "Idle breathing + subtle head tilt",
+        "category": "host",
+        "assetClass": "existing-head-loop",
+        "proposedFps": 30,
+        "minimumFrames": 48,
+        "status": "available-closeup",
+        "loop": true,
+        "notes": "The existing approved 384x384 head-only PNG loop can be used in dedicated close-up shots; this is NOT a full-body action."
+      },
+      {
+        "id": "idle_talking",
+        "label": "Idle speaking + subtle sway",
+        "category": "host",
+        "assetClass": "existing-head-loop",
+        "proposedFps": 30,
+        "minimumFrames": 30,
+        "status": "available-closeup",
+        "loop": true,
+        "notes": "The existing approved 384x384 head-only PNG loop can be used in dedicated close-up shots; this is NOT a full-body action."
+      },
+      {
+        "id": "walk",
+        "label": "Walk cycle",
+        "category": "host",
+        "assetClass": "full-body-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "needs-new-animation-art",
+        "loop": true,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "run",
+        "label": "Run cycle",
+        "category": "host",
+        "assetClass": "full-body-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "needs-new-animation-art",
+        "loop": true,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "jump",
+        "label": "Jump start / air / land",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 27,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "fall_landing",
+        "label": "Fall / recovery / landing",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 27,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "crouch_sit",
+        "label": "Crouch / sit / stand",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 36,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "turn_left",
+        "label": "Turn left",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "turn_right",
+        "label": "Turn right",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "point_forward",
+        "label": "Point forward",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "point_side",
+        "label": "Point side",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "wave",
+        "label": "Wave / greeting",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 33,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "cross_arms",
+        "label": "Cross arms",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "hand_on_hip",
+        "label": "Hand on hip",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "thinking_pose",
+        "label": "Thinking / hand on chin",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 36,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "talking_gestures",
+        "label": "Rhythmic talking gestures",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 30,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "glitch_idle",
+        "label": "Glitch idle",
+        "category": "host",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "available-composite",
+        "loop": true,
+        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+      },
+      {
+        "id": "surprised",
+        "label": "Surprised reaction",
+        "category": "host",
+        "assetClass": "existing-expression",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "available-closeup",
+        "loop": false,
+        "notes": "Existing portrait PNG is a valid expression CLOSE-UP, not a facial layer aligned to a full-body rig."
+      },
+      {
+        "id": "laugh",
+        "label": "Laugh reaction",
+        "category": "host",
+        "assetClass": "existing-expression",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "available-closeup",
+        "loop": false,
+        "notes": "Existing portrait PNG is a valid expression CLOSE-UP, not a facial layer aligned to a full-body rig."
+      },
+      {
+        "id": "serious_focused",
+        "label": "Serious / focused",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "alert",
+        "label": "Alert",
+        "category": "host",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "glitch_reaction",
+        "label": "Glitch reaction",
+        "category": "host",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 15,
+        "status": "available-composite",
+        "loop": false,
+        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+      },
+      {
+        "id": "mouth_A",
+        "label": "Mouth A / aa",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_E",
+        "label": "Mouth E / eh",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_I",
+        "label": "Mouth I / ee",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_O",
+        "label": "Mouth O / oh",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_U",
+        "label": "Mouth U / oo",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_M",
+        "label": "Mouth M/B/P closed",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_F",
+        "label": "Mouth F/V lower lip",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_rest",
+        "label": "Mouth neutral/rest",
+        "category": "host",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "blink",
+        "label": "Eye blink",
+        "category": "host",
+        "assetClass": "facial-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 7,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "eyebrows",
+        "label": "Eyebrow rise/furrow",
+        "category": "host",
+        "assetClass": "facial-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 14,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "hair_idle",
+        "label": "Hair motion: subtle bounce",
+        "category": "host",
+        "assetClass": "hair-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 33,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "hair_run",
+        "label": "Hair motion: follow-through while running",
+        "category": "host",
+        "assetClass": "hair-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "hair_jump",
+        "label": "Hair motion: jump/landing overlap",
+        "category": "host",
+        "assetClass": "hair-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 27,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "hair_glitch",
+        "label": "Hair digital glitch",
+        "category": "host",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 9,
+        "status": "available-composite",
+        "loop": false,
+        "notes": "RGB/scanline composite only; does NOT imply independently animated hair strands."
+      }
+    ],
+    "pix": [
+      {
+        "id": "idle_sitting",
+        "label": "Sitting idle with tail sway",
+        "category": "ai-pet",
+        "assetClass": "existing-head-loop",
+        "proposedFps": 30,
+        "minimumFrames": 48,
+        "status": "available-closeup",
+        "loop": false,
+        "notes": "The existing approved 384x384 head-only PNG loop can be used in dedicated close-up shots; this is NOT a full-body action."
+      },
+      {
+        "id": "idle_standing",
+        "label": "Standing idle",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 39,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "walk",
+        "label": "Walk cycle",
+        "category": "ai-pet",
+        "assetClass": "full-body-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "needs-new-animation-art",
+        "loop": true,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "run_trot",
+        "label": "Run/trotting cycle",
+        "category": "ai-pet",
+        "assetClass": "full-body-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "jump_pounce",
+        "label": "Jump and pounce",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 27,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "sit_to_stand",
+        "label": "Sit to stand",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 27,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "stand_to_sit",
+        "label": "Stand to sit",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 27,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "head_tilt",
+        "label": "Curious head tilt",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Curious head portrait exists, but a genuine head-tilt *motion* requires new sequential drawings. Never substitute a static curious facial image for a tilt."
+      },
+      {
+        "id": "paw_raise_point",
+        "label": "Paw raise/point",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 24,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "tail_wag",
+        "label": "Tail wag",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 30,
+        "status": "needs-new-animation-art",
+        "loop": true,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "tail_fluff",
+        "label": "Tail fluff",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 27,
+        "status": "needs-new-animation-art",
+        "loop": true,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "lick_paw",
+        "label": "Lick paw",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 36,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "stretch",
+        "label": "Stretch",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 39,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "meow_talk",
+        "label": "Meow/talk",
+        "category": "ai-pet",
+        "assetClass": "existing-head-loop",
+        "proposedFps": 30,
+        "minimumFrames": 30,
+        "status": "available-closeup",
+        "loop": true,
+        "notes": "The existing approved 384x384 head-only PNG loop can be used in dedicated close-up shots; this is NOT a full-body action."
+      },
+      {
+        "id": "glitch_idle",
+        "label": "Glitch idle",
+        "category": "ai-pet",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "available-composite",
+        "loop": true,
+        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+      },
+      {
+        "id": "happy_excited",
+        "label": "Happy / excited",
+        "category": "ai-pet",
+        "assetClass": "existing-expression",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "available-closeup",
+        "loop": false,
+        "notes": "Existing portrait PNG is a valid expression CLOSE-UP, not a facial layer aligned to a full-body rig."
+      },
+      {
+        "id": "curious",
+        "label": "Curious",
+        "category": "ai-pet",
+        "assetClass": "existing-expression",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "available-closeup",
+        "loop": false,
+        "notes": "Existing portrait PNG is a valid expression CLOSE-UP, not a facial layer aligned to a full-body rig."
+      },
+      {
+        "id": "annoyed",
+        "label": "Annoyed",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "surprised",
+        "label": "Surprised",
+        "category": "ai-pet",
+        "assetClass": "existing-expression",
+        "proposedFps": 30,
+        "minimumFrames": 21,
+        "status": "available-closeup",
+        "loop": false,
+        "notes": "Existing portrait PNG is a valid expression CLOSE-UP, not a facial layer aligned to a full-body rig."
+      },
+      {
+        "id": "sleepy",
+        "label": "Sleepy",
+        "category": "ai-pet",
+        "assetClass": "pose-sequence",
+        "proposedFps": 30,
+        "minimumFrames": 30,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "glitch_reaction",
+        "label": "Glitch reaction",
+        "category": "ai-pet",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 15,
+        "status": "available-composite",
+        "loop": false,
+        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+      },
+      {
+        "id": "ride_shoulder",
+        "label": "Riding UrFavXBF shoulder",
+        "category": "ai-pet",
+        "assetClass": "paired-staging",
+        "proposedFps": 30,
+        "minimumFrames": 60,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "float",
+        "label": "Floating beside UrFavXBF",
+        "category": "ai-pet",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 51,
+        "status": "available-composite",
+        "loop": true,
+        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+      },
+      {
+        "id": "appear_glitch",
+        "label": "Appear via glitch",
+        "category": "ai-pet",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "available-composite",
+        "loop": false,
+        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+      },
+      {
+        "id": "disappear_glitch",
+        "label": "Disappear via glitch",
+        "category": "ai-pet",
+        "assetClass": "composite-vfx",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "available-composite",
+        "loop": false,
+        "notes": "Can be rendered as a full-character composition effect; this does not create missing drawings."
+      },
+      {
+        "id": "mouth_A",
+        "label": "Mouth A",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_E",
+        "label": "Mouth E",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_I",
+        "label": "Mouth I",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_O",
+        "label": "Mouth O / meow",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_U",
+        "label": "Mouth U",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_M",
+        "label": "Mouth M/B/P closed",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_F",
+        "label": "Mouth F/V",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "mouth_rest",
+        "label": "Mouth neutral/rest",
+        "category": "ai-pet",
+        "assetClass": "viseme",
+        "proposedFps": 30,
+        "minimumFrames": 3,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "blink",
+        "label": "Eye blink",
+        "category": "ai-pet",
+        "assetClass": "facial-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 7,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "ears_idle",
+        "label": "Ear twitch",
+        "category": "ai-pet",
+        "assetClass": "facial-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 26,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      },
+      {
+        "id": "whiskers",
+        "label": "Whisker follow-through",
+        "category": "ai-pet",
+        "assetClass": "facial-cycle",
+        "proposedFps": 30,
+        "minimumFrames": 18,
+        "status": "needs-new-animation-art",
+        "loop": false,
+        "notes": "Needs new, clean original keyposes/inbetweens; do not synthesize from cutting and rotating the current flat PNG."
+      }
+    ]
+  },
+  "transitions": {
+    "defaultBlendFrames": 5,
+    "nonLoopHold": "last-frame",
+    "jumpChain": [
+      "anticipation",
+      "air",
+      "landing",
+      "recovery"
+    ],
+    "talkToIdleFrames": 6,
+    "reactionToIdleFrames": 8
+  },
+  "reviewGates": [
+    "frame-art-quality",
+    "hair-and-face-continuity",
+    "body-identity",
+    "clean-joints",
+    "pose-silhouette",
+    "loop-seam",
+    "phoneme-alignment-if-claimed",
+    "actual-playback-review",
+    "owner-approval"
+  ]
+}

@@ -1,4 +1,4 @@
-"""Regression checks for Filipino defaults and preserved English speaker identities."""
+"""Current English default, optional Filipino voices and V2 hero continuity."""
 import json
 from pathlib import Path
 import sys
@@ -20,7 +20,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(d["main_character"], "urfavxbf")
         self.assertEqual(d["companion_character"], "pix")
         self.assertEqual(set(d["characters"]), {"urfavxbf", "pix"})
-        self.assertEqual(d["production_language"], "tl")
+        self.assertEqual(d["production_language"], "en")
         self.assertEqual(d["supported_production_languages"], ["tl", "en"])
 
     def test_longform_landscape_delivery_default(self):
@@ -28,10 +28,15 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(v["type"], "long-form-youtube")
         self.assertEqual(v["aspect_ratio"], "16:9")
         self.assertEqual((v["width"], v["height"], v["fps"]), (1920, 1080, 30))
-        self.assertEqual(v["language"], "tl")
+        self.assertEqual(v["language"], "en")
         for field in ("script_language", "caption_language", "metadata_language"):
-            self.assertEqual(v[field], "tl")
-        self.assertEqual(v["character_layout"], "animated-head-portraits-only")
+            self.assertEqual(v[field], "en")
+        self.assertEqual(v["character_layout"], "super-pixel-v2-full-body-animated")
+        self.assertEqual(self.data["character_hero_system"]["version"], "hero-performance-v3")
+        self.assertEqual(self.data["character_hero_system"]["protagonists"], ["urfavxbf", "pix"])
+        self.assertTrue(self.data["character_hero_system"]["all_new_episodes"])
+        self.assertTrue(self.data["visual_variant_package"]["full_body_rendering_default"])
+        self.assertEqual(self.data["visual_variant_package"]["default_layout"], "full-body-hero-stage")
         self.assertTrue(v["legacy_portrait_demos_not_default"])
 
     def test_enlarged_head_portraits_and_asset_provenance_unchanged(self):

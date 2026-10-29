@@ -94,7 +94,7 @@
     "legacy_portrait_demos_not_default": true,
     "video_codec": "h264",
     "audio_codec": "aac",
-    "character_layout": "animated-head-portraits-only",
+    "character_layout": "super-pixel-v2-full-body-animated",
     "portrait_size": {
       "width": 414,
       "height": 468,
@@ -108,7 +108,9 @@
     "script_language": "en",
     "caption_language": "en",
     "metadata_language": "en",
-    "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending."
+    "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending.",
+    "character_motion": "2.5D voice-envelope-driven; full sprite when no independent layers; optional verified aligned rig",
+    "character_system": "src/characters/HeroPerformance.ts; src/characters/CharacterPuppet.tsx; src/characters/HeroCharacterStage.tsx"
   },
   "preferred_visual_variant": "super-pixel-glitch-v2",
   "visual_variant_package": {
@@ -162,9 +164,9 @@
         "voice_profile": "pix-cute-female-emily-v1"
       }
     },
-    "note": "Preserve v1 visual records for old episodes; use this V2 sprite version for all new work after assets are staged. Mouth switches are approximate expression puppetry, not phoneme-viseme lip sync.",
-    "default_layout": "animated-head-portraits-only",
-    "full_body_rendering_default": false,
+    "note": "Owner's latest direction overrides archived portrait-only default. Use SHA-verified V2 full-body PNGs as recurring protagonists in all new episodes. Head-only expression loops are suitable only for intentional cutaway close-ups, NOT full-body limb movement. Independent arms/legs require real aligned rig layers.",
+    "default_layout": "full-body-hero-stage",
+    "full_body_rendering_default": true,
     "portrait_component": "src/characters/PixelGlitchPortrait.tsx",
     "portrait_composition": "PixelPortraitHUD",
     "sample_library_path": "/UrFavXBF Video Characters/Pixel Glitch V2/PixelGlitch_PortraitsOnly_Sample_1080p.mp4",
@@ -180,5 +182,34 @@
   "supported_production_languages": [
     "tl",
     "en"
-  ]
+  ],
+  "character_hero_system": {
+    "version": "hero-performance-v3",
+    "protagonists": [
+      "urfavxbf",
+      "pix"
+    ],
+    "stage_composition": "HeroCharacterStage",
+    "full_body_pngs": {
+      "urfavxbf": "public/characters/pixel-glitch/urfavxbf/base.png",
+      "pix": "public/characters/pixel-glitch/pix/base.png"
+    },
+    "personalities": {
+      "urfavxbf": "Deliberate analytical storyteller; warm and confident; purposeful restrained movements",
+      "pix": "Curious playful AI pet; quick responses; energetic but never restless"
+    },
+    "continuity_policy": "No character redesign, third-party stock stand-ins or false viseme accuracy. Preserve verified 2D pixel-art identity; use real waveform timing.",
+    "accepted_languages": [
+      "en",
+      "tl"
+    ],
+    "all_new_episodes": true,
+    "artist_approval_required_for_new_rig": true,
+    "next_art_style": "dark-green UrFavXBF chibi / cyan-purple PIX chibi",
+    "new_art_review_composition": "ChibiV4ReviewStage"
+  },
+  "preferred_next_visual_style": "chibi-pixel-v4-dark-green",
+  "preferred_next_visual_style_status": "draft-sprite-pack; source reference approved; per-frame production QA pending",
+  "preferred_next_visual_asset_spec": "characters/chibi-v4-design.json",
+  "visual_migration_policy": "Do not use black/yellow V2 look for newly produced episode artwork after V4 is approved. Until manually reviewed and full sprite sequences exist, legacy renders remain pinned to V2 and V4 is in a separate review composition. Never silently substitute yellow V2 bodies for V4 sprites."
 }
