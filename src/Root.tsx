@@ -18,11 +18,16 @@ import {V4FacialReviewStage, V4_FACIAL_REVIEW_FRAMES, type V4FacialReviewProps} 
 import {ChibiV4ReviewStage, CHIBI_V4_REVIEW_DURATION, type ChibiV4ReviewProps} from './characters/ChibiV4ReviewStage'
 import {ImportedSpriteAnimation, type ImportedSpriteAnimationProps} from './characters/ImportedSpriteAnimation'
 import {CanonicalFullBodyReviewStage, CANONICAL_FULL_BODY_REVIEW_FRAMES, type CanonicalFullBodyReviewProps} from './characters/CanonicalFullBodyReviewStage'
+import {TrueFrameReviewStage, type TrueFrameReviewProps} from './characters/TrueFrameReviewStage'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="TrueFrameReviewStage" component={TrueFrameReviewStage}
+    width={1920} height={1080} fps={30} durationInFrames={240}
+    defaultProps={{assetsReady:false,artApproved:false,urfavxbfAction:'point_camera',
+      pixAction:'assist_point',hostFrames:8,pixFrames:8} satisfies TrueFrameReviewProps} />
   <Composition id="CanonicalFullBodyReviewStage" component={CanonicalFullBodyReviewStage}
     width={1920} height={1080} fps={30} durationInFrames={CANONICAL_FULL_BODY_REVIEW_FRAMES}
     defaultProps={{assetsReady:false,artApproved:false} satisfies CanonicalFullBodyReviewProps} />
