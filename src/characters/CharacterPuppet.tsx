@@ -1,5 +1,6 @@
 import React from 'react';
 import {Img, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {smoothVoiceEnergy} from './HeroPerformance';
 
 /**
  * Frame-deterministic 2.5D puppet. Single PNGs move as one piece; independent
@@ -8,6 +9,8 @@ import {Img, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
  */
 export type CharacterId = 'urfavxbf' | 'pix';
 export type CharacterReaction = 'curious' | 'excited' | 'surprised' | 'agree';
+/** Full-body performance intent. Real per-limb movement requires separate aligned rig PNGs. */
+export type BodyGesture = 'idle' | 'explain' | 'point' | 'celebrate' | 'walk';
 
 export type VoiceEvent = {
   speaker: CharacterId;
@@ -25,9 +28,20 @@ export type ReactionCue = {
 
 /** Layer files must have identical original PNG dimensions and transparent backgrounds. */
 export type LayeredPuppetRig = {
+  /** Torso-only image, NOT a duplicate already containing the articulated limbs. */
   body: string;
   head: string;
+  /** Hidden joint backfill behind all articulated parts; same native canvas size. */
+  underlay?: string;
+  leftArm?: string;
+  rightArm?: string;
+  leftLeg?: string;
+  rightLeg?: string;
   tail?: string;
+  leftArmPivotPercent?: [number, number];
+  rightArmPivotPercent?: [number, number];
+  leftLegPivotPercent?: [number, number];
+  rightLegPivotPercent?: [number, number];
   mouthClosed?: string;
   mouthOpen?: string;
   headPivotPercent?: [number, number];
@@ -46,6 +60,7 @@ export type CharacterPuppetProps = {
   voiceEvents?: VoiceEvent[];
   reactions?: ReactionCue[];
   layeredRig?: LayeredPuppetRig;
+  bodyGesture?: BodyGesture;
   fadeInFrames?: number;
   /** Set true only for deliberately mirrored screen blocking. */
   mirror?: boolean;
@@ -64,11 +79,7 @@ export const findVoiceEvent = (id: CharacterId, frame: number, events: VoiceEven
 
 /** No invented spoken energy when WAV samples are unavailable. */
 export const voiceEnergyAtFrame = (frame: number, fps: number, event?: VoiceEvent): number => {
-  if (!event || !event.rms?.length || fps <= 0) return 0;
-  const rate = event.samplesPerSecond ?? 10;
-  if (!Number.isFinite(rate) || rate <= 0) return 0;
-  const sample = Math.floor(((frame - event.startFrame) * rate) / fps);
-  return clamp(event.rms[Math.max(0, Math.min(event.rms.length - 1, sample))] ?? 0);
+  return smoothVoiceEnergy(frame, fps, event);
 };
 
 export const reactionAtFrame = (frame: number, cues: ReactionCue[] = []): ReactionCue | undefined =>
@@ -79,7 +90,8 @@ export const getPuppetPose = (
   frame: number,
   fps: number,
   event?: VoiceEvent,
-  reaction?: ReactionCue
+  reaction?: ReactionCue,
+  gesture: BodyGesture = 'idle',
 ) => {
   const speaking = Boolean(event);
   const energy = voiceEnergyAtFrame(frame, fps, event);
@@ -99,8 +111,43 @@ export const getPuppetPose = (
   const yaw = (cat ? -3 : 3) + Math.sin(t * 0.8) * 2.2 + (speaking ? energy * (cat ? 4 : -3) : 0);
   const headRoll = (speaking ? Math.sin(t * 9) * 3.5 * energy : 0) + (curious ? -6 : 0);
   const tailRoll = Math.sin(t * (speaking ? 6 : 2.7)) * (speaking ? 7 : 4) + (excited ? 11 : 0);
-  const scale = 1 + Math.max(0, breath) * 0.004 + (excited ? 0.02 : 0);
-  return {speaking, energy, x: 0, y: y + reactionBounce, roll, yaw, headRoll, tailRoll, scale};
+  // Deliberate gesture changes, not a repeating full-body dance while listening.
+  const activeVoice = speaking && energy > 0.12;
+  // Attack and release ease the gesture at clip boundaries. Silence does not
+  // trigger invented speech; waveform energy still comes from the real WAV.
+  const clipAge = event ? frame - event.startFrame : 0;
+  const clipRemaining = event ? event.endFrame - frame : 0;
+  const ease = (v: number) => {
+    const n = clamp(v, 0, 1);
+    return n*n*(3-2*n);
+  };
+  const gestureBlend = event
+    ? ease(clipAge/10) * ease(clipRemaining/10) : 0;
+  const cadence = t * (cat ? 7.8 : 6.3);
+  const walking = gesture === 'walk';
+  const celebrating = gesture === 'celebrate' || excited;
+  const explaining = gesture === 'explain' && activeVoice;
+  const pointing = gesture === 'point';
+  const stride = walking ? Math.sin(cadence) * 12 * gestureBlend : 0;
+  const handBeat = activeVoice ? Math.sin(cadence * 1.12) * (4 + 15 * energy) : 0;
+  const leftArmRoll = ((celebrating ? -36 : pointing ? -8 : explaining ? -16 : -2) - handBeat)*gestureBlend;
+  const rightArmRoll = ((celebrating ? 39 : pointing ? 42 : explaining ? 14 : 2) + handBeat * 0.9)*gestureBlend;
+  const leftLegRoll = stride + (celebrating ? Math.sin(cadence)*6 : 0);
+  const rightLegRoll = -stride + (celebrating ? Math.sin(cadence+1.5)*6 : 0);
+  const stepLift = walking ? Math.abs(Math.sin(cadence)) * 6 : 0;
+  const torsoRoll = (walking ? Math.sin(cadence)*1.1 : 0) + (explaining ? handBeat*0.06 : 0);
+  // A single full-body image can LEAN or SHIFT as a unit; it cannot actually point an arm.
+  // The separate limb layer path below uses the same cue for true joint rotation.
+  const x = (walking ? Math.sin(cadence)*7
+    : pointing ? (cat ? -8 : 8)
+    : explaining ? Math.sin(cadence*0.5)*3 : 0) * gestureBlend;
+  const bodyLean = (pointing ? (cat ? -4 : 5)
+    : explaining ? Math.sin(cadence*0.65)*1.8
+    : celebrating ? Math.sin(cadence*0.7)*2.8 : 0) * gestureBlend;
+  const scale = 1 + Math.max(0, breath) * 0.004 + (celebrating ? 0.015 : 0);
+  return {speaking, energy, x, y: y + reactionBounce - stepLift,
+    roll: roll + torsoRoll + bodyLean, yaw, headRoll: headRoll + (explaining ? handBeat * 0.12 : 0),
+    tailRoll, scale, leftArmRoll, rightArmRoll, leftLegRoll, rightLegRoll};
 };
 
 const FullCanvasLayer: React.FC<{
@@ -136,6 +183,7 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
   voiceEvents = [],
   reactions = [],
   layeredRig,
+  bodyGesture = 'idle',
   fadeInFrames = 10,
   mirror = false,
 }) => {
@@ -143,23 +191,37 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
   const {fps} = useVideoConfig();
   const event = findVoiceEvent(id, frame, voiceEvents);
   const reaction = reactionAtFrame(frame, reactions);
-  const pose = getPuppetPose(id, frame, fps, event, reaction);
+  const pose = getPuppetPose(id, frame, fps, event, reaction, bodyGesture);
   const activeCue = reaction && reaction.durationFrames > 0
     ? Math.min(1, (frame - reaction.atFrame) / Math.max(1, Math.min(8, reaction.durationFrames)))
     : 1;
   const pop = 0.92 + 0.08 * clamp(frame / Math.max(1, fadeInFrames));
+  const squash = pose.energy * (id === 'pix' ? 0.018 : 0.009);
+  const onsetGlitch = Boolean(event && frame >= event.startFrame &&
+    frame < event.startFrame + 2 && frame > 0);
   const fade = clamp(frame / Math.max(1, fadeInFrames));
   const outer = [
-    `translate3d(0, ${pose.y.toFixed(2)}px, 0)`,
+    `translate3d(${pose.x.toFixed(2)}px, ${pose.y.toFixed(2)}px, 0)`,
     `rotateY(${pose.yaw.toFixed(2)}deg)`,
     `rotateZ(${(pose.roll * activeCue).toFixed(2)}deg)`,
     `scale(${(pose.scale * pop).toFixed(4)})`,
+    `scaleX(${(1 - squash*0.45).toFixed(4)})`,
+    `scaleY(${(1 + squash).toFixed(4)})`,
     mirror ? 'scaleX(-1)' : '',
   ].filter(Boolean).join(' ');
 
-  const crisp = id === 'urfavxbf';
-  const headPivot = layeredRig?.headPivotPercent ?? (id === 'pix' ? [51, 48] : [51, 22]);
-  const tailPivot = layeredRig?.tailPivotPercent ?? [39, 77];
+  // Both canonical characters use high-detail chibi art; preserve original smoothing.
+  const crisp = false;
+  const headPivot = layeredRig?.headPivotPercent ?? (id === 'pix' ? [44, 69] : [54, 43]);
+  const tailPivot = layeredRig?.tailPivotPercent ?? [66, 71];
+  const armPivots = {
+    left: layeredRig?.leftArmPivotPercent ?? (id === 'pix' ? [31, 74] : [37, 47]),
+    right: layeredRig?.rightArmPivotPercent ?? (id === 'pix' ? [50, 75] : [72, 48]),
+  };
+  const legPivots = {
+    left: layeredRig?.leftLegPivotPercent ?? [41, 73],
+    right: layeredRig?.rightLegPivotPercent ?? [63, 73],
+  };
   // Energy can ONLY switch an open/closed mouth with actual provided mouth layer assets.
   // This is approximate mouth flapping, not phoneme-to-viseme alignment.
   const hasMouthLayers = Boolean(layeredRig?.mouthClosed && layeredRig?.mouthOpen);
@@ -169,6 +231,9 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
     <div
       data-character={id}
       data-speaker-active={pose.speaking ? 'true' : 'false'}
+      data-layout="full-body"
+      data-rig-mode={layeredRig ? 'articulated-layers' : 'single-sprite'}
+      data-body-gesture={bodyGesture}
       style={{
         position: 'absolute', left, right, bottom, width, height,
         transformStyle: 'preserve-3d', perspective: 1200, pointerEvents: 'none', opacity: fade,
@@ -176,33 +241,57 @@ export const CharacterPuppet: React.FC<CharacterPuppetProps> = ({
     >
       <div style={{
         position: 'absolute', left: '14%', bottom: 0, width: '72%', height: 25,
-        background: id === 'pix' ? 'rgba(0,207,250,0.21)' : 'rgba(255,192,0,0.18)',
+        background: id === 'pix' ? 'rgba(0,207,250,0.21)' : 'rgba(111,251,139,0.18)',
         borderRadius: '50%', filter: 'blur(14px)',
         transform: `scale(${Math.max(0.7, 1 - Math.abs(pose.y) / 120)})`,
       }}/>
       <div style={{
         position: 'absolute', inset: 0, transform: outer,
         transformStyle: 'preserve-3d', transformOrigin: '50% 85%',
-        filter: id === 'pix' ? 'drop-shadow(0 0 13px rgba(0,210,235,0.16))' : 'drop-shadow(0 0 12px rgba(255,190,0,0.10))',
+        filter: onsetGlitch
+          ? 'drop-shadow(3px 0 rgba(39,232,253,0.45)) drop-shadow(-3px 0 rgba(255,77,207,0.30))'
+          : id === 'pix' ? 'drop-shadow(0 0 13px rgba(0,210,235,0.16))'
+            : 'drop-shadow(0 0 12px rgba(111,251,139,0.10))',
       }}>
         {!layeredRig ? (
           <FullCanvasLayer src={assetPath} crisp={crisp}/>
         ) : (
           <>
+            {layeredRig.underlay && <FullCanvasLayer src={layeredRig.underlay} crisp={crisp}/>}
             {layeredRig.tail && (
               <FullCanvasLayer
                 src={layeredRig.tail}
                 crisp={crisp}
                 origin={`${tailPivot[0]}% ${tailPivot[1]}%`}
-                transform={`rotate(${pose.tailRoll.toFixed(2)}deg)`}
+                transform={`rotate(${(Math.max(-8, Math.min(8, pose.tailRoll))).toFixed(2)}deg)`}
               />
             )}
+            {layeredRig.leftLeg && (
+              <FullCanvasLayer src={layeredRig.leftLeg} crisp={crisp}
+                origin={`${legPivots.left[0]}% ${legPivots.left[1]}%`}
+                transform={`rotate(${(Math.max(-3, Math.min(3, pose.leftLegRoll))).toFixed(2)}deg)`}/>
+            )}
+            {layeredRig.rightLeg && (
+              <FullCanvasLayer src={layeredRig.rightLeg} crisp={crisp}
+                origin={`${legPivots.right[0]}% ${legPivots.right[1]}%`}
+                transform={`rotate(${(Math.max(-3, Math.min(3, pose.rightLegRoll))).toFixed(2)}deg)`}/>
+            )}
             <FullCanvasLayer src={layeredRig.body} crisp={crisp}/>
+            {layeredRig.leftArm && (
+              <FullCanvasLayer src={layeredRig.leftArm} crisp={crisp}
+                origin={`${armPivots.left[0]}% ${armPivots.left[1]}%`}
+                transform={`rotate(${(Math.max(id === 'pix' ? -3.5 : -6, Math.min(id === 'pix' ? 3.5 : 6, pose.leftArmRoll))).toFixed(2)}deg)`}/>
+            )}
+            {layeredRig.rightArm && (
+              <FullCanvasLayer src={layeredRig.rightArm} crisp={crisp}
+                origin={`${armPivots.right[0]}% ${armPivots.right[1]}%`}
+                transform={`rotate(${(Math.max(id === 'pix' ? -3.5 : -6, Math.min(id === 'pix' ? 3.5 : 6, pose.rightArmRoll))).toFixed(2)}deg)`}/>
+            )}
             <FullCanvasLayer
               src={layeredRig.head}
               crisp={crisp}
               origin={`${headPivot[0]}% ${headPivot[1]}%`}
-              transform={`rotate(${pose.headRoll.toFixed(2)}deg)`}
+              transform={`rotate(${(Math.max(-3, Math.min(3, pose.headRoll))).toFixed(2)}deg)`}
             />
             {hasMouthLayers && (
               <FullCanvasLayer src={mouthIsOpen ? layeredRig.mouthOpen! : layeredRig.mouthClosed!} crisp={crisp}/>

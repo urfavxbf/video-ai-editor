@@ -4,21 +4,23 @@
   "production_language": "en",
   "main_character": "urfavxbf",
   "companion_character": "pix",
-  "assets_location": "ChatGPT Library /UrFavXBF Video Characters/; binaries must be staged into the listed public paths for Remotion",
-  "approved_on": "2026-10-28",
+  "assets_location": "assets/character-references/ (original source images); runtime art must be separately prepared and approved",
+  "approved_on": "2026-10-29",
   "characters": {
     "urfavxbf": {
       "name": "UrFavXBF",
       "role": "primary-on-screen-host",
       "persona": "Versatile thinker and creator covering wisdom, science, mathematics, internet culture, AI and video editing; never science-only",
       "visual": {
-        "kind": "transparent-pixel-art-overlay",
-        "style": "pixelated human character, high-contrast black and bright yellow streetwear, messy black hair, backpack and sneakers",
-        "public_path": "public/characters/UrFavXBF_Transparent.png",
-        "library_path": "/UrFavXBF Video Characters/UrFavXBF_Transparent.png",
-        "width": 1110,
-        "height": 1417,
-        "sha256": "09fc91a64cd8c8cf281ae5ca101c452fb83fef1170f994bdd43dced9fe4f72de"
+        "kind": "canonical-chibi-anime-host",
+        "style": "black tousled hair with neon-green highlights, emerald-green eyes, green X headphones, dark-green cyber hoodie; separate full-body open-palms reference",
+        "official_face_reference": "assets/character-references/UrFavXBF_Facial_Expressions_Official.png",
+        "official_face_reference_sha256": "a803b78adaa0ef8f3ee8f427ca83a0c65a9f90ea8ed87e8487cae36efa1dac99",
+        "official_full_body_reference": "assets/character-references/UrFavXBF_FullBody_Official.png",
+        "official_full_body_reference_sha256": "b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5",
+        "public_path": "public/characters/canonical/urfavxbf/full-body.png",
+        "sha256": "b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5",
+        "production_rig_ready": false
       },
       "voice": {
         "engine": "voxcpm2",
@@ -49,13 +51,15 @@
       "role": "talking-ai-pet-sidekick",
       "persona": "Inquisitive, cute, clever and playful AI companion who interacts with UrFavXBF in natural Tagalog/Taglish dialogue",
       "visual": {
-        "kind": "transparent-cat-overlay",
-        "style": "cute white and black robotic cat, yellow hoodie accents, bright cyan LEDs and headphones, expressive face",
-        "public_path": "public/characters/PIX_Transparent.png",
-        "library_path": "/UrFavXBF Video Characters/PIX_Transparent.png",
-        "width": 1199,
-        "height": 1312,
-        "sha256": "4b8e29235969e2a19d1d6b7853a9c3ec7ec6c881f11e0e1127c57b5646829f28"
+        "kind": "canonical-chibi-cyber-cat",
+        "style": "cyan/light-blue fluffy chibi cyber cat, pink inner ears, purple/pink accents, expressive blue-purple eyes, neon circular headphones/collar",
+        "official_face_reference": "assets/character-references/PIX_Facial_Expressions_Official.png",
+        "official_face_reference_sha256": "c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069",
+        "official_full_body_reference": null,
+        "official_full_body_reference_sha256": null,
+        "public_path": "public/characters/canonical/pix/full-body.png",
+        "sha256": "c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069",
+        "production_rig_ready": false
       },
       "voice": {
         "engine": "voxcpm2",
@@ -94,7 +98,7 @@
     "legacy_portrait_demos_not_default": true,
     "video_codec": "h264",
     "audio_codec": "aac",
-    "character_layout": "animated-head-portraits-only",
+    "character_layout": "canonical-chibi-full-body-animated",
     "portrait_size": {
       "width": 414,
       "height": 468,
@@ -103,82 +107,33 @@
       "left": 64,
       "right": 64
     },
-    "next_episode_candidate": "y2038",
-    "next_episode_status": "proposed",
     "script_language": "en",
     "caption_language": "en",
     "metadata_language": "en",
-    "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending."
-  },
-  "preferred_visual_variant": "super-pixel-glitch-v2",
-  "visual_variant_package": {
-    "version": "super-pixel-glitch-v2",
-    "status": "approved new visual style and sample, binary assets in ChatGPT Library not yet committed to GitHub",
-    "library_root": "/UrFavXBF Video Characters/Pixel Glitch V2/",
-    "library_pack": "/UrFavXBF Video Characters/Pixel Glitch V2/PixelGlitch_Complete_Pack.zip",
-    "format": "separate RGBA transparent PNG sprites, 8-frame loops, glitch VFX, transparent head portraits",
-    "source": "a_detailed_high_contrast_neon_pixel_art_asset_pa.png",
-    "project_media_directory": "public/characters/pixel-glitch/",
-    "preview": "PixelGlitch_Animation_Sample_1080p.mp4",
-    "sample_resolution": "1920x1080",
-    "sample_fps": 30,
-    "characters": {
-      "urfavxbf": {
-        "base_path": "public/characters/pixel-glitch/urfavxbf/base.png",
-        "sha256": "b11936a4ace7c6cba1ee391ff768fce93bee80b2adf81b3a44a89cbaa4cf01b4",
-        "main_color": "black / bright yellow",
-        "facial_poses": [
-          "neutral",
-          "talk",
-          "excited",
-          "thinking",
-          "surprised",
-          "glitch"
-        ],
-        "loop_modes": [
-          "idle",
-          "talk",
-          "react"
-        ],
-        "voice_profile": "natural-storyteller-v1"
-      },
-      "pix": {
-        "base_path": "public/characters/pixel-glitch/pix/base.png",
-        "sha256": "cc5ecccdbb74b8c90ea3af09a0c75ff2c72db05fcdf0006fdc19255641304c6f",
-        "main_color": "white / cyan / yellow",
-        "facial_poses": [
-          "neutral",
-          "talk",
-          "happy",
-          "curious",
-          "surprised",
-          "glitch"
-        ],
-        "loop_modes": [
-          "idle",
-          "talk",
-          "react"
-        ],
-        "voice_profile": "pix-cute-female-emily-v1"
-      }
-    },
-    "note": "Preserve v1 visual records for old episodes; use this V2 sprite version for all new work after assets are staged. Mouth switches are approximate expression puppetry, not phoneme-viseme lip sync.",
-    "default_layout": "animated-head-portraits-only",
-    "full_body_rendering_default": false,
-    "portrait_component": "src/characters/PixelGlitchPortrait.tsx",
-    "portrait_composition": "PixelPortraitHUD",
-    "sample_library_path": "/UrFavXBF Video Characters/Pixel Glitch V2/PixelGlitch_PortraitsOnly_Sample_1080p.mp4",
-    "default_portrait_size": {
-      "width": 414,
-      "height": 468,
-      "relative_increase_width_percent": 35.3,
-      "top": 202,
-      "left": 64,
-      "right": 64
-    }
+    "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending.",
+    "character_motion": "speaker-aware timing preserved; new models require verified aligned RGBA layers, no legacy fallback",
+    "character_system": "src/characters/HeroPerformance.ts; src/characters/CanonicalCharacterAssets.ts",
+    "visual_asset_status": "canonical references approved; final full-body animation art pending QA",
+    "character_art_fallback": "DISABLED; never render V2/older rejected artworks",
+    "full_body_rendering_default": true
   },
   "supported_production_languages": [
     "tl",
     "en"
-  ]
+  ],
+  "character_hero_system": {
+    "version": "canonical-chibi-2026-10-29",
+    "protagonists": [
+      "urfavxbf",
+      "pix"
+    ],
+    "all_new_episodes": true,
+    "reference_manifest": "characters/canonical-references.json",
+    "voice_profiles_unchanged": true,
+    "no_legacy_visual_fallback": true,
+    "runtime_assets_ready": false,
+    "next_art_step": "Create genuine RGBA full-body animation layers for UrFavXBF and PIX matching 2026-10-29 approved reference images; generate and review missing PIX body art before final video",
+    "default_layout": "full-body-two-character-hero-stage"
+  },
+  "canonical_visual_version": "urfavxbf-pix-2026-10-29"
 }

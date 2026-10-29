@@ -1,0 +1,82 @@
+{
+  "visualVersion": "chibi-pixel-v4-dark-green",
+  "status": "draft-artwork-awaiting-cleanup-and-owner-preview",
+  "sourceArtwork": "User-approved chibi dark-green concept newly generated 2026-10-29",
+  "assetBundle": "UrFavXBF_PIX_Chibi_V4_Draft_Sprite_Pack.zip (conversation download; not stored in git)",
+  "publicFolder": "public/characters/animation-v4/",
+  "timelineComponent": "ChibiV4ReviewStage",
+  "characters": {
+    "urfavxbf": {
+      "role": "Main storyteller",
+      "style": "dark-green chibi cyber hoodie, neon-green eyes, black-green messy hair, green X headphones",
+      "colorHex": "#6ffb8b"
+    },
+    "pix": {
+      "role": "AI cat companion",
+      "style": "cyan-white chibi cat, purple/pink accents, neon headset and glitches",
+      "colorHex": "#70e8ff"
+    }
+  },
+  "recordedMotionCounts": {
+    "urfavxbf": {
+      "actions": 23,
+      "frames": 85
+    },
+    "pix": {
+      "actions": 24,
+      "frames": 86
+    }
+  },
+  "facialReferencesPerCharacter": 10,
+  "mouthReferenceTilesPerCharacter": 15,
+  "frameCanvas": [
+    64,
+    78
+  ],
+  "expressionReferenceCanvas": [
+    78,
+    83
+  ],
+  "mouthReferenceCanvas": [
+    56,
+    25
+  ],
+  "renderStage": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "gating": {
+    "sourcePosesAreDraft": true,
+    "visemesAreNotFaceAligned": true,
+    "fullFrameDrawingsStillNeeded": true,
+    "productionApproved": false,
+    "doNotSilentlySubstituteOldV2": true
+  },
+  "useAs": "visual-direction and isolated draft-sprite review only; not yet default for long-form production",
+  "facialAnimation": {
+    "phase": "REJECTED_VISUAL_DRAFT - do not promote to final assets",
+    "manifest": "characters/facial-v4-rig.json",
+    "controller": "src/characters/V4FacialController.ts",
+    "renderer": "src/characters/V4FacialPortrait.tsx",
+    "reviewComposition": "V4FacialReviewStage",
+    "validator": "scripts/validate_v4_facial_assets.py",
+    "perCharacterExpressionSlots": 10,
+    "perCharacterMouthSlots": 7,
+    "artCanvas": [
+      512,
+      512
+    ],
+    "legacyArtReuseAllowed": false,
+    "productionApproved": false,
+    "artifactLibraryPath": "/UrFavXBF Video Characters/Chibi Pixel V4/Facial Artwork Draft V1/",
+    "artifactPackage": "UrFavXBF_PIX_V4_Actual_Facial_Artwork_Draft.zip",
+    "stager": "scripts/stage_v4_facial_art.py",
+    "currentDraftFormat": "512x512 RGBA, 2 bases + 20 eyes/brows overlays + 14 mouth overlays",
+    "artSource": "independent original vector artwork; not cropped from imagegen concept poster or V2 packs",
+    "actualVoiceSyncTested": false,
+    "artApproval": "rejected-by-owner-reference-mismatch",
+    "blockedReason": "Owner rejected initial simplified vector facial artwork as not matching the original high-detail black/dark-green UrFavXBF reference; PIX must remain a cyan-purple cat, not a human avatar.",
+    "requiredNextStep": "Create a single 1:1 identity-matched new-model reference portrait and obtain owner approval before generating separate expression/mouth layers. Do not treat illustrative sprite posters as real production layers."
+  }
+}

@@ -1,4 +1,4 @@
-"""Default Tagalog speaker routing and explicit English legacy fallback."""
+"""English production default, explicit optional Tagalog and verified speaker profiles."""
 from pathlib import Path
 import sys
 import unittest
@@ -11,17 +11,19 @@ from pix_voice_profile import DEFAULT_PIX
 
 
 class CharacterVoiceoverTests(unittest.TestCase):
-    def test_new_videos_default_to_tagalog(self):
+    def test_new_videos_default_to_current_english_character_voices(self):
         args = voice.build_parser().parse_args([
             "--character", "urfavxbf", "--text", "Alam mo ba?", "--output", "out/a.wav"
         ])
-        self.assertEqual(args.language, "tl")
-        with self.assertRaisesRegex(ValueError, "not approved for Tagalog"):
-            voice.synth_args(args)
+        self.assertEqual(args.language, "en")
+        flags = voice.synth_args(args)
+        self.assertEqual(flags[flags.index("--language-id")+1], "en")
+        self.assertNotIn("--voice-reference", flags)
 
-    def test_default_routes_to_voxcpm_without_speaker_reference(self):
+    def test_explicit_tagalog_routes_to_voxcpm_without_speaker_reference(self):
         with patch("voxcpm_voiceover.main", return_value=0) as synth:
-            code = voice.main(["--character", "pix", "--text", "Hala, seryoso?!",
+            code = voice.main(["--character", "pix", "--language", "tl",
+                               "--text", "Hala, seryoso?!",
                                "--output", "out/pix-tl.wav", "--dry-run"])
         self.assertEqual(code, 0)
         self.assertIn("--character", synth.call_args.args[0])

@@ -1,0 +1,100 @@
+{
+  "schema": "video-ai-editor/facial-rig-v4/1",
+  "visualVersion": "chibi-pixel-v4-dark-green",
+  "status": "ART_PENDING_NOT_PRODUCTION_READY",
+  "artCanvas": {
+    "width": 512,
+    "height": 512,
+    "pixelFormat": "RGBA",
+    "background": "transparent",
+    "orientation": "front",
+    "alignment": "same-canvas-no-resizing"
+  },
+  "assetRoot": "public/characters/facial-v4",
+  "layerContract": {
+    "base": "base.png — V4 portrait/head/background silhouette with no eyes, eyebrows or mouth baked into the face area; NEVER use old PixelGlitch V2 art",
+    "expressions": "expressions/{expression}.png — aligned transparent full-canvas EYES/EYEBROWS layer; no mouth baked in",
+    "mouth": "mouth/{shape}.png — aligned transparent full-canvas independent MOUTH layer, no jaw/eyes or whole-face replacement",
+    "compositionOrder": [
+      "base",
+      "expressions",
+      "mouth"
+    ],
+    "approval": "Every PNG individually redrawn to match the new approved V4 design, aligned on same 512x512 native canvas and owner-reviewed before assetsReady=true.",
+    "body": "Independent body motion requires separate true V4 body rig/animations. Facial layers are a headshot system, NOT walking or arm movements."
+  },
+  "expressionIds": [
+    "neutral",
+    "happy",
+    "curious",
+    "excited",
+    "surprised",
+    "thinking",
+    "focused",
+    "sleepy",
+    "glitch",
+    "blink"
+  ],
+  "mouthIds": [
+    "rest",
+    "small",
+    "medium",
+    "wide",
+    "round",
+    "closed",
+    "fv"
+  ],
+  "characters": {
+    "urfavxbf": {
+      "artDirection": "Friendly calm young male chibi, black/dark-green spiky hair, emerald eyes, dark forest-green tech hoodie, green X headphones, medium-tan skin; never angry.",
+      "defaultExpression": "neutral",
+      "referenceSource": "user-approved new UrFavXBF A-pose (design only; cannot directly auto-cut facial layers)",
+      "legacyReferenceOnly": {
+        "source": "PixelGlitch_SpritePack/urfavxbf",
+        "expressions": [
+          "neutral",
+          "talk",
+          "excited",
+          "thinking",
+          "surprised",
+          "glitch"
+        ],
+        "loops": {
+          "idle": 8,
+          "talk": 8,
+          "react": 8
+        },
+        "provenance": "facial-STATE naming and timings only; no pixel reuse"
+      }
+    },
+    "pix": {
+      "artDirection": "Cute curious cyan/light-blue chibi cyber cat with purple/pink accents, expressive eyes, futuristic collar and ear accessories; NOT yellow/white V2.",
+      "defaultExpression": "neutral",
+      "referenceSource": "user-approved cyan-purple PIX concept (design only)",
+      "legacyReferenceOnly": {
+        "source": "PixelGlitch_SpritePack/pix",
+        "expressions": [
+          "neutral",
+          "talk",
+          "happy",
+          "curious",
+          "surprised",
+          "glitch"
+        ],
+        "loops": {
+          "idle": 8,
+          "talk": 8,
+          "react": 8
+        },
+        "provenance": "facial-STATE naming and timings only; no pixel reuse"
+      }
+    }
+  },
+  "voicePolicy": {
+    "speakerAware": true,
+    "noAudioOrNoWaveform": "rest mouth; never claim lip sync",
+    "audioRms": "only small/medium/wide/round generic mouth-open intensity proxies (not phonemes)",
+    "phonemeTiming": "optional explicit authored viseme cues; render exact cue shape only when timestamps and matching drawings are supplied",
+    "blink": "deterministic short closed-eye expression from V4 art if the mouth remains separate"
+  }
+}

@@ -19,3 +19,11 @@ __pycache__/
 # Locally generated voice-over and optional heavyweight TTS install
 .venv-chatterbox/
 public/voiceovers/
+
+# Production animation art requires separately staged and owner-reviewed binaries
+assets/character-references/
+public/characters/canonical/
+public/characters/facial-v4/
+public/characters/animation-v4/
+public/characters/animation-v4-normalized/
+public/characters/imported/

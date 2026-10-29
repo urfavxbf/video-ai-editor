@@ -1,4 +1,4 @@
-"""Regression checks for Filipino defaults and preserved English speaker identities."""
+"""Regression checks for canonical characters and preserved English voice identities."""
 import json
 from pathlib import Path
 import sys
@@ -20,7 +20,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(d["main_character"], "urfavxbf")
         self.assertEqual(d["companion_character"], "pix")
         self.assertEqual(set(d["characters"]), {"urfavxbf", "pix"})
-        self.assertEqual(d["production_language"], "tl")
+        self.assertEqual(d["production_language"], "en")
         self.assertEqual(d["supported_production_languages"], ["tl", "en"])
 
     def test_longform_landscape_delivery_default(self):
@@ -28,11 +28,15 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(v["type"], "long-form-youtube")
         self.assertEqual(v["aspect_ratio"], "16:9")
         self.assertEqual((v["width"], v["height"], v["fps"]), (1920, 1080, 30))
-        self.assertEqual(v["language"], "tl")
+        self.assertEqual(v["language"], "en")
         for field in ("script_language", "caption_language", "metadata_language"):
-            self.assertEqual(v[field], "tl")
-        self.assertEqual(v["character_layout"], "animated-head-portraits-only")
+            self.assertEqual(v[field], "en")
+        self.assertEqual(v["character_layout"], "canonical-chibi-full-body-animated")
         self.assertTrue(v["legacy_portrait_demos_not_default"])
+        self.assertTrue(v["full_body_rendering_default"])
+        self.assertEqual(self.data["character_hero_system"]["version"], "canonical-chibi-2026-10-29")
+        self.assertTrue(self.data["character_hero_system"]["no_legacy_visual_fallback"])
+        self.assertFalse(self.data["character_hero_system"]["runtime_assets_ready"])
 
     def test_enlarged_head_portraits_and_asset_provenance_unchanged(self):
         v = self.data["default_video"]
@@ -44,7 +48,9 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         for c in a.values():
             visual = c["visual"]
             self.assertEqual(len(visual["sha256"]), 64)
-            self.assertTrue(visual["public_path"].startswith("public/characters/"))
+            self.assertTrue(visual["public_path"].startswith("public/characters/canonical/"))
+            self.assertFalse(visual["production_rig_ready"])
+        self.assertIsNone(a["pix"]["visual"]["official_full_body_reference"])
 
     def test_tagalog_profiles_and_legacy_english_voices(self):
         chars = self.data["characters"]
