@@ -7,11 +7,13 @@ on:
       - 'src/characters/**'
       - 'src/Root.tsx'
       - 'scripts/import_sprite_animation.py'
+      - 'scripts/stage_canonical_fullbody_pack.py'
       - 'scripts/validate_chibi_v4_*.py'
       - 'scripts/validate_v4_facial_assets.py'
       - 'tests/test_character_registry.py'
       - 'tests/test_chibi_v4_*.py'
       - 'tests/test_import_sprite_animation.py'
+      - 'tests/test_stage_canonical_fullbody_pack.py'
       - 'tests/test_v4_facial_system.py'
       - '.github/workflows/canonical-character-system.yml'
   push:
@@ -49,6 +51,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_chibi_v4_*.py' -v
           python -m unittest discover -s tests -p 'test_v4_facial_system.py' -v
           python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
+          python -m unittest discover -s tests -p 'test_stage_canonical_fullbody_pack.py' -v
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -62,9 +65,11 @@ jobs:
           npx remotion still HeroCharacterStage out/canonical-hero-stage.png --frame=80 --scale=0.5
           npx remotion still V4FacialReviewStage out/canonical-facial-stage.png --frame=80 --scale=0.5
           npx remotion still ChibiV4ReviewStage out/canonical-sprite-stage.png --frame=80 --scale=0.5
+          npx remotion still CanonicalFullBodyReviewStage out/canonical-fullbody-stage.png --frame=80 --scale=0.5
           test -s out/canonical-hero-stage.png
           test -s out/canonical-facial-stage.png
           test -s out/canonical-sprite-stage.png
+          test -s out/canonical-fullbody-stage.png
       - uses: actions/upload-artifact@v4
         with:
           name: canonical-character-assetless-smoke
