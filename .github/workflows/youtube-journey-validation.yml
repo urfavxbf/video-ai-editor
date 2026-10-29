@@ -24,6 +24,8 @@ on:
       - 'src/characters/V4FacialReviewStage.tsx'
       - 'characters/facial-v4-rig.json'
       - 'scripts/validate_v4_facial_assets.py'
+      - 'scripts/stage_v4_facial_art.py'
+      - 'tests/test_stage_v4_facial_art.py'
       - 'tests/test_v4_facial_system.py'
       - 'characters/chibi-v4-design.json'
       - 'tests/test_chibi_v4_design.py'
@@ -73,6 +75,8 @@ on:
       - 'src/characters/V4FacialReviewStage.tsx'
       - 'characters/facial-v4-rig.json'
       - 'scripts/validate_v4_facial_assets.py'
+      - 'scripts/stage_v4_facial_art.py'
+      - 'tests/test_stage_v4_facial_art.py'
       - 'tests/test_v4_facial_system.py'
       - 'characters/chibi-v4-design.json'
       - 'tests/test_chibi_v4_design.py'
@@ -128,6 +132,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_chibi_v4_design.py' -v
           python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
           python -m unittest discover -s tests -p 'test_v4_facial_system.py' -v
+          python -m unittest discover -s tests -p 'test_stage_v4_facial_art.py' -v
           python scripts/validate_v4_facial_assets.py
           python -m unittest discover -s tests -p 'test_chibi_v4_native_quality.py' -v
           python -m py_compile scripts/validate_chibi_v4_assets.py scripts/validate_chibi_v4_production.py
