@@ -2,7 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {CharacterPuppet, type CharacterId, type LayeredPuppetRig, type VoiceEvent} from './CharacterPuppet';
 import {HERO_IDENTITY, heroGestureFor, heroStateAt, listeningReactionCues, smooth01} from './HeroPerformance';
-import {OFFICIAL_V2_RIGS} from './OfficialV2Rig';
+import {CANONICAL_CHARACTER_ASSETS, canonicalArtworkApproved} from './CanonicalCharacterAssets';
 
 /**
  * Reusable 16:9 character-first workbench.
@@ -11,6 +11,7 @@ import {OFFICIAL_V2_RIGS} from './OfficialV2Rig';
 export type HeroStageAsset = {assetPath: string; layeredRig?: LayeredPuppetRig};
 export type HeroStageProps = {
   assetsReady: boolean;
+  artApproved?: boolean;
   voiceEvents: VoiceEvent[];
   chapter: number;
   assets?: Record<CharacterId, HeroStageAsset>;
@@ -51,17 +52,18 @@ const IdentityCard:React.FC<{
 };
 
 export const HeroCharacterStage:React.FC<HeroStageProps> = ({
-  assetsReady, voiceEvents,chapter,assets,audio=[],
+  assetsReady,artApproved=false, voiceEvents,chapter,assets,audio=[],
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
   const host=heroStateAt('urfavxbf',chapter,frame,fps,voiceEvents);
   const pix=heroStateAt('pix',chapter,frame,fps,voiceEvents);
   const fade=smooth01(frame/23);
-  const hostAsset=assets?.urfavxbf??OFFICIAL_V2_RIGS.urfavxbf;
-  const pixAsset=assets?.pix??OFFICIAL_V2_RIGS.pix;
-  if (audio.length && !assetsReady) {
-    throw new Error('Stage approved SHA-verified V2 full-body PNGs before any voiced hero render');
+  const hostAsset=assets?.urfavxbf??CANONICAL_CHARACTER_ASSETS.urfavxbf;
+  const pixAsset=assets?.pix??CANONICAL_CHARACTER_ASSETS.pix;
+  const ready=canonicalArtworkApproved(assetsReady,artApproved);
+  if (audio.length && !ready) {
+    throw new Error('Stage and approve both official 2026-10-29 canonical character assets before voiced hero rendering');
   }
   return <AbsoluteFill style={{
     background:'#060d19',color:'#f1f6ff',fontFamily:'Inter',overflow:'hidden',
@@ -77,14 +79,14 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
       URFAVXBF × PIX // HERO CHARACTER SYSTEM
     </div>
     <div style={{position:'absolute',right:60,top:43,letterSpacing:2,fontSize:17,color:'#96a8c3'}}>
-      1920×1080 · 30 FPS · V2 ORIGINALS
+      1920×1080 · 30 FPS · CANONICAL CHIBI
     </div>
     <div style={{position:'absolute',top:145,left:625,width:670,textAlign:'center',opacity:fade}}>
-      <div style={{letterSpacing:7,fontSize:18,color:'#27e8fd',fontWeight:750}}>
+      <div style={{letterSpacing:7,fontSize:18,color:'#70e8ff',fontWeight:750}}>
         CHARACTER PERFORMANCE STUDY
       </div>
       <div style={{fontSize:76,fontWeight:950,letterSpacing:-2,lineHeight:1.05,marginTop:20}}>
-        THE HOST<br/><span style={{color:'#ffda00'}}>+</span> THE AI PET
+        THE HOST<br/><span style={{color:'#6ffb8b'}}>+</span> THE AI PET
       </div>
       <div style={{height:2,background:'linear-gradient(90deg,transparent,#40617a,transparent)',margin:'29px 34px 24px'}}/>
       <div style={{fontSize:23,lineHeight:1.6,color:'#a8bcd2'}}>
@@ -100,7 +102,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
           </div>)}
       </div>
     </div>
-    {assetsReady ? <>
+    {ready ? <>
       <CharacterPuppet id="urfavxbf"
         assetPath={hostAsset.assetPath} layeredRig={hostAsset.layeredRig}
         left={35} width={585} height={810} bottom={165}
@@ -118,7 +120,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
     </>:<div style={{position:'absolute',bottom:210,left:80,right:80,
       padding:20,textAlign:'center',border:'1px dashed #60728e',borderRadius:12,
       background:'#0d1a2b',fontSize:21}}>
-      Stage both approved Super Pixel V2 full-body RGBA PNGs to render the character performance.
+      NEW CANONICAL ART PENDING — original references approved; production PNGs must be separately rigged and verified.
     </div>}
     <IdentityCard id="urfavxbf" energy={host.speakingEnergy}
       speaking={host.isSpeaking} frame={frame}/>
@@ -126,7 +128,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
       speaking={pix.isSpeaking} frame={frame}/>
     <div style={{position:'absolute',left:60,right:60,bottom:23,
       display:'flex',justifyContent:'space-between',fontSize:14,letterSpacing:1.5,color:'#8aa3be'}}>
-      <span>APPROVED V2 VISUALS · PRESERVE IDENTITY</span>
+      <span>2026-10-29 CANONICAL VISUALS · NO LEGACY FALLBACK</span>
       <span>2.5D MOTION STUDY · NOT INDEPENDENT LIMB RIGGING</span>
     </div>
     {audio.map((a,i)=><Sequence key={i} from={a.startFrame}
