@@ -55,7 +55,7 @@
   },
   "useAs": "visual-direction and isolated draft-sprite review only; not yet default for long-form production",
   "facialAnimation": {
-    "phase": "36 original transparent aligned facial draft PNGs completed; technical QA passed locally; awaiting owner visual approval; artwork private",
+    "phase": "REJECTED_VISUAL_DRAFT - do not promote to final assets",
     "manifest": "characters/facial-v4-rig.json",
     "controller": "src/characters/V4FacialController.ts",
     "renderer": "src/characters/V4FacialPortrait.tsx",
@@ -74,6 +74,9 @@
     "stager": "scripts/stage_v4_facial_art.py",
     "currentDraftFormat": "512x512 RGBA, 2 bases + 20 eyes/brows overlays + 14 mouth overlays",
     "artSource": "independent original vector artwork; not cropped from imagegen concept poster or V2 packs",
-    "actualVoiceSyncTested": false
+    "actualVoiceSyncTested": false,
+    "artApproval": "rejected-by-owner-reference-mismatch",
+    "blockedReason": "Owner rejected initial simplified vector facial artwork as not matching the original high-detail black/dark-green UrFavXBF reference; PIX must remain a cyan-purple cat, not a human avatar.",
+    "requiredNextStep": "Create a single 1:1 identity-matched new-model reference portrait and obtain owner approval before generating separate expression/mouth layers. Do not treat illustrative sprite posters as real production layers."
   }
 }
