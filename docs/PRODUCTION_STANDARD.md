@@ -1,3 +1,5 @@
+> **Latest owner-approved video *direction* (2026-10-29):** Aim for cinematic 2.5D editorial animation: expressive, frame-animated pixel-styled UrFavXBF/PIX characters composited into depth-rich 3D studio/scene environments, with camera moves, powerful synced motion graphics and kinetic typography. This **supersedes portrait-only layout and rejected primitive-3D artwork as the default creative target**, without changing the locked October 29 character identities or English voices. See [reference analysis and QA target](CINEMATIC_2P5D_REFERENCE_2026-10-29.md). Artwork itself still requires owner visual approval.
+
 > **Character layout update:** User approved **head portraits only**, one on either side of the motion-graphics field. Eliminate the full-body character overlays from future videos. Keep animated face sprites and actual Chatterbox speaker attribution. See [PIXEL_GLITCH_PORTRAITS_ONLY.md](PIXEL_GLITCH_PORTRAITS_ONLY.md).
 
 # UrFavXBF + PIX — production quality standard

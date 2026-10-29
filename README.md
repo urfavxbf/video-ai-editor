@@ -1,3 +1,5 @@
+> **Video quality target (October 29, 2026):** The owner supplied a cinematic pixel-character × 3D-environment reference video. Future long-form productions should use recognizable character-specific animations, filmic rooms, camera work, sound-accurate kinetic typography and scene-integrated graphics—not static portraits or primitive geometric 3D actor substitutes. [Read the authoritative cinematic 2.5D direction](docs/CINEMATIC_2P5D_REFERENCE_2026-10-29.md). Historical animation drafts below are retained for audit.
+
 # Video AI Editor
 
 > **Current production setting (October 28, 2026): English voices are the default.** The user paused Tagalog voice synthesis because there is no budget for a GPU runner. Use the previously approved Chatterbox English speakers: UrFavXBF Natural Storyteller and PIX Emily. Keep VoxCPM2 Tagalog voice designs and source code for future explicit opt-in only. The Tagalog GitHub Actions workflow is manual-only; no automatic TTS generation or paid GPU runner is authorized. Earlier references below to Tagalog being the default describe the prior experimental configuration and are superseded by this setting.
