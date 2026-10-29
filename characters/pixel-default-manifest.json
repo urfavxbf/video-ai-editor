@@ -1,16 +1,16 @@
 {
-  "schema": "video-ai-editor/pixel-default-assets/v1",
+  "schema": "video-ai-editor/pixel-default-assets/v2",
   "effectiveDate": "2026-10-29",
   "selectedAsDefaultByOwner": true,
   "referenceArt": "Owner-selected Oct 29 pixel style sheets (50984 PIX, 50985 UrFavXBF)",
-  "originalArt": "10 separately generated PNG poses, never crops from the reference sheet",
-  "productionTechnique": "cinematic 2.5D + static/pose-swapped pixel characters + brief glitch at scene transitions",
+  "originalArt": "13 independently generated PNG poses; none cropped from reference sheets",
+  "productionTechnique": "pose-swapped pixel characters + cinematic 2.5D + intentional RGB/pixel-slice glitch at every scene boundary",
   "imageProcessing": "use original 1254x1254 RGBA images; image-rendering:pixelated; nearest-neighbor if resized",
   "assetDelivery": {
-    "archive": "UrFavXBF_PIX_Official_10_Poses.zip",
+    "archive": "UrFavXBF_PIX_13_Pose_Production_Pack.zip",
     "assetsCommitted": false,
     "assetReady": false,
-    "missingAssetPolicy": "hard-block production, no legacy fallback"
+    "missingAssetPolicy": "strict; no fallback to legacy, rejected, or generated placeholder art"
   },
   "characters": {
     "urfavxbf": {
@@ -53,6 +53,14 @@
           "sha256": "6a7ae94df79281988fe81ee22212d43b172e1175057b52cbb1ec85b7a4a728d2",
           "bytes": 889985,
           "source": "celebratory_neon_green_gamer_sprite.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "surprised": {
+          "path": "public/characters/pixel-default/urfavxbf/surprised.png",
+          "sha256": "bb67b262ffe0404e62803595074f606ba4dbb5777bda12aa19eab44c253cc83c",
+          "bytes": 863643,
+          "source": "startled_neon_gamer_chibi.png",
           "width": 1254,
           "height": 1254
         }
@@ -98,6 +106,22 @@
           "sha256": "b3ed3e48537da65a8e885172cc6b49682d54aaceed1acf8dba0c71c5eeb6ff82",
           "bytes": 1044513,
           "source": "neon_chibi_cat_mascot_sprite.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "question": {
+          "path": "public/characters/pixel-default/pix/question.png",
+          "sha256": "852e9ec8a6599772fa30b73c4d505e4bfe279356956e8dbf1c76ccb6363a1fba",
+          "bytes": 1064042,
+          "source": "curious_neon_cybercat_mascot.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "surprised": {
+          "path": "public/characters/pixel-default/pix/surprised.png",
+          "sha256": "31beb770b6e08112e4c947172d4d73e277be3860d0c0b18ef4623ed1fd1e3811",
+          "bytes": 1134097,
+          "source": "neon_pixel_cat_surprise.png",
           "width": 1254,
           "height": 1254
         }

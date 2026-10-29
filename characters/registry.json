@@ -115,9 +115,9 @@
     "caption_language": "en",
     "metadata_language": "en",
     "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending.",
-    "character_motion": "speaker-aware individual pose selection, no claimed true frame-by-frame walking or phoneme lip-sync",
+    "character_motion": "13 pose-selectable pixel characters, speaker/reaction-aware; no false lip-sync; glitch at scene boundaries",
     "character_system": "src/characters/PixelPoseCharacter.tsx + src/characters/HeroPerformance.ts",
-    "visual_asset_status": "owner-selected 10 separate image outputs; binary ZIP validated but images not yet staged in GitHub",
+    "visual_asset_status": "13 independent owner-selected pixel PNGs exported; GitHub binaries pending installation/verification; production not yet approved",
     "character_art_fallback": "DISABLED (rejected 3D/old 2D never substituted)",
     "full_body_rendering_default": true
   },
@@ -136,13 +136,13 @@
     "voice_profiles_unchanged": true,
     "no_legacy_visual_fallback": true,
     "runtime_assets_ready": false,
-    "next_art_step": "Stage and commit all ten exact PNG assets and verify SHA256 and RGBA before enabling production rendering.",
+    "next_art_step": "Stage all 13 owner-selected original RGBA PNGs, verify SHA256 and render PixelProductionProof before marking assetsReady",
     "default_layout": "pixel-chibi-poses-2p5d-stage",
     "frameByFrameActionContract": "characters/true-action-contract.json",
     "productionAnimationMethod": "pose-swaps-plus-glitch-transitions",
     "forbid2p5dAsProductionArt": false,
     "maximumExternalSpriteSpendUsd": 0,
-    "actionRuntime": "src/characters/PixelPoseCharacter.tsx"
+    "actionRuntime": "src/characters/PixelPoseCharacter.tsx; src/characters/PixelProductionProof.tsx"
   },
   "canonical_visual_version": "urfavxbf-pix-pixel-default-2026-10-29"
 }
