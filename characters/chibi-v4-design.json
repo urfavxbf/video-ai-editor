@@ -53,5 +53,21 @@
     "productionApproved": false,
     "doNotSilentlySubstituteOldV2": true
   },
-  "useAs": "visual-direction and isolated draft-sprite review only; not yet default for long-form production"
+  "useAs": "visual-direction and isolated draft-sprite review only; not yet default for long-form production",
+  "facialAnimation": {
+    "phase": "controller-and-QA-implemented; artwork pending",
+    "manifest": "characters/facial-v4-rig.json",
+    "controller": "src/characters/V4FacialController.ts",
+    "renderer": "src/characters/V4FacialPortrait.tsx",
+    "reviewComposition": "V4FacialReviewStage",
+    "validator": "scripts/validate_v4_facial_assets.py",
+    "perCharacterExpressionSlots": 10,
+    "perCharacterMouthSlots": 7,
+    "artCanvas": [
+      512,
+      512
+    ],
+    "legacyArtReuseAllowed": false,
+    "productionApproved": false
+  }
 }
