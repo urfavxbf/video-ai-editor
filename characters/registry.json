@@ -113,7 +113,7 @@
     "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending.",
     "character_motion": "speaker-aware timing preserved; new models require verified aligned RGBA layers, no legacy fallback",
     "character_system": "src/characters/HeroPerformance.ts; src/characters/CanonicalCharacterAssets.ts",
-    "visual_asset_status": "canonical references approved; final full-body animation art pending QA",
+    "visual_asset_status": "independent action-frame system available; canonical source art and final cycles still incomplete",
     "character_art_fallback": "DISABLED; never render V2/older rejected artworks",
     "full_body_rendering_default": true
   },
@@ -132,8 +132,13 @@
     "voice_profiles_unchanged": true,
     "no_legacy_visual_fallback": true,
     "runtime_assets_ready": false,
-    "next_art_step": "Create genuine RGBA full-body animation layers for UrFavXBF and PIX matching 2026-10-29 approved reference images; generate and review missing PIX body art before final video",
-    "default_layout": "full-body-two-character-hero-stage"
+    "next_art_step": "Produce and visually validate independently drawn full-body frames for all actions; old cutout poses are drafts, not production actions.",
+    "default_layout": "full-body-two-character-hero-stage",
+    "frameByFrameActionContract": "characters/true-action-contract.json",
+    "productionAnimationMethod": "independent-full-body-frame-sequences",
+    "forbid2p5dAsProductionArt": true,
+    "maximumExternalSpriteSpendUsd": 0,
+    "actionRuntime": "src/characters/TrueFrameActionSprite.tsx"
   },
   "canonical_visual_version": "urfavxbf-pix-2026-10-29"
 }

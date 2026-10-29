@@ -1,0 +1,21 @@
+{
+  "schema": "video-ai-editor/sprite-budget-policy/v1",
+  "maximumExternalSpendUsd": 0,
+  "allowPaidApis": false,
+  "allowGpuRental": false,
+  "autoGenerateSprites": false,
+  "allowedOperations": [
+    "offline-frame-validation",
+    "alpha-qa",
+    "contact-sheet",
+    "sprite-atlas",
+    "pose-guide-export",
+    "runtime-playback"
+  ],
+  "sourceIdentity": "canonical-2026-10-29",
+  "animationMode": "independent-whole-character-frames",
+  "forbidProductionCutoutFallback": true,
+  "allowGitHubCIForValidationOnly": true,
+  "licenseReviewRequiredForThirdPartyMotion": true,
+  "notes": "Model, video and sprite generation services may bill even if their CLI is open source. No credentialed generation on CI."
+}

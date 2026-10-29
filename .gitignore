@@ -27,3 +27,7 @@ public/characters/facial-v4/
 public/characters/animation-v4/
 public/characters/animation-v4-normalized/
 public/characters/imported/
+
+# New true-frame canonical sprites; independently drawn source artwork remains review-gated
+public/characters/true-action/
+source-frames/
