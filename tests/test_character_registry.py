@@ -44,7 +44,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual((p["width"], p["height"]), (414, 468))
         self.assertEqual((p["left"], p["right"], p["top"]), (64, 64, 202))
         a = self.data["characters"]
-        self.assertNotEqual(a["urfavxbf"]["visual"]["sha256"], a["pix"]["visual"]["sha256"])
+        self.assertNotEqual(a["urfavxbf"]["visual"]["reference_source_sha256"], a["pix"]["visual"]["reference_source_sha256"])
         for c in a.values():
             visual = c["visual"]
             self.assertEqual(len(visual["reference_source_sha256"]), 64)
