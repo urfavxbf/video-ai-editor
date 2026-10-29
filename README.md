@@ -1,3 +1,5 @@
+> **Default character direction (2026-10-29):** UrFavXBF and PIX use 10 independently generated, user-selected high-resolution pixel PNG poses, with no legacy artwork fallback. The new [runtime pose selector](src/characters/PixelPoseCharacter.tsx) is wired to the 16:9 Hero Character Stage. [Asset hashes and staging instructions](docs/PIXEL_DEFAULT_CHARACTERS_2026-10-29.md). The ZIP has been delivered in chat; binary assets still need to be committed before the production-ready gate can be enabled.
+
 # Video AI Editor
 
 > **Current production setting (October 28, 2026): English voices are the default.** The user paused Tagalog voice synthesis because there is no budget for a GPU runner. Use the previously approved Chatterbox English speakers: UrFavXBF Natural Storyteller and PIX Emily. Keep VoxCPM2 Tagalog voice designs and source code for future explicit opt-in only. The Tagalog GitHub Actions workflow is manual-only; no automatic TTS generation or paid GPU runner is authorized. Earlier references below to Tagalog being the default describe the prior experimental configuration and are superseded by this setting.

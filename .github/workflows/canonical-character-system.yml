@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - 'characters/**'
+      - 'scripts/stage_pixel_default_pack.py'
+      - 'tests/test_pixel_default_contract.py'
       - 'src/characters/**'
       - 'src/Root.tsx'
       - 'scripts/import_sprite_animation.py'
@@ -52,6 +54,7 @@ jobs:
       - name: Validate canonical registry, chibi sources, facial contract and sprite imports
         run: |
           python -m unittest discover -s tests -p 'test_character_registry.py' -v
+          python -m unittest discover -s tests -p 'test_pixel_default_contract.py' -v
           python -m unittest discover -s tests -p 'test_chibi_v4_*.py' -v
           python -m unittest discover -s tests -p 'test_v4_facial_system.py' -v
           python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
