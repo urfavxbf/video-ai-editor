@@ -37,7 +37,8 @@ class ChibiV4DesignTests(unittest.TestCase):
         src=(ROOT/"src/characters/ChibiV4Sprite.tsx").read_text()
         root=(ROOT/"src/Root.tsx").read_text()
         self.assertIn("ChibiV4ReviewStage",root)
-        self.assertIn("characters/animation-v4/",src)
+        self.assertIn("characters/animation-v4",src)
+        self.assertIn("characters/animation-v4-normalized",src)
         self.assertNotIn("pixel-glitch/",src)
         self.assertTrue((ROOT/"docs/CHIBI_V4_SPRITE_PACK.md").is_file())
 
