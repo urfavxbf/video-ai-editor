@@ -19,6 +19,12 @@ on:
       - 'src/characters/ChibiV4Sprite.tsx'
       - 'src/characters/ChibiV4ReviewStage.tsx'
       - 'src/characters/ImportedSpriteAnimation.tsx'
+      - 'src/characters/V4FacialController.ts'
+      - 'src/characters/V4FacialPortrait.tsx'
+      - 'src/characters/V4FacialReviewStage.tsx'
+      - 'characters/facial-v4-rig.json'
+      - 'scripts/validate_v4_facial_assets.py'
+      - 'tests/test_v4_facial_system.py'
       - 'characters/chibi-v4-design.json'
       - 'tests/test_chibi_v4_design.py'
       - 'tests/test_import_sprite_animation.py'
@@ -62,6 +68,12 @@ on:
       - 'src/characters/ChibiV4Sprite.tsx'
       - 'src/characters/ChibiV4ReviewStage.tsx'
       - 'src/characters/ImportedSpriteAnimation.tsx'
+      - 'src/characters/V4FacialController.ts'
+      - 'src/characters/V4FacialPortrait.tsx'
+      - 'src/characters/V4FacialReviewStage.tsx'
+      - 'characters/facial-v4-rig.json'
+      - 'scripts/validate_v4_facial_assets.py'
+      - 'tests/test_v4_facial_system.py'
       - 'characters/chibi-v4-design.json'
       - 'tests/test_chibi_v4_design.py'
       - 'tests/test_import_sprite_animation.py'
@@ -115,6 +127,8 @@ jobs:
           python scripts/validate_full_animation_set.py
           python -m unittest discover -s tests -p 'test_chibi_v4_design.py' -v
           python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
+          python -m unittest discover -s tests -p 'test_v4_facial_system.py' -v
+          python scripts/validate_v4_facial_assets.py
           python -m unittest discover -s tests -p 'test_chibi_v4_native_quality.py' -v
           python -m py_compile scripts/validate_chibi_v4_assets.py scripts/validate_chibi_v4_production.py
           python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py scripts/prepare_hero_stage.py scripts/rig_official_v2_characters.py scripts/validate_full_animation_set.py
@@ -148,6 +162,10 @@ jobs:
         run: |
           npx remotion still ChibiV4ReviewStage out/chibi-v4-staging-reference.png --frame=40 --scale=0.5
           test -s out/chibi-v4-staging-reference.png
+      - name: Render V4 new-character facial preview with pending-art safety gate
+        run: |
+          npx remotion still V4FacialReviewStage out/v4-facial-staging.png --frame=120 --scale=0.5
+          test -s out/v4-facial-staging.png
       - name: Render imported sprite review staging screen without private assets
         run: |
           npx remotion still ImportedSpriteAnimationReview out/imported-sprite-staging.png --frame=30 --scale=0.5
