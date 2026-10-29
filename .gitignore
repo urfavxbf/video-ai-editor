@@ -31,3 +31,6 @@ public/characters/animation-v4/
 
 # Existing character GIF/PNG imports remain private until explicitly approved
 public/characters/imported/
+
+# New V4 face artwork stays private until reviewed and intentionally released
+public/characters/facial-v4/
