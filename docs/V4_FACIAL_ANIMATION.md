@@ -104,3 +104,43 @@ validator alone cannot assess style likeness or art identity.
 - Independent full-body movements will be a separate true V4 sprite/rig job.
 - The face layer system uses no paid Spritesheets.ai generation APIs and
   consumes no generation credits.
+
+
+## Actual art draft V1 produced (29 October 2026)
+
+A new **original vector-authored artwork prototype** has been built: 36 transparent
+512x512 RGBA assets (two base portraits, 20 eyes/brows expressions and 14
+mouth layers), **not crops** from a concept poster and not V2 art reuse.
+
+- Personal asset Library:
+  `/UrFavXBF Video Characters/Chibi Pixel V4/Facial Artwork Draft V1/`
+- ZIP: `UrFavXBF_PIX_V4_Actual_Facial_Artwork_Draft.zip`
+- Review panel: `V4_Facial_Review_Contact_Sheet.png`
+- Video: `V4_Facial_Animation_Draft_1080p.mp4` (silent, 7 seconds, 1920x1080 at 30 fps).
+- ZIP includes `build_v4_face_art.py`, the 36 source PNGs and SHA manifest.
+- The video demonstrates deterministic **facial state switching**, not
+  waveform-triggered speech or phoneme-accurate lip-sync. Previous English
+  voice sample bytes were unavailable during drafting, so there is no
+  audio-synchronized preview yet.
+
+All 36 new files passed deterministic local canvas/alpha/uniqueness checks
+against the contract. **These are visual-review drafts**, not owner-approved
+production art. The vector drawing fidelity is simpler than the illustrated
+high-detail reference. Do not call the visuals final without owner approval.
+
+The artwork is **not committed to public GitHub**. It must be downloaded
+from the personal Library and staged into the repo using:
+
+```bash
+python scripts/stage_v4_facial_art.py \
+  --pack UrFavXBF_PIX_V4_Actual_Facial_Artwork_Draft.zip
+python scripts/validate_v4_facial_assets.py \
+  --assets public/characters/facial-v4 \
+  --output out/v4-facial-art-qa.json
+```
+
+**No auto-approval:** The staging script does not switch production episodes to
+V4 and does not set `artApproved:true`. Run with both flags explicitly only
+in a private visual review after file QA. Existing episodes remain pinned to
+prior art.
+
