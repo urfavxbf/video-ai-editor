@@ -1,0 +1,2 @@
+# Self-contained third-party checkout, dependencies, secrets and rendered media.
+.runtime/
