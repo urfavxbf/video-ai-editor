@@ -18,8 +18,10 @@ on:
       - 'src/characters/HeroAnimationTimeline.tsx'
       - 'src/characters/ChibiV4Sprite.tsx'
       - 'src/characters/ChibiV4ReviewStage.tsx'
+      - 'src/characters/ImportedSpriteAnimation.tsx'
       - 'characters/chibi-v4-design.json'
       - 'tests/test_chibi_v4_design.py'
+      - 'tests/test_import_sprite_animation.py'
       - 'tests/test_chibi_v4_native_quality.py'
       - 'characters/full-animation-set.json'
       - 'characters/registry.json'
@@ -32,6 +34,7 @@ on:
       - 'scripts/validate_full_animation_set.py'
       - 'scripts/validate_chibi_v4_assets.py'
       - 'scripts/validate_chibi_v4_production.py'
+      - 'scripts/import_sprite_animation.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
@@ -58,8 +61,10 @@ on:
       - 'src/characters/HeroAnimationTimeline.tsx'
       - 'src/characters/ChibiV4Sprite.tsx'
       - 'src/characters/ChibiV4ReviewStage.tsx'
+      - 'src/characters/ImportedSpriteAnimation.tsx'
       - 'characters/chibi-v4-design.json'
       - 'tests/test_chibi_v4_design.py'
+      - 'tests/test_import_sprite_animation.py'
       - 'tests/test_chibi_v4_native_quality.py'
       - 'characters/full-animation-set.json'
       - 'characters/registry.json'
@@ -72,6 +77,7 @@ on:
       - 'scripts/validate_full_animation_set.py'
       - 'scripts/validate_chibi_v4_assets.py'
       - 'scripts/validate_chibi_v4_production.py'
+      - 'scripts/import_sprite_animation.py'
       - 'scripts/render_youtube_journey_voices.py'
       - 'tests/test_youtube_journey_preview.py'
       - 'tests/test_youtube_journey_full.py'
@@ -108,6 +114,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_full_animation_catalog.py' -v
           python scripts/validate_full_animation_set.py
           python -m unittest discover -s tests -p 'test_chibi_v4_design.py' -v
+          python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
           python -m unittest discover -s tests -p 'test_chibi_v4_native_quality.py' -v
           python -m py_compile scripts/validate_chibi_v4_assets.py scripts/validate_chibi_v4_production.py
           python -m py_compile scripts/build_youtube_journey_preview.py scripts/build_youtube_journey_full.py scripts/render_youtube_journey_voices.py scripts/validate_youtube_journey_fullbody.py scripts/prepare_hero_stage.py scripts/rig_official_v2_characters.py scripts/validate_full_animation_set.py
@@ -141,6 +148,10 @@ jobs:
         run: |
           npx remotion still ChibiV4ReviewStage out/chibi-v4-staging-reference.png --frame=40 --scale=0.5
           test -s out/chibi-v4-staging-reference.png
+      - name: Render imported sprite review staging screen without private assets
+        run: |
+          npx remotion still ImportedSpriteAnimationReview out/imported-sprite-staging.png --frame=30 --scale=0.5
+          test -s out/imported-sprite-staging.png
       - uses: actions/upload-artifact@v4
         with:
           name: youtube-journey-eight-original-visual-beats
