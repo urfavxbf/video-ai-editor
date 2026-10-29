@@ -4,7 +4,12 @@ on:
   pull_request:
     paths:
       - 'characters/**'
+      - 'scripts/stage_pixel_default_pack.py'
+      - 'tests/test_pixel_default_contract.py'
       - 'src/characters/**'
+      - 'public/characters/pixel-default/**'
+      - 'scripts/stage_pixel_default_pack.py'
+      - 'tests/test_pixel_default_contract.py'
       - 'src/Root.tsx'
       - 'scripts/import_sprite_animation.py'
       - 'scripts/stage_canonical_fullbody_pack.py'
@@ -52,6 +57,8 @@ jobs:
       - name: Validate canonical registry, chibi sources, facial contract and sprite imports
         run: |
           python -m unittest discover -s tests -p 'test_character_registry.py' -v
+          python -m unittest discover -s tests -p 'test_pixel_default_contract.py' -v
+          python -m unittest discover -s tests -p 'test_pixel_default_contract.py' -v
           python -m unittest discover -s tests -p 'test_chibi_v4_*.py' -v
           python -m unittest discover -s tests -p 'test_v4_facial_system.py' -v
           python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
@@ -83,3 +90,14 @@ jobs:
           name: canonical-character-assetless-smoke
           path: out/canonical-*.png
           retention-days: 7
+
+      - name: Render the 13-pose production proof only after all art is committed
+        shell: bash
+        run: |
+          if test -f public/characters/pixel-default/pix/surprised.png; then
+            python scripts/stage_pixel_default_pack.py --verify-workspace
+            npx remotion still PixelProductionProof out/pixel-production-proof.png --frame=170 --scale=0.5 --props='{"assetsReady":true}'
+            test -s out/pixel-production-proof.png
+          else
+            echo "No PNG binaries committed yet: production readiness remains blocked (not a passed render)"
+          fi

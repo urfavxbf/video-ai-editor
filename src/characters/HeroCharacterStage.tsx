@@ -1,8 +1,9 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
-import {CharacterPuppet, type CharacterId, type LayeredPuppetRig, type VoiceEvent} from './CharacterPuppet';
+import {type CharacterId, type LayeredPuppetRig, type VoiceEvent} from './CharacterPuppet';
+import {PixelPoseCharacter} from './PixelPoseCharacter';
 import {HERO_IDENTITY, heroGestureFor, heroStateAt, listeningReactionCues, smooth01} from './HeroPerformance';
-import {CANONICAL_CHARACTER_ASSETS, canonicalArtworkApproved} from './CanonicalCharacterAssets';
+import {canonicalArtworkApproved} from './CanonicalCharacterAssets';
 
 /**
  * Reusable 16:9 character-first workbench.
@@ -52,15 +53,15 @@ const IdentityCard:React.FC<{
 };
 
 export const HeroCharacterStage:React.FC<HeroStageProps> = ({
-  assetsReady,artApproved=false, voiceEvents,chapter,assets,audio=[],
+  assetsReady,artApproved=false, voiceEvents,chapter,audio=[],
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
   const host=heroStateAt('urfavxbf',chapter,frame,fps,voiceEvents);
   const pix=heroStateAt('pix',chapter,frame,fps,voiceEvents);
   const fade=smooth01(frame/23);
-  const hostAsset=assets?.urfavxbf??CANONICAL_CHARACTER_ASSETS.urfavxbf;
-  const pixAsset=assets?.pix??CANONICAL_CHARACTER_ASSETS.pix;
+  const hostReaction=listeningReactionCues('urfavxbf',voiceEvents,chapter).find(c=>c.atFrame<=frame&&frame<c.atFrame+c.durationFrames)?.kind;
+  const pixReaction=listeningReactionCues('pix',voiceEvents,chapter).find(c=>c.atFrame<=frame&&frame<c.atFrame+c.durationFrames)?.kind;
   const ready=canonicalArtworkApproved(assetsReady,artApproved);
   if (audio.length && !ready) {
     throw new Error('Stage and approve both official 2026-10-29 canonical character assets before voiced hero rendering');
@@ -103,24 +104,16 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
       </div>
     </div>
     {ready ? <>
-      <CharacterPuppet id="urfavxbf"
-        assetPath={hostAsset.assetPath} layeredRig={hostAsset.layeredRig}
-        left={35} width={585} height={810} bottom={165}
-        voiceEvents={voiceEvents}
-        reactions={listeningReactionCues('urfavxbf',voiceEvents,chapter)}
-        bodyGesture={heroGestureFor('urfavxbf',chapter,host.isSpeaking?'urfavxbf':undefined,frame,voiceEvents)}
-        fadeInFrames={20}/>
-      <CharacterPuppet id="pix"
-        assetPath={pixAsset.assetPath} layeredRig={pixAsset.layeredRig}
-        right={35} width={585} height={810} bottom={165}
-        voiceEvents={voiceEvents}
-        reactions={listeningReactionCues('pix',voiceEvents,chapter)}
-        bodyGesture={heroGestureFor('pix',chapter,pix.isSpeaking?'pix':undefined,frame,voiceEvents)}
-        fadeInFrames={24}/>
+      <PixelPoseCharacter id="urfavxbf" speaking={host.isSpeaking}
+        gesture={heroGestureFor('urfavxbf',chapter,host.isSpeaking?'urfavxbf':undefined,frame,voiceEvents)}
+        reaction={hostReaction} left={35} width={585} height={810} bottom={165}/>
+      <PixelPoseCharacter id="pix" speaking={pix.isSpeaking}
+        gesture={heroGestureFor('pix',chapter,pix.isSpeaking?'pix':undefined,frame,voiceEvents)}
+        reaction={pixReaction} right={35} width={585} height={810} bottom={165}/>
     </>:<div style={{position:'absolute',bottom:210,left:80,right:80,
       padding:20,textAlign:'center',border:'1px dashed #60728e',borderRadius:12,
       background:'#0d1a2b',fontSize:21}}>
-      NEW CANONICAL ART PENDING — original references approved; production PNGs must be separately rigged and verified.
+      OWNER-SELECTED PIXEL POSES — stage all 10 verified RGBA PNG files before production rendering.
     </div>}
     <IdentityCard id="urfavxbf" energy={host.speakingEnergy}
       speaking={host.isSpeaking} frame={frame}/>
@@ -128,8 +121,8 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
       speaking={pix.isSpeaking} frame={frame}/>
     <div style={{position:'absolute',left:60,right:60,bottom:23,
       display:'flex',justifyContent:'space-between',fontSize:14,letterSpacing:1.5,color:'#8aa3be'}}>
-      <span>2026-10-29 CANONICAL VISUALS · NO LEGACY FALLBACK</span>
-      <span>2.5D MOTION STUDY · NOT INDEPENDENT LIMB RIGGING</span>
+      <span>2026-10-29 PIXEL POSES · NO LEGACY FALLBACK</span>
+      <span>POSE-SWAP MOTION · NO FALSE FRAME-BY-FRAME CLAIMS</span>
     </div>
     {audio.map((a,i)=><Sequence key={i} from={a.startFrame}
       durationInFrames={a.endFrame-a.startFrame}>

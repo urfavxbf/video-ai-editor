@@ -1,0 +1,65 @@
+name: Install owner-selected 13-pose pixel characters
+on:
+  push:
+    branches:
+      - feat/official-pixel-pose-default-20261029
+    paths:
+      - assets/import/UrFavXBF_PIX_13_Pose_Production_Pack.zip
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install-verified-poses:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Validate exact owner-selected PNG binaries and stage them
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s assets/import/UrFavXBF_PIX_13_Pose_Production_Pack.zip
+          python -m pip install Pillow==11.3.0
+          python scripts/stage_pixel_default_pack.py assets/import/UrFavXBF_PIX_13_Pose_Production_Pack.zip
+          python scripts/stage_pixel_default_pack.py --verify-workspace
+      - name: Typecheck video engine and render a real canonical pose
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run typecheck
+          npx remotion still PixelProductionProof out/pixel-production-proof.png --frame=170 --scale=0.5 --props='{"assetsReady":true}'
+          test -s out/pixel-production-proof.png
+      - name: Activate only after successful verified image render
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/activate_pixel_default.py
+          python -m unittest discover -s tests -p 'test_character_registry.py' -v
+          python -m unittest discover -s tests -p 'test_pixel_default_contract.py' -v
+      - uses: actions/upload-artifact@v4
+        with:
+          name: UrFavXBF-PIX-real-pose-production-proof
+          path: out/pixel-production-proof.png
+          retention-days: 7
+      - name: Commit all verified PNGs and activated default manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/characters/pixel-default/ characters/pixel-default-manifest.json characters/registry.json
+          git rm -f assets/import/UrFavXBF_PIX_13_Pose_Production_Pack.zip
+          git commit -m "assets(characters): install 13 SHA-verified pixel poses and activate defaults"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

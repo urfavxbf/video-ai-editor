@@ -18,7 +18,7 @@ class ChibiV4DesignTests(unittest.TestCase):
         self.assertIn("green",c["urfavxbf"]["style"])
         self.assertIn("purple",c["pix"]["style"])
         self.assertEqual(self.registry["character_hero_system"]["version"],
-                         "canonical-chibi-2026-10-29")
+                         "pixel-pose-default-2026-10-29")
 
     def test_truthful_frame_count_and_no_false_visemes(self):
         counts=self.design["recordedMotionCounts"]

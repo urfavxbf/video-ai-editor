@@ -19,11 +19,15 @@ import {ChibiV4ReviewStage, CHIBI_V4_REVIEW_DURATION, type ChibiV4ReviewProps} f
 import {ImportedSpriteAnimation, type ImportedSpriteAnimationProps} from './characters/ImportedSpriteAnimation'
 import {CanonicalFullBodyReviewStage, CANONICAL_FULL_BODY_REVIEW_FRAMES, type CanonicalFullBodyReviewProps} from './characters/CanonicalFullBodyReviewStage'
 import {TrueFrameReviewStage, type TrueFrameReviewProps} from './characters/TrueFrameReviewStage'
+import {PixelProductionProof,PIXEL_PROOF_FRAMES,type PixelProductionProofProps} from './characters/PixelProductionProof'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="PixelProductionProof" component={PixelProductionProof}
+    width={1920} height={1080} fps={30} durationInFrames={PIXEL_PROOF_FRAMES}
+    defaultProps={{assetsReady:false} satisfies PixelProductionProofProps} />
   <Composition id="TrueFrameReviewStage" component={TrueFrameReviewStage}
     width={1920} height={1080} fps={30} durationInFrames={240}
     defaultProps={{assetsReady:false,artApproved:false,urfavxbfAction:'point_camera',
