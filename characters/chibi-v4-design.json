@@ -55,7 +55,7 @@
   },
   "useAs": "visual-direction and isolated draft-sprite review only; not yet default for long-form production",
   "facialAnimation": {
-    "phase": "controller-and-QA-implemented; artwork pending",
+    "phase": "36 original transparent aligned facial draft PNGs completed; technical QA passed locally; awaiting owner visual approval; artwork private",
     "manifest": "characters/facial-v4-rig.json",
     "controller": "src/characters/V4FacialController.ts",
     "renderer": "src/characters/V4FacialPortrait.tsx",
@@ -68,6 +68,12 @@
       512
     ],
     "legacyArtReuseAllowed": false,
-    "productionApproved": false
+    "productionApproved": false,
+    "artifactLibraryPath": "/UrFavXBF Video Characters/Chibi Pixel V4/Facial Artwork Draft V1/",
+    "artifactPackage": "UrFavXBF_PIX_V4_Actual_Facial_Artwork_Draft.zip",
+    "stager": "scripts/stage_v4_facial_art.py",
+    "currentDraftFormat": "512x512 RGBA, 2 bases + 20 eyes/brows overlays + 14 mouth overlays",
+    "artSource": "independent original vector artwork; not cropped from imagegen concept poster or V2 packs",
+    "actualVoiceSyncTested": false
   }
 }
