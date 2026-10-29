@@ -31,7 +31,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(v["language"], "en")
         for field in ("script_language", "caption_language", "metadata_language"):
             self.assertEqual(v[field], "en")
-        self.assertEqual(v["character_layout"], "canonical-chibi-full-body-animated")
+        self.assertEqual(v["character_layout"], "pixel-pose-chibi-cinematic-2p5d")
         self.assertTrue(v["legacy_portrait_demos_not_default"])
         self.assertTrue(v["full_body_rendering_default"])
         self.assertEqual(self.data["character_hero_system"]["version"], "pixel-pose-default-2026-10-29")
