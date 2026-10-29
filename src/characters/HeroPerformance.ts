@@ -1,18 +1,19 @@
 import {type BodyGesture, type CharacterId, type CharacterReaction, type ReactionCue, type VoiceEvent} from './CharacterPuppet';
 
 /**
- * Character-first continuity system for every UrFavXBF + PIX episode.
- * Artwork is approved Super Pixel/Glitch V2; do not replace its identities.
+ * Canonical identity from the three user-supplied reference images (2026-10-29).
+ * These image SHA256 values are source-reference checksums, not production rig checksums.
+ * No old PixelGlitch V2 or rejected V4 artwork may be used as fallback.
  * Dialogue envelopes originate from actual WAVs, never a script-length guess.
  */
 export const HERO_IDENTITY = {
   urfavxbf: {
     name: 'UrFavXBF',
     role: 'host',
-    accent: '#ffda00',
-    glow: 'rgba(255,218,0,0.18)',
-    assetPath: 'characters/pixel-glitch/urfavxbf/base.png',
-    sha256: 'b11936a4ace7c6cba1ee391ff768fce93bee80b2adf81b3a44a89cbaa4cf01b4',
+    accent: '#6ffb8b',
+    glow: 'rgba(111,251,139,0.18)',
+    assetPath: 'characters/canonical/urfavxbf/full-body.png',
+    referenceSha256: 'b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5',
     voiceProfile: 'natural-storyteller-v1',
     notes: 'Controlled, clear, warm, subtly witty. Stable posture and deliberate explanation gestures.',
   },
@@ -21,8 +22,8 @@ export const HERO_IDENTITY = {
     role: 'AI companion',
     accent: '#27e8fd',
     glow: 'rgba(39,232,253,0.2)',
-    assetPath: 'characters/pixel-glitch/pix/base.png',
-    sha256: 'cc5ecccdbb74b8c90ea3af09a0c75ff2c72db05fcdf0006fdc19255641304c6f',
+    assetPath: 'characters/canonical/pix/portrait.png',
+    referenceSha256: 'c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069',
     voiceProfile: 'pix-cute-female-emily-v1',
     notes: 'Curious, bright, expressive and playful; punctuated bounces and quick reactions.',
   },
