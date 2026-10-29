@@ -15,6 +15,7 @@ import {HeroCharacterStage, HERO_STAGE_DURATION, type HeroStageProps} from './ch
 import {HeroAnimationReviewReel, HERO_REEL_FRAMES, type HeroAnimationReviewReelProps} from './characters/HeroAnimationReviewReel'
 import {ChibiV4ReviewStage,CHIBI_V4_REVIEW_DURATION,type ChibiV4ReviewProps} from './characters/ChibiV4ReviewStage'
 import {ImportedSpriteAnimation,type ImportedSpriteAnimationProps} from './characters/ImportedSpriteAnimation'
+import {V4FacialReviewStage,V4_FACIAL_REVIEW_FRAMES,type V4FacialReviewProps} from './characters/V4FacialReviewStage'
 import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
 import './fonts'
@@ -26,6 +27,7 @@ import {YouTubeJourneyFullEpisode, type YouTubeJourneyFullEpisodeProps} from './
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="V4FacialReviewStage" component={V4FacialReviewStage} width={1920} height={1080} fps={30} durationInFrames={V4_FACIAL_REVIEW_FRAMES} defaultProps={{assetsReady:false,artApproved:false,voiceEvents:[]} satisfies V4FacialReviewProps}/>
   <Composition id="ImportedSpriteAnimationReview" component={ImportedSpriteAnimation} width={1920} height={1080} fps={30} durationInFrames={300} defaultProps={{character:'urfavxbf',action:'idle_normal',durationsMs:[125],loop:true,assetsReady:false} satisfies ImportedSpriteAnimationProps}/>
   <Composition id="ChibiV4ReviewStage" component={ChibiV4ReviewStage} width={1920} height={1080} fps={30} durationInFrames={CHIBI_V4_REVIEW_DURATION} defaultProps={{assetsReady:false} satisfies ChibiV4ReviewProps}/>
   <Composition id="HeroAnimationReviewReel" component={HeroAnimationReviewReel} width={1920} height={1080} fps={30} durationInFrames={HERO_REEL_FRAMES} defaultProps={{assetsReady:false} satisfies HeroAnimationReviewReelProps}/>
