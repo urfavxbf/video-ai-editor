@@ -28,3 +28,6 @@ public/characters/PIX_Transparent.png
 
 # New Chibi V4 concept-derived draft PNGs, kept private until frame art passes QA
 public/characters/animation-v4/
+
+# Existing character GIF/PNG imports remain private until explicitly approved
+public/characters/imported/
