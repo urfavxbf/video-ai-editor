@@ -1,0 +1,69 @@
+{
+  "schema": "video-ai-editor/canonical-character-references/v1",
+  "approved_on": "2026-10-29",
+  "reference_only": true,
+  "production_rig_ready": false,
+  "supersedes": "all previous visual character identities, including pixel-glitch V2 and rejected V4 facial artwork",
+  "characters": {
+    "urfavxbf": {
+      "facial": "assets/character-references/UrFavXBF_Facial_Expressions_Official.png",
+      "full_body": "assets/character-references/UrFavXBF_FullBody_Official.png"
+    },
+    "pix": {
+      "facial": "assets/character-references/PIX_Facial_Expressions_Official.png",
+      "full_body": null
+    }
+  },
+  "expressions": [
+    "neutral",
+    "happy",
+    "curious",
+    "excited",
+    "surprised",
+    "thinking",
+    "focused",
+    "sleepy",
+    "glitch",
+    "blink"
+  ],
+  "mouth_shapes": [
+    "rest",
+    "small",
+    "medium",
+    "wide",
+    "round",
+    "closed",
+    "fv"
+  ],
+  "files": {
+    "assets/character-references/UrFavXBF_Facial_Expressions_Official.png": {
+      "sha256": "a803b78adaa0ef8f3ee8f427ca83a0c65a9f90ea8ed87e8487cae36efa1dac99",
+      "bytes": 535660,
+      "width": 1536,
+      "height": 1152
+    },
+    "assets/character-references/PIX_Facial_Expressions_Official.png": {
+      "sha256": "c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069",
+      "bytes": 519411,
+      "width": 1536,
+      "height": 1152
+    },
+    "assets/character-references/UrFavXBF_FullBody_Official.png": {
+      "sha256": "b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5",
+      "bytes": 242428,
+      "width": 1152,
+      "height": 1536
+    }
+  },
+  "validation": {
+    "source_images": "SHA256 exact-match of original uploaded images",
+    "alpha": "NOT_READY: source images are RGB reference boards with backgrounds",
+    "expression_layers": "NOT_READY",
+    "mouth_layers": "NOT_READY",
+    "pix_full_body": "MISSING_ART: must be separately authored to match uploaded official PIX facial sheet"
+  },
+  "runtime_paths": {
+    "urfavxbf": "characters/canonical/urfavxbf/full-body.png",
+    "pix": "characters/canonical/pix/full-body.png"
+  }
+}
