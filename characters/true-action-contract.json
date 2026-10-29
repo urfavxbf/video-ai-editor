@@ -1,0 +1,131 @@
+{
+  "schema": "video-ai-editor/true-action-sprites/v1",
+  "referenceIdentity": "canonical-2026-10-29",
+  "visualReviewRequired": true,
+  "characters": {
+    "urfavxbf": {
+      "idle": {
+        "frames": 6,
+        "loop": true
+      },
+      "talk": {
+        "frames": 8,
+        "loop": true
+      },
+      "point_camera": {
+        "frames": 8,
+        "loop": false
+      },
+      "point_object": {
+        "frames": 8,
+        "loop": false
+      },
+      "explain": {
+        "frames": 8,
+        "loop": true
+      },
+      "walk": {
+        "frames": 12,
+        "loop": true
+      },
+      "run": {
+        "frames": 10,
+        "loop": true
+      },
+      "jump": {
+        "frames": 8,
+        "loop": false
+      },
+      "laugh": {
+        "frames": 8,
+        "loop": true
+      },
+      "think": {
+        "frames": 6,
+        "loop": true
+      },
+      "surprised": {
+        "frames": 6,
+        "loop": false
+      },
+      "confused": {
+        "frames": 6,
+        "loop": true
+      },
+      "wave": {
+        "frames": 8,
+        "loop": true
+      },
+      "celebrate": {
+        "frames": 8,
+        "loop": false
+      },
+      "listen": {
+        "frames": 6,
+        "loop": true
+      }
+    },
+    "pix": {
+      "idle": {
+        "frames": 6,
+        "loop": true
+      },
+      "talk": {
+        "frames": 8,
+        "loop": true
+      },
+      "assist_point": {
+        "frames": 8,
+        "loop": false
+      },
+      "walk": {
+        "frames": 12,
+        "loop": true
+      },
+      "run": {
+        "frames": 10,
+        "loop": true
+      },
+      "jump": {
+        "frames": 8,
+        "loop": false
+      },
+      "laugh": {
+        "frames": 8,
+        "loop": true
+      },
+      "curious": {
+        "frames": 6,
+        "loop": true
+      },
+      "surprised": {
+        "frames": 6,
+        "loop": false
+      },
+      "confused": {
+        "frames": 6,
+        "loop": true
+      },
+      "wave": {
+        "frames": 8,
+        "loop": true
+      },
+      "celebrate": {
+        "frames": 8,
+        "loop": false
+      },
+      "listen": {
+        "frames": 6,
+        "loop": true
+      },
+      "happy_bounce": {
+        "frames": 8,
+        "loop": true
+      },
+      "sleepy": {
+        "frames": 6,
+        "loop": true
+      }
+    }
+  }
+}
