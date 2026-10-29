@@ -1,0 +1,109 @@
+{
+  "schema": "video-ai-editor/pixel-default-assets/v1",
+  "effectiveDate": "2026-10-29",
+  "selectedAsDefaultByOwner": true,
+  "referenceArt": "Owner-selected Oct 29 pixel style sheets (50984 PIX, 50985 UrFavXBF)",
+  "originalArt": "10 separately generated PNG poses, never crops from the reference sheet",
+  "productionTechnique": "cinematic 2.5D + static/pose-swapped pixel characters + brief glitch at scene transitions",
+  "imageProcessing": "use original 1254x1254 RGBA images; image-rendering:pixelated; nearest-neighbor if resized",
+  "assetDelivery": {
+    "archive": "UrFavXBF_PIX_Official_10_Poses.zip",
+    "assetsCommitted": false,
+    "assetReady": false,
+    "missingAssetPolicy": "hard-block production, no legacy fallback"
+  },
+  "characters": {
+    "urfavxbf": {
+      "defaultPose": "idle",
+      "poses": {
+        "idle": {
+          "path": "public/characters/pixel-default/urfavxbf/idle.png",
+          "sha256": "864097c7b03db19610f172259e04cf1ea7e6c089529c82fdb5b183818a9762d3",
+          "bytes": 708034,
+          "source": "neon_green_gamer_chibi_sprite.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "talk": {
+          "path": "public/characters/pixel-default/urfavxbf/talk.png",
+          "sha256": "0449ca47dec807e634be9bb7085fbaad4d1d0f60c11ca482cf8a16c088fdac33",
+          "bytes": 864237,
+          "source": "neon_green_chibi_gamer_sprite.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "point_camera": {
+          "path": "public/characters/pixel-default/urfavxbf/point_camera.png",
+          "sha256": "eec2598fe2663953a0e631547f2423d66d4b68480b087b71e5d8118c4086145d",
+          "bytes": 923732,
+          "source": "neon_green_pointing_gamer_sprite.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "point_side": {
+          "path": "public/characters/pixel-default/urfavxbf/point_side.png",
+          "sha256": "91aefec80c54717b5729fb4f0953be4766261deebc25545035228a5ada5a5e75",
+          "bytes": 801941,
+          "source": "neon_gamer_chibi_pointing_right.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "happy": {
+          "path": "public/characters/pixel-default/urfavxbf/happy.png",
+          "sha256": "6a7ae94df79281988fe81ee22212d43b172e1175057b52cbb1ec85b7a4a728d2",
+          "bytes": 889985,
+          "source": "celebratory_neon_green_gamer_sprite.png",
+          "width": 1254,
+          "height": 1254
+        }
+      }
+    },
+    "pix": {
+      "defaultPose": "idle",
+      "poses": {
+        "idle": {
+          "path": "public/characters/pixel-default/pix/idle.png",
+          "sha256": "fb21354b3806139efc5ca2df3887f9ed52d0ca122edee291207776b1a6761cf6",
+          "bytes": 1101811,
+          "source": "cyber_cat_headphones_sprite.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "curious": {
+          "path": "public/characters/pixel-default/pix/curious.png",
+          "sha256": "9f937fa46cb46e6b0d3d97fb6fceed01a5ed52a61443f440b87919a870cfee94",
+          "bytes": 1130214,
+          "source": "curious_cyberpunk_cat_sprite.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "talk": {
+          "path": "public/characters/pixel-default/pix/talk.png",
+          "sha256": "39a6efc251eb7ca5c3f443d44aa8f706dfe5b3edbc0c5ea2f4ef95a7c8e34197",
+          "bytes": 1160572,
+          "source": "neon_cyberpunk_cat_mascot.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "point": {
+          "path": "public/characters/pixel-default/pix/point.png",
+          "sha256": "aa2a44e3408badc73638d01c98e8fa74cedc0e5728cda8f230fd24fe55c8fe3e",
+          "bytes": 1115722,
+          "source": "neon_cyber_kitten_pointing.png",
+          "width": 1254,
+          "height": 1254
+        },
+        "happy": {
+          "path": "public/characters/pixel-default/pix/happy.png",
+          "sha256": "b3ed3e48537da65a8e885172cc6b49682d54aaceed1acf8dba0c71c5eeb6ff82",
+          "bytes": 1044513,
+          "source": "neon_chibi_cat_mascot_sprite.png",
+          "width": 1254,
+          "height": 1254
+        }
+      }
+    }
+  },
+  "englishVoicesUnchanged": true,
+  "paidServicesRequired": false
+}
