@@ -7,7 +7,7 @@ import {canonicalArtworkApproved} from './CanonicalCharacterAssets';
 
 /**
  * Reusable 16:9 character-first workbench.
- * No fake narration or substituted characters; real official sprites must be staged.
+ * No fake narration or substituted characters; uses the verified default PNGs\n * already committed to main. Legacy test scenes remain separate.
  */
 export type HeroStageAsset = {assetPath: string; layeredRig?: LayeredPuppetRig};
 export type HeroStageProps = {
@@ -113,7 +113,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
     </>:<div style={{position:'absolute',bottom:210,left:80,right:80,
       padding:20,textAlign:'center',border:'1px dashed #60728e',borderRadius:12,
       background:'#0d1a2b',fontSize:21}}>
-      OWNER-SELECTED PIXEL POSES — stage all 10 verified RGBA PNG files before production rendering.
+      OWNER-SELECTED PIXEL POSES MISSING — verify all 13 transparent PNGs, no legacy fallback.
     </div>}
     <IdentityCard id="urfavxbf" energy={host.speakingEnergy}
       speaking={host.isSpeaking} frame={frame}/>

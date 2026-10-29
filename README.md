@@ -1,4 +1,5 @@
-> **Default character direction (2026-10-29):** UrFavXBF and PIX use 10 independently generated, user-selected high-resolution pixel PNG poses, with no legacy artwork fallback. The new [runtime pose selector](src/characters/PixelPoseCharacter.tsx) is wired to the 16:9 Hero Character Stage. [Asset hashes and staging instructions](docs/PIXEL_DEFAULT_CHARACTERS_2026-10-29.md). The ZIP has been delivered in chat; binary assets still need to be committed before the production-ready gate can be enabled.
+> **Official active character defaults (2026-10-29):** The 13 verified, independently generated pixel-art PNG poses of UrFavXBF (6) and PIX (7) are **committed to `main`**, including `?` and `!` reactions. New UrFavXBF × PIX videos default to `HeroCharacterStage` with the approved pixel pose assets **enabled out of the box**; `PixelProductionProof` also renders without manual props. Cinematic 2.5D scenes, short glitch transitions, no substitute/rejected art, and existing English Chatterbox voices. Older review/demo compositions are historical tools only, not the default for new episodes. [Asset manifest](characters/pixel-default-manifest.json) · [Production notes](docs/PIXEL_DEFAULT_CHARACTERS_2026-10-29.md).
+
 
 # Video AI Editor
 
