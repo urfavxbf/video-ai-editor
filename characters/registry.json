@@ -4,7 +4,7 @@
   "production_language": "en",
   "main_character": "urfavxbf",
   "companion_character": "pix",
-  "assets_location": "public/characters/pixel-default/ (the independent PNGs are provided in verified ZIP pending GitHub binary staging)",
+  "assets_location": "public/characters/pixel-default/ (13 verified original images)",
   "approved_on": "2026-10-29",
   "characters": {
     "urfavxbf": {
@@ -117,7 +117,7 @@
     "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending.",
     "character_motion": "13 pose-selectable pixel characters, speaker/reaction-aware; no false lip-sync; glitch at scene boundaries",
     "character_system": "src/characters/PixelPoseCharacter.tsx + src/characters/HeroPerformance.ts",
-    "visual_asset_status": "13 independent owner-selected pixel PNGs exported; GitHub binaries pending installation/verification; production not yet approved",
+    "visual_asset_status": "13 owner-selected pixel PNG binaries present and SHA-256 verified; independent voice sync still episode-specific",
     "character_art_fallback": "DISABLED (rejected 3D/old 2D never substituted)",
     "full_body_rendering_default": true
   },
@@ -135,8 +135,8 @@
     "reference_manifest": "characters/pixel-default-manifest.json",
     "voice_profiles_unchanged": true,
     "no_legacy_visual_fallback": true,
-    "runtime_assets_ready": false,
-    "next_art_step": "Stage all 13 owner-selected original RGBA PNGs, verify SHA256 and render PixelProductionProof before marking assetsReady",
+    "runtime_assets_ready": true,
+    "next_art_step": "Assets validated; integrate real English Chatterbox audio and align dialogue in long-form episodes.",
     "default_layout": "pixel-chibi-poses-2p5d-stage",
     "frameByFrameActionContract": "characters/true-action-contract.json",
     "productionAnimationMethod": "pose-swaps-plus-glitch-transitions",

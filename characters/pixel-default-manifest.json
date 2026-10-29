@@ -8,9 +8,10 @@
   "imageProcessing": "use original 1254x1254 RGBA images; image-rendering:pixelated; nearest-neighbor if resized",
   "assetDelivery": {
     "archive": "UrFavXBF_PIX_13_Pose_Production_Pack.zip",
-    "assetsCommitted": false,
-    "assetReady": false,
-    "missingAssetPolicy": "strict; no fallback to legacy, rejected, or generated placeholder art"
+    "assetsCommitted": true,
+    "assetReady": true,
+    "missingAssetPolicy": "strict; no fallback to legacy, rejected, or generated placeholder art",
+    "assetInstallation": "all 13 original full-resolution PNG images verified in GitHub working tree"
   },
   "characters": {
     "urfavxbf": {
