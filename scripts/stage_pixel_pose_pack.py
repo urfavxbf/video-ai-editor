@@ -11,7 +11,7 @@ import sys
 import tempfile
 from pathlib import Path
 from zipfile import ZipFile, BadZipFile
-from PIL import Image, ImageChops
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC_PATH = ROOT / "characters" / "pixel-pose-style-lock.json"
@@ -46,7 +46,7 @@ def validated_assets(zip_path: Path, manifest_path: Path=SPEC_PATH):
                 if hashlib.sha256(payloads[1]).hexdigest() != expected_sha:
                     raise ValueError(f"SHA256 mismatch: {who}/{pose}")
                 upcheck = native.resize((1024, 1024), Image.Resampling.NEAREST)
-                if ImageChops.difference(upcheck, upscaled).getbbox():
+                if upcheck.tobytes() != upscaled.tobytes():
                     raise ValueError(f"Upscale is not nearest-neighbor pixel-perfect: {who}/{pose}")
                 items.append((who, pose, payloads))
     if len(items) != 10:
