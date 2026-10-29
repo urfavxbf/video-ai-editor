@@ -34,9 +34,9 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(v["character_layout"], "canonical-chibi-full-body-animated")
         self.assertTrue(v["legacy_portrait_demos_not_default"])
         self.assertTrue(v["full_body_rendering_default"])
-        self.assertEqual(self.data["character_hero_system"]["version"], "canonical-chibi-2026-10-29")
+        self.assertEqual(self.data["character_hero_system"]["version"], "procedural-3d-v1")
         self.assertTrue(self.data["character_hero_system"]["no_legacy_visual_fallback"])
-        self.assertFalse(self.data["character_hero_system"]["runtime_assets_ready"])
+        self.assertTrue(self.data["character_hero_system"]["runtime_assets_ready"])
 
     def test_enlarged_head_portraits_and_asset_provenance_unchanged(self):
         v = self.data["default_video"]
@@ -44,12 +44,14 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual((p["width"], p["height"]), (414, 468))
         self.assertEqual((p["left"], p["right"], p["top"]), (64, 64, 202))
         a = self.data["characters"]
-        self.assertNotEqual(a["urfavxbf"]["visual"]["sha256"], a["pix"]["visual"]["sha256"])
+        self.assertNotEqual(a["urfavxbf"]["visual"]["reference_source_sha256"], a["pix"]["visual"]["reference_source_sha256"])
         for c in a.values():
             visual = c["visual"]
-            self.assertEqual(len(visual["sha256"]), 64)
-            self.assertTrue(visual["public_path"].startswith("public/characters/canonical/"))
-            self.assertFalse(visual["production_rig_ready"])
+            self.assertEqual(len(visual["reference_source_sha256"]), 64)
+            self.assertTrue(visual["model_path"].startswith("public/characters/3d/"))
+            self.assertEqual(visual["model_format"], "gltf-2.0-embedded")
+            self.assertTrue(visual["production_rig_ready"])
+            self.assertNotIn("public_path", visual)
         self.assertIsNone(a["pix"]["visual"]["official_full_body_reference"])
 
     def test_tagalog_profiles_and_legacy_english_voices(self):

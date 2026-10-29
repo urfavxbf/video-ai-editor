@@ -12,15 +12,31 @@
       "role": "primary-on-screen-host",
       "persona": "Versatile thinker and creator covering wisdom, science, mathematics, internet culture, AI and video editing; never science-only",
       "visual": {
-        "kind": "canonical-chibi-anime-host",
+        "kind": "original-procedural-3d-chibi-host",
         "style": "black tousled hair with neon-green highlights, emerald-green eyes, green X headphones, dark-green cyber hoodie; separate full-body open-palms reference",
         "official_face_reference": "assets/character-references/UrFavXBF_Facial_Expressions_Official.png",
         "official_face_reference_sha256": "a803b78adaa0ef8f3ee8f427ca83a0c65a9f90ea8ed87e8487cae36efa1dac99",
         "official_full_body_reference": "assets/character-references/UrFavXBF_FullBody_Official.png",
         "official_full_body_reference_sha256": "b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5",
-        "public_path": "public/characters/canonical/urfavxbf/full-body.png",
-        "sha256": "b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5",
-        "production_rig_ready": false
+        "production_rig_ready": true,
+        "reference_source_sha256": "b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5",
+        "model_path": "public/characters/3d/urfavxbf.gltf",
+        "model_format": "gltf-2.0-embedded",
+        "model_generator": "scripts/build-3d-models.mjs",
+        "rig_type": "hierarchical-rigid-body-joints",
+        "available_animation_clips": [
+          "idle",
+          "walk",
+          "run",
+          "point_camera",
+          "point_object",
+          "talk",
+          "laugh",
+          "jump",
+          "explain",
+          "wave"
+        ],
+        "visual_match_status": "description-aligned-first-pass; requires owner visual review against canonical source images"
       },
       "voice": {
         "engine": "voxcpm2",
@@ -51,15 +67,31 @@
       "role": "talking-ai-pet-sidekick",
       "persona": "Inquisitive, cute, clever and playful AI companion who interacts with UrFavXBF in natural Tagalog/Taglish dialogue",
       "visual": {
-        "kind": "canonical-chibi-cyber-cat",
+        "kind": "original-procedural-3d-cyber-cat",
         "style": "cyan/light-blue fluffy chibi cyber cat, pink inner ears, purple/pink accents, expressive blue-purple eyes, neon circular headphones/collar",
         "official_face_reference": "assets/character-references/PIX_Facial_Expressions_Official.png",
         "official_face_reference_sha256": "c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069",
         "official_full_body_reference": null,
         "official_full_body_reference_sha256": null,
-        "public_path": "public/characters/canonical/pix/full-body.png",
-        "sha256": "c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069",
-        "production_rig_ready": false
+        "production_rig_ready": true,
+        "reference_source_sha256": "c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069",
+        "model_path": "public/characters/3d/pix.gltf",
+        "model_format": "gltf-2.0-embedded",
+        "model_generator": "scripts/build-3d-models.mjs",
+        "rig_type": "hierarchical-rigid-body-joints",
+        "available_animation_clips": [
+          "idle",
+          "walk",
+          "talk",
+          "laugh",
+          "jump",
+          "pounce",
+          "tail_wag",
+          "curious",
+          "assist_point",
+          "wave"
+        ],
+        "visual_match_status": "description-aligned-first-pass; requires owner visual review against canonical source images"
       },
       "voice": {
         "engine": "voxcpm2",
@@ -111,9 +143,9 @@
     "caption_language": "en",
     "metadata_language": "en",
     "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending.",
-    "character_motion": "speaker-aware timing preserved; new models require verified aligned RGBA layers, no legacy fallback",
-    "character_system": "src/characters/HeroPerformance.ts; src/characters/CanonicalCharacterAssets.ts",
-    "visual_asset_status": "independent action-frame system available; canonical source art and final cycles still incomplete",
+    "character_motion": "glTF articulated node animation clips; voice tracks unchanged; runtime integration pending",
+    "character_system": "public/characters/3d/urfavxbf.gltf + public/characters/3d/pix.gltf",
+    "visual_asset_status": "both 3D glTF files committed; character identity match and full video render not yet approved",
     "character_art_fallback": "DISABLED; never render V2/older rejected artworks",
     "full_body_rendering_default": true
   },
@@ -122,7 +154,7 @@
     "en"
   ],
   "character_hero_system": {
-    "version": "canonical-chibi-2026-10-29",
+    "version": "procedural-3d-v1",
     "protagonists": [
       "urfavxbf",
       "pix"
@@ -131,14 +163,17 @@
     "reference_manifest": "characters/canonical-references.json",
     "voice_profiles_unchanged": true,
     "no_legacy_visual_fallback": true,
-    "runtime_assets_ready": false,
-    "next_art_step": "Produce and visually validate independently drawn full-body frames for all actions; old cutout poses are drafts, not production actions.",
+    "runtime_assets_ready": true,
+    "next_art_step": "Review first-pass geometric models against the official uploads; refine shape and facial detail before marking production-approved.",
     "default_layout": "full-body-two-character-hero-stage",
     "frameByFrameActionContract": "characters/true-action-contract.json",
     "productionAnimationMethod": "independent-full-body-frame-sequences",
     "forbid2p5dAsProductionArt": true,
     "maximumExternalSpriteSpendUsd": 0,
-    "actionRuntime": "src/characters/TrueFrameActionSprite.tsx"
+    "actionRuntime": "glTF animation channels; Remotion import/preview integration pending",
+    "modelFormat": "gltf-2.0",
+    "modelGenerator": "scripts/build-3d-models.mjs",
+    "legacy_models_retired_from_active_selection": true
   },
   "canonical_visual_version": "urfavxbf-pix-2026-10-29"
 }
