@@ -20,7 +20,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(d["main_character"], "urfavxbf")
         self.assertEqual(d["companion_character"], "pix")
         self.assertEqual(set(d["characters"]), {"urfavxbf", "pix"})
-        self.assertEqual(d["production_language"], "tl")
+        self.assertEqual(d["production_language"], "en")
         self.assertEqual(d["supported_production_languages"], ["tl", "en"])
 
     def test_longform_landscape_delivery_default(self):
@@ -28,9 +28,9 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(v["type"], "long-form-youtube")
         self.assertEqual(v["aspect_ratio"], "16:9")
         self.assertEqual((v["width"], v["height"], v["fps"]), (1920, 1080, 30))
-        self.assertEqual(v["language"], "tl")
+        self.assertEqual(v["language"], "en")
         for field in ("script_language", "caption_language", "metadata_language"):
-            self.assertEqual(v[field], "tl")
+            self.assertEqual(v[field], "en")
         self.assertEqual(v["character_layout"], "canonical-chibi-full-body-animated")
         self.assertTrue(v["legacy_portrait_demos_not_default"])
         self.assertTrue(v["full_body_rendering_default"])
