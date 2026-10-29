@@ -22,3 +22,6 @@ The code and manifest are installed by this PR; **until the image binaries are c
 
 
 For browser-based one-ZIP asset installation, see [import instructions](../assets/import/README.md). A dedicated GitHub Actions workflow will verify and commit every source PNG automatically after it receives the actual archive; the code-only PR remains blocked before that step.
+
+## Production default (active on main)
+All 13 original PNGs were installed by [the verified GitHub Actions import workflow](https://github.com/urfavxbf/video-ai-editor/actions/runs/40845188627) and merged to `main` in PR #45. No manual ZIP upload is needed. The production `HeroCharacterStage` and proof `PixelProductionProof` are now registered in `src/Root.tsx` with `assetsReady:true` (and `artApproved:true` for the host stage), so standard renders display the official sprites **without extra props**. The registry's `default_video.default_character_composition` points to `HeroCharacterStage` for future UrFavXBF × PIX episodes. Old experimental compositions are retained for archive/review only; never auto-select legacy character art. This enables character artwork, **not automatic voice synchronization or an entire finished episode**.

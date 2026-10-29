@@ -119,7 +119,11 @@
     "character_system": "src/characters/PixelPoseCharacter.tsx + src/characters/HeroPerformance.ts",
     "visual_asset_status": "13 owner-selected pixel PNG binaries present and SHA-256 verified; independent voice sync still episode-specific",
     "character_art_fallback": "DISABLED (rejected 3D/old 2D never substituted)",
-    "full_body_rendering_default": true
+    "full_body_rendering_default": true,
+    "default_character_composition": "HeroCharacterStage",
+    "character_asset_manifest": "characters/pixel-default-manifest.json",
+    "new_episodes_use_canonical_pixel_characters": true,
+    "legacy_review_compositions_excluded_from_default": true
   },
   "supported_production_languages": [
     "tl",
@@ -142,7 +146,13 @@
     "productionAnimationMethod": "pose-swaps-plus-glitch-transitions",
     "forbid2p5dAsProductionArt": false,
     "maximumExternalSpriteSpendUsd": 0,
-    "actionRuntime": "src/characters/PixelPoseCharacter.tsx; src/characters/PixelProductionProof.tsx"
+    "actionRuntime": "src/characters/PixelPoseCharacter.tsx; src/characters/PixelProductionProof.tsx",
+    "default_composition": "HeroCharacterStage",
+    "default_render_props": {
+      "assetsReady": true,
+      "artApproved": true
+    },
+    "current_default_assets_commit": "5b0f9813d333dfe43811d90c60cf602674efff53"
   },
   "canonical_visual_version": "urfavxbf-pix-pixel-default-2026-10-29"
 }

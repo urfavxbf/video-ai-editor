@@ -27,7 +27,7 @@ const spec = edit as EditSpec
 export const Root = () => <>
   <Composition id="PixelProductionProof" component={PixelProductionProof}
     width={1920} height={1080} fps={30} durationInFrames={PIXEL_PROOF_FRAMES}
-    defaultProps={{assetsReady:false} satisfies PixelProductionProofProps} />
+    defaultProps={{assetsReady:true} satisfies PixelProductionProofProps} />
   <Composition id="TrueFrameReviewStage" component={TrueFrameReviewStage}
     width={1920} height={1080} fps={30} durationInFrames={240}
     defaultProps={{assetsReady:false,artApproved:false,urfavxbfAction:'point_camera',
@@ -37,7 +37,7 @@ export const Root = () => <>
     defaultProps={{assetsReady:false,artApproved:false} satisfies CanonicalFullBodyReviewProps} />
   <Composition id="HeroCharacterStage" component={HeroCharacterStage} width={1920} height={1080} fps={30}
     durationInFrames={HERO_STAGE_DURATION}
-    defaultProps={{assetsReady:false,artApproved:false,voiceEvents:[],chapter:1} satisfies HeroStageProps} />
+    defaultProps={{assetsReady:true,artApproved:true,voiceEvents:[],chapter:1} satisfies HeroStageProps} />
   <Composition id="V4FacialReviewStage" component={V4FacialReviewStage} width={1920} height={1080} fps={30}
     durationInFrames={V4_FACIAL_REVIEW_FRAMES}
     defaultProps={{assetsReady:false,artApproved:false} satisfies V4FacialReviewProps} />
