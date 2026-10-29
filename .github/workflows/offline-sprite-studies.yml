@@ -1,0 +1,87 @@
+name: Zero-cost whole-body sprite study build (NOT production)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/generate_zero_budget_sprite_studies.py"
+      - ".github/workflows/offline-sprite-studies.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/generate_zero_budget_sprite_studies.py"
+      - ".github/workflows/offline-sprite-studies.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  offline-study:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Free CPU-only image dependency
+        run: python -m pip install Pillow==11.3.0
+      - name: Repaint all 230 prototype frames locally with no model/API calls
+        env:
+          ZERO_BUDGET_OUT: out/offline-sprite-study
+        run: python scripts/generate_zero_budget_sprite_studies.py
+      - name: Fail if action coverage, alpha or SHA-256 is invalid
+        run: |
+          python - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          from PIL import Image
+          root=Path("out/offline-sprite-study/source-frames")
+          contract=json.loads(Path("characters/true-action-contract.json").read_text())["characters"]
+          total=0
+          for who,actions in contract.items():
+            for action,info in actions.items():
+              target=root/who/action
+              manifest=json.loads((target/"manifest.json").read_text())
+              files=sorted(target.glob("[0-9][0-9][0-9].png"))
+              assert len(files)==info["frames"]==manifest["frameCount"],(who,action)
+              assert manifest["artApproved"] is False and manifest["motionReviewed"] is False
+              raw_hashes=[]
+              for i,path in enumerate(files):
+                assert path.name==f"{i:03d}.png"
+                raw_hash=hashlib.sha256(path.read_bytes()).hexdigest()
+                assert raw_hash==manifest["frames"][i]["sha256"]
+                with Image.open(path) as im:
+                  assert im.mode=="RGBA" and im.size==(512,512)
+                  alpha=im.getchannel("A")
+                  assert alpha.getbbox() is not None and alpha.getextrema()[0]<255
+                  assert all(alpha.getpixel(p)==0 for p in ((0,0),(511,0),(0,511),(511,511)))
+                  raw_hashes.append(hashlib.sha256(im.tobytes()).hexdigest())
+              assert len(raw_hashes)==len(set(raw_hashes)),f"Duplicate whole-drawing images {who}/{action}"
+              total+=len(files)
+          assert total==230,total
+          print(f"PASS: {total} distinct prototype-frame PNGs; all 30 actions complete at draft level")
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Prepare draft-only Remotion action preview
+        run: |
+          npm ci --no-audit --no-fund
+          mkdir -p public/characters/true-action
+          cp -R out/offline-sprite-study/source-frames/urfavxbf public/characters/true-action/
+          cp -R out/offline-sprite-study/source-frames/pix public/characters/true-action/
+      - name: Render distinct sprite-frame motion preview (DRAFT watermark)
+        run: |
+          npx remotion render TrueFrameReviewStage out/offline-draft-point-camera.mp4 --codec=h264 --crf=26 --props='{"assetsReady":true,"artApproved":false,"urfavxbfAction":"point_camera","pixAction":"assist_point","hostFrames":8,"pixFrames":8}'
+          test -s out/offline-draft-point-camera.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zero-budget-230-true-frame-technical-studies-NOT-APPROVED
+          path: |
+            out/UrFavXBF_PIX_ZeroBudget_Vector_Frame_Studies.zip
+            out/offline-draft-point-camera.mp4
+            out/offline-sprite-study/STATUS.json
+          retention-days: 30
+          if-no-files-found: error
