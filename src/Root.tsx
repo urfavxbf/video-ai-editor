@@ -13,11 +13,27 @@ import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
 import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characters/CharacterAnimationLab'
 import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
+import {HeroCharacterStage, HERO_STAGE_DURATION, type HeroStageProps} from './characters/HeroCharacterStage'
+import {V4FacialReviewStage, V4_FACIAL_REVIEW_FRAMES, type V4FacialReviewProps} from './characters/V4FacialReviewStage'
+import {ChibiV4ReviewStage, CHIBI_V4_REVIEW_DURATION, type ChibiV4ReviewProps} from './characters/ChibiV4ReviewStage'
+import {ImportedSpriteAnimation, type ImportedSpriteAnimationProps} from './characters/ImportedSpriteAnimation'
 import './fonts'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="HeroCharacterStage" component={HeroCharacterStage} width={1920} height={1080} fps={30}
+    durationInFrames={HERO_STAGE_DURATION}
+    defaultProps={{assetsReady:false,artApproved:false,voiceEvents:[],chapter:1} satisfies HeroStageProps} />
+  <Composition id="V4FacialReviewStage" component={V4FacialReviewStage} width={1920} height={1080} fps={30}
+    durationInFrames={V4_FACIAL_REVIEW_FRAMES}
+    defaultProps={{assetsReady:false,artApproved:false} satisfies V4FacialReviewProps} />
+  <Composition id="ChibiV4ReviewStage" component={ChibiV4ReviewStage} width={1920} height={1080} fps={30}
+    durationInFrames={CHIBI_V4_REVIEW_DURATION}
+    defaultProps={{assetsReady:false} satisfies ChibiV4ReviewProps} />
+  <Composition id="ImportedSpriteAnimationReview" component={ImportedSpriteAnimation} width={1920} height={1080} fps={30}
+    durationInFrames={240}
+    defaultProps={{character:'urfavxbf',action:'idle_normal',durationsMs:[125],loop:true,assetsReady:false} satisfies ImportedSpriteAnimationProps} />
   <Composition id="Y2038Teaser" component={Y2038Teaser} width={1920} height={1080} fps={30} durationInFrames={720}
     defaultProps={{assetsReady: false} satisfies Y2038TeaserProps} />
   <Composition id="PixelPortraitHUD" component={PixelPortraitHUD}
