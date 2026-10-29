@@ -10,8 +10,11 @@ class PixelDefaultTests(unittest.TestCase):
         m=json.loads((ROOT/"characters/pixel-default-manifest.json").read_text())
         self.assertEqual(reg["character_hero_system"]["version"],"pixel-pose-default-2026-10-29")
         self.assertTrue(m["selectedAsDefaultByOwner"])
-        self.assertFalse(m["assetDelivery"]["assetReady"])
-        self.assertFalse(m["assetDelivery"]["assetsCommitted"])
+        self.assertEqual(m["assetDelivery"]["assetReady"],m["assetDelivery"]["assetsCommitted"])
+        if m["assetDelivery"]["assetReady"]:
+            for character in m["characters"].values():
+                for pose in character["poses"].values():
+                    self.assertTrue((ROOT/pose["path"]).is_file())
         self.assertEqual(set(m["characters"]),{"urfavxbf","pix"})
         self.assertEqual({c:len(x["poses"]) for c,x in m["characters"].items()},{"urfavxbf":6,"pix":7})
         self.assertIn("surprised",m["characters"]["urfavxbf"]["poses"])

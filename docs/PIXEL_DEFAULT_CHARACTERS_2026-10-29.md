@@ -19,3 +19,6 @@ To stage, download the ZIP and run `python scripts/stage_pixel_default_pack.py /
 A new `PixelProductionProof` Remotion 1920×1080/30 fps composition uses actual original PNGs, text motion and a deliberately short RGB/slice effect at each 3-second scene boundary. Once source images are staged, validate via `python scripts/stage_pixel_default_pack.py --verify-workspace`, then `npx remotion render PixelProductionProof out/pixel-proof.mp4 --props='{"assetsReady":true}'`. It throws when `assetsReady` is false. This demo has no fake narration or lip-sync. Headphones, proportions and colors are inherited from the exact standalone owner-selected 1254px PNGs. Review before long-form video use.
 
 The code and manifest are installed by this PR; **until the image binaries are checked into the GitHub branch, the remote version remains production-blocked, despite normal CI showing green**.
+
+
+For browser-based one-ZIP asset installation, see [import instructions](../assets/import/README.md). A dedicated GitHub Actions workflow will verify and commit every source PNG automatically after it receives the actual archive; the code-only PR remains blocked before that step.

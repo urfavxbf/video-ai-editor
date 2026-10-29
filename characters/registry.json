@@ -22,7 +22,7 @@
         "sha256": "864097c7b03db19610f172259e04cf1ea7e6c089529c82fdb5b183818a9762d3",
         "production_rig_ready": false,
         "pose_manifest": "characters/pixel-default-manifest.json",
-        "pose_count": 5
+        "pose_count": 6
       },
       "voice": {
         "engine": "voxcpm2",
@@ -63,7 +63,7 @@
         "sha256": "fb21354b3806139efc5ca2df3887f9ed52d0ca122edee291207776b1a6761cf6",
         "production_rig_ready": false,
         "pose_manifest": "characters/pixel-default-manifest.json",
-        "pose_count": 5
+        "pose_count": 7
       },
       "voice": {
         "engine": "voxcpm2",

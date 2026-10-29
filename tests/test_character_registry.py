@@ -36,7 +36,8 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertTrue(v["full_body_rendering_default"])
         self.assertEqual(self.data["character_hero_system"]["version"], "pixel-pose-default-2026-10-29")
         self.assertTrue(self.data["character_hero_system"]["no_legacy_visual_fallback"])
-        self.assertFalse(self.data["character_hero_system"]["runtime_assets_ready"])
+        self.assertEqual(self.data["character_hero_system"]["runtime_assets_ready"],
+                         json.loads((ROOT / "characters/pixel-default-manifest.json").read_text())["assetDelivery"]["assetReady"])
 
     def test_enlarged_head_portraits_and_asset_provenance_unchanged(self):
         v = self.data["default_video"]
