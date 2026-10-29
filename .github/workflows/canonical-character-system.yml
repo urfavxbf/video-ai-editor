@@ -9,6 +9,7 @@ on:
       - 'scripts/import_sprite_animation.py'
       - 'scripts/stage_canonical_fullbody_pack.py'
       - 'scripts/true_frame_action_pipeline.py'
+      - 'scripts/extract_drawn_pose_grid.py'
       - 'scripts/validate_chibi_v4_*.py'
       - 'scripts/validate_v4_facial_assets.py'
       - 'tests/test_character_registry.py'
@@ -16,6 +17,7 @@ on:
       - 'tests/test_import_sprite_animation.py'
       - 'tests/test_stage_canonical_fullbody_pack.py'
       - 'tests/test_true_frame_action_pipeline.py'
+      - 'tests/test_extract_drawn_pose_grid.py'
       - 'tests/test_v4_facial_system.py'
       - '.github/workflows/canonical-character-system.yml'
   push:
@@ -55,6 +57,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
           python -m unittest discover -s tests -p 'test_stage_canonical_fullbody_pack.py' -v
           python -m unittest discover -s tests -p 'test_true_frame_action_pipeline.py' -v
+          python -m unittest discover -s tests -p 'test_extract_drawn_pose_grid.py' -v
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
