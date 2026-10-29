@@ -12,6 +12,9 @@ on:
       - 'scripts/extract_drawn_pose_grid.py'
       - 'scripts/validate_chibi_v4_*.py'
       - 'scripts/validate_v4_facial_assets.py'
+      - 'tests/test_pixel_pose_style_lock.py'
+      - 'scripts/stage_pixel_pose_pack.py'
+      - 'docs/PIXEL_POSE_STYLE_LOCK_2026-10-29.md'
       - 'tests/test_character_registry.py'
       - 'tests/test_chibi_v4_*.py'
       - 'tests/test_import_sprite_animation.py'
@@ -52,6 +55,7 @@ jobs:
       - name: Validate canonical registry, chibi sources, facial contract and sprite imports
         run: |
           python -m unittest discover -s tests -p 'test_character_registry.py' -v
+          python -m unittest discover -s tests -p 'test_pixel_pose_style_lock.py' -v
           python -m unittest discover -s tests -p 'test_chibi_v4_*.py' -v
           python -m unittest discover -s tests -p 'test_v4_facial_system.py' -v
           python -m unittest discover -s tests -p 'test_import_sprite_animation.py' -v
