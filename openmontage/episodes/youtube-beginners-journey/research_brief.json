@@ -1,0 +1,278 @@
+{
+  "version": "1.0",
+  "topic": "YouTube Beginner's Journey: how someone starts, improves, and eventually becomes eligible to earn from original videos",
+  "research_date": "2026-10-29",
+  "landscape": {
+    "existing_content": [
+      {
+        "title": "Get Started on YouTube",
+        "url": "https://www.youtube.com/watch?v=qlzSMFWs0xQ",
+        "source": "YouTube Creators (official video)",
+        "angle": "channel setup tutorial",
+        "what_it_covers": "Setting up and customizing a new channel.",
+        "what_it_misses": "The emotional journey between a first upload, disappointing views, improvement and monetization."
+      },
+      {
+        "title": "YouTube Partner Program overview & eligibility",
+        "url": "https://support.google.com/youtube/answer/72851?hl=en",
+        "source": "YouTube Help (official documentation)",
+        "angle": "eligibility reference",
+        "what_it_covers": "Advertising eligibility and the application/review process.",
+        "what_it_misses": "Concrete creative production steps for a beginner starting with no budget."
+      },
+      {
+        "title": "Get started with YouTube Analytics",
+        "url": "https://support.google.com/youtube/answer/9002587?hl=en",
+        "source": "YouTube Help (official documentation)",
+        "angle": "metric reference",
+        "what_it_covers": "How to find performance insights, reach and engagement.",
+        "what_it_misses": "A beginner's narrative demonstrating how to translate insights into the next episode."
+      }
+    ],
+    "saturated_angles": [
+      "Get rich quickly by uploading AI videos",
+      "Generic how-to-create-a-channel checklists",
+      "Guaranteed algorithm hacks"
+    ],
+    "underserved_gaps": [
+      "An honest beginner journey that connects concept, first upload, low views, feedback and learning.",
+      "A clear distinction between earlier YPP fan-funding access and full ad-revenue requirements.",
+      "A zero-budget workflow that emphasizes original editorial contribution rather than repetitive mass-produced output."
+    ]
+  },
+  "trending": {
+    "recent_developments": [
+      {
+        "headline": "YouTube updated its repetitious-content wording to 'inauthentic content'",
+        "date": "2025-07-15",
+        "url": "https://support.google.com/youtube/answer/1311392?hl=en",
+        "relevance": "Explain why automated production still requires original/authentic editorial decisions."
+      },
+      {
+        "headline": "YouTube Studio began a staged Analytics redesign in July 2026",
+        "date": "2026-07",
+        "url": "https://support.google.com/youtube/answer/9002587?hl=en",
+        "relevance": "Avoid presenting a frozen UI layout as permanent."
+      }
+    ],
+    "active_discussions": [
+      {
+        "platform": "Reddit r/NewTubers",
+        "topic_or_url": "https://www.reddit.com/r/NewTubers/comments/1x5z1u5/anyone_else_spending_hours_on_videos_just_to_get/",
+        "sentiment": "Creators describe investing hours in videos with low early views and ask when recommendations begin."
+      },
+      {
+        "platform": "Reddit r/NewTubers",
+        "topic_or_url": "https://www.reddit.com/r/NewTubers/comments/1vfmq7o/how_many_videos_until_you_were_monetized/",
+        "sentiment": "New creators compare very different numbers of uploads before monetization, highlighting variance."
+      },
+      {
+        "platform": "Reddit r/NewTubers",
+        "topic_or_url": "https://www.reddit.com/r/NewTubers/comments/1vsa85v/how_long_did_it_take_you_to_monetise_your_channel/",
+        "sentiment": "Creators compare how long monetization took; outcomes are anecdotal, not guaranteed."
+      }
+    ],
+    "timeliness_window": "evergreen with policy checks before final script approval"
+  },
+  "data_points": [
+    {
+      "claim": "The expanded YPP entry path in eligible markets requires 500 subscribers, three valid public uploads in the last 90 days, plus either 3,000 qualified public watch hours in 12 months or 3 million qualified Shorts views in 90 days.",
+      "source_url": "https://support.google.com/youtube/answer/13429240?hl=en",
+      "source_name": "YouTube Help",
+      "credibility": "primary_source",
+      "surprise_factor": "notable",
+      "usable_as": "comparison graphic"
+    },
+    {
+      "claim": "Ad-revenue sharing requires 1,000 subscribers plus either 4,000 qualified public watch hours in 12 months or 10 million qualified Shorts views in 90 days.",
+      "source_url": "https://support.google.com/youtube/answer/72851?hl=en",
+      "source_name": "YouTube Help",
+      "credibility": "primary_source",
+      "surprise_factor": "expected",
+      "usable_as": "eligibility graphic"
+    },
+    {
+      "claim": "Qualified Shorts Feed viewing time does not count toward the 4,000 public long-form watch-hours threshold.",
+      "source_url": "https://support.google.com/youtube/answer/72851?hl=en",
+      "source_name": "YouTube Help",
+      "credibility": "primary_source",
+      "surprise_factor": "counterintuitive",
+      "usable_as": "myth-busting scene"
+    },
+    {
+      "claim": "Meeting YouTube Partner Program thresholds does not automatically guarantee approval; the channel undergoes a policy review.",
+      "source_url": "https://support.google.com/youtube/answer/72851?hl=en",
+      "source_name": "YouTube Help",
+      "credibility": "primary_source",
+      "surprise_factor": "notable",
+      "usable_as": "script anchor"
+    },
+    {
+      "claim": "YouTube Studio Analytics includes impressions CTR, views, watch time, average view duration and audience engagement reports.",
+      "source_url": "https://support.google.com/youtube/answer/9002587?hl=en",
+      "source_name": "YouTube Help",
+      "credibility": "primary_source",
+      "surprise_factor": "expected",
+      "usable_as": "data HUD illustration"
+    },
+    {
+      "claim": "YouTube's July 2025 policy language explicitly calls out mass-produced or repetitive inauthentic content as ineligible for monetization.",
+      "source_url": "https://support.google.com/youtube/answer/1311392?hl=en",
+      "source_name": "YouTube Help",
+      "credibility": "primary_source",
+      "surprise_factor": "notable",
+      "usable_as": "editorial integrity beat"
+    }
+  ],
+  "audience_insights": {
+    "common_questions": [
+      "Why can a new creator spend hours on a video and still receive few views? (r/NewTubers October 2026)",
+      "How many videos does it usually take to reach monetization? (r/NewTubers August 2026)",
+      "How much time does a new channel take to qualify for monetization, and what mistakes should be avoided? (r/NewTubers August 2026)"
+    ],
+    "misconceptions": [
+      {
+        "myth": "One successful first video is guaranteed if you choose the right niche.",
+        "reality": "Individual success stories vary widely; there is no guaranteed video count or timeline.",
+        "source": "https://www.reddit.com/r/NewTubers/comments/1vfmq7o/how_many_videos_until_you_were_monetized/"
+      },
+      {
+        "myth": "500 subscribers automatically unlock all ad revenue.",
+        "reality": "Expanded YPP threshold grants access to some features; ad sharing has a higher qualification threshold.",
+        "source": "https://support.google.com/youtube/answer/13429240?hl=en"
+      },
+      {
+        "myth": "A monetization threshold guarantees acceptance.",
+        "reality": "Every eligible application is reviewed against channel monetization policy.",
+        "source": "https://support.google.com/youtube/answer/72851?hl=en"
+      },
+      {
+        "myth": "Any automated upload is fine as long as it gets views.",
+        "reality": "YouTube expects original/authentic contribution and restricts mass-produced or repetitive inauthentic content.",
+        "source": "https://support.google.com/youtube/answer/1311392?hl=en"
+      }
+    ],
+    "knowledge_level": "Absolute beginners who have watched creator tutorials and heard monetization claims but may not know the distinction between impressions, retention and revenue eligibility.",
+    "pain_points": [
+      "Slow early traction despite significant editing effort",
+      "Confusing platform eligibility terms",
+      "Uncertainty about video topics and consistency",
+      "No budget for premium creative software"
+    ]
+  },
+  "angles_discovered": [
+    {
+      "name": "The First Upload Nobody Watched",
+      "hook": "What if your first video gets almost no views—and that's where the real journey begins?",
+      "type": "narrative",
+      "why_now": "Recent NewTubers accounts show emotionally familiar low-view starts; official Analytics tools provide concrete learning loops.",
+      "grounded_in": [
+        "https://www.reddit.com/r/NewTubers/comments/1x5z1u5/anyone_else_spending_hours_on_videos_just_to_get/",
+        "https://support.google.com/youtube/answer/9002587?hl=en"
+      ]
+    },
+    {
+      "name": "The Monetization Milestones Explained Honestly",
+      "hook": "Five hundred subscribers doesn't mean you're earning ad revenue. Here's what really changes.",
+      "type": "data_driven",
+      "why_now": "Official threshold distinctions are easy to confuse and matter to beginners.",
+      "grounded_in": [
+        "https://support.google.com/youtube/answer/13429240?hl=en",
+        "https://support.google.com/youtube/answer/72851?hl=en"
+      ]
+    },
+    {
+      "name": "Can An Original Video Be Made For Free",
+      "hook": "No studio, no paid AI credits—can we still make a watchable YouTube episode?",
+      "type": "contrarian",
+      "why_now": "Inauthentic-content rules highlight original editorial work, while beginner forums describe costly, time-intensive production.",
+      "grounded_in": [
+        "https://support.google.com/youtube/answer/1311392?hl=en",
+        "https://www.reddit.com/r/NewTubers/comments/1x5z1u5/anyone_else_spending_hours_on_videos_just_to_get/"
+      ]
+    }
+  ],
+  "visual_references": [
+    {
+      "description": "Official YouTube getting-started tutorial",
+      "url": "https://www.youtube.com/watch?v=qlzSMFWs0xQ",
+      "what_works": "Friendly process sequencing; we should not copy exact graphics."
+    },
+    {
+      "description": "YouTube Studio analytics teaching materials",
+      "url": "https://support.google.com/youtube/answer/9002587?hl=en",
+      "what_works": "Simple concepts that can be reinterpreted as wholly original motion-graphic cards."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.youtube.com/watch?v=qlzSMFWs0xQ",
+      "title": "Get Started on YouTube (YouTube Creators)",
+      "used_for": "Landscape",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://support.google.com/youtube/answer/72851?hl=en",
+      "title": "YouTube Partner Program overview & eligibility",
+      "used_for": "Monetization thresholds and review",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://support.google.com/youtube/answer/13429240?hl=en",
+      "title": "Overview of the expanded YouTube Partner Program",
+      "used_for": "Earlier feature eligibility",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://support.google.com/youtube/answer/1311392?hl=en",
+      "title": "YouTube channel monetization policies",
+      "used_for": "Originality and inauthentic content",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://support.google.com/youtube/answer/9002587?hl=en",
+      "title": "Get started with YouTube Analytics",
+      "used_for": "Metrics and studio learning loop",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://support.google.com/youtube/answer/9313698?hl=en",
+      "title": "Understand your YouTube engagement",
+      "used_for": "Audience retention context",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://support.google.com/youtube/answer/1646861?hl=en",
+      "title": "Create a YouTube channel",
+      "used_for": "Channel creation basics",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://www.reddit.com/r/NewTubers/comments/1x5z1u5/anyone_else_spending_hours_on_videos_just_to_get/",
+      "title": "Anyone else spending hours on videos just to get 10 views?",
+      "used_for": "Real beginner community questions",
+      "reliability": "anecdotal"
+    },
+    {
+      "url": "https://www.reddit.com/r/NewTubers/comments/1vfmq7o/how_many_videos_until_you_were_monetized/",
+      "title": "How many videos until you were monetized?",
+      "used_for": "Anecdotal creator expectations",
+      "reliability": "anecdotal"
+    },
+    {
+      "url": "https://www.reddit.com/r/NewTubers/comments/1vsa85v/how_long_did_it_take_you_to_monetise_your_channel/",
+      "title": "How long did it take you to monetise your channel?",
+      "used_for": "Anecdotal creator expectations",
+      "reliability": "anecdotal"
+    }
+  ],
+  "research_summary": "The strongest story is an honest creator journey from the first upload through low initial viewership and measurable improvements; monetization is a later milestone, not a promised result. Exact policy thresholds should be sourced from YouTube itself. All visuals and audio will be newly created for this episode, with no historic character or video assets imported.",
+  "metadata": {
+    "language": "English",
+    "format": "YouTube 16:9 1920x1080",
+    "fresh_assets_only": true,
+    "previous_assets_allowed": false,
+    "budget_cap_usd": 0,
+    "reference_video_provided": false
+  }
+}

@@ -1,0 +1,45 @@
+name: OpenMontage Fresh Journey Preproduction
+on:
+  push:
+    branches: [episode/youtube-beginners-journey-openmontage-fresh]
+    paths:
+      - 'openmontage/episodes/youtube-beginners-journey/**'
+      - 'scripts/openmontage_youtube_journey_preflight.py'
+      - '.github/workflows/openmontage-youtube-journey.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-and-proposal-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout episode workspace
+        uses: actions/checkout@v4
+      - name: Checkout the official OpenMontage source (version pinned)
+        uses: actions/checkout@v4
+        with:
+          repository: calesthio/OpenMontage
+          ref: 195eab24478dc9363326aec437aefc3701635ddf
+          path: .openmontage
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation-only dependencies (no paid APIs)
+        run: python -m pip install --disable-pip-version-check 'jsonschema>=4.20' 'PyYAML>=6.0'
+      - name: Validate real OpenMontage schema and create its checkpoints
+        env:
+          OPENMONTAGE_ROOT: ${{ github.workspace }}/.openmontage
+          OPENMONTAGE_PROJECTS_DIR: ${{ github.workspace }}/.openmontage/projects
+        run: python scripts/openmontage_youtube_journey_preflight.py
+      - name: Upload actual OpenMontage project checkpoints
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-journey-openmontage-preproduction
+          path: .openmontage/projects/youtube-beginners-journey/
+          if-no-files-found: error
+          retention-days: 14
