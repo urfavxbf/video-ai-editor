@@ -1,4 +1,4 @@
-name: Blue App HTML export tutorial — widescreen YouTube + TikTok
+name: Blue App HTML tutorial — cinematic animated widescreen
 
 on:
   pull_request:
@@ -6,6 +6,8 @@ on:
       - "productions/blue-app-html-history/**"
       - "integrations/openmontage/scripts/build_blue_app_props.py"
       - "integrations/openmontage/scripts/render_blue_app_tutorial.sh"
+      - "integrations/openmontage/scripts/stage_blue_app_visual.py"
+      - "integrations/openmontage/creative/**"
       - ".github/workflows/blue-app-tiktok-video.yml"
   workflow_dispatch:
 
@@ -48,7 +50,7 @@ jobs:
         run: bash integrations/openmontage/scripts/render_blue_app_tutorial.sh preview
       - uses: actions/upload-artifact@v4
         with:
-          name: blue-app-widescreen-preview-SILENT
+          name: blue-app-cinematic-reference-style-preview-SILENT
           path: out/blue-app-tutorial/blue-app-preview.mp4
           retention-days: 5
           if-no-files-found: error
@@ -115,7 +117,7 @@ jobs:
             out/blue-app-tutorial/PRODUCTION.md
       - uses: actions/upload-artifact@v4
         with:
-          name: blue-app-widescreen-narrated-video-REVIEW-BEFORE-PUBLISH
+          name: blue-app-cinematic-narrated-video-REVIEW-BEFORE-PUBLISH
           path: |
             out/blue-app-tutorial/blue-app-final.mp4
             out/blue-app-tutorial/blue-app-narration.json

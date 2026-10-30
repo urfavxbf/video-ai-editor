@@ -9,21 +9,23 @@ PRODUCTION="$ROOT/productions/blue-app-html-history"
 MODE="${1:-preview}"
 mkdir -p "$ROOT/out/blue-app-tutorial"
 test -f "$COMPOSER/package.json" || { echo "OpenMontage not installed" >&2; exit 2; }
+python3 "$ROOT/integrations/openmontage/scripts/stage_blue_app_visual.py" \
+  --integration "$ROOT/integrations/openmontage" --composer "$COMPOSER"
 cd "$COMPOSER"
 if [[ "$MODE" == preview ]]; then
   test -s "$PRODUCTION/scene-props.json"
-  npx --no-install remotion render src/index.tsx Explainer \
+  npx --no-install remotion render src/index.tsx BlueAppVisual \
     "$ROOT/out/blue-app-tutorial/blue-app-preview.mp4" \
-    --props "$PRODUCTION/scene-props.json" --width 1280 --height 720 \
+    --props "$PRODUCTION/scene-props.json" --scale=0.66666667 \
     --frames=0-449 --codec=h264 --crf=23 --concurrency=2 \
     --pixel-format=yuv420p
   OUTPUT="$ROOT/out/blue-app-tutorial/blue-app-preview.mp4"
 elif [[ "$MODE" == final ]]; then
   test -s "$PRODUCTION/render-props.json" || { echo "Narration props missing" >&2; exit 2; }
   test -s "public/audio/blue-app-narration.wav" || { echo "Approved narrator WAV missing" >&2; exit 2; }
-  npx --no-install remotion render src/index.tsx Explainer \
+  npx --no-install remotion render src/index.tsx BlueAppVisual \
     "$ROOT/out/blue-app-tutorial/blue-app-final.mp4" \
-    --props "$PRODUCTION/render-props.json" --width 1920 --height 1080 \
+    --props "$PRODUCTION/render-props.json" \
     --codec=h264 --crf=22 --audio-codec=aac --audio-bitrate=192k \
     --concurrency=2 --pixel-format=yuv420p
   OUTPUT="$ROOT/out/blue-app-tutorial/blue-app-final.mp4"

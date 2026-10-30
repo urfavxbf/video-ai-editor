@@ -49,5 +49,43 @@ class PilotContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.build_props(self.template,self.manifest,4)
 
+
+    def test_cinematic_reference_style_in_original_remotion_component(self):
+        integration=Path(__file__).resolve().parents[2]/"integrations"/"openmontage"
+        tsx=(integration/"creative"/"BlueAppVisual.tsx").read_text(encoding="utf-8")
+        render=(integration/"scripts"/"render_blue_app_tutorial.sh").read_text(encoding="utf-8")
+        self.assertIn("PixelEnvelope",tsx)
+        self.assertIn("BottomCaptions",tsx)
+        self.assertIn('BlueAppVisual',render)
+        self.assertIn("--scale=0.66666667",render)
+        self.assertIn("expected=(1280,720)",render)
+        self.assertIn("(1920,1080)",render)
+        self.assertNotIn("src/index.tsx Explainer",render)
+
+    def test_upstream_staging_is_idempotent_and_fails_closed(self):
+        import tempfile
+        integration=Path(__file__).resolve().parents[2]/"integrations"/"openmontage"
+        script=integration/"scripts"/"stage_blue_app_visual.py"
+        spec=importlib.util.spec_from_file_location("blue_app_stage",script)
+        mod_stage=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod_stage)
+        with tempfile.TemporaryDirectory() as d:
+            composer=Path(d)/"remotion-composer"
+            (composer/"src").mkdir(parents=True)
+            (composer/"package.json").write_text("{}",encoding="utf-8")
+            root=composer/"src"/"Root.tsx"
+            root.write_text('import { Composition, CalculateMetadataFunction } from "remotion";\n'
+                            "export const Root=()=> (\n  <>\n    </>\n  );\n};\n",encoding="utf-8")
+            mod_stage.stage(integration,composer)
+            first=root.read_text(encoding="utf-8")
+            self.assertIn('id="BlueAppVisual"',first)
+            self.assertIn('component={BlueAppVisual}',first)
+            mod_stage.stage(integration,composer)
+            self.assertEqual(first,root.read_text(encoding="utf-8"))
+            self.assertTrue((composer/"src"/"BlueAppVisual.tsx").is_file())
+            root.write_text("unexpected upstream format",encoding="utf-8")
+            with self.assertRaises(RuntimeError):
+                mod_stage.stage(integration,composer)
+
 if __name__=="__main__":
     unittest.main()
