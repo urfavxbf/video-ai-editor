@@ -13,7 +13,7 @@ import wave
 from copy import deepcopy
 from pathlib import Path
 
-PRODUCTION = Path(__file__).resolve().parents[2] / "productions" / "blue-app-html-history"
+PRODUCTION = Path(__file__).resolve().parents[3] / "productions" / "blue-app-html-history"
 PLANNED_SECONDS = 69.0
 APPROVED_VOICE = "natural-storyteller-v1"
 

@@ -35,6 +35,10 @@ class PilotContractTests(unittest.TestCase):
         self.assertEqual(cuts[2]["leftValue"], "Still there")
         self.assertEqual(cuts[2]["rightValue"], "May be gone")
         self.assertLessEqual(max(len(c["rightValue"]) for c in cuts if c.get("type")=="comparison"), 18)
+    def test_production_directory_is_correctly_resolved(self):
+        self.assertEqual(mod.PRODUCTION, HERE)
+        self.assertTrue((mod.PRODUCTION / "scene-props.json").is_file())
+
     def test_narration_props_include_caption_cues(self):
         out=mod.build_props(self.template,self.manifest,52)
         self.assertEqual(out["audio"]["narration"]["src"],"audio/blue-app-narration.wav")
