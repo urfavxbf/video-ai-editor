@@ -1,11 +1,15 @@
 # OpenMontage — isolated faceless YouTube production
 
-This is an **opt-in** OpenMontage integration for the existing `video-ai-editor` repository. It deliberately does **not** change the default `.devcontainer/devcontainer.json`, root `package.json`, Remotion compositions, existing voice/character policies, or the `main` branch.
+This is an **opt-in** OpenMontage integration for the existing `video-ai-editor` repository, merged into `main` via [PR #49](https://github.com/urfavxbf/video-ai-editor/pull/49). It deliberately does **not** change the default `.devcontainer/devcontainer.json`, root `package.json`, Remotion compositions, or existing voice/character policies. **Previously created test Codespaces are not required** for GitHub Actions sample rendering.
 
-## Android phone only: Codespaces walkthrough
+## Android phone: no-Codespaces test workflow
+
+For new test MP4s without Copilot or an old Codespace, follow [Android GitHub Actions instructions](ANDROID_ACTIONS.md). The Codespaces steps below are optional for users who specifically want an interactive agent workspace.
+
+## Optional: Android Codespaces walkthrough
 
 1. In Android Chrome, sign in to GitHub. Open the `urfavxbf/video-ai-editor` repository and enable **Desktop site** if the buttons are hidden.
-2. Open **Code → Codespaces → Create codespace**. Select the branch `feature/openmontage-codespaces` and the **OpenMontage (isolated) — Faceless YouTube** devcontainer configuration (`.devcontainer/openmontage/devcontainer.json`). GitHub can show the configuration selector under advanced options.
+2. Open **Code → Codespaces → Create codespace**. Select the `main` branch (or a new feature branch based on it) and the **OpenMontage (isolated) — Faceless YouTube** devcontainer configuration (`.devcontainer/openmontage/devcontainer.json`). GitHub can show the configuration selector under advanced options.
 3. Let the profile's `postCreateCommand` finish. It installs a pinned checkout, separate Python virtual environment and separate Remotion dependencies inside `integrations/openmontage/.runtime/openmontage/`. Cloud compute may count against your Codespaces/Actions allowances.
 4. In Codespaces, open **Terminal → New Terminal** and run:
 
@@ -54,6 +58,6 @@ To upgrade the upstream snapshot, **review** the new OpenMontage commit and upda
 - **Approval/billing:** no OpenMontage provider keys are required for demo rendering. Optional provider keys should be set through GitHub Codespaces secrets or kept exclusively in the ignored nested `.env`; never commit credentials. A separate AI coding assistant connection is still required to execute real production pipelines.
 - **CI:** the new pull-request-only workflow runs contract tests and a zero-paid-API demo render, uploading a short-lived MP4 artifact when it succeeds. CI runs consume GitHub Actions minutes and are **not** a complete end-to-end faceless-episode test.
 - **Licensing:** confirm media license and attribution terms before public YouTube uploads. Stock availability and copyright safety must not be assumed automatically.
-- **Preservation:** the existing `video-ai-editor` mainline, UrFavXBF/PIX presets, default 16:9 pipeline, and historic videos stay unchanged. No merge is performed by this setup.
+- **Preservation:** the existing `video-ai-editor` Remotion sources, UrFavXBF/PIX presets, default 16:9 pipeline, and historic videos stay unchanged. The integration has already been merged into `main` after successful CI.
 
 Upstream documentation: https://github.com/calesthio/OpenMontage/blob/main/README.md
