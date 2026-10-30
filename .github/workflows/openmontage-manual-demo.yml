@@ -15,9 +15,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/openmontage-manual-demo.yml"
-      - "integrations/openmontage/scripts/report_progress.py"
-      - "integrations/openmontage/tests/test_progress_report.py"
-      - "integrations/openmontage/RECOVERY_AND_AUTOMATION.md"
+      - "integrations/openmontage/tests/test_automation_workflow.py"
+      - "integrations/openmontage/ANDROID_ACTIONS.md"
 
 permissions:
   contents: read
@@ -31,10 +30,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test read-only Codespaces recovery inventory
-        run: |
-          python -m unittest discover -s integrations/openmontage/tests -p 'test_*.py' -v
-          python -m py_compile integrations/openmontage/scripts/report_progress.py
+      - name: Run integration contract tests
+        run: python -m unittest discover -s integrations/openmontage/tests -p 'test_*.py' -v
 
   render-official-fixture:
     if: github.event_name == 'workflow_dispatch'
