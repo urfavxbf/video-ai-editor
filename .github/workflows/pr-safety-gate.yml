@@ -1,0 +1,81 @@
+name: Pull request safety gate
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-safety-gate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  safety-gate:
+    name: Model-free checks and fixture render
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install existing runtime dependencies
+        run: |
+          npm ci --no-audit --no-fund
+          python -m pip install -r requirements.txt
+      - name: Typecheck all compositions
+        run: npm run typecheck
+      - name: Run existing model-free tests
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py' -v
+          python -m unittest discover -s integrations/openmontage/tests -p 'test_*.py' -v
+      - name: Verify all 13 approved character PNGs
+        run: python scripts/stage_pixel_default_pack.py --verify-workspace
+      - name: Prepare browser and video verification tool
+        run: |
+          npx remotion browser ensure
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Render one-second deterministic character fixture
+        run: >-
+          npx remotion render PixelProductionProof out/pr-safety-gate.mp4
+          --frames=165-194 --scale=0.25 --concurrency=2
+          --codec=h264 --pixel-format=yuv420p
+      - name: Verify encoded fixture
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+
+          result = subprocess.check_output([
+              "ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=codec_name,width,height,r_frame_rate,nb_frames",
+              "-of", "json", "out/pr-safety-gate.mp4",
+          ], text=True)
+          streams = json.loads(result)["streams"]
+          assert len(streams) == 1, "Expected one video stream"
+          expected = {
+              "codec_name": "h264", "width": 480, "height": 270,
+              "r_frame_rate": "30/1", "nb_frames": "30",
+          }
+          for key, value in expected.items():
+              assert streams[0].get(key) == value, f"Unexpected {key}: {streams[0]}"
+          print("Verified 30-frame H.264 fixture: 480x270 at 30 fps")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pr-safety-gate-fixture
+          path: out/pr-safety-gate.mp4
+          if-no-files-found: error
+          retention-days: 3
