@@ -216,6 +216,78 @@ function Computer({frame,beat}:{frame:number;beat:typeof BEATS[number]}){
   </div>}
  </div>;
 }
+function StoryObject({index,beat,frame}:{index:number;beat:typeof BEATS[number];frame:number}){
+ const float=Math.sin(frame/16)*9;
+ const t="translateY("+float+"px)";
+ if(index===0||index===3||index===5)return <Computer frame={frame} beat={beat}/>;
+ if(index===1)return <div style={{position:"absolute",right:285,top:170,width:690,height:640,
+   display:"flex",justifyContent:"center",alignItems:"center",
+   border:"27px solid #FF6B787A",borderRadius:"50%",
+   boxShadow:"0 0 120px #F1556766,inset 0 0 100px #A2203855",
+   transform:t}}>
+   <span style={{fontSize:480,fontWeight:950,color:WHITE,lineHeight:1,
+     textShadow:"0 0 55px #FF7272"}}>!</span>
+   <span style={{position:"absolute",bottom:10,fontSize:43,fontWeight:950,
+     color:WHITE,background:"#601E30",padding:"12px 36px",
+     border:"5px solid #FF7A78",transform:"rotate(-6deg)"}}>SCAM ALERT</span>
+ </div>;
+ if(index===2)return <div style={{position:"absolute",right:110,top:250,
+   width:790,height:510,zIndex:3,display:"flex",gap:24,transform:t}}>
+   {([{a:"ARCHIVED",b:"STILL THERE",c:TEAL},{a:"DELETED",b:"MAY BE GONE",c:RED}]).map((v,i)=>
+    <div key={i} style={{flex:1,height:440,padding:"45px 25px",color:WHITE,
+      background:"#372830",border:"9px solid #C49C67",
+      boxShadow:"20px 30px 30px #0009",transform:"rotate("+(i===0?-5:4)+"deg)"}}>
+      <div style={{fontSize:37,fontWeight:900}}>{v.a}</div>
+      <div style={{margin:"36px 0",height:12,background:v.c}}/>
+      <div style={{fontSize:52,fontWeight:950,color:v.c,lineHeight:1.08}}>{v.b}</div>
+    </div>)}
+ </div>;
+ if(index===4||index===7)return <div style={{position:"absolute",right:250,top:210,
+   width:620,height:600,background:index===4?"#EBD1AB":"#F6CD79",
+   border:"15px solid #BC8759",boxShadow:"22px 30px 65px #000A",
+   clipPath:"polygon(0% 0%,76% 0%,100% 23%,100% 100%,0% 100%)",
+   transform:"rotate(-5deg) "+t,zIndex:3}}>
+   <div style={{margin:"135px 55px 30px",fontWeight:950,fontSize:64,
+     color:"#603B3D"}}>{index===4?"YOUR INFO":".HTML FILE"}</div>
+   {Array.from({length:5},(_,i)=><div key={i} style={{
+     margin:"25px 55px",height:16,width:485-i*65,background:"#AC7963"}}/>)}
+   <div style={{position:"absolute",right:32,bottom:35,fontSize:38,
+     color:"#9B5256",fontWeight:950}}>{index===4?"PRIVATE":"ZIP → HTML"}</div>
+ </div>;
+ if(index===6)return <div style={{position:"absolute",right:210,top:260,
+   width:730,height:520,zIndex:3,transform:t}}>
+    <div style={{width:480,height:410,background:"#12343B",
+      border:"15px solid #60F2CE",boxShadow:"0 0 95px #33E9C56A",
+      transform:"rotate(-8deg)",padding:"65px 35px"}}>
+      <div style={{fontSize:112,fontWeight:950,color:TEAL}}>HTML</div>
+      <div style={{fontSize:32,color:WHITE,marginTop:20}}>&lt;messages&gt;</div>
+    </div>
+    <div style={{position:"absolute",right:3,top:180,width:300,height:280,
+      background:"#DFA64D",border:"13px solid #73543A",
+      transform:"rotate(10deg)",fontSize:102,textAlign:"center",fontWeight:950,
+      color:"#4D3734",paddingTop:75,boxShadow:"18px 23px 35px #0008"}}>ZIP</div>
+ </div>;
+ if(index===8)return <div style={{position:"absolute",right:265,top:220,
+   width:640,height:620,zIndex:3,transform:t,
+   filter:"drop-shadow(0 0 48px #76ECFFAA)"}}>
+   <div style={{position:"absolute",left:155,top:10,width:310,height:350,
+     border:"50px solid #97F2FF",borderRadius:"48% 48% 10% 10%"}}/>
+   <div style={{position:"absolute",left:80,top:310,width:480,height:315,
+     border:"17px solid #A0F6FF",background:"#1B6C82",borderRadius:25}}>
+     <div style={{position:"absolute",left:206,top:72,width:49,height:126,
+       background:"#072438",borderRadius:25}}/>
+   </div>
+ </div>;
+ return <div style={{position:"absolute",right:235,top:275,
+   padding:"75px 65px",background:"#320D26",border:"12px solid #FDC165",
+   boxShadow:"0 0 70px #FFAA5A6A,30px 33px 65px #000B",
+   zIndex:3,transform:t}}>
+   <div style={{fontSize:154,color:GOLD,fontWeight:950}}>NO</div>
+   <div style={{fontSize:69,color:WHITE,fontWeight:950}}>GUARANTEE</div>
+   <div style={{height:12,background:RED,marginTop:28}}/>
+ </div>;
+}
+
 function BigType({beat,frame}:{beat:typeof BEATS[number];frame:number}){
  const enter=spring({frame,fps:30,config:{damping:18,stiffness:120}});
  const shift=(1-enter)*110;
@@ -251,15 +323,19 @@ function Scene({index}:{index:number}){
    {isWarn&&<div style={{position:"absolute",right:210,top:130,
      border:"25px solid #FF879421",width:660,height:660,borderRadius:"50%",
      transform:"scale("+(0.96+Math.sin(frame/11)*0.06)+")"}}/>}
-   <Computer frame={frame} beat={beat}/>
+   <StoryObject index={index} beat={beat} frame={frame}/>
    <BigType beat={beat} frame={frame}/>
-   <div style={{position:"absolute",bottom:82,left:140,zIndex:10,
-      transform:"translateX("+((1-entrance)*-100)+"px)"}}>
-      <PixelGuide scale={1.48} walk={Math.sin(frame/13)*5}/>
+   <div style={{position:"absolute",
+     bottom:index===2?-120:76,
+     left:(index===1||index===2||index===8||index===9)?1300:115,
+     zIndex:10,transform:"translateX("+((1-entrance)*-100)+"px)"}}>
+     <PixelGuide scale={index===2?3.1:(index===1||index===8||index===9)?2.5:1.65}
+       walk={Math.sin(frame/13)*5}/>
    </div>
-   <div style={{position:"absolute",bottom:115,left:460,zIndex:11,
-      transform:"rotate("+(-7+Math.sin(frame/13)*4)+"deg)"}}>
-      <PixelChat size={153} bob={Math.sin(frame/13)*6}/>
+   <div style={{position:"absolute",bottom:105,
+     left:(index===1||index===2||index===8||index===9)?1650:430,
+     zIndex:11,transform:"rotate("+(-7+Math.sin(frame/13)*4)+"deg)"}}>
+     <PixelChat size={175} bob={Math.sin(frame/13)*6}/>
    </div>
    <div style={{position:"absolute",bottom:58,right:138,color:"#C2C8C9",
       fontSize:20,fontWeight:800,letterSpacing:3,
