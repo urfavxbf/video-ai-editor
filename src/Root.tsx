@@ -21,6 +21,7 @@ import {CanonicalFullBodyReviewStage, CANONICAL_FULL_BODY_REVIEW_FRAMES, type Ca
 import {TrueFrameReviewStage, type TrueFrameReviewProps} from './characters/TrueFrameReviewStage'
 import {PixelProductionProof,PIXEL_PROOF_FRAMES,type PixelProductionProofProps} from './characters/PixelProductionProof'
 import './fonts'
+import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadata'
 
 const spec = edit as EditSpec
 
@@ -37,6 +38,7 @@ export const Root = () => <>
     defaultProps={{assetsReady:false,artApproved:false} satisfies CanonicalFullBodyReviewProps} />
   <Composition id="HeroCharacterStage" component={HeroCharacterStage} width={1920} height={1080} fps={30}
     durationInFrames={HERO_STAGE_DURATION}
+    calculateMetadata={calculateHeroMetadata}
     defaultProps={{assetsReady:true,artApproved:true,voiceEvents:[],chapter:1} satisfies HeroStageProps} />
   <Composition id="V4FacialReviewStage" component={V4FacialReviewStage} width={1920} height={1080} fps={30}
     durationInFrames={V4_FACIAL_REVIEW_FRAMES}
@@ -67,5 +69,5 @@ export const Root = () => <>
 		calculateMetadata={({ props }) => ({ durationInFrames: fxById(props.id)?.duration ?? 90 })} />
 	<Composition id="DudutV2" component={DudutV2} width={1080} height={1920} fps={30} durationInFrames={DUDUT_V2_DURATION} defaultProps={{ videoPath: 'takes/dudut/clip.mp4', sourceStartSeconds: 42 } satisfies DudutV2Props} />
 	<Composition id="DudutPremium" component={DudutPremium} width={1080} height={1920} fps={30} durationInFrames={DUDUT_DURATION} defaultProps={{ videoPath: 'takes/dudut/clip.mp4', sourceStartSeconds: 42 } satisfies DudutPremiumProps} />
-	<Composition id="ExampleEdit" component={Edit} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={editDuration(spec)} defaultProps={{ spec }} />
+	<Composition id="ExampleEdit" component={Edit} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={editDuration(spec)} calculateMetadata={calculateEditMetadata} defaultProps={{ spec }} />
 </>

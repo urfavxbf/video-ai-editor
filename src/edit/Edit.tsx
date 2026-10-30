@@ -4,6 +4,8 @@ import { fxById } from '../fx/index'
 import { type Cue, Sfx } from '../fx/sfx'
 import { ARoll, type FxSource, FxSourceContext } from '../fx/shared'
 import { GlassBlur } from '../fx/theme'
+import { editDuration } from '../compositionMetadata'
+export { editDuration } from '../compositionMetadata'
 
 /** A cut list over one take. `at` is the source frame the segment starts on, `frames` its length on the timeline.
  * `kind: 'fx'` plays the effect `id` from `at` (cut short if `frames` is less than the effect's duration). */
@@ -18,11 +20,9 @@ const timeline = (spec: EditSpec) => {
 		return item
 	})
 }
-export const editDuration = (spec: EditSpec) => Math.max(1, spec.segments.reduce((sum, s) => sum + s.frames, 0))
-
 export const Edit = ({ spec }: { spec: EditSpec }) => {
-	const segs = timeline(spec)
 	const total = editDuration(spec)
+	const segs = timeline(spec)
 	const cues: Cue[] = segs.flatMap(s => s.kind === 'fx' ? (fxById(s.id!)?.sfx ?? []).filter(c => c.at < s.frames).map(c => ({ ...c, at: c.at + s.start })) : [])
 	return <FxSourceContext.Provider value={spec.source}><GlassBlur.Provider value={false}><AbsoluteFill style={{ background: '#000' }}>
 		{segs.map((s, i) => {
