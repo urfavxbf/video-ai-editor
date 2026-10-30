@@ -10,24 +10,24 @@ This does not grant direct shell access to the owner's Codespace. A GitHub conne
 
 - **Mainline:** Remotion/FFmpeg `video-ai-editor`, with 16:9 long-form video as default.
 - **Approved English narrator:** `natural-storyteller-v1` Chatterbox Multilingual V3: `scripts/chatterbox_voice_profile.py`, `scripts/chatterbox_longform.py`, `docs/CHATTERBOX_TTS.md`. Existing configured voice is NOT evidence of an audio file in the checkout.
-- **Optional OpenMontage:** isolated checkout described by draft [PR #49](https://github.com/urfavxbf/video-ai-editor/pull/49); the upstream revision and smoke-render automation are proposed there, **not in main until merged**.
-- **Previous Android project:** “Outer Space Mysteries” was last reported by the Copilot session as being in the assets stage with approved scene plan, incomplete 39-slot asset manifest, and no final MP4. This is a user-visible report, **not independently verified from Codespaces files**. Do not assume the current checkpoint remains unchanged.
+- **OpenMontage:** isolated, pinned integration was merged via [PR #49](https://github.com/urfavxbf/video-ai-editor/pull/49). Its demos run on GitHub-hosted CI without an existing Codespace.
+- **Discarded test projects:** do not recover, inspect, migrate, or rely on previous Codespaces test projects. Start new production requests with new, explicit artifacts; the owner may delete unused test Codespaces.
 
 ## Production workflow
 
 1. **Request:** capture topic, target platform, duration, language/voice, budget and hard constraints from the conversation. Reuse known requirements; ask only for indispensable product choices.
-2. **Locate:** inspect GitHub for existing project sources, last reviewed PR, workflows and available artifacts. For Codespaces-only productions, explicitly identify that checkpoint state is **not available through GitHub**.
+2. **Locate:** inspect GitHub for reviewed production code, PRs, workflows, and artifacts relevant to the new requested production. Do not inspect or retrieve abandoned Codespaces experiments.
 3. **Plan:** create a short, versioned production brief plus the appropriate pipeline manifest/artifacts. For OpenMontage, obey its upstream review stages and human approval gates. Do not invent that a generic prompt alone creates MP4 output.
 4. **Build:** branch off green `main`; isolate OpenMontage changes, voices and dependencies. Implement reusable automation with a narrow attack surface and secrets only through approved secret stores.
 5. **Run:** use a suitable triggered GitHub Actions job for deterministic code/testing/render tasks. Heavy TTS or video generation must have bounded runtime and resource preflight. If the agent-driven creative stages lack a running compatible agent, report the blocker and do not label the system “one click.”
 6. **Validate:** inspect tests, real media artifacts, codecs and duration (`ffprobe`), audio, script/subtitle timing, copyright license metadata and visual samples. Report any checks that could not be performed.
 7. **Deliver:** link the verified GitHub workflow/PR and real artifact; leave all proposed branch changes unmerged until approved. Do not publish videos automatically.
 
-## Recovery of a paused Codespaces production
+## New-project-first automation
 
-Do not delete or re-create the owner’s Codespace. On reopening it, inspect `integrations/openmontage/.runtime/openmontage/projects/` and its `checkpoint_*.json` artifacts. Resume only after identifying the project and last valid stage. Those paths are ignored by Git and therefore unavailable to ChatGPT's GitHub connector unless intentionally exported/shared. Do not commit unreviewed media, secrets, or raw private production files to a public repository.
+All new video work begins with a clean production brief, a new project identifier, and a reviewable pipeline. GitHub Actions operates on checked-in inputs or approved artifacts, never on invisible or abandoned Codespaces-local files. Implement deterministic rendering and bounded agent orchestration on isolated branches, with proper approvals, provider limitations, and license checks.
 
-The next engineering milestone is an **explicit, secure transfer mechanism** for approved checkpoint metadata and assets from Codespaces to a GitHub-runner-accessible store. Design and implement it on a feature branch with tests and least-privilege permissions; never pretend GitHub Actions can read a stopped Codespace directly.
+Do not require the owner to keep an old Codespace, recover test checkpoints, or run interactive Copilot sessions. When a new production does require a human approval gate, present it clearly and wait for authorization rather than silently skipping it.
 
 ## No silent spending or unattended claims
 
