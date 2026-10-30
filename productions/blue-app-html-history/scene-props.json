@@ -1,0 +1,131 @@
+{
+  "theme": "flat-motion-graphics",
+  "cuts": [
+    {
+      "id": "01-hook",
+      "type": "hero_title",
+      "text": "DELETED MESSAGES?",
+      "subtitle": "THE BLUE APP · WHAT TO CHECK",
+      "in_seconds": 0,
+      "out_seconds": 5.5,
+      "accentColor": "#5BDAFF",
+      "backgroundColor": "#081126"
+    },
+    {
+      "id": "02-stop",
+      "type": "callout",
+      "title": "BEFORE YOU PANIC",
+      "text": "Avoid random “message recovery” apps.",
+      "callout_type": "warning",
+      "in_seconds": 5.5,
+      "out_seconds": 12,
+      "accentColor": "#FFCA4B",
+      "backgroundColor": "#101B35"
+    },
+    {
+      "id": "03-archive",
+      "type": "comparison",
+      "title": "CHECK THE CHAT",
+      "leftLabel": "ARCHIVED",
+      "leftValue": "Hidden",
+      "rightLabel": "DELETED",
+      "rightValue": "Not in inbox",
+      "in_seconds": 12,
+      "out_seconds": 19,
+      "backgroundColor": "#09172B",
+      "accentColor": "#5BDAFF"
+    },
+    {
+      "id": "04-settings",
+      "type": "text_card",
+      "text": "STEP 1\nSettings\n↓\nAccounts Center",
+      "fontSize": 63,
+      "in_seconds": 19,
+      "out_seconds": 26,
+      "backgroundColor": "#091B30",
+      "color": "#F7FAFF"
+    },
+    {
+      "id": "05-information",
+      "type": "text_card",
+      "text": "STEP 2\nYour Information\n& Permissions",
+      "fontSize": 61,
+      "in_seconds": 26,
+      "out_seconds": 33,
+      "backgroundColor": "#0D2135",
+      "color": "#F7FAFF"
+    },
+    {
+      "id": "06-export",
+      "type": "text_card",
+      "text": "STEP 3\nExport Your Information\n→ Create Export",
+      "fontSize": 55,
+      "in_seconds": 33,
+      "out_seconds": 41,
+      "backgroundColor": "#0B1C30",
+      "color": "#F7FAFF"
+    },
+    {
+      "id": "07-html",
+      "type": "callout",
+      "title": "STEP 4 · SELECT",
+      "text": "Your profile → Messages\nAll Time → HTML",
+      "callout_type": "tip",
+      "in_seconds": 41,
+      "out_seconds": 48,
+      "backgroundColor": "#0A1C30",
+      "accentColor": "#53E3BD"
+    },
+    {
+      "id": "08-zip",
+      "type": "text_card",
+      "text": "STEP 5\nDownload ZIP\nExtract → Open HTML\nSearch for the chat",
+      "fontSize": 55,
+      "in_seconds": 48,
+      "out_seconds": 55,
+      "backgroundColor": "#0B2134",
+      "color": "#F7FAFF"
+    },
+    {
+      "id": "09-secure",
+      "type": "callout",
+      "title": "ENCRYPTED CHATS?",
+      "text": "Recent messages may need a separate secure-storage check.",
+      "callout_type": "info",
+      "in_seconds": 55,
+      "out_seconds": 62,
+      "backgroundColor": "#0B1B30",
+      "accentColor": "#7EB6FF"
+    },
+    {
+      "id": "10-reality",
+      "type": "hero_title",
+      "text": "NO MAGIC UNDELETE",
+      "subtitle": "Only available data can be exported.",
+      "in_seconds": 62,
+      "out_seconds": 69,
+      "accentColor": "#FFC85A",
+      "backgroundColor": "#0B1530"
+    }
+  ],
+  "overlays": [
+    {
+      "type": "section_title",
+      "in_seconds": 20,
+      "out_seconds": 24,
+      "text": "ACCOUNTS CENTER",
+      "subtitle": "Official settings route",
+      "accentColor": "#5BDAFF"
+    },
+    {
+      "type": "stat_reveal",
+      "in_seconds": 43,
+      "out_seconds": 47,
+      "text": "HTML",
+      "subtitle": "Readable in a browser",
+      "accentColor": "#53E3BD"
+    }
+  ],
+  "captions": [],
+  "audio": {}
+}
