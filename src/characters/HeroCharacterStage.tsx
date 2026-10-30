@@ -19,7 +19,7 @@ export type HeroStageProps = {
   audio?: {file: string; startFrame: number; endFrame: number}[];
   durationFrames?: number;
 };
-export const HERO_STAGE_DURATION = 540;
+export {HERO_STAGE_DURATION} from '../compositionMetadata';
 
 const Wave: React.FC<{energy:number; color:string;frame:number; active:boolean}> = ({
   energy,color,frame,active,
