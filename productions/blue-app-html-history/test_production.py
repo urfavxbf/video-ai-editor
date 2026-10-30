@@ -57,8 +57,8 @@ class PilotContractTests(unittest.TestCase):
         self.assertIn("PixelEnvelope",tsx)
         self.assertIn("BottomCaptions",tsx)
         self.assertIn('BlueAppVisual',render)
-        self.assertIn("--scale=0.66666667",render)
-        self.assertIn("expected=(1280,720)",render)
+        self.assertIn("--scale=0.5",render)
+        self.assertIn("expected=(960,540)",render)
         self.assertIn("(1920,1080)",render)
         self.assertNotIn("src/index.tsx Explainer",render)
 

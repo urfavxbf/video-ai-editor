@@ -6,7 +6,7 @@
 - Quick cinematic scene transitions, rhythmic headings, bold color emphasis and high-contrast typography
 - Original pixel-style envelope mascot that helps viewers follow the tutorial, **not** the reference creator's character or assets
 - The video viewer is a teaching device: fictional interface panels representing general account steps, not fabricated real Messenger screenshots
-- Clean 16:9 master, 1920×1080 for YouTube and horizontally formatted TikTok. Motion scale-down for 1280×720 preview.
+- Clean 16:9 master, 1920×1080 for YouTube and horizontally formatted TikTok. Motion scale-down for 960×540 preview.
 - Palette: deep navy, aqua/teal, clean white, selective amber. This is intentionally distinct from the reference video's own characters, background compositions and branding.
 - Exact approved Blue App title and the existing HTML export / archive / secure storage script remain unchanged.
 

@@ -4,7 +4,7 @@
 
 **Owner-selected premise:** Tutorial on exporting available Facebook/Messenger message history as an HTML archive, not a promise to recover permanently deleted chat text.
 
-**Platforms:** YouTube and TikTok / **16:9 widescreen master**, final 1920×1080 at 30 fps, preview 1280×720, approximately 60–70 seconds. TikTok will show the landscape video within a vertically oriented feed; an independent 9:16 adaptation can be made later without altering this master.
+**Platforms:** YouTube and TikTok / **16:9 widescreen master**, final 1920×1080 at 30 fps, preview 960×540, approximately 60–70 seconds. TikTok will show the landscape video within a vertically oriented feed; an independent 9:16 adaptation can be made later without altering this master.
 
 **Voice:** Existing English Natural Storyteller, `natural-storyteller-v1`, Chatterbox Multilingual V3. No generic replacement TTS. Speech is generated only in the narrated render job. Silence is for technical preview only, clearly named as such.
 
