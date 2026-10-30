@@ -1,0 +1,53 @@
+name: Senior Agent Skill Validation
+
+on:
+  pull_request:
+    paths:
+      - '.github/agents/**'
+      - '.github/skills/**'
+      - '.agents/skills/**'
+      - 'docs/SENIOR_MULTIDISCIPLINARY_AGENT.md'
+      - '.github/workflows/senior-agent-validation.yml'
+  push:
+    branches:
+      - 'feat/install-senior-multidisciplinary-agent'
+    paths:
+      - '.github/agents/**'
+      - '.github/skills/**'
+      - '.agents/skills/**'
+      - 'docs/SENIOR_MULTIDISCIPLINARY_AGENT.md'
+      - '.github/workflows/senior-agent-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate agent definitions and skills
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check both skill manifests and local references
+        run: |
+          python3 .agents/skills/senior-multidisciplinary-agent/scripts/validate_skill.py
+          python3 .github/skills/senior-multidisciplinary-agent/scripts/validate_skill.py
+      - name: Verify Copilot and Codex skill copies match
+        run: |
+          diff -qr .agents/skills/senior-multidisciplinary-agent .github/skills/senior-multidisciplinary-agent
+      - name: Python source syntax
+        run: |
+          python3 -m py_compile .agents/skills/senior-multidisciplinary-agent/scripts/*.py
+          python3 -m py_compile .github/skills/senior-multidisciplinary-agent/scripts/*.py
+      - name: Validate custom agent profile
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          file = Path('.github/agents/senior-multidisciplinary.agent.md')
+          content = file.read_text(encoding='utf-8')
+          assert content.startswith('---\nname: Senior Multidisciplinary Engineer\n')
+          assert '\ndescription:' in content
+          assert '.agents/skills/senior-multidisciplinary-agent/SKILL.md' in content
+          print('PASS: workspace custom agent profile')
+          PY
