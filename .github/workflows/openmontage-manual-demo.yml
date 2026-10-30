@@ -1,0 +1,78 @@
+name: OpenMontage — manual zero-key MP4
+
+on:
+  workflow_dispatch:
+    inputs:
+      demo:
+        description: "Official OpenMontage fixture (not a custom YouTube episode)"
+        required: true
+        default: world-in-numbers
+        type: choice
+        options:
+          - world-in-numbers
+          - code-to-screen
+          - focusflow-pitch
+  pull_request:
+    paths:
+      - ".github/workflows/openmontage-manual-demo.yml"
+      - "integrations/openmontage/tests/test_automation_workflow.py"
+      - "integrations/openmontage/ANDROID_ACTIONS.md"
+
+permissions:
+  contents: read
+
+jobs:
+  contract-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run integration contract tests
+        run: python -m unittest discover -s integrations/openmontage/tests -p 'test_*.py' -v
+
+  render-official-fixture:
+    if: github.event_name == 'workflow_dispatch'
+    needs: contract-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      DEMO_NAME: ${{ inputs.demo }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Restrict to reviewed demo fixture names
+        run: |
+          case "$DEMO_NAME" in
+            world-in-numbers|code-to-screen|focusflow-pitch) ;;
+            *) echo "Invalid demo fixture" >&2; exit 1 ;;
+          esac
+      - name: Check free disk and available RAM
+        run: |
+          df -h .
+          free -h
+      - name: Install FFmpeg
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Install isolated pinned OpenMontage runtime
+        run: bash integrations/openmontage/scripts/setup.sh --skip-tts
+      - name: Check OpenMontage runtime and render MP4
+        run: |
+          bash integrations/openmontage/scripts/doctor.sh
+          bash integrations/openmontage/scripts/demo.sh "$DEMO_NAME"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openmontage-demo-${{ inputs.demo }}
+          path: integrations/openmontage/.runtime/openmontage/projects/demos/renders/${{ inputs.demo }}.mp4
+          if-no-files-found: error
+          retention-days: 3
