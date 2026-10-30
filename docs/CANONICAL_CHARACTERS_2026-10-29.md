@@ -1,3 +1,5 @@
+> **Historical development workflow — not the current production default.** The requirements below apply to this earlier prototype/review pipeline, not the approved pose-swap workflow. Follow [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and [the registry](../characters/registry.json): 13 committed pixel poses, HeroCharacterStage and English Chatterbox voices. Keep these instructions for explicitly selected historical work; no paid API/GPU usage is authorized.
+
 # Official characters — canonical visual replacement (29 October 2026)
 
 **This specification supersedes every earlier UrFavXBF/PIX visual model.** The three uploaded references, not previous V2 packs or rejected V4 vector artwork, are authoritative. Preserve the existing English Chatterbox speaker profiles and speech-turn timing. Production language remains English while Tagalog voice generation is budget-deferred.

@@ -70,7 +70,7 @@ def main():
         "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
         "name": "video-ai-editor-skills",
         "version": "0.1.0",
-        "description": "Thirteen AI editing skills: twelve official Remotion skills plus the Video AI Editor podcast and Tagalog Shorts workflow.",
+        "description": "Thirteen AI editing skills: twelve official Remotion skills plus the current English UrFavXBF and PIX production workflow and supplied-footage editing.",
         "repository": "https://github.com/urfavxbf/video-ai-editor",
     }
     compat = {

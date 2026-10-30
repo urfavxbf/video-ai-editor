@@ -1,3 +1,5 @@
+> **Historical reference — superseded for new productions.** The body below records an older workflow, including any claims of being "latest" or "default". Use it only for explicitly requested historical reproduction. Current defaults are in [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and [the registry](../characters/registry.json): English Chatterbox voices, 13 committed pixel poses and HeroCharacterStage. Historical staging requirements do not apply to the current pose pack.
+
 # Production language and character voices (2026-10-28)
 
 New original UrFavXBF + PIX videos default to **Tagalog/Taglish (tl)**, not
@@ -29,11 +31,11 @@ Do not clone any third-party person's voice without authorization.
 python3.11 -m venv .venv-voxcpm
 .venv-voxcpm/bin/pip install -r requirements-voxcpm.txt
 .venv-voxcpm/bin/python scripts/character_voiceover.py \
-  --character urfavxbf \
+  --character urfavxbf --language tl \
   --text "Alam mo ba, PIX? May misteryo sa likod ng internet!" \
   --output out/urfavxbf-tl.wav
 .venv-voxcpm/bin/python scripts/character_voiceover.py \
-  --character pix \
+  --character pix --language tl \
   --text "Hala, seryoso?! Tara, alamin natin!" \
   --output out/pix-tl.wav
 ```

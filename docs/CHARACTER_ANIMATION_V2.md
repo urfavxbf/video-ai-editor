@@ -1,3 +1,5 @@
+> **Historical development reference.** Prototype rig requirements below are not prerequisites for the current approved pixel-pose workflow. Follow [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and the registry for new productions.
+
 > **Owner layout decision:** Use **animated head portraits only** for future UrFavXBF + PIX video scenes; the earlier full-body versions should be hidden in final compositions. Keep expressive pixel portrait animation, accurate voice assignment, and connected data+captions. See [portrait-only layout](PIXEL_GLITCH_PORTRAITS_ONLY.md).
 
 # Animation v2 — UrFavXBF + PIX (owner feedback, 28 October 2026)

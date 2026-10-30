@@ -1,3 +1,5 @@
+> **Historical development workflow — not the current production default.** The requirements below apply to this earlier prototype/review pipeline, not the approved pose-swap workflow. Follow [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and [the registry](../characters/registry.json): 13 committed pixel poses, HeroCharacterStage and English Chatterbox voices. Keep these instructions for explicitly selected historical work; no paid API/GPU usage is authorized.
+
 # Canonical full-body motion review pack (2026-10-29)
 
 The owner-approved three-image reference set remains the **only authoritative

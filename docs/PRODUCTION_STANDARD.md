@@ -1,13 +1,11 @@
-> **Character layout update:** User approved **head portraits only**, one on either side of the motion-graphics field. Eliminate the full-body character overlays from future videos. Keep animated face sprites and actual Chatterbox speaker attribution. See [PIXEL_GLITCH_PORTRAITS_ONLY.md](PIXEL_GLITCH_PORTRAITS_ONLY.md).
-
 # UrFavXBF + PIX — production quality standard
 
-**Owner direction recorded:** 2026-10-28. This is the default brief for every new original Tagalog/Taglish video (English remains opt-in) featuring UrFavXBF (main host) and PIX (female-voiced AI cat sidekick). AI agents should consult this before creating a screenplay, timeline or rendered video. Keep all visual work original and treat cited creators as technique references, not designs to copy.
+**Current scope:** follow [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and the latest registry. This is the quality brief for new original English videos featuring UrFavXBF (main host) and PIX (female-voiced AI cat sidekick). AI agents should consult this before creating a screenplay, timeline or rendered video. Keep all visual work original and treat cited creators as technique references, not designs to copy.
 
 ## Storytelling & first pilot
 
 - Show **UrFavXBF** and **PIX** as two distinct recurring personalities; the host explains and PIX prompts, reacts, questions or adds humor. Do not replace either speaker with generic narration.
-- The agreed **first long-form episode** is **“Is the Internet Becoming a Ghost Town?”**, an English-language widescreen video about bots, real vs automated web activity, AI and internet authenticity. Build a full explanatory story with room for dialogue, visuals, nuance and takeaways; **do not reuse the retired 40–50-second Short outline as the episode duration**. The final runtime is story-driven and is set per production, not hard-coded in this standard. The science niche is **not** the channel identity; UrFavXBF covers wisdom, science, math, the internet, AI and editing.
+- The historical **Ghost Town pilot** is **“Is the Internet Becoming a Ghost Town?”**, an English-language widescreen video about bots, real vs automated web activity, AI and internet authenticity. Build a full explanatory story with room for dialogue, visuals, nuance and takeaways; **do not reuse the retired 40–50-second Short outline as the episode duration**. The final runtime is story-driven and is set per production, not hard-coded in this standard. The science niche is **not** the channel identity; UrFavXBF covers wisdom, science, math, the internet, AI and editing.
 - Treat any numerical claims about bot traffic as *unverified until checked against a dated primary source*. Clearly distinguish **share of web traffic** from **share of people, accounts or comments**. Do not automatically embed a percentage in the render without source and date verification.
 - Structure a **long-form narrative**: compelling cold open, premise, contextual explanation, evidence, examples, escalating questions, counterpoints and memorable conclusion. Split into titled chapters or sequences as appropriate; keep scene transitions and graphics motivated by changing ideas. Avoid slow generic introductions, unnecessary padding or an endless Shorts-style sequence of cuts.
 
@@ -16,7 +14,7 @@
 - Design **custom scene-specific motion**, not a slideshow or static speaking PNGs. Integrate characters into grounded live-action/realistic footage or cinematic backgrounds using appropriate occlusion, shadows, lighting, depth ordering and compositing.
 - Combine purposeful **kinetic typography**, UI/HUD overlays, infographics, animated counters, charts, tracked labels, parallax / 2.5D depth, masks/reveals, smooth camera moves, motion blur, spring physics, morph/scale transitions and synced sound effects when narratively useful.
 - Use the existing **21 Remotion motion effects** in `src/fx/` as an available creative toolbox. **Select effects to serve each scene; do not force all 21 into one video**. Study and adapt the effects without destroying their reusable source components. For longer chapters, alternate graphic-heavy passages with quieter compositions so viewers can follow the explanation.
-- Maintain coherent high-contrast **black/yellow** identity for UrFavXBF and **white/black/yellow/cyan** accents for PIX; ensure pixel-art edges stay intentionally crisp when scaled. Compose for a **16:9 landscape canvas**, including legible full-width charts and safe lower thirds, rather than vertical phone-safe framing.
+- Maintain coherent high-contrast **black/neon-green** identity for UrFavXBF and **cyan/lavender** styling for PIX; ensure pixel-art edges stay intentionally crisp when scaled. Compose for a **16:9 landscape canvas**, including legible full-width charts and safe lower thirds, rather than vertical phone-safe framing.
 - Inspiration by technique: interactive mathematical animation (Alan Becker), footage-plus-game HUD visualization (TierZoo), expressive character reactions (Danno / Riggy), and professional kinetic motion polish (Ben Marriott). Do not reproduce their characters, shots or copyrighted animations.
 
 ## Owner feedback after Ghost Town pilot — priority changes
@@ -25,7 +23,7 @@ The first pilot had strong overall motion design, but both characters need visib
 
 ## Character animation and identity integrity
 
-- Load the **actual approved transparent PNG overlays** listed in `characters/registry.json`, after staging the binaries from the owner's ChatGPT Library into `public/characters/` for a render. Verify each fingerprint where supported. The repository does **not** currently contain those binary images.
+- Load the **13 committed approved transparent PNG poses** under `public/characters/pixel-default/`, using `characters/registry.json` and `characters/pixel-default-manifest.json`. Run `python3 scripts/stage_pixel_default_pack.py --verify-workspace`; no old Library pack is required for the current HeroCharacterStage default.
 - Animate both characters with intentional, scene-specific **idle breathing or bobbing, head tilts, eye blinks, gaze shifts, emphatic poses, ear/tail reactions for PIX, turns, entrance/exit motion and reaction timing**, to the extent actually supported by the available image rig/assets.
 - Speaker-specific cues must derive from the final audio and annotated speaker track. Use reaction motion on listening characters; do not animate both as talking simultaneously unless deliberately overlapping dialogue.
 - **A static transparent PNG is not a rigged or lip-synced model.** If mouth-shape sprites, an actual face rig or phoneme/viseme mapping are unavailable, avoid claiming real lip sync. Use honest, limited bob/gesture proxies until an authentic rig is created.
@@ -33,8 +31,8 @@ The first pilot had strong overall motion design, but both characters need visib
 
 ## Voice identity, accuracy & music
 
-- **UrFavXBF**: default VoxCPM2 `urfavxbf-neon-storyteller-tl-v1`, Filipino Neon Storyteller voice design; English legacy Chatterbox `natural-storyteller-v1` available explicitly.
-- **PIX**: default VoxCPM2 `pix-pixel-spark-tl-v1`, Filipino Pixel Spark voice design; English legacy Chatterbox `pix-cute-female-emily-v1` available explicitly. Prefer the character-aware CLI `scripts/character_voiceover.py` to avoid assigning the wrong speaker.
+- **UrFavXBF**: current English Chatterbox V3 Natural Storyteller, `natural-storyteller-v1`. Tagalog VoxCPM2 designs remain on hold and opt-in only.
+- **PIX**: current English Chatterbox V3 Emily reference, `pix-cute-female-emily-v1`. No paid API or GPU usage is authorized by the defaults. Prefer the character-aware CLI `scripts/character_voiceover.py` to avoid assigning the wrong speaker.
 - Generate **distinct WAV lines or manageable chapter-sized segments**, mark the speaker and exact script for each line, retain real start/end times, and sequence them with visual reactions. Use the existing Chatterbox long-form chunking where appropriate. Avoid accidental overwriting, speech clipping, double audio, overlapping lines or voice drift between chapters.
 - **Check voice accuracy by listening**: no missing or invented words, no swapped lines, corrected pronunciation of UrFavXBF, PIX and technical terms, appropriate expressive delivery, no unexplained shifts of voice identity. Chatterbox can vary across generations; voice presets alone do not prove audible quality.
 - Build **word-aligned captions from the actual final generated audio** (forced alignment or transcript with human review). Captions, kinetic text, scene changes and reaction animation must track the audible speech; do not invent word timestamps. Check SRT/caption line wrapping, safe-area placement and readability.
@@ -47,8 +45,8 @@ The first pilot had strong overall motion design, but both characters need visib
 For each episode, plan the overall timeline, chapter transitions, recurring graphics, two-character screen geography and audio pacing across the **entire** runtime. Avoid simply stretching a short-form sequence or scaling 1080 × 1920 graphics into landscape.
 
 Before declaring the video complete:
-1. Confirm **both approved images** are actually present and rendered with transparent backgrounds, consistent pixelated styling and no cropping/off-screen errors.
-2. Confirm **both approved character voice designs** produce understandable Tagalog/Taglish audio, distinct speaker identities and accurate captions; independently listen and compare with the locked script. Existing verified Chatterbox WAVs are English-only and do not validate the new Tagalog designs.
+1. Confirm the required **approved poses for both characters** are actually present and rendered with transparent backgrounds, consistent pixelated styling and no cropping/off-screen errors.
+2. Confirm **both approved English Chatterbox voices** have distinct speaker identities, intelligible audio and accurate captions; independently listen and compare with the locked script. Presets or prior samples do not prove a new WAV or a completed episode.
 3. Confirm credible character motion, clearly differentiated speaker turns and character-reactive motion graphics. Check no distracting or excessive effect stacking.
 4. Preview representative and transition frames; verify typography, overlays, motion timing, camera/effect continuity and zero missing assets.
 5. Validate actual MP4 video + audio streams, encoding, dimensions, length, audio balance, speech-to-caption alignment and playback using ffprobe and preview.

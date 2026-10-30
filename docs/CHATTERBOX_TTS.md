@@ -1,7 +1,7 @@
-> **Production update (2026-10-28):** Chatterbox V3 is retained for
-> explicit **English** `--language en` character narration and old examples.
-> New UrFavXBF + PIX videos default to **Tagalog/Taglish** with VoxCPM2
-> voice-design profiles. See [multilingual voice policy](MULTILINGUAL_PRODUCTION_POLICY.md).
+> **Current production voice:** English Chatterbox V3 remains the default,
+> using Natural Storyteller for UrFavXBF and Emily for PIX. Read
+> [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and the registry's `english_voice`
+> fields. Tagalog/VoxCPM2 is on hold and opt-in only, without paid API/GPU use.
 > Do not attempt to force Tagalog through Malay `ms` in Chatterbox.
 
 # Chatterbox Multilingual V3 voice-over integration
@@ -28,7 +28,7 @@ These settings preserve the speaker conditioning and match the approved sample's
 - Overlay that WAV on any Remotion `ExampleEdit` composition and control the source-audio level.
 - Supports on-demand local CLI synthesis and a manual GitHub Actions **Generate Chatterbox V3 narration** workflow on the default branch. This does not provide a hosted low-latency TTS API or automatically verified natural-sounding audio.
 
-**Tagalog is not officially supported.** The multilingual V3 language list contains Malay (`ms`) and English (`en`), but not Filipino/Tagalog (`tl`). Do not label `ms` as Tagalog support. You can experiment with a Tagalog script tagged as `ms` only with the understanding that accent, transcription, and pronunciation may be incorrect. Manually review every output before publication.
+**Tagalog is not officially supported.** The multilingual V3 language list contains Malay (`ms`) and English (`en`), but not Filipino/Tagalog (`tl`). Do not label or route `ms` as Tagalog support. An explicitly requested Tagalog design experiment uses the separate retained VoxCPM2 path and remains subject to the current no-paid-usage policy.
 
 ## Important: V3 dependency compatibility
 
