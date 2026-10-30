@@ -1,3 +1,5 @@
+> **Historical reference — superseded for new productions.** The body below records an older workflow, including any claims of being "latest" or "default". Use it only for explicitly requested historical reproduction. Current defaults are in [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and [the registry](../characters/registry.json): English Chatterbox voices, 13 committed pixel poses and HeroCharacterStage. Historical staging requirements do not apply to the current pose pack.
+
 # Global canonical character development
 
 **Effective:** 2026-10-29 · **Scope:** all new UrFavXBF × PIX videos.

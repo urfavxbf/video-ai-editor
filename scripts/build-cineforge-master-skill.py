@@ -59,7 +59,7 @@ def main():
         raise ValueError("Pinned Remotion skill revision changed")
     header="""---
 name: cineforge-pro
-description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original English-language long-form YouTube videos starring UrFavXBF and PIX, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
+description: Use when an all-in-one reference is needed for UrFavXBF and PIX production, supplied-footage edits, Remotion compositions, narration, captions, previews or verified video delivery.
 ---
 
 # CINEFORGE PRO — AI Video Director & Motion Studio
@@ -68,6 +68,12 @@ ONE INSTALL • THIRTEEN MERGED SKILLS
 
 The main instructions from the project's custom AI video editor and all 12
 official Remotion Agent Skills are consolidated into this single SKILL.md.
+
+Read `docs/PRODUCTION_POLICY.md` and `characters/registry.json` first. The latest
+explicit user instruction governs its request; otherwise the current registry
+and custom production module take precedence over generic imported examples.
+English Chatterbox voices, the 13 committed pixel poses and HeroCharacterStage
+are the current defaults. Historical policies do not override that setting.
 
 ## Operating principles
 

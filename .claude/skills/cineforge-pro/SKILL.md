@@ -1,6 +1,6 @@
 ---
 name: cineforge-pro
-description: All-in-one professional AI video creator and editor skill combining thirteen workflows. Use for podcast video editing, cinematic motion graphics, original Tagalog/Taglish-default long-form YouTube videos starring UrFavXBF and PIX, Remotion animations, synchronized subtitles, audio, Studio previews, rendering and building a video editor.
+description: Use when an all-in-one reference is needed for UrFavXBF and PIX production, supplied-footage edits, Remotion compositions, narration, captions, previews or verified video delivery.
 ---
 
 # CINEFORGE PRO — AI Video Director & Motion Studio
@@ -9,6 +9,12 @@ ONE INSTALL • THIRTEEN MERGED SKILLS
 
 The main instructions from the project's custom AI video editor and all 12
 official Remotion Agent Skills are consolidated into this single SKILL.md.
+
+Read `docs/PRODUCTION_POLICY.md` and `characters/registry.json` first. The latest
+explicit user instruction governs its request; otherwise the current registry
+and custom production module take precedence over generic imported examples.
+English Chatterbox voices, the 13 committed pixel poses and HeroCharacterStage
+are the current defaults. Historical policies do not override that setting.
 
 ## Operating principles
 
@@ -23,7 +29,7 @@ official Remotion Agent Skills are consolidated into this single SKILL.md.
 4. For original videos, write original scripts and use properly licensed
    visuals, voiceover and music. Independently verify time-sensitive or
    material scientific claims.
-5. Prefer word-level timestamps. Proofread captions in the selected production language for new work, place subtitles
+5. Prefer word-level timestamps. Proofread English-language captions for new work, place subtitles
    in safe areas, and disclose approximate timing when exact alignment fails.
 6. Render deterministic Remotion animations from frames. Use appropriate
    Studio previews and real MP4 renders. Validate encoded duration, frames,
@@ -42,85 +48,59 @@ official Remotion Agent Skills are consolidated into this single SKILL.md.
 
 Source: https://github.com/urfavxbf/video-ai-editor/blob/main/.claude/skills/ai-video-editor/SKILL.md
 
-### AI Video Editor – Professional 2026 Workflow
+### AI Video Editor
 
-You are the editor. User provides footage; make artistic/technical editing decisions, without inventing source material.
+Read `docs/PRODUCTION_POLICY.md` and `characters/registry.json` before production.
+The latest explicit user instruction wins for that request; otherwise use the
+registry's `production_language`, `default_video`, `character_hero_system` and
+each character's `english_voice`. Historical policies and generic examples do
+not replace these defaults. Report unresolved current-source conflicts before
+dependent production. A Tagalog user message does not change video language.
 
-#### Official two-character production identity
+#### Current approved defaults
 
-- **UrFavXBF** is the recurring main human presenter and is knowledgeable across wisdom, science, math, internet culture, AI, and editing. Do not label the channel science-only. Use the approved high-contrast black/yellow pixel-art portrait and VoxCPM2 Tagalog `urfavxbf-neon-storyteller-tl-v1` Neon Storyteller voice design by default; preserve Chatterbox `natural-storyteller-v1` only for explicit English releases.
-- **PIX** is UrFavXBF's separate talking robotic-cat AI pet, with cyan/lavender pixel-glitch visual identity and a bright feminine Filipino VoxCPM2 `pix-pixel-spark-tl-v1` Pixel Spark voice design by default; preserve the synthetic Emily-reference Chatterbox V3 `pix-cute-female-emily-v1` voice for explicit English releases.
-- The owner approved and saved both characters/voice identities on 2026-10-28. Read `characters/registry.json` and `docs/OFFICIAL_CHARACTERS.md` before composing new stories. Preserve each character's face, costume and voice conditioning across scenes.
-- For new Tagalog character dialogue, use `scripts/character_voiceover.py --character urfavxbf|pix --text ... --output ...` (default `tl`, VoxCPM2). For legacy English Chatterbox voices, supply `--language en`; never give PIX the male narrator's conditioning.
-- The original transparent PNGs and real voice samples live in the owner's ChatGPT Library under `/UrFavXBF Video Characters/`. They are **not yet binary assets in this repo**; stage the images into `public/characters/` before attempting an overlay render. Do not invent image or audio paths, lip sync, or completed MP4 outputs.
+- **English (en)** for scripts, narration, captions, graphics and metadata.
+- Long-form **1920×1080, 16:9, 30 fps**; runtime follows script and chapters.
+- UrFavXBF: Chatterbox V3 **Natural Storyteller**, `natural-storyteller-v1`.
+- PIX: Chatterbox V3 **Emily**, `pix-cute-female-emily-v1`; keep independent speakers.
+- **13 committed** approved pixel PNG poses (UrFavXBF 6, PIX 7), under
+  `public/characters/pixel-default/`; verify against `characters/pixel-default-manifest.json`.
+- Full-body pixel-pose characters on a cinematic 2.5D stage:
+  **HeroCharacterStage** with approved assets enabled; **PixelProductionProof**
+  is the existing model-free artwork proof. No substitute/rejected art.
+- Preserve black/neon-green UrFavXBF and cyan/lavender PIX identities. Use
+  speaker/listener pose swaps and short scene-transition glitches; no claim of
+  phoneme lip-sync or volumetric 3D from PNG transforms.
+- Tagalog/VoxCPM2 stays on hold, **opt-in only**. **No paid API or GPU** usage.
+  Its retained `voice` profiles are not the English production defaults.
 
-#### Current owner improvement priorities — mandatory
+Verify files with `python3 scripts/stage_pixel_default_pack.py --verify-workspace`.
+The approved art is in the repository; if a local file is absent, report that
+path and repair the authorized checkout/staging, not the approved identity.
+Do not demand the old V2 Library pack for the default workflow.
 
-- The owner wants **both animated PIX/UrFavXBF head portraits enlarged by about 35%** for new landscape videos; use `src/characters/portraitLayout.ts` (414 × 468 px with center-safe left/right positions) and keep the full-body sprites hidden.
-- Next researched candidate: `docs/episodes/y2038.md` (Year 2038 signed 32-bit Unix time problem). Use the `Y2038Teaser` Remotion scene and independently verified facts; do not claim all computers will fail or that the full episode is complete.
+#### Production and verification
 
+1. Verify the requested output and actual media. Preserve authentic supplied
+   dialogue; translate/redub only with explicit authorization.
+2. Plan the story, chapter lengths, speaker turns and restrained FX. UrFavXBF
+   covers wisdom, science, math, internet culture, AI and editing; never science-only.
+3. Reuse approved English WAVs when available. If new narration is authorized,
+   use the existing Chatterbox profiles via `scripts/character_voiceover.py`
+   with `--language en --device cpu`. Actual WAVs, word alignment and listening
+   QA determine captions and speaker events, not guessed text duration.
+4. Apply `docs/PRODUCTION_STANDARD.md`. Use the 21 existing FX selectively,
+   clear captions and verified facts; inspect representative/transition frames.
+5. Verify final MP4 dimensions, duration, video/audio streams and playback with
+   FFprobe and audiovisual QA. Deliver only real files; publish only if requested.
 
-- **Latest explicit user layout decision**: use ONLY the **animated super-pixel/glitch HEAD PORTRAITS** of UrFavXBF (left) and PIX (right). Do **not** composite their large full-body sprites or bottom nameplates in new videos. See `docs/PIXEL_GLITCH_PORTRAITS_ONLY.md` and the `PixelPortraitHUD` / `PixelGlitchPortrait` Remotion components.
-
-
-- **Newest approved visual identity:** use `super-pixel-glitch-v2` for new UrFavXBF + PIX videos. These are separate real transparent 2D pixel-art PNGs, expression portraits, animation-loop frames and glitch VFX; see `docs/PIXEL_GLITCH_CHARACTER_PACK.md` and `characters/registry.json`. Don't mistake a concept sheet for an overlay.
-- The binary pack is in the owner's ChatGPT Library (`/UrFavXBF Video Characters/Pixel Glitch V2/`), **not yet in GitHub**. Stage images at `public/characters/pixel-glitch/` first; prefer the `src/characters/PixelGlitchSprite.tsx` frame-driven talk/idle/react loops when using this asset set.
-- Keep VoxCPM2 Tagalog voice designs `urfavxbf-neon-storyteller-tl-v1` for UrFavXBF and `pix-pixel-spark-tl-v1` for PIX as the new defaults. Existing Chatterbox English voice identities stay available only with explicit `--language en`. Glitch effects should decorate/react, not overwhelm captions.
-
-
-- After watching the Ghost Town pilot, the owner requested **more expressive character animation first**: independent reactions, idle/head/ear/tail/body movement where real rig layers exist, speaker-aware cues and accurate voice attribution.
-- Next implement **animated data/caption fusion**, tying verified stats and emphasized captions to the same final WAV word timestamps. Avoid disconnected subtitles and floating fact cards.
-- Consult `docs/CHARACTER_ANIMATION_V2.md` and use `src/characters/CharacterPuppet.tsx` plus `scripts/extract_voice_envelope.py` when the matching approved assets are available.
-- The existing repo has Remotion and FX, but no genuine rigged 3D character assets nor installed `@remotion/three` engine. Do not describe 2.5D transforms as volumetric 3D or claim phoneme-accurate mouth animation from a single transparent PNG.
-
-#### Format, motion graphics, character animation, and voice QA — mandatory
-
-- **Default output for new original episodes is long-form 16:9 widescreen (1920 × 1080 at 30 fps), not 9:16.** Runtime comes from a complete script/chapters and is confirmed for each video; preserve existing portrait demos but don't copy their framing for new work.
-- Outline a sustained narrative with chapter boundaries, multi-scene character exchanges, visual breathing room and long-form audio continuity; do not stretch a Shorts template.
-
-- Apply `docs/PRODUCTION_STANDARD.md` as the **acceptance criteria for every new UrFavXBF + PIX video**: cinematic advanced motion design, appropriate selections from all **21 available effects** in `src/fx/`, character-specific animation/reactions and accurate audio-to-caption-to-animation timing.
-- The 21 entries in `src/fx/` are motion-effect implementations, **not 21 separate agent skills**; CineForge Pro consolidates the custom editing skill plus 12 official Remotion skills. Use both the effect library and relevant agent guidance.
-- For the first **long-form 16:9 episode**, treat **“Is the Internet Becoming a Ghost Town?”** as a historical English pilot; for new episodes, use Tagalog/Taglish dialogue and chaptered storytelling, detailed interactive internet/AI graphics and grounded fact-checking of bot traffic claims; do not confuse bot traffic with human accounts. **Do not use the obsolete 40–50-second Short duration.**
-- Before rendering, **verify both PNGs are staged** and generate separate lines for each voice via `scripts/character_voiceover.py`. Validate the speaker-to-WAV mapping, voice pronunciation, actual word alignment and reactive animation; never claim real lip sync from still PNGs without a mouth rig/sprites.
-- Preview and verify the final MP4 with real audio and visual QA; polish is not satisfied by passing unit tests alone.
-
-#### Production language policy
-
-- For **all new original productions**, use **Tagalog/Taglish (`tl`) by default** for scripts, narration, on-screen graphics, captions, YouTube titles, descriptions, and SEO metadata. UrFavXBF uses VoxCPM2 Neon Storyteller, PIX uses VoxCPM2 Pixel Spark; these are approved text voice designs, **not yet verified audible Tagalog samples**. English remains an explicit `--language en` alternative using the previous Chatterbox voices. Read `docs/MULTILINGUAL_PRODUCTION_POLICY.md`. Never describe a TTS voice design as a completed audio/video render.
-- Preserve both historical Tagalog/Taglish and English compositions as legacy projects; new productions follow the chosen language, Tagalog/Taglish by default.
-- When supplied existing interviews or recordings, preserve authentic speech and quotations. Never invent dialogue or silently translate/redub without appropriate rights and explicit authorization, regardless of language.
-- Check narration intelligibility, voice identity, word-level caption sync, soundtrack balance, output dimensions, and encoded MP4 audio/video before describing a production as delivered.
-
-#### Tools
-- FFmpeg: transcode, trim, audio mix, silence/noise processing, final encoding.
-- Remotion: reuse the existing project's effects; its edit list is src/edit/edit.json.
-- Official Remotion Agent Skills: consult `.claude/skills/remotion-best-practices/SKILL.md` for routing; `remotion-markup` for animation/composition rules, `remotion-captions` for word-timed subtitles, `remotion-render` for export, and `remotion-studio` for preview. The official skills are reference guidance; follow this project skill's user-specific editing and delivery requirements.
-- HyperFrames: separate HTML/CSS/JS motion-graphics renderer. Use the official /hyperframes skill (installed through its CLI) and build in a separate project. Do not put HyperFrames code into the Remotion composition.
-- Groq Whisper: optional cloud transcription for Tagalog, Taglish and English. The script scripts/groq_transcribe.py generates word-timed JSON, TXT and SRT; require GROQ_API_KEY and user authorization to send audio to an external service. Never translate speech without asking. Do not assume Tagalog/Taglish transcription is perfect.
-- Claude.ai on Android and GitHub Codespaces are different execution environments. A Skill alone does NOT connect them.
-
-#### Workflow
-1. Confirm input media actually exists, probe metadata with ffprobe and inspect the footage before editing. Do not claim to have watched inaccessible media.
-2. If authorized and Groq key available, transcribe with python scripts/groq_transcribe.py input/myclip.mp4. For mixed Taglish, omit --language; for pure Tagalog, --language tl is optional. Proofread names and slang.
-3. Identify the story hook, useful quotes, punchlines and natural pacing; avoid meaning-changing edits. Plan cuts and effects to the frame.
-4. Design readable, kinetic captions that match each spoken word, safe margins and accessible contrast. Use zooms/callouts only when narrative value is clear. Reserve HyperFrames for custom graphic sequences.
-5. Preview and check timing, faces, cutouts, fonts, sound levels, captions and missing media. Render through an available engine. Verify the output via ffprobe.
-6. Deliver the actual MP4, edit file and SRT only if those files were produced. Otherwise provide executable commands and be clear about the boundary.
-
-#### Codespaces tools setup
-From the repo root, after the scripts have landed in the workspace:
-
-    bash scripts/setup-ai-video-tools.sh
-
-For Groq, store GROQ_API_KEY in GitHub Codespaces secrets; do not commit it or paste it into a public conversation. Restart Codespaces to load it.
-
-To start an independent HyperFrames project:
-
-    mkdir -p hyperframes-projects
-    cd hyperframes-projects
-    npx hyperframes init my-motion-clip
-
-Never assume that running this Skill from the Claude mobile app executes those commands in GitHub Codespaces.
+Groq transcription (`scripts/groq_transcribe.py`) is optional and requires an
+available key and authorization to send audio externally. A skill does not
+connect a chatbot to Codespaces, install models or grant credentials/budget.
+Historical portrait/V2 and 9:16 workflows remain explicit reproduction options.
+OpenMontage remains isolated and opt-in: read `integrations/openmontage/README.md`
+and its nested agent guide when selected. Do not mix its runtime into Remotion.
+Official Remotion skills supply framework techniques, not project defaults.
 
 ---
 

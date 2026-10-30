@@ -1,3 +1,5 @@
+> **Historical reference — superseded for new productions.** The body below records an older workflow, including any claims of being "latest" or "default". Use it only for explicitly requested historical reproduction. Current defaults are in [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and [the registry](../characters/registry.json): English Chatterbox voices, 13 committed pixel poses and HeroCharacterStage. Historical staging requirements do not apply to the current pose pack.
+
 > **Update (28 October 2026):** The preferred production layout is now **animated head portraits only**. Do not show the full-body V2 sprites in new videos. See [the portrait-only policy](PIXEL_GLITCH_PORTRAITS_ONLY.md). The pack retains full-body originals as archived raw source material.
 
 # Super Pixel / Glitch V2 — character asset pack

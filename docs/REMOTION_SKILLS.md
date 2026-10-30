@@ -31,7 +31,7 @@ The full skill directories (including supporting `REFERENCE.md`, technique docum
 
 ## Which skill controls this project?
 
-Use the local `ai-video-editor` skill for practical editing rules—Tagalog/Taglish dialogue, source timing, motion design, creative pacing, rights and final MP4 verification. Consult the appropriate official Remotion skills for implementation best practices.
+Read [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and the current registry before the local `ai-video-editor` skill: English Chatterbox voices, committed pixel poses and HeroCharacterStage are the approved defaults. Use the custom skill for source timing, motion design, creative pacing, rights and final MP4 verification. Consult official Remotion skills for framework techniques; generic examples do not change project defaults.
 
 These are **agent instructions**, not installed React video effects or new npm packages. Importing skills alone does not upgrade Remotion or guarantee automatic video editing. Our Remotion npm dependencies remain pinned separately in `package.json`.
 

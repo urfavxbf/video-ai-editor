@@ -1,9 +1,4 @@
-> **2026-10-28 update:** PIX's new default for Tagalog/Taglish videos is
-> **Pixel Spark**, a VoxCPM2 text-based voice design profile. This document
-> records the *English-only legacy* Chatterbox Emily reference. See
-> [multilingual policy](MULTILINGUAL_PRODUCTION_POLICY.md) and
-> [official character registry](../characters/registry.json).
-> The new Tagalog voice has not yet been auditioned as a real WAV.
+> **Current English production voice:** PIX uses the approved Chatterbox Emily reference below. Tagalog Pixel Spark remains opt-in and on hold; it does not replace this default. Read [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and the `english_voice` fields in [the registry](../characters/registry.json).
 
 # PIX voice — Chatterbox Multilingual V3
 

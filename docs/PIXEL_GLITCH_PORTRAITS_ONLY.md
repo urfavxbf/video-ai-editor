@@ -1,3 +1,5 @@
+> **Historical reference — superseded for new productions.** The body below records an older workflow, including any claims of being "latest" or "default". Use it only for explicitly requested historical reproduction. Current defaults are in [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and [the registry](../characters/registry.json): English Chatterbox voices, 13 committed pixel poses and HeroCharacterStage. Historical staging requirements do not apply to the current pose pack.
+
 > **Sizing update:** Enlarge **both** head portraits to 414 × 468 px (approximately 35% wider). Left at 64 px, right at 64 px, top at 202 px, center infographic field x=515–1405. See [portraitLayout.ts](../src/characters/portraitLayout.ts). No full-body avatars.
 
 # Pixel Glitch V2 — portraits-only layout (owner-approved)
