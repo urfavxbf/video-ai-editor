@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio",
+    "test:motion": "node --test tests/motion-toolkit.test.cjs",
     "sample": "python3 scripts/make-sample.py public/sample && python3 scripts/make-fg.py public/sample/take.mp4 public/sample/masks public/sample/fg && python3 scripts/make-sticker-mattes.py public/sample/fg public/sample/sticker",
     "typecheck": "tsc --noEmit",
     "render:showcase": "remotion render FxShowcase out/showcase.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p",

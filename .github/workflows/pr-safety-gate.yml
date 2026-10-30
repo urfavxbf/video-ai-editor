@@ -36,6 +36,8 @@ jobs:
         run: npm run typecheck
       - name: Test composition duration validation
         run: node --test tests/composition-duration.test.cjs
+      - name: Test original motion toolkit
+        run: npm run test:motion
       - name: Run existing model-free tests
         run: |
           python -m unittest discover -s tests -p 'test_*.py' -v
@@ -77,9 +79,37 @@ jobs:
               assert streams[0].get(key) == value, f"Unexpected {key}: {streams[0]}"
           print("Verified 30-frame H.264 fixture: 480x270 at 30 fps")
           PY
+      - name: Render original motion toolkit demo
+        run: >-
+          npx remotion render MotionToolkitDemo out/motion-toolkit-demo.mp4
+          --scale=0.5 --concurrency=2 --codec=h264 --crf=21
+          --pixel-format=yuv420p
+      - name: Verify rendered motion demo
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+
+          result = subprocess.check_output([
+              "ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=codec_name,width,height,r_frame_rate,nb_frames",
+              "-of", "json", "out/motion-toolkit-demo.mp4",
+          ], text=True)
+          streams = json.loads(result)["streams"]
+          assert len(streams) == 1, "Expected one video stream"
+          expected = {
+              "codec_name": "h264", "width": 960, "height": 540,
+              "r_frame_rate": "30/1", "nb_frames": "240",
+          }
+          for key, value in expected.items():
+              assert streams[0].get(key) == value, f"Unexpected {key}: {streams[0]}"
+          print("Verified 240-frame H.264 motion demo: 960x540 at 30 fps")
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: pr-safety-gate-fixture
-          path: out/pr-safety-gate.mp4
+          path: |
+            out/pr-safety-gate.mp4
+            out/motion-toolkit-demo.mp4
           if-no-files-found: error
           retention-days: 3

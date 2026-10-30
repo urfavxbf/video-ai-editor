@@ -8,6 +8,7 @@ import { DudutPremium, DUDUT_DURATION, type DudutPremiumProps } from './podcast/
 import { DudutV2, DUDUT_V2_DURATION, type DudutV2Props } from './podcast/DudutV2'
 import { DoorwayEffect, type DoorwayProps } from './original/DoorwayEffect'
 import { OfficialFeaturesDemo, OFFICIAL_FEATURE_DEMO_FRAMES } from './features/OfficialFeaturesDemo'
+import { MotionToolkitDemo, MOTION_TOOLKIT_DEMO_FRAMES } from './motion/MotionToolkitDemo'
 import { RepoShowcase, REPO_SHOWCASE_FRAMES } from './showcase/RepoShowcase'
 import { ChallengerDeep, type ChallengerProps } from './original/ChallengerDeep'
 import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characters/CharacterAnimationLab'
@@ -61,6 +62,7 @@ export const Root = () => <>
     defaultProps={{totalFrames:1350,captions:[],narrationAvailable:false} satisfies ChallengerProps} />
   <Composition id="RepoShowcase" component={RepoShowcase} width={1080} height={1920} fps={30} durationInFrames={REPO_SHOWCASE_FRAMES} />
 	<Composition id="OfficialFeaturesDemo" component={OfficialFeaturesDemo} width={1080} height={1920} fps={30} durationInFrames={OFFICIAL_FEATURE_DEMO_FRAMES} />
+  <Composition id="MotionToolkitDemo" component={MotionToolkitDemo} width={1920} height={1080} fps={30} durationInFrames={MOTION_TOOLKIT_DEMO_FRAMES} />
 	<Composition id="OriginalDoorway" component={DoorwayEffect} width={1080} height={1920} fps={30} durationInFrames={2400}
     defaultProps={{totalFrames:1230,captions:[],narrationAvailable:false} satisfies DoorwayProps} />
   <Composition id="FxShowcase" component={FxShowcase} width={FX_W} height={FX_H} fps={FX_FPS} durationInFrames={showcaseDuration()} />

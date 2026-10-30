@@ -1,0 +1,2 @@
+export { MotionText, type MotionTextProps } from './MotionText'
+export { MOTION_PRESETS, resolveMotionState, type MotionEasing, type MotionPreset, type MotionPresetName, type MotionVariant } from './motionMath'
