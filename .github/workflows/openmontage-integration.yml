@@ -44,8 +44,24 @@ jobs:
         run: bash integrations/openmontage/scripts/setup.sh --skip-tts
       - name: Verify environment without exposing secrets
         run: bash integrations/openmontage/scripts/doctor.sh
+      - name: Report Codex-native production capabilities
+        run: python integrations/openmontage/scripts/production.py preflight
       - name: Render and probe a free demo MP4
         run: bash integrations/openmontage/scripts/demo.sh world-in-numbers
+      - name: Render a new manifest-driven motion and caption fixture
+        run: python integrations/openmontage/tests/production_fixture.py ci
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: openmontage-codex-motion-proof
+          path: |
+            integrations/openmontage/.runtime/openmontage/projects/fixture-ci/renders/fixture.mp4
+            integrations/openmontage/.runtime/openmontage/projects/fixture-ci/renders/qa-*.jpg
+            integrations/openmontage/.runtime/openmontage/projects/fixture-ci/assets/captions.srt
+            integrations/openmontage/.runtime/openmontage/projects/fixture-ci/artifacts/*.json
+            integrations/openmontage/.runtime/openmontage/projects/fixture-ci/checkpoint_*.json
+          if-no-files-found: error
+          retention-days: 3
       - uses: actions/upload-artifact@v4
         if: success()
         with:

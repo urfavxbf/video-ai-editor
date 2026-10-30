@@ -1,59 +1,150 @@
-# OpenMontage — isolated faceless YouTube production
+# OpenMontage — Codex-native, isolated production tools
 
-This is an **opt-in** OpenMontage integration for the existing `video-ai-editor` repository. It deliberately does **not** change the default `.devcontainer/devcontainer.json`, root `package.json`, Remotion compositions, existing voice/character policies, or the `main` branch.
+**The Codex environment already connected to this repository is the agent.**
+No Copilot, Claude, Cursor account or second AI-agent installation is required.
+Codex reads the pinned instructions, makes creative decisions, authors/reviews
+artifacts, requests real approvals and runs tools. Actions executes deterministic
+commands; it is not an AI reasoning agent.
 
-## Android phone only: Codespaces walkthrough
+Read the [verified capability-gap audit](../../docs/OPENMONTAGE_CODEX_GAP_AUDIT.md)
+and [current production policy](../../docs/PRODUCTION_POLICY.md). This opt-in route
+preserves UrFavXBF/PIX, approved art/voices, English and 1920×1080/30 fps.
 
-1. In Android Chrome, sign in to GitHub. Open the `urfavxbf/video-ai-editor` repository and enable **Desktop site** if the buttons are hidden.
-2. Open **Code → Codespaces → Create codespace**. Select the branch `feature/openmontage-codespaces` and the **OpenMontage (isolated) — Faceless YouTube** devcontainer configuration (`.devcontainer/openmontage/devcontainer.json`). GitHub can show the configuration selector under advanced options.
-3. Let the profile's `postCreateCommand` finish. It installs a pinned checkout, separate Python virtual environment and separate Remotion dependencies inside `integrations/openmontage/.runtime/openmontage/`. Cloud compute may count against your Codespaces/Actions allowances.
-4. In Codespaces, open **Terminal → New Terminal** and run:
+## One-command preflight
 
-   ```bash
-   bash integrations/openmontage/scripts/doctor.sh
-   bash integrations/openmontage/scripts/demo.sh world-in-numbers
-   ```
-
-5. From the VS Code file explorer, find `integrations/openmontage/.runtime/openmontage/projects/demos/renders/world-in-numbers.mp4`. Right-click and **Download** to your Android phone. This first MP4 is a technical test, **not** yet your faceless episode.
-
-If you chose the **default** devcontainer instead, install in its terminal with:
+From the host root in the existing Codex task environment:
 
 ```bash
-bash integrations/openmontage/scripts/codespace-setup.sh
+# Only if not already installed:
+bash integrations/openmontage/scripts/setup.sh --skip-tts
+python3 integrations/openmontage/scripts/production.py preflight
 ```
 
-No Termux, Android root access, or local laptop is needed. **Codespaces and any paid AI service may have usage costs.** A GitHub account's quota varies; check your billing before a large render.
+This selects the isolated venv, verifies the unchanged source pin, loads the real
+manifest and discovers selected tools. Its JSON diagnoses capabilities; `degraded`
+is not production readiness or approval. It does not print credentials, synthesize
+speech, download footage or make paid calls. Registration does not prove network
+connectivity. Modified tracked upstream source or a wrong SHA is a hard blocker.
 
-## Start a faceless production
+Verified task-machine blockers: Chatterbox lacks `torch`; NASA, Archive.org and
+Commons are denied by network policy; the default Chromium download from
+`remotion.media` also fails. Do not downgrade voice/runtime to conceal these.
+Existing approved WAVs do not require synthesis dependencies.
 
-Open the nested upstream folder `integrations/openmontage/.runtime/openmontage/` in an AI coding assistant that can **read repository files and execute commands in the Codespace** (not just a plain text chatbot). Have it read `AGENT_GUIDE.md`, `PROJECT_CONTEXT.md` and the selected `pipeline_defs/` manifest before attempting production.
+## Approved local inputs → reviewed MP4
 
-Starter prompt for a 16:9 YouTube episode:
+Codex reads nested `CODEX.md`, `AGENT_GUIDE.md`, `PROJECT_CONTEXT.md`,
+`pipeline_defs/documentary-montage.yaml` and each stage's director skill. Actual
+stages: **idea → scene_plan → assets → edit → compose**. The first four require
+owner approval. Python does not generate topics, invent scripts or approve stages.
+Backlot is an optional observer, not an execution/approval substitute.
 
-> Read AGENT_GUIDE.md and PROJECT_CONTEXT.md first and follow the OpenMontage pipeline. Create an original 3-minute faceless YouTube documentary about why satellites don't fall straight to Earth. Use 16:9 1920x1080, clear English narration, captions, real licensed stock/archival footage where feasible, and copyright-safe background music. Choose the documentary-montage pipeline or explain why animated-explainer fits better. Use **zero paid API calls**. Research and propose an outline, storyboard, media sources/licenses and costs first; **stop for my approval** before producing assets or rendering. If free narration is not available, report the blocker instead of silently replacing it.
+A task you can send to the configured Codex environment from Android:
 
-OpenMontage is an agent-driven production system, **not** an unattended one-command topic-to-video CLI. The agent must drive its documented pipeline and approval gates. It is separate from the original video's UrFavXBF/PIX characters and narration defaults.
+> Use the pinned OpenMontage documentary route and current production policy.
+> Run preflight; propose an original English brief/script, scenes and footage/license
+> sources. Keep 1920×1080/30 fps, approved Natural Storyteller/Emily and zero paid
+> API/GPU. Present each real approval gate before advancing. Use approved local
+> footage/WAV where available; report exact missing media/runtime/rights blockers.
+> Do not substitute voices, deliver test media as an episode or publish.
 
-## Manual commands
-
-From the parent repository root:
+Commands run by Codex:
 
 ```bash
-bash integrations/openmontage/scripts/setup.sh           # pinned checkout + dependencies + optional Piper TTS
-bash integrations/openmontage/scripts/setup.sh --skip-tts # installation without optional Piper TTS
-bash integrations/openmontage/scripts/doctor.sh           # verify install; no secrets printed
-bash integrations/openmontage/scripts/demo.sh             # free sample render
+python3 integrations/openmontage/scripts/production.py init my-documentary --title 'My original topic'
+# Codex writes schema-valid artifacts after reading the stage director skill.
+python3 integrations/openmontage/scripts/production.py checkpoint my-documentary idea
+# Present brief and stop for the actual owner decision. Only after that decision:
+python3 integrations/openmontage/scripts/production.py checkpoint my-documentary idea --approve 'owner decision reference'
+# Repeat separately for scene_plan, assets and edit with real owner approvals.
+python3 integrations/openmontage/scripts/production.py render my-documentary
 ```
 
-To upgrade the upstream snapshot, **review** the new OpenMontage commit and update `UPSTREAM_COMMIT` via a separate PR; re-run CI. The installer refuses to overwrite tracked changes in the nested checkout.
+Projects are under ignored `.runtime/openmontage/projects/my-documentary/`.
+Use canonical `artifacts/{brief,scene_plan,asset_manifest,edit_decisions}.json`,
+following upstream `schemas/artifacts/`. The adapter uses upstream checkpoints;
+changed approved artifacts/media fail acceptance. Never use `--approve` to skip
+an actual conversation gate. Use a new project ID for a new render.
+Each gate is bound to prerequisite artifact hashes; reapproving a changed brief
+invalidates downstream approvals. A changed prerequisite also invalidates a
+pending approval. No checkpoint/history/temp symlinks are accepted.
 
-## Design and safety
+First-route limits: **2–180 seconds, at most 60 hard cuts**, matching `broll`
+scenes and distinct local motion assets. Transforms, overlays, speed changes,
+multi-speaker mixing, music/end-tag execution are explicit blockers. Caption
+styling overrides and cut background colors are also rejected explicitly.
+Documentary normally requires music and an end-tag; this route needs **real approved opt-out
+reasons**, or stops for the next adapter. It never invents those decisions.
 
-- **Upstream pinned:** `calesthio/OpenMontage` at commit `195eab24478dc9363326aec437aefc3701635ddf` (third-party source, under its upstream AGPLv3 license). The code is fetched only when the optional installer runs; it is not copied or committed into this repository.
-- **Isolation:** all checkout files, NPM installs, Python packages, local `.env`, downloaded media and MP4 renders live under ignored `integrations/openmontage/.runtime/`. It never changes root dependencies or project compositions.
-- **Approval/billing:** no OpenMontage provider keys are required for demo rendering. Optional provider keys should be set through GitHub Codespaces secrets or kept exclusively in the ignored nested `.env`; never commit credentials. A separate AI coding assistant connection is still required to execute real production pipelines.
-- **CI:** the new pull-request-only workflow runs contract tests and a zero-paid-API demo render, uploading a short-lived MP4 artifact when it succeeds. CI runs consume GitHub Actions minutes and are **not** a complete end-to-end faceless-episode test.
-- **Licensing:** confirm media license and attribution terms before public YouTube uploads. Stock availability and copyright safety must not be assumed automatically.
-- **Preservation:** the existing `video-ai-editor` mainline, UrFavXBF/PIX presets, default 16:9 pipeline, and historic videos stay unchanged. No merge is performed by this setup.
+Additional adapter metadata (alongside the upstream canonical fields):
 
-Upstream documentation: https://github.com/calesthio/OpenMontage/blob/main/README.md
+- `brief.metadata`: `language: "en"`, `render_runtime: "remotion"`,
+  `music_plan: {"source":"none","opt_out_reason":"<actual owner decision>"}`,
+  `end_tag_plan: null`, `end_tag_opt_out_reason: "<actual owner decision>"`.
+- Each asset: unique `id`, project-relative real `path`, `scene_id`, `source_tool`,
+  `provider`, `original_url`, item-level `license`, `cost_usd: 0`.
+- `asset_manifest.metadata.provenance[asset_id]`: `sha256`, `rights_review`
+  (item evidence, attribution and allowed use), `reviewed_by`. A site's generic
+  license label is not legal clearance.
+- `asset_manifest.metadata.narration`: narration WAV `asset_id`,
+  `character: "urfavxbf"` or `"pix"`, matching `voice_id` (`natural-storyteller-v1`
+  or `pix-cute-female-emily-v1`), `language: "en"`, `audio_sha256`,
+  `alignment_review`, `segments: [{"words":[{"word":"Hello","start":0.2,"end":0.7}]}]`.
+  Reviewed WAV/edit durations must match within 50 ms. Word timings must be
+  ordered, finite and within the actual WAV; estimates are not alignment.
+- `edit_decisions`: `renderer_family: "documentary-montage"`,
+  `render_runtime: "remotion"`, cuts referencing asset IDs with matching scene
+  IDs, real source in/out times and explicit hard cuts.
+
+The registry's `subtitle_gen` writes SRT. `video_compose` renders the cinematic
+word-caption transport props and muxes the approved audio without extra speech
+fades. Exact probe, full decode and sample frames verify technical output;
+`final_review`, `render_report` and FFprobe JSON are preserved.
+Upstream `revise` QA results remain `awaiting_human`, never completed; evidence
+is kept and the report identifies that state. A failed/unknown QA result blocks.
+Labels/checksums cannot prove audible voice identity, alignment or rights: owner audiovisual/legal
+review remains necessary. No automatic publishing occurs.
+
+When new narration is separately authorized and available, reuse the existing
+host Chatterbox environment and CPU path, not upstream Piper or paid TTS:
+
+```bash
+python scripts/check_chatterbox_v3.py
+python scripts/character_voiceover.py --character urfavxbf --language en --device cpu \
+  --text-file SCRIPT.txt --output APPROVED.wav
+```
+
+This neither installs/downloads models automatically nor guarantees inference.
+PIX retains the existing Emily-reference path; no voice identities change.
+
+## Real technical proof and Android download
+
+```bash
+python3 integrations/openmontage/tests/production_fixture.py local-check
+```
+
+This creates `projects/fixture-local-check/` with editable canonical JSON, two
+moving FFmpeg test patterns, a four-second tone **not speech**, timed labels and
+simulated **fixture-only** approvals. Production mode rejects it. Explicit fixture
+mode produces a new 1080p/30 fps MP4/SRT/probe/reviews/frames; it is not a licensed
+or voiced episode. Use a new ID for another run; existing projects are preserved.
+
+The existing PR-only **OpenMontage isolated integration** workflow retains its
+demo and also runs the new proof. On Android GitHub: PR → Checks → OpenMontage run
+→ Artifacts → **openmontage-codex-motion-proof** → download ZIP. Open `fixture.mp4`,
+`qa-*.jpg`, `captions.srt` and JSON reports. Evidence expires after three days.
+No duplicate manual-demo workflow, extra AI agent or publishing is introduced.
+Actions/Codespaces still consume account quotas; do not launch large jobs blindly.
+
+## Preservation and license
+
+Official pin: `195eab24478dc9363326aec437aefc3701635ddf`, **AGPL-3.0**. Its source,
+dependencies and media stay in the ignored runtime. No implementation is copied
+into the host. Isolation alone does not remove AGPL obligations; see the audit
+before distributing/hosting modified combined systems. Media rights are separate.
+
+No root dependency changes, framework migration, paid API/GPU, secrets, publishing,
+main push or merge. Keep pending Zod work separate. Existing doctor/demo and the
+optional Codespaces profile remain usable. On Android Codespaces select the
+reviewed branch (or merged main after approval) and the OpenMontage configuration;
+no obsolete branch or additional AI-assistant connection is required.
