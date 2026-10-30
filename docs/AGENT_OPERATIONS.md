@@ -4,7 +4,7 @@
 
 The owner assigns ChatGPT the **lead coordination role** for `urfavxbf/video-ai-editor`. In the ChatGPT conversation, the assistant makes technical and implementation decisions, reviews code and logs, opens issues/branches/PRs, and configures **testable** GitHub Actions tasks. The owner supplies topics and approves only business decisions, material costs, publication, or production gates that must have explicit human approval.
 
-This does not grant direct shell access to the owner's Codespace. A GitHub connector can inspect committed files, branch states, pull requests, workflow results, and artifacts; it cannot see uncommitted workspace files or ignored OpenMontage checkpoints. The assistant also cannot continue working after a chat turn ends unless a separate scheduled or event-based automation has been configured.
+This does not grant direct shell access to the owner's Codespace. A GitHub connector can inspect committed files, branch states, pull requests, workflow results, and artifacts; it cannot see uncommitted workspace files or ignored OpenMontage checkpoints. The assistant also cannot continue working after a chat turn ends unless a separate scheduled or event-based automation has been configured. **ChatGPT itself is the agent:** it must orchestrate OpenMontage stages in the conversation rather than redirect the owner to Copilot or another AI assistant. For code execution use available connected tools or reviewable, bounded GitHub Actions jobs; do not claim direct Codespaces shell access.
 
 ## Existing systems
 
