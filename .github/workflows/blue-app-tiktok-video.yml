@@ -1,0 +1,127 @@
+name: Blue App HTML tutorial — cinematic animated widescreen
+
+on:
+  pull_request:
+    paths:
+      - "productions/blue-app-html-history/**"
+      - "integrations/openmontage/scripts/build_blue_app_props.py"
+      - "integrations/openmontage/scripts/render_blue_app_tutorial.sh"
+      - "integrations/openmontage/scripts/stage_blue_app_visual.py"
+      - "integrations/openmontage/creative/**"
+      - ".github/workflows/blue-app-tiktok-video.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate tutorial title, facts, scenes and approved voice adapter
+        run: python -m unittest discover -s productions/blue-app-html-history -p "test_*.py" -v
+
+  visual-preview:
+    needs: contract-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install FFmpeg if needed
+        run: |
+          if ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Install pinned OpenMontage without TTS
+        run: bash integrations/openmontage/scripts/setup.sh --skip-tts
+      - name: Render 15-second silent visual preview
+        run: bash integrations/openmontage/scripts/render_blue_app_tutorial.sh preview
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blue-app-cinematic-reference-style-preview-SILENT
+          path: out/blue-app-tutorial/blue-app-preview.mp4
+          retention-days: 5
+          if-no-files-found: error
+
+  narrated-video:
+    needs: contract-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 85
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: "4"
+      MKL_NUM_THREADS: "4"
+      TOKENIZERS_PARALLELISM: "false"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Resource preflight
+        run: |
+          df -h .
+          free -h
+          test "$(df -Pm . | awk 'NR==2 {print $4}')" -ge 4500
+      - name: Install CPU-only approved Chatterbox V3
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu \
+            torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Generate actual Natural Storyteller English narration
+        run: |
+          python scripts/chatterbox_longform.py \
+            --text-file productions/blue-app-html-history/narration.txt \
+            --language-id en --device cpu --pause-ms 200 --max-chars 120 \
+            --output out/blue-app-tutorial/blue-app-narration.wav
+      - name: Install pinned OpenMontage editor and stage verified audio
+        run: |
+          if ! command -v ffprobe >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          bash integrations/openmontage/scripts/setup.sh --skip-tts
+          mkdir -p integrations/openmontage/.runtime/openmontage/remotion-composer/public/audio
+          cp out/blue-app-tutorial/blue-app-narration.wav \
+            integrations/openmontage/.runtime/openmontage/remotion-composer/public/audio/blue-app-narration.wav
+      - name: Create speech-matched OpenMontage props and estimated captions
+        run: |
+          python integrations/openmontage/scripts/build_blue_app_props.py \
+            --wav out/blue-app-tutorial/blue-app-narration.wav \
+            --manifest out/blue-app-tutorial/blue-app-narration.json \
+            --output productions/blue-app-html-history/render-props.json
+      - name: Render full 1920x1080 narrated H.264 MP4
+        run: bash integrations/openmontage/scripts/render_blue_app_tutorial.sh final
+      - name: Verify duration and preserve provenance
+        run: |
+          ffprobe -v error -show_entries format=duration \
+            -of default=nw=1 out/blue-app-tutorial/blue-app-final.mp4
+          cp productions/blue-app-html-history/PRODUCTION.md \
+            out/blue-app-tutorial/PRODUCTION.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blue-app-cinematic-narrated-video-REVIEW-BEFORE-PUBLISH
+          path: |
+            out/blue-app-tutorial/blue-app-final.mp4
+            out/blue-app-tutorial/blue-app-narration.json
+            out/blue-app-tutorial/final-probe.json
+            out/blue-app-tutorial/PRODUCTION.md
+          retention-days: 7
+          if-no-files-found: error
