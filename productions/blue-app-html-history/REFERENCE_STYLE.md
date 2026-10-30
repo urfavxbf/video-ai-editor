@@ -1,21 +1,36 @@
-# Owner-selected motion reference and original treatment
+# Faithful high-level visual study of owner-provided reference (not asset copying)
 
-**Owner-provided reference:** uploaded video `50976.mp4` viewed privately in ChatGPT. The video is ~119.85 seconds, 952×472, ~29.97 fps, HEVC with AAC audio. This file is **not committed to GitHub**, copied into the rendered tutorial or used as stock footage.
+**Owner reference:** `50976.mp4`, 119.85 seconds, 952×472, approximately 29.97 fps, uploaded directly in this conversation. The video is never stored in the repository or included in generated frames.
 
-## Visual principles drawn from the reference
-- Quick cinematic scene transitions, rhythmic headings, bold color emphasis and high-contrast typography
-- Original pixel-style envelope mascot that helps viewers follow the tutorial, **not** the reference creator's character or assets
-- The video viewer is a teaching device: fictional interface panels representing general account steps, not fabricated real Messenger screenshots
-- Clean 16:9 master, 1920×1080 for YouTube and horizontally formatted TikTok. Motion scale-down for 960×540 preview.
-- Palette: deep navy, aqua/teal, clean white, selective amber. This is intentionally distinct from the reference video's own characters, background compositions and branding.
-- Exact approved Blue App title and the existing HTML export / archive / secure storage script remain unchanged.
+## What the reference ACTUALLY shows
 
-## Production constraints
-- Render custom **content-only composition** `BlueAppVisual` inside pinned upstream OpenMontage Remotion. Import it via deterministic, idempotent checkout staging. No global upstream modifications committed, no replacement engine.
-- Use approved English Chatterbox V3 Natural Storyteller WAV for the narrated final.
-- React/Remotion animation only, no copyrighted third-party backgrounds, characters, sounds or music.
-- Existing voice cues are estimated from chunk timings, not frame-verified forced alignment: final playback required.
-- No publishing without owner's approval.
+The source alternates between **cinematic pixel-story scenes** and bold, moving typographic moments:
+- Opening outdoors (blue sky, clouds, grass) with a monitor placed naturally in the world
+- Saturated red warning cuts with large emphasized words, character acting
+- Warm dim study/office scenes: wooden desk, bookcases, practical lamps, screens and atmospheric depth
+- Pixel characters walking/presenting/gesturing, not a small brand icon attached to a card
+- Scene-specific camera angles (wide, desk overhead, close-up, cutaway), rapid push-ins, motion accents and close-up text
+- Occasional almost-black or abstract atmospheric cutaways, highlighted red/white keywords and call-to-action
 
-## Edit structure
-01 hook / missing chat → 02 avoid unsafe recovery apps → 03 archived versus deleted → 04 settings and Accounts Center → 05 information permissions → 06 export action → 07 HTML selection → 08 download ZIP → 09 encrypted secure storage → 10 limitation / CTA.
+**The first draft was NOT faithful.** It reused generic OpenMontage Explainer cards. The second draft `BlueAppVisual` also erroneously relied on repetitive blue dashboard windows and a tiny envelope icon. Both were inappropriate responses to the visual reference.
+
+## Revised visual direction (from the reference's high-level grammar, original assets)
+
+The current `BlueAppVisual.tsx` has been fully replaced with staged, story-driven original visuals, not the generic cards:
+
+- Original teal-jacket pixel-guide character with lavender hair and rectangular glasses; separate expressive aqua chat-bubble sidekick. Their designs differ from the reference's characters.
+- Outdoor morning scene for the missing-chat hook
+- Crimson warning/anti-scam cutaway
+- Pixel art shelf/studio environments for archived conversations and Accounts Center navigation
+- Warm desk and monitor scenes for export settings
+- Grid-lit digital space and floating file symbolism for HTML and ZIP exports
+- Midnight/glowing stars scene for encrypted secure storage
+- Red warning outro explicitly distinguishing export from deletion recovery
+- Big animated two-tone white/accent typography in scene, camera movement, foreground objects and visual depth
+
+Production **content, ownership, title, narration and technical target remain unchanged**. Source isn't copied, traced, embedded, or reproduced. Music/SFX and the final real narration require separate listening QC. Scene-level preview must still be verified for legibility and fidelity by the owner before publishing.
+
+## Technical
+- Existing pinned OpenMontage Remotion renderer remains the engine; we stage project-specific composition into the ignored checkout, not replace core editor.
+- 16:9 1920×1080 master, 960×540 preview for reliable integer scale.
+- Human review required; do not assume staging is faithful just because unit tests pass.

@@ -30,3 +30,5 @@ Deleted messages on the blue app? Before using a recovery app, check what your a
 **Upstream pinned OpenMontage:** `195eab24478dc9363326aec437aefc3701635ddf`, installed by `integrations/openmontage/scripts/setup.sh`.
 
 **Owner's format decision (2026-10-30):** Prefer one 16:9 YouTube-quality master that can also be uploaded to TikTok. Abandon the earlier 9:16 target for this production. The original portrait preview is only historical test material, not the approved layout. The screenshot revealed clipped right-hand comparison copy; shorten the labels as well as changing the canvas. Keep the tutorial title and narration unchanged.
+
+**Visual correction after owner feedback:** The owner rejected the dashboard/panel template as unlike their video reference. Replaced it with an original story-driven pixel-character cinematic sequence, with different illustrated spaces and kinetic titles. Source not used as stock footage. See [REFERENCE_STYLE.md](REFERENCE_STYLE.md).

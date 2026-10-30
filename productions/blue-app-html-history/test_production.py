@@ -58,8 +58,8 @@ class PilotContractTests(unittest.TestCase):
         integration=Path(__file__).resolve().parents[2]/"integrations"/"openmontage"
         tsx=(integration/"creative"/"BlueAppVisual.tsx").read_text(encoding="utf-8")
         render=(integration/"scripts"/"render_blue_app_tutorial.sh").read_text(encoding="utf-8")
-        self.assertIn("PixelEnvelope",tsx)
-        self.assertIn("BottomCaptions",tsx)
+        self.assertIn("PixelGuide",tsx)\n        self.assertIn("PixelChat",tsx)\n        self.assertIn("Studio",tsx)\n        self.assertIn("BigType",tsx)\n        self.assertNotIn("ACCOUNT VIEW",tsx)
+        self.assertIn("Captions",tsx)
         self.assertIn('BlueAppVisual',render)
         self.assertIn("--scale=0.5",render)
         self.assertIn("expected=(960,540)",render)
