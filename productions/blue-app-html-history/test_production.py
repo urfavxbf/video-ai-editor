@@ -24,7 +24,7 @@ class PilotContractTests(unittest.TestCase):
         self.assertIn("HTML",self.script)
         self.assertIn("cannot guarantee recovery",self.script)
         self.assertIn("only check your own account",self.script.lower())
-    def test_temporal_continuity_and_vertical_safe_copy(self):
+    def test_temporal_continuity_and_landscape_safe_copy(self):
         cuts=self.template["cuts"]
         self.assertEqual(len(cuts),10)
         self.assertEqual(cuts[0]["in_seconds"],0)
@@ -32,6 +32,9 @@ class PilotContractTests(unittest.TestCase):
         for before, after in zip(cuts,cuts[1:]):
             self.assertEqual(before["out_seconds"],after["in_seconds"])
         self.assertTrue(all(c["source"]=="" for c in cuts if "source" in c))
+        self.assertEqual(cuts[2]["leftValue"], "Still there")
+        self.assertEqual(cuts[2]["rightValue"], "May be gone")
+        self.assertLessEqual(max(len(c["rightValue"]) for c in cuts if c.get("type")=="comparison"), 18)
     def test_narration_props_include_caption_cues(self):
         out=mod.build_props(self.template,self.manifest,52)
         self.assertEqual(out["audio"]["narration"]["src"],"audio/blue-app-narration.wav")

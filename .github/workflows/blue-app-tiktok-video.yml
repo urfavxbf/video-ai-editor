@@ -1,4 +1,4 @@
-name: Blue App HTML Messenger tutorial — TikTok pilot
+name: Blue App HTML export tutorial — widescreen YouTube + TikTok
 
 on:
   pull_request:
@@ -48,7 +48,7 @@ jobs:
         run: bash integrations/openmontage/scripts/render_blue_app_tutorial.sh preview
       - uses: actions/upload-artifact@v4
         with:
-          name: blue-app-visual-preview-SILENT
+          name: blue-app-widescreen-preview-SILENT
           path: out/blue-app-tutorial/blue-app-preview.mp4
           retention-days: 5
           if-no-files-found: error
@@ -105,7 +105,7 @@ jobs:
             --wav out/blue-app-tutorial/blue-app-narration.wav \
             --manifest out/blue-app-tutorial/blue-app-narration.json \
             --output productions/blue-app-html-history/render-props.json
-      - name: Render full 1080x1920 narrated H.264 MP4
+      - name: Render full 1920x1080 narrated H.264 MP4
         run: bash integrations/openmontage/scripts/render_blue_app_tutorial.sh final
       - name: Verify duration and preserve provenance
         run: |
@@ -115,7 +115,7 @@ jobs:
             out/blue-app-tutorial/PRODUCTION.md
       - uses: actions/upload-artifact@v4
         with:
-          name: blue-app-tiktok-full-narrated-video-REVIEW-BEFORE-PUBLISH
+          name: blue-app-widescreen-narrated-video-REVIEW-BEFORE-PUBLISH
           path: |
             out/blue-app-tutorial/blue-app-final.mp4
             out/blue-app-tutorial/blue-app-narration.json

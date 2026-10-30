@@ -4,7 +4,7 @@
 
 **Owner-selected premise:** Tutorial on exporting available Facebook/Messenger message history as an HTML archive, not a promise to recover permanently deleted chat text.
 
-**Platform:** TikTok / vertical 9:16 / final intended 1080×1920, 30 fps, approximately 60–70 seconds.
+**Platforms:** YouTube and TikTok / **16:9 widescreen master**, final 1920×1080 at 30 fps, preview 1280×720, approximately 60–70 seconds. TikTok will show the landscape video within a vertically oriented feed; an independent 9:16 adaptation can be made later without altering this master.
 
 **Voice:** Existing English Natural Storyteller, `natural-storyteller-v1`, Chatterbox Multilingual V3. No generic replacement TTS. Speech is generated only in the narrated render job. Silence is for technical preview only, clearly named as such.
 
@@ -23,8 +23,10 @@ Deleted messages on the blue app? Before using a recovery app, check what your a
 - Updated explanation of Accounts Center, HTML/ZIP data export and limitations: https://www.itechguides.com/how-to-recover-permanently-deleted-facebook-messages/
 - Guide distinguishing Accounts Center HTML exports from encrypted-chat secure storage: https://textexporter.com/export/facebook-messenger/
 
-**Tool selection:** OpenMontage's upstream curated `Explainer` Remotion composition; no replacement pipeline. Original visual props kept in this repository. Full output will be checked using `ffprobe` for vertical H.264 video and AAC audio, and audio timing manifest. Word highlight timings generated from TTS chunk boundaries are **estimates**, not confirmed forced alignment; review before publishing. Render stays private to GitHub artifact viewers subject to repository visibility and Actions permissions; not uploaded to TikTok.
+**Tool selection:** OpenMontage's upstream curated `Explainer` Remotion composition; no replacement pipeline. Original visual props kept in this repository. Full output will be checked using `ffprobe` for **widescreen 1920×1080 H.264 video** and AAC audio, and audio timing manifest. Word highlight timings generated from TTS chunk boundaries are **estimates**, not confirmed forced alignment; review before publishing. Render stays private to GitHub artifact viewers subject to repository visibility and Actions permissions; not uploaded to TikTok.
 
 **Approval boundary:** This production brief is the owner's approved tutorial topic and title. A final publish approval is still required; do not publish autonomously.
 
 **Upstream pinned OpenMontage:** `195eab24478dc9363326aec437aefc3701635ddf`, installed by `integrations/openmontage/scripts/setup.sh`.
+
+**Owner's format decision (2026-10-30):** Prefer one 16:9 YouTube-quality master that can also be uploaded to TikTok. Abandon the earlier 9:16 target for this production. The original portrait preview is only historical test material, not the approved layout. The screenshot revealed clipped right-hand comparison copy; shorten the labels as well as changing the canvas. Keep the tutorial title and narration unchanged.

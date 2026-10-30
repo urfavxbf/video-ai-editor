@@ -14,7 +14,7 @@ if [[ "$MODE" == preview ]]; then
   test -s "$PRODUCTION/scene-props.json"
   npx --no-install remotion render src/index.tsx Explainer \
     "$ROOT/out/blue-app-tutorial/blue-app-preview.mp4" \
-    --props "$PRODUCTION/scene-props.json" --width 720 --height 1280 \
+    --props "$PRODUCTION/scene-props.json" --width 1280 --height 720 \
     --frames=0-449 --codec=h264 --crf=23 --concurrency=2 \
     --pixel-format=yuv420p
   OUTPUT="$ROOT/out/blue-app-tutorial/blue-app-preview.mp4"
@@ -23,7 +23,7 @@ elif [[ "$MODE" == final ]]; then
   test -s "public/audio/blue-app-narration.wav" || { echo "Approved narrator WAV missing" >&2; exit 2; }
   npx --no-install remotion render src/index.tsx Explainer \
     "$ROOT/out/blue-app-tutorial/blue-app-final.mp4" \
-    --props "$PRODUCTION/render-props.json" --width 1080 --height 1920 \
+    --props "$PRODUCTION/render-props.json" --width 1920 --height 1080 \
     --codec=h264 --crf=22 --audio-codec=aac --audio-bitrate=192k \
     --concurrency=2 --pixel-format=yuv420p
   OUTPUT="$ROOT/out/blue-app-tutorial/blue-app-final.mp4"
@@ -39,11 +39,11 @@ data=json.load(open(sys.argv[1]))
 streams=data.get("streams",[])
 video=[s for s in streams if s.get("codec_type")=="video"]
 audio=[s for s in streams if s.get("codec_type")=="audio"]
-expected=(720,1280) if sys.argv[2]=="preview" else (1080,1920)
-assert video and (video[0].get("width"),video[0].get("height"))==expected, "Not a vertical MP4"
+expected=(1280,720) if sys.argv[2]=="preview" else (1920,1080)
+assert video and (video[0].get("width"),video[0].get("height"))==expected, "Not a 16:9 widescreen MP4"
 assert video[0].get("codec_name")=="h264", "Expected H.264"
 if sys.argv[2]=="final":
     assert audio and audio[0].get("codec_name")=="aac", "Approved voice not present as AAC"
-print("Verified",sys.argv[2],"MP4 streams and portrait size.")
+print("Verified",sys.argv[2],"MP4 streams and 16:9 landscape size.")
 PY
 echo "Render verified: $OUTPUT"
