@@ -51,6 +51,7 @@ jobs:
         run: |
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           npm ci --no-audit --no-fund
+          python3 -m pip install -r requirements.txt
       - name: Build compiled production skill from authoritative source
         run: python3 scripts/build-cineforge-master-skill.py
       - name: Typecheck and test validated chapter motion graphics
