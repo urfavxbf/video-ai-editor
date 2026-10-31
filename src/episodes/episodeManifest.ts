@@ -35,9 +35,9 @@ export type CompiledEpisodeV1 = {
   durationFrames: number;
 };
 
-const fail = (field: string, message: string): never => {
+function fail(field: string, message: string): never {
   throw new Error(`${field}: ${message}`);
-};
+}
 const object = (value: unknown, path: string): Record<string, unknown> => {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) {
     return fail(path, 'must be an object');
