@@ -1,0 +1,80 @@
+name: Expansion video — approved Chatterbox V3 voice
+on:
+  push:
+    branches:
+      - feat/expansion-inspired-original-video-20261031
+    paths:
+      - .github/workflows/expansion-chatterbox-v3.yml
+      - scripts/expansion_chatterbox_generate.py
+      - productions/expansion-original/scene-plan.json
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: expansion-chatterbox-v3-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  narrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: "4"
+      MKL_NUM_THREADS: "4"
+      TOKENIZERS_PARALLELISM: "false"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-chatterbox.txt
+      - name: Verify original script input and scene ordering
+        run: |
+          python scripts/expansion_chatterbox_generate.py --validate-only
+          python -m py_compile scripts/expansion_chatterbox_generate.py
+      - name: Install pinned CPU Chatterbox V3 (same known-good upstream revision)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Generate original narration using approved UrFavXBF voice
+        run: |
+          python scripts/expansion_chatterbox_generate.py \
+            --scene-plan productions/expansion-original/scene-plan.json \
+            --output-dir out/expansion-chatterbox
+      - name: Verify WAV files and timing manifest
+        run: |
+          python - <<'PY'
+          import json
+          import math
+          import wave
+          from pathlib import Path
+          root=Path('out/expansion-chatterbox')
+          m=json.loads((root/'voice-manifest.json').read_text())
+          assert m['voiceProfile']=='natural-storyteller-v1'
+          assert m['engine']=='Chatterbox Multilingual V3'
+          assert len(m['scenes'])==25
+          for s in m['scenes']:
+              wav=root/s['file']
+              assert wav.is_file() and wav.stat().st_size > 2000
+              with wave.open(str(wav),'rb') as f:
+                  assert f.getnchannels()==1 and f.getframerate()==m['sampleRate']
+                  assert f.getnframes()==s['samples']
+          whole=root/'urfavxbf-chatterbox-v3-scene-narration.wav'
+          assert whole.is_file() and whole.stat().st_size > 10000
+          assert m['durationSeconds'] > 20
+          print("Verified 25 original speech WAVs; listening QA remains required.")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: expansion-original-approved-urfavxbf-chatterbox-v3
+          path: |
+            out/expansion-chatterbox/*.wav
+            out/expansion-chatterbox/voice-manifest.json
+          retention-days: 7
+          if-no-files-found: error
