@@ -1,0 +1,142 @@
+name: HyperFrames → Remotion episode — local integration proof
+
+on:
+  push:
+    branches:
+      - feat/hyperframes-first-class-production-20261031
+    paths:
+      - .github/workflows/hyperframes-remotion-production.yml
+      - hyperframes/projects/**
+      - scripts/render-hyperframes.mjs
+      - package.json
+      - src/hyperframes/**
+      - src/episodes/EpisodeProduction.tsx
+      - tests/hyperframes-bridge.test.cjs
+      - AGENTS.md
+      - docs/PRODUCTION_POLICY.md
+      - docs/AI_AGENT_PROMPTS.md
+      - .claude/skills/ai-video-editor/SKILL.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate-render-and-lock:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      HYPERFRAMES_NO_TELEMETRY: "1"
+      DO_NOT_TRACK: "1"
+      HEYGEN_API_KEY: ""
+      HYPERFRAMES_API_KEY: ""
+      HEYGEN_ACCESS_TOKEN: ""
+      ELEVENLABS_API_KEY: ""
+      OPENROUTER_API_KEY: ""
+      GEMINI_API_KEY: ""
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Sync exact HyperFrames dependency lock
+        run: |
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci --no-audit --no-fund
+      - name: Build compiled production skill from authoritative source
+        run: python3 scripts/build-cineforge-master-skill.py
+      - name: Typecheck and test validated chapter motion graphics
+        run: |
+          npm run typecheck
+          node --test tests/*.test.cjs
+          python3 -m unittest discover -s tests -p 'test_agent_operating_rules.py' -v
+          python3 -m unittest discover -s tests -p 'test_production_instructions.py' -v
+          python3 scripts/stage_pixel_default_pack.py --verify-workspace
+      - name: Provision browsers and local FFmpeg tools
+        run: |
+          npx remotion browser ensure
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Render real original HyperFrames animation and stage local asset
+        run: |
+          npm run hyperframes:render
+          test -s out/hyperframes/kinetic-intro.mp4
+          test -s public/hyperframes/kinetic-intro.mp4
+      - name: Generate real EpisodeProduction input with a HyperFrames graphic
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs';
+          const manifest=JSON.parse(fs.readFileSync('src/episodes/episode-proof-v1.json','utf8'));
+          const first=manifest.chapters[0];
+          if(first.durationFrames < 45) throw new Error('Chapter too short for bridge fixture');
+          const props={
+            manifest,captions:{},
+            motionGraphics:{
+              [first.id]:[{file:'hyperframes/kinetic-intro.mp4',
+                startFrame:3,durationFrames:40,layout:'inset'}],
+            },
+          };
+          fs.writeFileSync('out/hyperframes/episode-props.json',JSON.stringify(props));
+          JS
+      - name: Render a real Remotion episode with the staged HyperFrames clip
+        run: |
+          npx remotion still EpisodeProduction out/hyperframes/episode-frame.png \
+            --frame=20 --scale=0.25 --props=out/hyperframes/episode-props.json
+          test -s out/hyperframes/episode-frame.png
+          npx remotion render EpisodeProduction out/hyperframes/episode-hf-proof.mp4 \
+            --frames=0-44 --scale=0.25 --concurrency=2 \
+            --props=out/hyperframes/episode-props.json \
+            --codec=h264 --pixel-format=yuv420p
+      - name: Verify output container / frame count / frame decode
+        run: |
+          python3 - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          clips=[
+            ('out/hyperframes/kinetic-intro.mp4',(1920,1080),60),
+            ('out/hyperframes/episode-hf-proof.mp4',(480,270),45),
+          ]
+          for name,(width,height),count in clips:
+            p=Path(name)
+            assert p.is_file() and p.stat().st_size>12000,name
+            d=json.loads(subprocess.check_output([
+              'ffprobe','-v','error','-select_streams','v:0',
+              '-show_entries','stream=codec_name,width,height,r_frame_rate,nb_frames',
+              '-of','json',name],text=True))['streams'][0]
+            assert (d['codec_name'],d['width'],d['height'],d['r_frame_rate'],d['nb_frames'])==(
+              'h264',width,height,'30/1',str(count)),(name,d)
+            subprocess.run(['ffmpeg','-v','error','-xerror','-i',name,'-f','null','-'],check=True)
+          print('Verified original HyperFrames MP4 and embedded Remotion EpisodeProduction video')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hyperframes-first-class-production-qa
+          path: |
+            out/hyperframes/kinetic-intro.mp4
+            out/hyperframes/episode-hf-proof.mp4
+            out/hyperframes/episode-frame.png
+            out/hyperframes/episode-props.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Commit synced package lockfile and generated CineForge skill to feature branch
+        if: github.ref == 'refs/heads/feat/hyperframes-first-class-production-20261031'
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_NAME}" = 'feat/hyperframes-first-class-production-20261031'
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json .claude/skills/cineforge-pro/SKILL.md
+          if ! git diff --cached --quiet; then
+            git commit -m "build: lock HyperFrames and regenerate canonical CineForge skill"
+            git push origin HEAD:"${GITHUB_REF_NAME}"
+          fi
