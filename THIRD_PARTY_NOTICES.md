@@ -35,3 +35,15 @@ The sound effects under `public/sfx/` came with the imported effects project. It
 The independent additions, including the Dudut editing compositions, original Doorway Effect composition, automation workflows, and editorial scripts, are not licensed solely by the imported MIT notice. No new project-wide open-source grant is made by this notices file.
 
 The historic Git commit record preserves prior files and their notices, including the formerly present top-level `LICENSE`.
+
+## Resource library provenance and publication gate
+
+The inventory at [`resources/catalog.json`](resources/catalog.json) now
+classifies the **13 legacy SFX** as `review-before-publication`. Their
+physical presence is not a blanket commercial license. The two new
+abstract SVG backgrounds and original B-roll/audio synthesis code were
+authored specifically for this repository without third-party sampled
+media. The license guidance at
+[`docs/MEDIA_RESOURCE_LIBRARY.md`](docs/MEDIA_RESOURCE_LIBRARY.md)
+does not reproduce, distribute or relicense media from any recommended
+stock provider. Stock assets must remain owner-reviewed and untracked.

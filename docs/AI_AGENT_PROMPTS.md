@@ -223,6 +223,26 @@ media-use, telemetry, remote uploads, o publish nang walang permiso.
 Huwag palitan ang default HeroCharacterStage o Chatterbox V3.
 ```
 
+## 15. Media resource library — B-roll, photos, music, sounds and fonts
+
+```text
+Ihanda ang media resources para sa [VIDEO TOPIC / EPISODE].
+Basahin ang required AGENTS.md at docs/MEDIA_RESOURCE_LIBRARY.md.
+Hanapin ang mga kapaki-pakinabang na [B-ROLL / PHOTO / FONT / MUSIC / SFX]
+mula sa naka-listang legal sources. Bawat specific item ay dapat may
+asset-level source, creator, exact license at intended commercial context.
+Huwag mag-bulk download, mag-scrape, mag-republish ng stock files o gumamit
+ng paid API. Kung hindi confirmed ang rights o model/property releases,
+markahan bilang NEEDS REVIEW at huwag gamitin sa publication.
+Run python3 scripts/resource_library.py audit at i-intake lamang ang
+owner-reviewed local assets gamit ang --rights-confirmed. Gumamit ng
+ResourceLibraryProof para sa existing original abstract B-roll at
+npm run resources:ambient para sa original quiet WAV starter.
+I-stage ang resources sa Remotion ayon sa aktuwal na script timecode;
+i-verify ang FFprobe, visuals, captions, background mix at rights receipt.
+Huwag palitan ang existing approved UrFavXBF/PIX poses at Chatterbox voices.
+```
+
 ## Fast path: choose task, then verify
 
 | Goal | Starting point | Required verification |
@@ -235,6 +255,7 @@ Huwag palitan ang default HeroCharacterStage o Chatterbox V3.
 | Lottie | `AfterEffectsLottieProof` | Multiple nonidentical rendered frames |
 | Duik | `import_duik_baked_lottie.py` | Offline safe import + H.264 render |
 | HyperFrames | `npm run hyperframes:render` → `EpisodeProduction.motionGraphics` | Local H.264, chapter timing, Remotion playback |
+| Resource library | `python3 scripts/resource_library.py audit` | Asset rights receipts, hashes, media validity, no raw stock redistribution |
 | Shipping | Production composition + FFprobe | Visual, audio, caption and provenance QA |
 
 ## Commands agents can use AFTER inputs and permissions are verified
