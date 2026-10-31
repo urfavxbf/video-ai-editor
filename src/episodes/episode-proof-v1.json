@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "episodeId": "episode-timeline-proof",
+  "language": "en",
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "chapters": [
+    {
+      "id": "opening",
+      "title": "Chapter One: Timeline Proof",
+      "chapterNumber": 1,
+      "startFrame": 0,
+      "durationFrames": 60,
+      "voiceEvents": [],
+      "audio": []
+    },
+    {
+      "id": "transition",
+      "title": "Chapter Two: Deterministic Playback",
+      "chapterNumber": 2,
+      "startFrame": 60,
+      "durationFrames": 60,
+      "voiceEvents": [],
+      "audio": []
+    }
+  ]
+}
