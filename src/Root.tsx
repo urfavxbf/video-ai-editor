@@ -1,4 +1,5 @@
 import { Composition } from 'remotion'
+import {MotionShowreel,SHOWREEL_FRAMES} from './showcase/MotionShowreel'
 import { Edit, type EditSpec, editDuration } from './edit/Edit'
 import edit from './edit/edit.json'
 import { fxById, FxPreview, type FxPreviewProps } from './fx/index'
@@ -32,6 +33,8 @@ import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadat
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="MotionShowreel" component={MotionShowreel}
+    width={1920} height={1080} fps={30} durationInFrames={SHOWREEL_FRAMES} />
   <Composition id="DuikBakedCharacterProof" component={DuikBakedCharacterProof}
     width={1920} height={1080} fps={30} durationInFrames={DUIK_BAKED_PROOF_FRAMES} />
   <Composition id="AfterEffectsLottieProof" component={AfterEffectsLottieProof}
