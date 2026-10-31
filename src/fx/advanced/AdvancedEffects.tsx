@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Easing, interpolate, staticFile, useCurrentFrame} from 'remotion';
 import {interpolatePath, evolvePath} from '@remotion/paths';
-import {ARoll, Cutout, FX_H, FX_W, type FxEntry, type FxProps, clamp01} from '../shared';
+import {ARoll, Cutout, FX_H, FX_W, type FxEntry, type FxProps, clamp01, useSrcFrame, useFxSource} from '../shared';
 import envelope from './reactive-envelope.json';
 
 /** Local 30fps, 9:16 frame-driven cinematic effects; no hard-coded branding or HUDs. */
@@ -89,19 +89,27 @@ export const LiquidDisplacement:React.FC<FxProps>=({from})=>{
 };
 export const PixelDissolve:React.FC<FxProps>=({from})=>{
  const f=useCurrentFrame(),t=ease(lerp(f,8,65));
- return <AbsoluteFill style={{overflow:'hidden'}}>
+ const src=useSrcFrame(from),{matte}=useFxSource();
+ const image=staticFile(`${matte}/${String(src).padStart(4,'0')}.webp`);
+ return <AbsoluteFill style={{overflow:'hidden',background:'#061122'}}>
   <ARoll from={from}/>
-  <AbsoluteFill style={{background:'#081224',opacity:t*.78}}/>
+  <AbsoluteFill style={{background:'#071422',opacity:t*.88}}/>
   {Array.from({length:192},(_,i)=>{
     const x=(i%12)*90,y=Math.floor(i/12)*120,r=noise(i+29);
     const active=clamp01((t-r)*5);
-    return <div key={i} style={{position:'absolute',left:x+(noise(i+2)-.5)*130*active,
-      top:y+(noise(i+4)-.5)*160*active,width:86,height:116,opacity:active*(1-t*.76),
-      background:i%3===0?'#74f2c9':i%3===1?'#3d8cf8':'#c6b8ff',
-      transform:`rotate(${noise(i+8)*72*active}deg) scale(${1-.5*active})`,
-      mixBlendMode:'screen'}}/>
+    return <div key={i} style={{position:'absolute',
+      left:x+(noise(i+2)-.5)*220*active,
+      top:y+(noise(i+4)-.5)*275*active,
+      width:90,height:120,opacity:active*(1-t*.57),
+      backgroundImage:`url("${image}")`,
+      backgroundSize:`${FX_W}px ${FX_H}px`,
+      backgroundPosition:`-${x}px -${y}px`,
+      backgroundRepeat:'no-repeat',
+      transform:`rotate(${(noise(i+8)-.5)*92*active}deg) scale(${1-.65*active})`,
+      boxShadow:'0 0 10px #7dffe933',
+    }}/>
   })}
-  <AbsoluteFill style={{opacity:1-t,filter:`contrast(${1+4*t})`}}>{sprite(from)}</AbsoluteFill>
+  <AbsoluteFill style={{opacity:1-t,filter:`contrast(${1+2*t})`}}>{sprite(from)}</AbsoluteFill>
  </AbsoluteFill>;
 };
 export const WhipPanBlur:React.FC<FxProps>=({from})=>{
@@ -176,16 +184,26 @@ export const ShaderPortal:React.FC<FxProps>=({from})=>{
 };
 export const FilmBurnReveal:React.FC<FxProps>=({from})=>{
  const f=useCurrentFrame(),t=ease(lerp(f,7,66));
- const inner=10+t*153;
+ const radius=12+2070*t;
+ const points=Array.from({length:56},(_,i)=>{
+   const angle=Math.PI*2*i/56;
+   const r=radius*(.84+.15*noise(i+200));
+   return [540+Math.cos(angle)*r,960+Math.sin(angle)*r];
+ });
+ const polygon=points.map(([x,y])=>`${x}px ${y}px`).join(',');
+ const path='M '+points.map(([x,y])=>x.toFixed(1)+' '+y.toFixed(1)).join(' L ')+' Z';
  return <AbsoluteFill style={{overflow:'hidden'}}>
-  <FullVideo from={from} style={{filter:'sepia(.35) contrast(1.14) brightness(.8)'}}/>
-  <AbsoluteFill style={{clipPath:`circle(${inner}% at 48% 50%)`}}>
+  <FullVideo from={from} style={{filter:'sepia(.4) contrast(1.17) brightness(.78)'}}/>
+  <AbsoluteFill style={{clipPath:`polygon(${polygon})`}}>
     <ARoll from={from+17}/>
   </AbsoluteFill>
-  <AbsoluteFill style={{opacity:.64*(1-t),pointerEvents:'none',background:
-   `radial-gradient(circle at 48% 50%,transparent ${Math.max(0,inner-11)}%,rgba(255,245,161,.84) ${Math.max(0,inner-8)}%,rgba(245,90,23,.94) ${Math.max(0,inner-3)}%,transparent ${inner+3}%)`,
-   mixBlendMode:'screen'}}/>
-  <AbsoluteFill style={{opacity:.19*(1-t),background:'linear-gradient(160deg,#eb4c20,transparent 55%)',mixBlendMode:'screen'}}/>
+  <svg width={FX_W} height={FX_H} viewBox="0 0 1080 1920" style={{position:'absolute',inset:0,
+    opacity:1-t*.8,pointerEvents:'none',filter:'drop-shadow(0 0 48px #f59c3f)'}}>
+    <path d={path} fill="none" stroke="#ff6a18" strokeWidth={48*(1-t*.7)}
+      strokeLinejoin="round" opacity={.84}/>
+    <path d={path} fill="none" stroke="#fff4b7" strokeWidth={12*(1-t*.8)}
+      strokeLinejoin="round" opacity={.7}/>
+  </svg>
  </AbsoluteFill>;
 };
 export const AudioReactiveParticles:React.FC<FxProps>=({from})=>{
