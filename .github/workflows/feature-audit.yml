@@ -67,6 +67,7 @@ jobs:
           npm ci --no-audit --no-fund
           python -m pip install Pillow==11.3.0
           npx remotion browser ensure
+          if ! command -v ffmpeg >/dev/null 2>&1; then sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; fi
       - name: Create original local test source with 300 transparent masks
         run: |
           mkdir -p public/sample/fg public/sample/sticker out/audit-fx
@@ -127,6 +128,7 @@ jobs:
         run: |
           npm ci --no-audit --no-fund
           npx remotion browser ensure
+          if ! command -v ffmpeg >/dev/null 2>&1; then sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; fi
           mkdir -p public/sample out/audit-compositions
           ffmpeg -hide_banner -loglevel error -y \
             -f lavfi -i 'testsrc2=size=540x960:rate=30' \
