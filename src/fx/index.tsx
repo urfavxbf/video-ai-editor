@@ -22,6 +22,7 @@ import { snapZoomFx } from './SnapZoom'
 import { splitFx } from './Split'
 import { zoomPortalFx } from './ZoomPortal'
 import { zoomThroughCutFx } from './ZoomThroughCut'
+import { EDIT_EFFECT_IDS } from '../compositionMetadata'
 
 export const FX_ALL: FxEntry[] = [
 	orbitFx, chatTakeoverFx, frameEscapeFx, snapZoomFx, checklistPopFx, headlineStormFx, zoomPortalFx, growthCurveFx, brollOverlayFx,
@@ -29,6 +30,8 @@ export const FX_ALL: FxEntry[] = [
 	glassWidgetsFx, checklistFx, splitFx,
 ]
 export const fxById = (id: string) => FX_ALL.find(e => e.id === id)
+if (FX_ALL.length !== EDIT_EFFECT_IDS.length || new Set(FX_ALL.map(e => e.id)).size !== FX_ALL.length ||
+  EDIT_EFFECT_IDS.some(id => !fxById(id))) throw new Error('Edit contract and FX registry disagree')
 
 export type FxPreviewProps = { id: string; from: number; source?: FxSource }
 

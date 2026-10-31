@@ -29,7 +29,7 @@ test('model-free v1 fixture is valid and compiled deterministically', () => {
 test('rejects invalid manifest header, unknown fields and unsupported output format', () => {
   for (const [key, value, match] of [
     ['schemaVersion', 2, /schemaVersion/], ['language', 'tl', /language/],
-    ['episodeId', '../unsafe', /episodeId/], ['unexpected', 'x', /unexpected/],
+    ['episodeId', '../unsafe', /episodeId/], ['unexpected', 'x', /unknown field/],
   ]) {
     const m = copy(); m[key] = value; failure(m, match);
   }

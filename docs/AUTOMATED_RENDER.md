@@ -21,7 +21,12 @@ Open the successful workflow run in the Actions tab and download the **dudut-pre
 
 ## Privacy and intellectual property
 
-The queued job file currently uses a temporary signed source-media download URL, **visible in this public repository while it remains tracked and in Git history**. It will eventually expire, but removing a tracked file does not erase historical Git commits. Only use this queue mode for footage whose temporary accessibility is acceptable; for confidential files, a private repo plus secure object storage or an authenticated file-transfer mechanism is needed. Never place permanent API credentials in job files.
+The historical queue contains a signed source-media download URL in reachable
+Git history. The 2026-10-31 audit found none in current tracked files; token
+validity and active deployments remain unverified. See
+[the redacted security audit](EDIT_INPUT_SECURITY.md). Removing a tracked file
+does not erase historical commits. Keep future URLs in a secret manager and use
+authenticated private storage for confidential media. Never commit API credentials.
 
 Do not publish third-party podcast footage without the necessary license or permission. Credits and motion graphics do not automatically confer reuse rights.
 

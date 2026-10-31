@@ -35,13 +35,7 @@ jobs:
       - name: Typecheck all compositions
         run: npm run typecheck
       - name: Test composition duration validation
-        run: node --test tests/composition-duration.test.cjs tests/episode-manifest.test.cjs
-      - name: Run existing model-free tests
-        run: |
-          python -m unittest discover -s tests -p 'test_*.py' -v
-          python -m unittest discover -s integrations/openmontage/tests -p 'test_*.py' -v
-      - name: Verify all 13 approved character PNGs
-        run: python scripts/stage_pixel_default_pack.py --verify-workspace
+        run: node --test tests/*.test.cjs
       - name: Prepare browser and video verification tool
         run: |
           npx remotion browser ensure
@@ -49,6 +43,12 @@ jobs:
             sudo apt-get update -qq
             sudo apt-get install -y -qq ffmpeg
           fi
+      - name: Run existing model-free tests
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py' -v
+          python -m unittest discover -s integrations/openmontage/tests -p 'test_*.py' -v
+      - name: Verify all 13 approved character PNGs
+        run: python scripts/stage_pixel_default_pack.py --verify-workspace
       - name: Verify registered metadata with actual input props
         run: node scripts/check-composition-metadata.mjs
       - name: Render one-second deterministic character fixture

@@ -19,7 +19,7 @@ const {HERO_STAGE_DURATION, MAX_COMPOSITION_DURATION_FRAMES, calculateHeroMetada
 const edit = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/edit/edit.json'), 'utf8'));
 const metadata = (fn, props) => fn({props, defaultProps: props, abortSignal: new AbortController().signal,
   compositionId: 'test', isRendering: true});
-const spec = (segments) => ({...edit, segments});
+const spec = (segments) => ({...edit, source: {...edit.source, frames: 108000}, segments});
 
 test('Hero retains the 540-frame default when no duration override is supplied', async () => {
   assert.equal(HERO_STAGE_DURATION, 540);
