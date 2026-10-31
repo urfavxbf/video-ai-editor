@@ -153,6 +153,11 @@ export const validateEpisodeManifest = (value: unknown): EpisodeManifestV1 => {
           if (rms.length > 100000) {
             fail(`${path}.rms`, 'must be an array of up to 100000 real audio samples');
           }
+          const requiredSamples = Math.floor(((event.endFrame as number) - s - 1) *
+            ((event.samplesPerSecond as number | undefined) ?? 10) / 30) + 1;
+          if (rms.length < requiredSamples) {
+            fail(`${path}.rms`, 'must cover every frame of the voice event at samplesPerSecond');
+          }
           for (const [k, sample] of rms.entries()) {
             if (typeof sample !== 'number' || !Number.isFinite(sample) || sample < 0 || sample > 1) {
               fail(`${path}.rms[${k}]`, 'must be finite and between 0 and 1');

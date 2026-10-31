@@ -55,7 +55,7 @@ test('rejects chapter timeline gaps, overlaps, negative frames and overflow', ()
   assert.equal(compileEpisodeTimeline(valid).durationFrames, EPISODE_V1_MAX_FRAMES);
 });
 test('validates voice events: speakers, sorting, bounds, overlaps and real RMS', () => {
-  const base = {speaker: 'urfavxbf', startFrame: 0, endFrame: 20, rms: [0.2, 0.8], samplesPerSecond: 10};
+  const base = {speaker: 'urfavxbf', startFrame: 0, endFrame: 20, rms: [0.2, 0.8, 0.4, 0.1, 0.3, 0.2, 0.1], samplesPerSecond: 10};
   const m = copy(); m.chapters[0].voiceEvents = [base];
   assert.doesNotThrow(() => validateEpisodeManifest(m));
   for (const [key, value] of [
@@ -72,6 +72,12 @@ test('validates voice events: speakers, sorting, bounds, overlaps and real RMS',
     {...base, speaker: 'pix', startFrame: 0, endFrame: 10},
   ];
   failure(unsorted, /voiceEvents\[1\].startFrame/);
+});
+test('supplied RMS must cover the event instead of extending the last sample', () => {
+  const m = copy();
+  m.chapters[0].voiceEvents = [{speaker: 'pix', startFrame: 0, endFrame: 60,
+    rms: [0.9], samplesPerSecond: 10}];
+  failure(m, /rms.*cover/);
 });
 test('rejects traversal, URLs, malicious or out-of-bounds audio paths', () => {
   for (const value of ['../secret.wav', '/tmp/source.wav', 'https://x.com/a.wav',

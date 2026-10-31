@@ -62,3 +62,19 @@ The short, silent fixture is the only render recommended for this PR. A successf
 6. Media preparation, bounded rendering, FFprobe/visual/audio QA and human approval.
 
 All these stages should be explicit, independently resumable jobs. No paid API, external provider access, publishing or production media upload is enabled by the manifest itself.
+
+## Verified integration gate
+
+The PR gate now evaluates the registered episode metadata with default and custom
+props, rejects a gapped/overlapping manifest in Chromium, and renders all 120
+frames with `--muted`. `scripts/check-episode-proof.py` checks the actual codec,
+frame count, duration, and static title region at frames 58–61. It requires a
+title change at frame 60 and stable titles within each chapter, allowing codec
+noise. Supplied RMS arrays must cover every event frame at their declared rate;
+short envelopes cannot stretch a last sample into invented speaking energy.
+
+Local verification on 2026-10-31: TypeScript; 17 Node tests; 78 Python tests;
+5 isolated OpenMontage tests; all 13 PNG hashes; actual Chromium metadata checks;
+and a 120-frame silent H.264 proof (480×270 at 30 fps). The chapter-two frame was
+visually inspected. This validates the small proof, not voiced production or
+full-resolution delivery. GitHub Actions must pass on the updated commit too.

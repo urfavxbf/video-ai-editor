@@ -77,9 +77,17 @@ jobs:
               assert streams[0].get(key) == value, f"Unexpected {key}: {streams[0]}"
           print("Verified 30-frame H.264 fixture: 480x270 at 30 fps")
           PY
+      - name: Render complete two-chapter episode fixture
+        run: >-
+          npx remotion render EpisodeTimelineProof out/episode-timeline-proof.mp4
+          --scale=0.25 --concurrency=2 --codec=h264 --pixel-format=yuv420p --muted
+      - name: Verify episode frame count and chapter boundary
+        run: python scripts/check-episode-proof.py out/episode-timeline-proof.mp4
       - uses: actions/upload-artifact@v4
         with:
           name: pr-safety-gate-fixture
-          path: out/pr-safety-gate.mp4
+          path: |
+            out/pr-safety-gate.mp4
+            out/episode-timeline-proof.mp4
           if-no-files-found: error
           retention-days: 3
