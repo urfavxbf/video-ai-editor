@@ -88,7 +88,7 @@ def render(destination: Path):
             sticker=Image.new("RGBA",(W,H),(0,0,0,0))
             sticker.alpha_composite(outlined,(x,y))
             image.paste(matte,(0,0),matte)
-                        matte.save(fgdir/(f"{i:04d}.webp"),format="WEBP",quality=85,method=1)
+            matte.save(fgdir/(f"{i:04d}.webp"),format="WEBP",quality=85,method=1)
             sticker.save(stickdir/(f"{i:04d}.webp"),format="WEBP",quality=86,method=1)
             ffmpeg.stdin.write(image.tobytes())
     finally:

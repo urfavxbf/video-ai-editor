@@ -41,6 +41,7 @@ jobs:
           npx remotion browser ensure
       - name: Verify approved artwork and effect code
         run: |
+          python3 -m py_compile scripts/generate_advanced_showcase_source.py scripts/generate_advanced_showcase_score.py
           python3 scripts/stage_pixel_default_pack.py --verify-workspace
           npm run typecheck
           node --test tests/cinematic-fx-12.test.cjs
