@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "pexels",
+      "categories": [
+        "image",
+        "video"
+      ],
+      "url": "https://www.pexels.com/",
+      "licenseUrl": "https://www.pexels.com/legal-pages/license/",
+      "note": "Photos and clips; generally commercial use allowed, but no standalone redistribution, endorsement, or systematic bulk copying. Review model/property releases for intended context."
+    },
+    {
+      "id": "pixabay",
+      "categories": [
+        "image",
+        "video",
+        "music",
+        "sfx"
+      ],
+      "url": "https://pixabay.com/",
+      "licenseUrl": "https://pixabay.com/service/license-summary/",
+      "note": "Free content subject to prohibited uses and third-party rights. Copyright-safe is not guaranteed merely by a search result."
+    },
+    {
+      "id": "unsplash",
+      "categories": [
+        "image"
+      ],
+      "url": "https://unsplash.com/",
+      "licenseUrl": "https://unsplash.com/license",
+      "note": "Free photos; significant restrictions on resale/compiling a competing library; third-party model/property/trademark rights remain."
+    },
+    {
+      "id": "mixkit",
+      "categories": [
+        "video",
+        "music",
+        "sfx"
+      ],
+      "url": "https://mixkit.co/",
+      "licenseUrl": "https://mixkit.co/license/",
+      "note": "Check the actual item type and its Free/Restricted license. Music has special distribution/remix/rights-management restrictions. Do not redistribute raw SFX in this repo."
+    },
+    {
+      "id": "google-fonts",
+      "categories": [
+        "font"
+      ],
+      "url": "https://fonts.google.com/",
+      "licenseUrl": "https://github.com/google/fonts/blob/main/README.md",
+      "note": "Individual families have their own font licenses and notices (often OFL); preserve copyright/license files when bundling."
+    },
+    {
+      "id": "freesound",
+      "categories": [
+        "sfx",
+        "music"
+      ],
+      "url": "https://freesound.org/",
+      "licenseUrl": "https://freesound.org/help/faq/",
+      "note": "Per-asset licenses vary: CC0, CC BY, CC BY-NC. Never use BY-NC for commercial projects; BY requires proper credit."
+    },
+    {
+      "id": "youtube-audio-library",
+      "categories": [
+        "music",
+        "sfx"
+      ],
+      "url": "https://www.youtube.com/audiolibrary",
+      "licenseUrl": "https://support.google.com/youtube/answer/3376882",
+      "note": "YouTube Studio library, some tracks require attribution. Do not assume rights for external platforms or unrestricted raw redistribution."
+    }
+  ]
+}
