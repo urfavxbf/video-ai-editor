@@ -14,7 +14,8 @@ test('bundled original Bodymovin/Lottie sample is local and valid', () => {
   assert.ok(animation.op > animation.ip);
   assert.ok(Array.isArray(animation.layers) && animation.layers.length === 3);
   assert.deepEqual(animation.assets, []);
-  assert.equal(JSON.stringify(animation).match(/https?:\\/\\//), null);
+  assert.equal(JSON.stringify(animation).includes('http://'), false);
+  assert.equal(JSON.stringify(animation).includes('https://'), false);
   assert.ok(animation.layers.every(l => l.ty === 4 && l.shapes.some(s => s.ty === 'el')));
   assert.ok(animation.layers.some(l => l.ks.s.a === 1));
 });
@@ -24,5 +25,5 @@ test('bridge pins Remotion package versions and registers explicit proof only', 
   assert.equal(pkg.dependencies['lottie-web'], '5.13.0');
   assert.equal(pkg.dependencies['@remotion/lottie'], pkg.dependencies.remotion);
   assert.match(registered, /id="AfterEffectsLottieProof"/);
-  assert.match(registered, /width=\\{1080\\} height=\\{1920\\} fps=\\{30\\}/);
+  assert.ok(registered.includes('width={1080} height={1920} fps={30}'));
 });
