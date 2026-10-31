@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "reference_id": "expansion-feels-like-chaos-7577091531933240631",
+  "role": "reference-only",
+  "observed_source": {
+    "duration_seconds": 60.029388,
+    "width": 1080,
+    "height": 1920,
+    "fps": 60,
+    "video_codec": "hevc",
+    "audio_codec": "mp3",
+    "audio_sample_rate_hz": 44100,
+    "audio_channels": 2,
+    "sha256": "68363bc1eaf560a62d4d698c1ef1dac5fa36ba8004970fd3ca9745f6ea89d5c4",
+    "inset_approx_px": {
+      "x": 47,
+      "y": 474,
+      "width": 987,
+      "height": 910
+    },
+    "confidence": "measured representative frames; inset scene-dependent"
+  },
+  "analysis": {
+    "narrative": "desires becoming pressure; growth disrupting comfort; doubt accompanying new opportunities",
+    "visual_motifs": [
+      "illustrated metaphor per idea",
+      "rounded inset on black frame",
+      "paper-grain textured 2D cutout illustration",
+      "high-contrast all-caps kinetic keywords",
+      "scene-level palette swings"
+    ],
+    "approx_section_boundaries_sec": [
+      0,
+      3.5,
+      7.05,
+      10.18,
+      13.82,
+      17.63,
+      19.52,
+      23.43,
+      24.7,
+      25.13,
+      26.97,
+      27.87,
+      28.82,
+      31.8,
+      34.12,
+      35.43,
+      38.73,
+      42.4,
+      44.52,
+      45.98,
+      47.62,
+      49.17,
+      51.65,
+      53.3,
+      55.48,
+      60.03
+    ],
+    "timing_uncertainty_seconds": 0.2,
+    "audio_transcript_verified": false
+  },
+  "proposed_animation_not_measured": {
+    "keyword_enter_duration_frames_at_source_fps": [
+      6,
+      12
+    ],
+    "scale_start": 1.08,
+    "scale_end": 1,
+    "blur_start_px": 8,
+    "blur_end_px": 0,
+    "rough_shot_length_seconds": 2.4,
+    "word_alignment_required_before_production": true
+  },
+  "production_integration": {
+    "inherit_repository_policy": true,
+    "default_format_override": false,
+    "reuse_reference_assets": false,
+    "use_approved_characters_and_voices": true,
+    "scope": "technique inspiration only; recreate original assets and narrative"
+  }
+}

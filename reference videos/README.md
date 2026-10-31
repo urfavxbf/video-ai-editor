@@ -1,52 +1,28 @@
-Reference Videos — Production Guide
+# Reference Videos — Production Guide
 
-Purpose
+This folder stores reference media for **technique analysis**, not approved art, voices, scripts or replacement production defaults. Study visual metaphors, motion, kinetic typography, editing rhythm and narrative structure; create **original** output and clear rights for any third-party media reused.
 
-This folder contains reference videos used as inspiration for creating original, high-quality faceless videos.
+## Reference index
 
-The goal is to study and reproduce the production techniques, visual quality, animation style, pacing, and storytelling approach of the references while creating original content.
+| Reference | Status | Analysis |
+| --- | --- | --- |
+| `Expansion feels like chaos before alignment...` (ID `7577091531933240631`) | **Analyzed** (visual-first) | [Scene storyboard, style notes and caveats](analysis/expansion-feels-like-chaos.md) · [Machine-readable motion profile](analysis/expansion-style-profile.json) |
 
-Analysis Requirements
+## What to capture for every new reference
 
-Every reference video must be analyzed across these areas:
+1. Confirm the actual video's resolution, duration, frame rate, audio codec and rights/provenance.
+2. Inspect **real frames**: composition, palette, fonts, illustration metaphors, safe areas, motion cues and texture.
+3. Record **approximate shot boundaries** and distinguish scene changes from word-by-word typography changes.
+4. Analyze the hook, narrative escalation, pivot, ending and emotional rhythm.
+5. Inspect/listen to the audio and validate the **actual** transcript and word alignment before claiming exact voiceover timing.
+6. Build an original scene-by-scene treatment and reusable editorial profile; avoid copying third-party artworks, character designs or unlicensed music.
 
-Category| What to Analyze
-Graphics| Colors, typography, backgrounds, layouts, visual elements
-Animations| Motion graphics, keyframes, easing, transitions
-Pacing| Scene duration, cuts, pauses, visual rhythm
-Voiceover| Narration speed, tone, emphasis, synchronization
-Script| Hook, narrative structure, explanation, key message
-Sound Design| Background music, sound effects, audio transitions
-Editing| Camera movement, zooms, visual effects, composition
+## Current project defaults remain in force
 
-Reference Video Index
+See [the production policy](../docs/PRODUCTION_POLICY.md), [character registry](../characters/registry.json) and [agent instructions](../AGENTS.md): new default episodes are **English, 16:9 1920×1080, 30 fps**, with approved UrFavXBF/PIX pixel poses and English voices. A reference can be 9:16 or faceless without automatically changing those defaults. A separate explicit production instruction is needed to override them for a specific deliverable.
 
-Filename| Priority| Notes
-video-01.mp4| Primary| Main reference for overall style
-video-02.mp4| Secondary| Additional animation and pacing reference
+## Output requirements
 
-Update this table whenever new videos are added.
+Each `analysis/*.md` should document visual evidence, timing estimates, storytelling, text/graphics principles, audio verification status, original-production guidance, and unresolved uncertainties. Structured profiles must mark **measured observations** separately from **proposed animation parameters**.
 
-Production Rules
-
-1. Analyze reference videos scene by scene using precise timestamps.
-2. Identify reusable animation patterns, graphics, transitions, and editing techniques.
-3. Match the reference pacing and overall production quality.
-4. Preserve the important ideas and educational context, using original narration and wording.
-5. Create original visual assets rather than reusing copyrighted footage or graphics without permission.
-6. Maintain consistent graphics, animations, typography, and editing across all produced videos.
-
-Required Analysis Output
-
-For each reference video, generate a production breakdown containing:
-
-- Complete scene-by-scene timeline
-- Timestamp and duration of each scene
-- Voiceover script and narrative structure
-- Graphics and animation specifications
-- Transition and sound effect descriptions
-- Reusable design and animation patterns
-
-Main Objective
-
-Build a reusable, production-grade video creation workflow that can consistently produce original videos with the same visual sophistication, storytelling effectiveness, and pacing quality as the reference materials.
+Reference media and analyses should never be treated as evidence that a finished render, voice sync, or asset license has been verified.
