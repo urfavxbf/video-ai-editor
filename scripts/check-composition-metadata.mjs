@@ -10,6 +10,9 @@ const temp = await mkdtemp(path.join(tmpdir(), 'composition-metadata-'));
 const browserExecutable = process.env.REMOTION_BROWSER_EXECUTABLE;
 const edit = JSON.parse(await readFile('src/edit/edit.json', 'utf8'));
 const shortEdit = {...edit, segments: [{kind: 'aroll', at: 0, frames: 10}]};
+const episode = JSON.parse(await readFile('src/episodes/episode-proof-v1.json', 'utf8'));
+const shortEpisode = structuredClone(episode);
+shortEpisode.chapters = [{...shortEpisode.chapters[0], durationFrames: 17}];
 let browser;
 try {
   const serveUrl = await bundle({entryPoint: path.resolve('src/index.ts'), outDir: path.join(temp, 'bundle')});
@@ -22,7 +25,12 @@ try {
     ['HeroCharacterStage', {durationFrames: 900}, 900],
     ['ExampleEdit', {}, 299],
     ['ExampleEdit', {spec: shortEdit}, 10],
+    ['EpisodeTimelineProof', {}, 120],
+    ['EpisodeTimelineProof', {manifest: shortEpisode}, 17],
   ];
+  const invalidEpisode = structuredClone(episode);
+  invalidEpisode.chapters[1].startFrame = 59;
+  await assert.rejects(select('EpisodeTimelineProof', {manifest: invalidEpisode}), /contiguous timeline offset/);
   const actual = [];
   for (const [id, inputProps, expected] of cases) {
     const composition = await select(id, inputProps);

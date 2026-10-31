@@ -20,6 +20,9 @@ import {ImportedSpriteAnimation, type ImportedSpriteAnimationProps} from './char
 import {CanonicalFullBodyReviewStage, CANONICAL_FULL_BODY_REVIEW_FRAMES, type CanonicalFullBodyReviewProps} from './characters/CanonicalFullBodyReviewStage'
 import {TrueFrameReviewStage, type TrueFrameReviewProps} from './characters/TrueFrameReviewStage'
 import {PixelProductionProof,PIXEL_PROOF_FRAMES,type PixelProductionProofProps} from './characters/PixelProductionProof'
+import episodeFixture from './episodes/episode-proof-v1.json'
+import {compileEpisodeTimeline, type EpisodeManifestV1} from './episodes/episodeManifest'
+import {EpisodeTimelineProof, calculateEpisodeTimelineMetadata, type EpisodeTimelineProofProps} from './episodes/EpisodeTimelineProof'
 import './fonts'
 import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadata'
 
@@ -40,6 +43,10 @@ export const Root = () => <>
     durationInFrames={HERO_STAGE_DURATION}
     calculateMetadata={calculateHeroMetadata}
     defaultProps={{assetsReady:true,artApproved:true,voiceEvents:[],chapter:1} satisfies HeroStageProps} />
+  <Composition id="EpisodeTimelineProof" component={EpisodeTimelineProof} width={1920} height={1080} fps={30}
+    durationInFrames={compileEpisodeTimeline(episodeFixture).durationFrames}
+    calculateMetadata={calculateEpisodeTimelineMetadata}
+    defaultProps={{manifest: episodeFixture as EpisodeManifestV1} satisfies EpisodeTimelineProofProps} />
   <Composition id="V4FacialReviewStage" component={V4FacialReviewStage} width={1920} height={1080} fps={30}
     durationInFrames={V4_FACIAL_REVIEW_FRAMES}
     defaultProps={{assetsReady:false,artApproved:false} satisfies V4FacialReviewProps} />
