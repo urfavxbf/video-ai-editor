@@ -168,6 +168,29 @@ cloud APIs. The CLI render script explicitly disables telemetry and provider
 credentials. Only claim an integrated clip after actual render, FFprobe and
 Remotion playback verification.
 
+## Media resource library — verified provenance and local media only
+
+The video editor uses [`docs/MEDIA_RESOURCE_LIBRARY.md`](docs/MEDIA_RESOURCE_LIBRARY.md),
+`resources/catalog.json` and `resources/sources.json` as the central
+library for B-roll/stock clips, stills, fonts, music and SFX. The existing
+Inter/Montserrat/Caveat fonts and 13 imported SFX are inventoried;
+**publication rights for the legacy imported SFX still require review**.
+Two repo-original SVG backgrounds, the `ResourceLibraryProof` B-roll
+composition, and an original offline ambient WAV generator are available.
+
+Use `python3 scripts/resource_library.py audit` before production. Owners
+manually select and inspect **specific licensed assets**; imports require
+an explicit `--rights-confirmed` flag, exact source and license attribution,
+and physical media validation. Imported raw stock is **local and Git-ignored**,
+not automatically bundled, downloaded or redistributed. A resource provider
+link does not mean that all its media has been downloaded or cleared.
+
+Select visual and music cues by script and verified source timing; do not
+replace approved UrFavXBF/PIX PNGs or Chatterbox V3 voices, assume content
+claims are licensed, use paid/remote media APIs, or call a proof B-roll a
+finished video. The resource library does not grant external asset upload,
+distribution or music publishing permissions.
+
 ## 7. Development, acceptance and delivery gate
 
 1. Use a dedicated Git branch and PR; leave `main` green. **Never push to

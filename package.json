@@ -14,7 +14,11 @@
     "render:repo-showcase": "remotion render RepoShowcase out/repo-showcase.mp4 --codec=h264 --crf=21 --pixel-format=yuv420p",
     "hyperframes:lint": "node scripts/prepare-hyperframes.mjs && cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes lint",
     "hyperframes:render": "node scripts/render-hyperframes.mjs",
-    "hyperframes:studio": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes preview"
+    "hyperframes:studio": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes preview",
+    "resources:audit": "python3 scripts/resource_library.py audit",
+    "resources:list": "python3 scripts/resource_library.py list",
+    "resources:render-broll": "remotion render ResourceLibraryProof out/resources/original-broll.mp4 --codec=h264 --pixel-format=yuv420p --concurrency=2",
+    "resources:ambient": "python3 scripts/generate_original_ambient.py"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.522",

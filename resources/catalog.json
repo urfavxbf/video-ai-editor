@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "note": "Tracked built-in resources only. User-provided media is staged under ignored public/library/ and recorded in ignored resources/local-catalog.json. Do not silently grant stock content redistribution rights.",
+  "builtIn": [
+    {
+      "id": "font-inter",
+      "kind": "font",
+      "path": "fonts/Inter.ttf",
+      "displayName": "Inter",
+      "license": "OFL-1.1",
+      "licenseNotice": "fonts/OFL.txt",
+      "rightsStatus": "approved-font-license",
+      "use": "existing-production-typeface"
+    },
+    {
+      "id": "font-montserrat",
+      "kind": "font",
+      "path": "fonts/Montserrat.ttf",
+      "displayName": "Montserrat",
+      "license": "OFL-1.1",
+      "licenseNotice": "fonts/OFL.txt",
+      "rightsStatus": "approved-font-license",
+      "use": "existing-production-typeface"
+    },
+    {
+      "id": "font-caveat",
+      "kind": "font",
+      "path": "fonts/Caveat.ttf",
+      "displayName": "Caveat",
+      "license": "OFL-1.1",
+      "licenseNotice": "fonts/OFL.txt",
+      "rightsStatus": "approved-font-license",
+      "use": "existing-production-typeface"
+    },
+    {
+      "id": "sfx-whoosh",
+      "kind": "sfx",
+      "path": "sfx/whoosh.mp3",
+      "displayName": "whoosh",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-whip",
+      "kind": "sfx",
+      "path": "sfx/whip.mp3",
+      "displayName": "whip",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-bubble",
+      "kind": "sfx",
+      "path": "sfx/bubble.mp3",
+      "displayName": "bubble",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-click",
+      "kind": "sfx",
+      "path": "sfx/click.mp3",
+      "displayName": "click",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-reveal",
+      "kind": "sfx",
+      "path": "sfx/reveal.mp3",
+      "displayName": "reveal",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-stamp",
+      "kind": "sfx",
+      "path": "sfx/stamp.mp3",
+      "displayName": "stamp",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-chime",
+      "kind": "sfx",
+      "path": "sfx/chime.mp3",
+      "displayName": "chime",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-riser",
+      "kind": "sfx",
+      "path": "sfx/riser.mp3",
+      "displayName": "riser",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-cascade",
+      "kind": "sfx",
+      "path": "sfx/cascade.mp3",
+      "displayName": "cascade",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-hit",
+      "kind": "sfx",
+      "path": "sfx/hit.mp3",
+      "displayName": "hit",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-crack",
+      "kind": "sfx",
+      "path": "sfx/crack.mp3",
+      "displayName": "crack",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-shatter",
+      "kind": "sfx",
+      "path": "sfx/shatter.mp3",
+      "displayName": "shatter",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "sfx-typing",
+      "kind": "sfx",
+      "path": "sfx/typing.mp3",
+      "displayName": "typing",
+      "license": "legacy-unverified",
+      "rightsStatus": "review-before-publication",
+      "use": "existing-effect-cue",
+      "rightsNote": "Imported effect-library audio. Separate commercial and redistribution rights not verified."
+    },
+    {
+      "id": "image-neon-grid",
+      "kind": "image",
+      "path": "resources/original/neon-grid.svg",
+      "displayName": "Neon grid abstract background",
+      "license": "owner-original",
+      "rightsStatus": "original-repo-artwork",
+      "use": "original-abstract-background"
+    },
+    {
+      "id": "image-orbit-lines",
+      "kind": "image",
+      "path": "resources/original/orbit-lines.svg",
+      "displayName": "Orbit lines abstract background",
+      "license": "owner-original",
+      "rightsStatus": "original-repo-artwork",
+      "use": "original-motion-graphics-background"
+    }
+  ]
+}

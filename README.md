@@ -101,6 +101,28 @@ See [production instructions](docs/HYPERFRAMES_PRODUCTION.md) and the
 telemetry disabled, and does not call cloud services, paid HeyGen APIs or
 external media providers without authorization.
 
+## Verified media resources (video, images, fonts, music and SFX)
+
+The [Media Resource Library](docs/MEDIA_RESOURCE_LIBRARY.md) inventories the
+three bundled OFL fonts, 13 legacy SFX requiring publication-rights review,
+two repo-original SVG backgrounds, a genuine 4-second original B-roll
+composition and a local 8-second ambient sound generator. It also lists
+manually reviewable stock-media sources, records source/creator/license
+attestations and SHA-256 file receipts, and rejects unsafe/missing media.
+
+```bash
+python3 scripts/resource_library.py audit
+npm run resources:render-broll
+npm run resources:ambient
+```
+
+Third-party stock is **not** bundled or bulk-downloaded: per-asset licensing
+and permissions matter. Private approved files are staged locally under
+ignored `public/library/`; the source index alone does not grant publishing
+rights or create a stock library service. See the
+[AI prompt for resources](docs/AI_AGENT_PROMPTS.md) for requesting assets
+narration-first.
+
 ## Quick start
 
 ```bash

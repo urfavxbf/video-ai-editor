@@ -115,3 +115,21 @@ Run only offline local rendering with telemetry disabled; do not invoke cloud
 services, external media pipelines, paid HeyGen features or publishing without
 explicit owner authorization. Never infer a finished episode from a successful
 motion-graphics test.
+
+## Verified local media resources and rights
+
+For B-roll/video clips, stills, typefaces, music and sound effects use the
+[`Media Resource Library`](MEDIA_RESOURCE_LIBRARY.md). Its committed
+`resources/catalog.json` inventories the existing three licensed fonts,
+13 legacy SFX and two original SVGs; the imported SFX require separate rights
+review before publication. The project also includes the original
+`ResourceLibraryProof` B-roll template and local ambient WAV recipe.
+
+Use `python3 scripts/resource_library.py audit`, inspect source licensing,
+originality, model/property rights, actual file hashes and duration, and
+record an approved owner-reviewed provenance receipt. New stock media goes
+into **ignored local** `public/library/` storage, not an automatically
+republished public stock library. Provider links are suggestions only:
+no paid API, scraping, bulk downloads, uploads or redistribution without
+specific authorization. The existing approved voice and character assets
+remain authoritative.
