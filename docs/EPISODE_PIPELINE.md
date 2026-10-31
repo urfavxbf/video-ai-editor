@@ -192,7 +192,13 @@ Machine QA probes the actual encoded MP4 for H.264, dimensions, 30fps, exact
 video frame count, duration, AAC presence when narration exists, mean/peak dBFS,
 black intervals, audio EOF coverage, and excessive silence within source-derived
 active RMS windows (preserving genuine source pauses).
-Mean/peak dBFS is not integrated LUFS. Manual review remains required for identity,
+The QA report includes EBU R128 integrated loudness in LUFS and oversampled true
+peak in dBFS, in addition to mean/peak dBFS. Measurements are extracted from
+the final encoded AAC audio via FFmpeg `ebur128=peak=true`; they do not normalize
+or master the soundtrack. Non-finite loudness for required narration fails
+verification. Actual target loudness and true-peak headroom are editorial
+acceptance decisions for the destination; avoid hard-coding a platform-wide
+normalization rule. Manual review remains required for identity,
 word timing, pronunciation, narrative/fact quality, caption readability and
 visual/audio playback. QA never grants publishing approval.
 

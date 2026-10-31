@@ -41,7 +41,7 @@ def verify_delivery(filename, frames, width=1920, height=1080, require_audio=Tru
             raise ValueError('unverifiable delivery audio duration') from None
     args=['ffmpeg','-hide_banner','-nostdin','-threads','2','-protocol_whitelist','file',
        '-i',str(filename),'-vf','blackdetect=d=0.15:pix_th=0.10:pic_th=0.98']
-    if audio: args+=['-af','silencedetect=noise=-50dB:d=0.3,volumedetect']
+    if audio: args+=['-af','silencedetect=noise=-50dB:d=0.3,ebur128=peak=true,volumedetect']
     args+=['-f','null','-']
     log=command(args,300).stderr
     black=[float(s) for s in re.findall(r'black_duration:([0-9.]+)',log)]
@@ -54,6 +54,24 @@ def verify_delivery(filename, frames, width=1920, height=1080, require_audio=Tru
             levels[field]=float(match.group(1))
         if require_audio and (not math.isfinite(levels['meanDb']) or levels['meanDb'] < -60 or levels['maxDb'] > -0.1):
             raise ValueError('audio is silent, too quiet or clipping')
+        # ebur128 provides the integrated ITU-R BS.1770 loudness and the
+        # oversampled true peak. Parse its final summary, not per-frame logs.
+        summary = log.rsplit('Summary:', 1)[-1] if 'Summary:' in log else ''
+        integrated = re.search(r'Integrated loudness:\\s*I:\\s*(-inf|-?[0-9]+(?:\\.[0-9]+)?)\\s+LUFS', summary)
+        true_peak = re.search(r'True peak:\\s*Peak:\\s*(-inf|-?[0-9]+(?:\\.[0-9]+)?)\\s+dBFS', summary)
+        if not integrated or not true_peak:
+            raise ValueError('EBU R128 loudness or true-peak measurement missing')
+        measured_lufs = float(integrated.group(1))
+        measured_peak = float(true_peak.group(1))
+        if require_audio and (not math.isfinite(measured_lufs) or
+                              not math.isfinite(measured_peak)):
+            raise ValueError('unmeasurable narration loudness')
+        if require_audio and measured_peak > 0:
+            raise ValueError('true peak exceeds digital full-scale')
+        # None for silence keeps JSON QA records standards-compliant
+        # (never persist Infinity/-Infinity as a JSON number).
+        levels['integratedLufs'] = measured_lufs if math.isfinite(measured_lufs) else None
+        levels['truePeakDbfs'] = measured_peak if math.isfinite(measured_peak) else None
         starts=[float(s) for s in re.findall(r'silence_start: ([0-9.]+)',log)]
         ends=[float(s) for s in re.findall(r'silence_end: ([0-9.]+)',log)]
         if len(ends)<len(starts): ends.append(frames/30)
@@ -64,5 +82,5 @@ def verify_delivery(filename, frames, width=1920, height=1080, require_audio=Tru
     return {'machineChecks':'passed','video':video[0],'audio':levels,
             'durationSeconds':float(probe['format']['duration']),
             'blackIntervals':len(black),'manualReviewRequired':True,
-            'limitations':['Loudness uses mean/peak dBFS, not integrated LUFS.',
+            'limitations':['Integrated LUFS and true-peak dBFS are measured, not normalized or mastered.',
                           'Semantic captions, speaker identity and audiovisual quality require manual review.']}
