@@ -66,6 +66,9 @@ test('procedural effects use frame animation, real matte and typed paths',()=>{
  assert.match(advanced,/transform:.*translate/);
  assert.match(advanced,/from\+24/);
  assert.match(advanced,/FX_ADVANCED:FxEntry\[\]/);
+ assert.match(advanced,/useSrcFrame\(from\)/);
+ assert.match(advanced,/backgroundPosition:/);
+ assert.match(advanced,/points=Array\.from\(\{length:56/);
 });
 test('original measured audio envelope is finite and actually varies',()=>{
  const levels=JSON.parse(src('src/fx/advanced/reactive-envelope.json'));
