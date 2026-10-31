@@ -25,12 +25,15 @@ import {compileEpisodeTimeline, type EpisodeManifestV1} from './episodes/episode
 import {EpisodeTimelineProof, calculateEpisodeTimelineMetadata, type EpisodeTimelineProofProps} from './episodes/EpisodeTimelineProof'
 import {EpisodeProduction, calculateEpisodeProductionMetadata, type EpisodeProductionProps} from './episodes/EpisodeProduction'
 import {AfterEffectsLottieProof, AFTER_EFFECTS_LOTTIE_FRAMES} from './after-effects/AfterEffectsLottieProof'
+import {DuikBakedCharacterProof, DUIK_BAKED_PROOF_FRAMES} from './after-effects/DuikBakedCharacterProof'
 import './fonts'
 import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadata'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="DuikBakedCharacterProof" component={DuikBakedCharacterProof}
+    width={1920} height={1080} fps={30} durationInFrames={DUIK_BAKED_PROOF_FRAMES} />
   <Composition id="AfterEffectsLottieProof" component={AfterEffectsLottieProof}
     width={1080} height={1920} fps={30} durationInFrames={AFTER_EFFECTS_LOTTIE_FRAMES} />
   <Composition id="EpisodeProduction" component={EpisodeProduction} width={1920} height={1080} fps={30}

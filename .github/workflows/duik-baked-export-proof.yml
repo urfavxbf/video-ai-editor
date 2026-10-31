@@ -1,0 +1,87 @@
+name: Duik baked animation → Remotion integration proof
+
+on:
+  push:
+    branches:
+      - feat/duik-angela-baked-export-bridge-20261031
+    paths:
+      - .github/workflows/duik-baked-export-proof.yml
+      - scripts/import_duik_baked_lottie.py
+      - tests/test_duik_baked_lottie.py
+      - src/after-effects/duik-imported.json
+      - src/after-effects/DuikBakedCharacterProof.tsx
+      - src/Root.tsx
+      - docs/DUIK_ANGELA_IMPORT.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prove-duik-baked-bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Validate import, bad assets and atomic copy
+        run: |
+          python3 -m unittest discover -s tests -p 'test_duik_baked_lottie.py' -v
+          python3 scripts/import_duik_baked_lottie.py src/after-effects/duik-imported.json --check
+          python3 -m py_compile scripts/import_duik_baked_lottie.py
+      - name: Install current pinned Remotion packages and typecheck
+        run: |
+          npm ci --no-audit --no-fund
+          npm run typecheck
+      - name: Real offline puppet keyframe and H264 render
+        run: |
+          npx remotion browser ensure
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          mkdir -p out/duik-proof
+          npx remotion still DuikBakedCharacterProof out/duik-proof/frame-20.png \
+            --frame=20 --scale=0.25
+          npx remotion still DuikBakedCharacterProof out/duik-proof/frame-62.png \
+            --frame=62 --scale=0.25
+          test -s out/duik-proof/frame-20.png
+          test -s out/duik-proof/frame-62.png
+          if cmp -s out/duik-proof/frame-20.png out/duik-proof/frame-62.png; then
+            echo "FAIL: character animation frames do not change" >&2; exit 1
+          fi
+          npx remotion render DuikBakedCharacterProof out/duik-proof/duik-baked.mp4 \
+            --frames=0-44 --scale=0.25 --concurrency=2 \
+            --codec=h264 --pixel-format=yuv420p
+          python3 - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          media=Path("out/duik-proof/duik-baked.mp4")
+          assert media.stat().st_size > 8000
+          data=json.loads(subprocess.check_output([
+             "ffprobe","-v","error","-select_streams","v:0",
+             "-show_entries","stream=codec_name,width,height,r_frame_rate,nb_frames",
+             "-of","json",str(media)],text=True))
+          stream=data["streams"][0]
+          assert stream["codec_name"]=="h264"
+          assert (stream["width"],stream["height"])==(480,270)
+          assert stream["r_frame_rate"]=="30/1"
+          assert stream["nb_frames"]=="45"
+          print("Duik-style original baked-vector character bridge: real H264 render verified")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: duik-baked-character-motion-proof
+          path: out/duik-proof/
+          retention-days: 7
+          if-no-files-found: warn
