@@ -99,3 +99,19 @@ assets, processing permissions or production approvals.
   never constitutes verified final delivery.
 - Do not merge changes to `main`, publish, trigger write-capable workflows,
   or incur paid API/GPU costs without the owner's explicit authorization.
+
+## HyperFrames first-class animation production
+
+HyperFrames by HeyGen is **integrated into the local production toolchain** for
+authoring motion graphics, using pinned CLI dependencies and a real tested
+renderer. Use `npm run hyperframes:lint`, `npm run hyperframes:render`, and the
+validated `EpisodeProduction.motionGraphics` chapter clips. The approved
+narration, identity, artwork and character-stage defaults remain unchanged.
+This is not an optional dependency installation or a replacement for Remotion;
+graphics are applied selectively when they improve the story. See
+[`docs/HYPERFRAMES_PRODUCTION.md`](HYPERFRAMES_PRODUCTION.md).
+
+Run only offline local rendering with telemetry disabled; do not invoke cloud
+services, external media pipelines, paid HeyGen features or publishing without
+explicit owner authorization. Never infer a finished episode from a successful
+motion-graphics test.

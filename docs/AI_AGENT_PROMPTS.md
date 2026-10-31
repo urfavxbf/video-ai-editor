@@ -205,6 +205,24 @@ branch, PR, workflow at artifact links kung available.
 Huwag tawaging final ang storyboard/preview o successful voice-only run.
 ```
 
+## 14. HyperFrames motion graphics → verified Remotion episode
+
+```text
+Bumuo ng original motion-graphics scene para sa [NARRATION MOMENT] gamit
+ang fully integrated local HyperFrames rendering pipeline ng video-ai-editor.
+Basahin ang docs/HYPERFRAMES_PRODUCTION.md at ang 5 required files.
+Use hyperframes/projects/kinetic-intro/index.html bilang verified
+contract example, pero gumawa ng original, purpose-built scene content.
+Run npm run hyperframes:lint at npm run hyperframes:render para
+mag-generate at mag-stage ng 1920x1080/30fps H.264 video.
+Ilagay ang clip sa EpisodeProduction.motionGraphics sa tamang chapter
+at frame range, ayon sa actual timing at approved narration.
+Verify via FFprobe, representative frames, Remotion render at audio QA.
+Huwag mag-generate ng voice, gumamit ng HeyGen cloud, paid API,
+media-use, telemetry, remote uploads, o publish nang walang permiso.
+Huwag palitan ang default HeroCharacterStage o Chatterbox V3.
+```
+
 ## Fast path: choose task, then verify
 
 | Goal | Starting point | Required verification |
@@ -216,6 +234,7 @@ Huwag tawaging final ang storyboard/preview o successful voice-only run.
 | Voiceover | `scripts/character_voiceover.py` | Actual WAV + approved speaker + listening |
 | Lottie | `AfterEffectsLottieProof` | Multiple nonidentical rendered frames |
 | Duik | `import_duik_baked_lottie.py` | Offline safe import + H.264 render |
+| HyperFrames | `npm run hyperframes:render` → `EpisodeProduction.motionGraphics` | Local H.264, chapter timing, Remotion playback |
 | Shipping | Production composition + FFprobe | Visual, audio, caption and provenance QA |
 
 ## Commands agents can use AFTER inputs and permissions are verified
@@ -230,6 +249,9 @@ node scripts/validate-edit.cjs src/edit/edit.json --media
 # For a separate synthetic FX demo, after npm ci:
 npm run sample
 npm run studio
+# HyperFrames first-class local graphics, after npm ci:
+npm run hyperframes:lint
+npm run hyperframes:render
 # For a real existing MP4:
 ffprobe -v error -show_format -show_streams [EXISTING_MP4]
 ```

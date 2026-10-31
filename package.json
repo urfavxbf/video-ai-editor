@@ -11,7 +11,10 @@
     "render:edit": "remotion render ExampleEdit out/edit.mp4 --codec=h264 --crf=17 --pixel-format=yuv420p --audio-codec=aac --audio-bitrate=320k",
     "stills": "node scripts/fx-stills.mjs",
     "bench": "node scripts/fx-bench.mjs",
-    "render:repo-showcase": "remotion render RepoShowcase out/repo-showcase.mp4 --codec=h264 --crf=21 --pixel-format=yuv420p"
+    "render:repo-showcase": "remotion render RepoShowcase out/repo-showcase.mp4 --codec=h264 --crf=21 --pixel-format=yuv420p",
+    "hyperframes:lint": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes lint",
+    "hyperframes:render": "node scripts/render-hyperframes.mjs",
+    "hyperframes:studio": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes preview"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.522",
@@ -35,6 +38,7 @@
   "devDependencies": {
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "typescript": "^5"
+    "typescript": "^5",
+    "hyperframes": "0.8.222"
   }
 }

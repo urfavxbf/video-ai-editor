@@ -149,6 +149,25 @@ Never fabricate chart numbers, captions, source positions, or source media.
   hand-authored, **not** tested with a real Duik-generated export.
   See `docs/DUIK_ANGELA_IMPORT.md`.
 
+## 7. HyperFrames by HeyGen — first-class motion-graphics workflow
+
+**HyperFrames is part of this repository's production toolchain**, not merely an
+uninstalled Agent Skill. It creates offline HTML/GSAP animations through the
+pinned local `hyperframes` CLI; `npm run hyperframes:lint` and
+`npm run hyperframes:render` stage a verified H.264 graphics file for Remotion.
+`EpisodeProduction.motionGraphics` allows chapter-local, validated, muted
+picture-in-picture or full-screen motion-graphics clips. It is **not** the
+replacement for `HeroCharacterStage`, approved PIX/UrFavXBF characters,
+Chatterbox V3 narration, or the default English 16:9 episode policy.
+
+See `docs/HYPERFRAMES_PRODUCTION.md`. HyperFrames local preview and rendering
+are allowed for approved original graphics; never automatically invoke hosted
+HeyGen/cloud rendering, paid media generation, publishing or third-party
+uploads. Do not treat the installed HyperFrames skills as permission to use
+cloud APIs. The CLI render script explicitly disables telemetry and provider
+credentials. Only claim an integrated clip after actual render, FFprobe and
+Remotion playback verification.
+
 ## 7. Development, acceptance and delivery gate
 
 1. Use a dedicated Git branch and PR; leave `main` green. **Never push to
