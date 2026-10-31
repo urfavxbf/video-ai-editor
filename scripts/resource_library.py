@@ -20,6 +20,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "public"
+BUILTIN_PUBLIC = ROOT / "public"  # Never overridden by isolated local intake tests
 CATALOG = ROOT / "resources" / "catalog.json"
 LOCAL_CATALOG = ROOT / "resources" / "local-catalog.json"
 DEST_ROOT = PUBLIC / "library"
@@ -154,14 +155,14 @@ def audit() -> dict:
         known.add(identity)
         if not isinstance(name, str) or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9/_\-.]{1,180}", name):
             fail("unsafe bundled resource path")
-        item_path = PUBLIC / name
+        item_path = BUILTIN_PUBLIC / name
         if item_path.suffix == ".svg" and name.startswith("resources/original/"):
-            ensure_file(item_path, root=PUBLIC, extensions={".svg"})
+            ensure_file(item_path, root=BUILTIN_PUBLIC, extensions={".svg"})
             probe(item_path, "vector")
         else:
-            ensure_file(item_path, root=PUBLIC, extensions=EXTENSIONS[kind])
+            ensure_file(item_path, root=BUILTIN_PUBLIC, extensions=EXTENSIONS[kind])
             if kind == "font":
-                if item.get("license") != "OFL-1.1" or not (PUBLIC / "fonts/OFL.txt").is_file():
+                if item.get("license") != "OFL-1.1" or not (BUILTIN_PUBLIC / "fonts/OFL.txt").is_file():
                     fail("bundled font license missing")
             elif item.get("rightsStatus") == "review-before-publication":
                 result["rightsReviewNeeded"] += 1
