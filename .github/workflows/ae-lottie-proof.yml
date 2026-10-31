@@ -1,0 +1,90 @@
+name: After Effects to Lottie — branch-only integration proof
+
+on:
+  push:
+    branches:
+      - feat/after-effects-lottie-bridge-20261031
+    paths:
+      - .github/workflows/ae-lottie-proof.yml
+      - package.json
+      - src/after-effects/**
+      - src/Root.tsx
+      - tests/after-effects-lottie.test.cjs
+      - docs/AFTER_EFFECTS_LOTTIE.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-lock:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Sync exact dependency lockfile safely
+        run: |
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci --no-audit --no-fund
+      - name: Typecheck all compositions and prove Lottie contract
+        run: |
+          npm run typecheck
+          node --test tests/*.test.cjs
+      - name: Render two original Lottie keyframes and 45-frame H264 proof
+        run: |
+          npx remotion browser ensure
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          mkdir -p out/lottie
+          npx remotion still AfterEffectsLottieProof out/lottie/frame-12.png --frame=12 --scale=0.25
+          npx remotion still AfterEffectsLottieProof out/lottie/frame-42.png --frame=42 --scale=0.25
+          test -s out/lottie/frame-12.png
+          test -s out/lottie/frame-42.png
+          if cmp -s out/lottie/frame-12.png out/lottie/frame-42.png; then
+            echo 'Lottie animation static across distinct frames' >&2
+            exit 1
+          fi
+          npx remotion render AfterEffectsLottieProof out/lottie/animation.mp4 \
+            --frames=0-44 --scale=0.25 --concurrency=2 \
+            --codec=h264 --pixel-format=yuv420p
+          python3 - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          mp4=Path("out/lottie/animation.mp4")
+          assert mp4.is_file() and mp4.stat().st_size > 10000
+          data=json.loads(subprocess.check_output([
+              "ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=codec_name,width,height,r_frame_rate,nb_frames",
+              "-of", "json", str(mp4)],text=True))
+          video=data["streams"][0]
+          assert video["codec_name"]=="h264" and video["width"]==270
+          assert video["height"]==480 and video["r_frame_rate"]=="30/1"
+          assert video["nb_frames"]=="45"
+          print("Original Lottie proof: rendered real 45-frame H.264 MP4")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: after-effects-lottie-render-proof
+          path: out/lottie/
+          retention-days: 7
+      - name: Commit generated lockfile only to this isolated feature branch
+        if: github.ref == 'refs/heads/feat/after-effects-lottie-bridge-20261031'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_NAME}" = 'feat/after-effects-lottie-bridge-20261031'
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "build: lock Remotion Lottie bridge dependencies"
+            git push origin HEAD:"${GITHUB_REF_NAME}"
+          fi

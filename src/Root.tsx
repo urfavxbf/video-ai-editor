@@ -24,12 +24,15 @@ import episodeFixture from './episodes/episode-proof-v1.json'
 import {compileEpisodeTimeline, type EpisodeManifestV1} from './episodes/episodeManifest'
 import {EpisodeTimelineProof, calculateEpisodeTimelineMetadata, type EpisodeTimelineProofProps} from './episodes/EpisodeTimelineProof'
 import {EpisodeProduction, calculateEpisodeProductionMetadata, type EpisodeProductionProps} from './episodes/EpisodeProduction'
+import {AfterEffectsLottieProof, AFTER_EFFECTS_LOTTIE_FRAMES} from './after-effects/AfterEffectsLottieProof'
 import './fonts'
 import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadata'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="AfterEffectsLottieProof" component={AfterEffectsLottieProof}
+    width={1080} height={1920} fps={30} durationInFrames={AFTER_EFFECTS_LOTTIE_FRAMES} />
   <Composition id="EpisodeProduction" component={EpisodeProduction} width={1920} height={1080} fps={30}
     durationInFrames={120} calculateMetadata={calculateEpisodeProductionMetadata}
     defaultProps={{manifest: episodeFixture as EpisodeManifestV1, captions:{}} satisfies EpisodeProductionProps}/>
