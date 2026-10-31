@@ -51,3 +51,11 @@ test('showreel is full-bleed: no labels, watermark, slide grid, nav, split cards
   assert.match(reel,/width=\{1080\} height=\{1920\}/.test(specifyRoot()) ? /MotionShowreel/ : /this-regex-will-not-match/);
   function specifyRoot(){return readFileSync(path.join(root,'src/Root.tsx'),'utf8');}
 });
+
+test('animated source environments vary and never recreate the dark technical grid',()=>{
+ const source=readFileSync(path.join(root,'scripts/generate_motion_reel_source.py'),'utf8');
+ assert.match(source,/palettes=\[\(245,222,200\)/);
+ assert.match(source,/accents=\[/);
+ assert.doesNotMatch(source,/d\.line\(\[\(0,715\)/);
+ assert.doesNotMatch(source,/k\*k\*2/);
+});
