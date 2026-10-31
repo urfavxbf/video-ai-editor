@@ -115,3 +115,17 @@ Run only offline local rendering with telemetry disabled; do not invoke cloud
 services, external media pipelines, paid HeyGen features or publishing without
 explicit owner authorization. Never infer a finished episode from a successful
 motion-graphics test.
+
+## Owner-mandated visual direction: no presentation-template graphics
+
+For new videos, never insert unsolicited `URFAVXBF VIDEO AI EDITOR`
+headers, permanent watermarks, bottom labels/footers, scene indices,
+progress meters, black/teal technical grids, explanatory split panes or
+boxed effect previews. The owner specifically rejected this recurring
+slideshow-style design after reviewing the 21-FX showreel. A video needs
+to exhibit actual visual effects full-frame, purposeful camera/compositing
+motion and story-based typography, **not** a thesis-defense presentation.
+No branding overlay or end card unless the owner asks for one. The project
+name in documentation is not a mandate to display it on screen. This visual
+gate is in addition to technical frame/audio validation. See `AGENTS.md`
+and `docs/REAL_MOTION_SHOWREEL.md`.

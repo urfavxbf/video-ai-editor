@@ -260,3 +260,18 @@ ffprobe -v error -show_format -show_streams [EXISTING_MP4]
 owner's actual approval of creating new voice audio, using Groq or other remote
 processors, incurring charges, publishing, triggering privileged workflows, or
 merging to `main`. Use the existing zero-paid-API/CPU defaults.
+
+## 16. Full-frame motion design, no unsolicited logo/labels
+
+```text
+Gumawa ng [EFFECT / VIDEO] na cinematic at motion-driven. Bawal ang
+unrequested URFAVXBF VIDEO AI EDITOR watermark, permanent header/footer,
+slide title, numbered sidebar, data HUD, dark grid template, mini-preview
+framing, at invented branding/end-card. Ipakita nang FULL FRAME ang
+actual animated effect; gumamit ng match cuts, layered depth, scene-specific
+motion, and kinetic typography lamang kung may storytelling purpose.
+Kung 21 portrait-native effects ang ipapakita, gamitin ang 9:16
+full-frame showreel at huwag hatiin ang screen na parang presentation.
+Render actual frames, i-review ang mga representative frames at final
+playback. Itigil at ayusin kung nagmukhang slideshow kahit green ang CI.
+```

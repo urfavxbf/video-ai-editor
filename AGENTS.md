@@ -168,6 +168,31 @@ cloud APIs. The CLI render script explicitly disables telemetry and provider
 credentials. Only claim an integrated clip after actual render, FFprobe and
 Remotion playback verification.
 
+## Strict visual direction — do not invent a presentation template
+
+The owner explicitly rejected slideshow/presentation styling in video
+deliverables. **Never add unsolicited** corner branding (`URFAVXBF VIDEO AI
+EDITOR`), watermarks, permanent top/bottom labels, footers, scene numbers,
+progress bars, UI chrome, dark technical grid backgrounds, split sidebars,
+boxed video previews, PowerPoint-like information panels, or generic
+"feature showcase" cards. These are **not** project defaults, even in demos.
+
+Render the actual requested action/effect as the dominant image. Use
+full-frame animated footage, purposeful scene choreography, match cuts,
+layered compositing, camera movement and narrative-driven typography only
+when the scene calls for them. On-screen text must serve the video
+content, not explain to the viewer which component is running. Any
+branding/end card requires an **explicit owner request**. Ask only if
+the user genuinely needs to decide a new brand identity; otherwise
+omit branding.
+
+The 21 stock FX are authored in native 9:16. A showreel may use a
+native full-bleed 9:16 composition to display their full effect motion;
+this does **not** change the 16:9 default for original episodes.
+See `docs/REAL_MOTION_SHOWREEL.md` for the specific rejection and
+regression guard. A technically successful MP4 with slide-like
+layout is **not** accepted visual quality.
+
 ## 7. Development, acceptance and delivery gate
 
 1. Use a dedicated Git branch and PR; leave `main` green. **Never push to
