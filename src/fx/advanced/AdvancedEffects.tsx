@@ -13,18 +13,18 @@ const FullVideo=({from,style}:{from:number;style?:React.CSSProperties})=>
   <AbsoluteFill style={{...style,overflow:'hidden'}}><ARoll from={from}/></AbsoluteFill>;
 const sprite=(from:number,style?:React.CSSProperties)=> <Cutout from={from} style={style}/>;
 const shimmer=(progress:number,angle=30)=>({
-  background:\`linear-gradient(\${angle}deg,transparent 15%,rgba(255,209,142,.0) 29%,rgba(255,144,56,.84) 51%,rgba(248,87,65,.38) 66%,transparent 80%)\`,
-  transform:\`translateX(\${-1450+progress*2750}px)\`,mixBlendMode:'screen' as const,
+  background:`linear-gradient(${angle}deg,transparent 15%,rgba(255,209,142,.0) 29%,rgba(255,144,56,.84) 51%,rgba(248,87,65,.38) 66%,transparent 80%)`,
+  transform:`translateX(${-1450+progress*2750}px)`,mixBlendMode:'screen' as const,
 });
 export const RgbSplit:React.FC<FxProps>=({from})=>{
   const frame=useCurrentFrame();
   const burst=Math.sin(Math.PI*lerp(frame,5,42))**2;
   const offset=Math.round(37*burst*(.4+.6*Math.abs(Math.sin(frame*.65))));
   return <AbsoluteFill style={{background:'#03070b',overflow:'hidden'}}>
-    <FullVideo from={from} style={{filter:\`contrast(\${1+burst*.28})\`}}/>
+    <FullVideo from={from} style={{filter:`contrast(${1+burst*.28})`}}/>
     {offset>0&&<>
-      <AbsoluteFill style={{transform:\`translateX(\${-offset}px)\`,mixBlendMode:'screen',opacity:burst*.6,filter:'brightness(1.5) sepia(1) saturate(12) hue-rotate(305deg)'}}>{sprite(from)}</AbsoluteFill>
-      <AbsoluteFill style={{transform:\`translateX(\${offset}px)\`,mixBlendMode:'screen',opacity:burst*.6,filter:'brightness(1.5) sepia(1) saturate(12) hue-rotate(135deg)'}}>{sprite(from)}</AbsoluteFill>
+      <AbsoluteFill style={{transform:`translateX(${-offset}px)`,mixBlendMode:'screen',opacity:burst*.6,filter:'brightness(1.5) sepia(1) saturate(12) hue-rotate(305deg)'}}>{sprite(from)}</AbsoluteFill>
+      <AbsoluteFill style={{transform:`translateX(${offset}px)`,mixBlendMode:'screen',opacity:burst*.6,filter:'brightness(1.5) sepia(1) saturate(12) hue-rotate(135deg)'}}>{sprite(from)}</AbsoluteFill>
       {Array.from({length:7},(_,i)=><div key={i} style={{position:'absolute',left:0,top:(i*273+frame*23)%FX_H,width:FX_W,height:2+noise(i)*10,
        background:'rgba(152,255,229,.30)',opacity:burst}}/>)}
     </>}
@@ -33,13 +33,13 @@ export const RgbSplit:React.FC<FxProps>=({from})=>{
 export const SpeedTrails:React.FC<FxProps>=({from})=>{
   const f=useCurrentFrame(),p=ease(lerp(f,4,35)),decay=1-ease(lerp(f,38,70));
   return <AbsoluteFill style={{overflow:'hidden'}}>
-    <FullVideo from={from} style={{transform:\`scale(\${1+.09*p})\`}}/>
+    <FullVideo from={from} style={{transform:`scale(${1+.09*p})`}}/>
     {Array.from({length:8},(_,i)=><AbsoluteFill key={i} style={{opacity:(.34-i*.031)*p*decay,
-      transform:\`translateX(\${-(i+1)*29*p}px) scale(\${1+i*.004})\`,
-      filter:\`blur(\${i*1.1}px) brightness(1.6)\`,mixBlendMode:'screen'}}>
+      transform:`translateX(${-(i+1)*29*p}px) scale(${1+i*.004})`,
+      filter:`blur(${i*1.1}px) brightness(1.6)`,mixBlendMode:'screen'}}>
       {sprite(from)}
     </AbsoluteFill>)}
-    {sprite(from,{transform:\`translateX(\${26*p*decay}px)\`})}
+    {sprite(from,{transform:`translateX(${26*p*decay}px)`})}
   </AbsoluteFill>;
 };
 export const FilmLightLeak:React.FC<FxProps>=({from})=>{
@@ -47,7 +47,7 @@ export const FilmLightLeak:React.FC<FxProps>=({from})=>{
   return <AbsoluteFill style={{overflow:'hidden'}}>
     <ARoll from={from}/>
     <AbsoluteFill style={{...shimmer(p),opacity:.92}}/>
-    <AbsoluteFill style={{background:\`radial-gradient(ellipse at \${p*118}% 35%,rgba(255,227,140,.68),transparent 52%)\`,
+    <AbsoluteFill style={{background:`radial-gradient(ellipse at ${p*118}% 35%,rgba(255,227,140,.68),transparent 52%)`,
       mixBlendMode:'screen',opacity:.67}}/>
     <AbsoluteFill style={{background:'rgba(252,186,95,.18)',mixBlendMode:'screen',
       opacity:Math.sin(p*Math.PI)}}/>
@@ -63,9 +63,9 @@ export const GlassShatter:React.FC<FxProps>=({from})=>{
       const col=i%4,row=Math.floor(i/4),x=col*270,y=row*320;
       const a=noise(i+9)*Math.PI*2,force=80+noise(i+28)*560;
       return <AbsoluteFill key={i} style={{
-        clipPath:\`polygon(\${x}px \${y}px,\${x+270}px \${y}px,\${x+270}px \${y+320}px,\${x}px \${y+320}px)\`,
-        transform:\`translate(\${Math.cos(a)*force*t}px,\${Math.sin(a)*force*t+480*t*t}px) rotate(\${(noise(i+44)-.5)*52*t}deg) scale(\${1-.31*t})\`,
-        opacity:1-ease(lerp(f,49,76)),filter:\`drop-shadow(0 0 \${4+12*t}px #fff9)\`,
+        clipPath:`polygon(${x}px ${y}px,${x+270}px ${y}px,${x+270}px ${y+320}px,${x}px ${y+320}px)`,
+        transform:`translate(${Math.cos(a)*force*t}px,${Math.sin(a)*force*t+480*t*t}px) rotate(${(noise(i+44)-.5)*52*t}deg) scale(${1-.31*t})`,
+        opacity:1-ease(lerp(f,49,76)),filter:`drop-shadow(0 0 ${4+12*t}px #fff9)`,
       }}>{sprite(from)}</AbsoluteFill>;
     })}
     <AbsoluteFill style={{background:'radial-gradient(circle at 50% 46%,#efffff 0%,transparent 38%)',
@@ -83,7 +83,7 @@ export const LiquidDisplacement:React.FC<FxProps>=({from})=>{
         xChannelSelector="R" yChannelSelector="G"/>
     </filter></defs>
   </svg>
-  <AbsoluteFill style={{filter:'url(#advanced-liquid)',transform:\`scale(\${1+.12*t})\`}}><ARoll from={from}/></AbsoluteFill>
+  <AbsoluteFill style={{filter:'url(#advanced-liquid)',transform:`scale(${1+.12*t})`}}><ARoll from={from}/></AbsoluteFill>
   <AbsoluteFill style={{background:'linear-gradient(50deg,transparent 34%,#5cebc122 55%,transparent 71%)',mixBlendMode:'screen'}}/>
  </AbsoluteFill>;
 };
@@ -98,10 +98,10 @@ export const PixelDissolve:React.FC<FxProps>=({from})=>{
     return <div key={i} style={{position:'absolute',left:x+(noise(i+2)-.5)*130*active,
       top:y+(noise(i+4)-.5)*160*active,width:86,height:116,opacity:active*(1-t*.76),
       background:i%3===0?'#74f2c9':i%3===1?'#3d8cf8':'#c6b8ff',
-      transform:\`rotate(\${noise(i+8)*72*active}deg) scale(\${1-.5*active})\`,
+      transform:`rotate(${noise(i+8)*72*active}deg) scale(${1-.5*active})`,
       mixBlendMode:'screen'}}/>
   })}
-  <AbsoluteFill style={{opacity:1-t,filter:\`contrast(\${1+4*t})\`}}>{sprite(from)}</AbsoluteFill>
+  <AbsoluteFill style={{opacity:1-t,filter:`contrast(${1+4*t})`}}>{sprite(from)}</AbsoluteFill>
  </AbsoluteFill>;
 };
 export const WhipPanBlur:React.FC<FxProps>=({from})=>{
@@ -109,12 +109,12 @@ export const WhipPanBlur:React.FC<FxProps>=({from})=>{
  const kick=Math.sin(Math.PI*p);
  return <AbsoluteFill style={{overflow:'hidden',background:'#030608'}}>
   <FullVideo from={from} style={{
-    transform:\`translateX(\${-FX_W*p}px) scale(1.14)\`,
-    filter:\`blur(\${kick*32}px)\`,
+    transform:`translateX(${-FX_W*p}px) scale(1.14)`,
+    filter:`blur(${kick*32}px)`,
   }}/>
   <FullVideo from={from+24} style={{
-    transform:\`translateX(\${FX_W*(1-p)}px) scale(1.14)\`,
-    filter:\`blur(\${kick*32}px)\`,
+    transform:`translateX(${FX_W*(1-p)}px) scale(1.14)`,
+    filter:`blur(${kick*32}px)`,
   }}/>
   {Array.from({length:4},(_,i)=><div key={i} style={{position:'absolute',
     left:(i*315+p*1900)%1750-400,top:150+i*315,width:300,height:5,
@@ -143,11 +143,11 @@ export const SvgPathMorph:React.FC<FxProps>=({from})=>{
 export const ComicHalftone:React.FC<FxProps>=({from})=>{
  const f=useCurrentFrame(),t=ease(lerp(f,7,30));
  return <AbsoluteFill style={{overflow:'hidden'}}>
-  <FullVideo from={from} style={{filter:\`grayscale(\${t*.25}) contrast(\${1+1.15*t}) saturate(1.5)\`}}/>
+  <FullVideo from={from} style={{filter:`grayscale(${t*.25}) contrast(${1+1.15*t}) saturate(1.5)`}}/>
   <AbsoluteFill style={{opacity:t*.53,backgroundImage:'radial-gradient(circle,#091426 2px,transparent 2.5px)',
-    backgroundSize:'13px 13px',mixBlendMode:'multiply',transform:\`scale(\${1+.02*t})\`}}/>
+    backgroundSize:'13px 13px',mixBlendMode:'multiply',transform:`scale(${1+.02*t})`}}/>
   <AbsoluteFill style={{opacity:t*.18,background:'#ffff66',mixBlendMode:'color-burn'}}/>
-  {sprite(from,{filter:\`contrast(\${1+t*.45}) drop-shadow(\${Math.round(t*13)}px 9px 0 #090d1f)\`})}
+  {sprite(from,{filter:`contrast(${1+t*.45}) drop-shadow(${Math.round(t*13)}px 9px 0 #090d1f)`})}
  </AbsoluteFill>;
 };
 // SVG displacement map is an offline procedural shader-like transition. It does NOT
@@ -163,15 +163,15 @@ export const ShaderPortal:React.FC<FxProps>=({from})=>{
    </filter></defs>
   </svg>
   <FullVideo from={from} style={{filter:'brightness(.45)'}}/>
-  <AbsoluteFill style={{clipPath:\`circle(\${radius}px at 52% 45%)\`,
-    transform:\`scale(\${1.35-.35*t}) rotate(\${12*(1-t)}deg)\`,
+  <AbsoluteFill style={{clipPath:`circle(${radius}px at 52% 45%)`,
+    transform:`scale(${1.35-.35*t}) rotate(${12*(1-t)}deg)`,
     filter:'url(#advanced-portal)'}}>
      <ARoll from={from+14}/>
   </AbsoluteFill>
   <div style={{position:'absolute',left:'52%',top:'45%',height:radius*2,width:radius*2,
     transform:'translate(-50%,-50%)',borderRadius:'50%',
-    boxShadow:\`0 0 \${120*(1-t)}px \${22*(1-t)}px #5ae9fff0, inset 0 0 50px #7bf7ffd4\`,
-    border:\`\${Math.max(0,14*(1-t))}px solid #a2ffff\`,opacity:1-t}}/>
+    boxShadow:`0 0 ${120*(1-t)}px ${22*(1-t)}px #5ae9fff0, inset 0 0 50px #7bf7ffd4`,
+    border:`${Math.max(0,14*(1-t))}px solid #a2ffff`,opacity:1-t}}/>
  </AbsoluteFill>;
 };
 export const FilmBurnReveal:React.FC<FxProps>=({from})=>{
@@ -179,11 +179,11 @@ export const FilmBurnReveal:React.FC<FxProps>=({from})=>{
  const inner=10+t*153;
  return <AbsoluteFill style={{overflow:'hidden'}}>
   <FullVideo from={from} style={{filter:'sepia(.35) contrast(1.14) brightness(.8)'}}/>
-  <AbsoluteFill style={{clipPath:\`circle(\${inner}% at 48% 50%)\`}}>
+  <AbsoluteFill style={{clipPath:`circle(${inner}% at 48% 50%)`}}>
     <ARoll from={from+17}/>
   </AbsoluteFill>
   <AbsoluteFill style={{opacity:.64*(1-t),pointerEvents:'none',background:
-   \`radial-gradient(circle at 48% 50%,transparent \${Math.max(0,inner-11)}%,rgba(255,245,161,.84) \${Math.max(0,inner-8)}%,rgba(245,90,23,.94) \${Math.max(0,inner-3)}%,transparent \${inner+3}%)\`,
+   `radial-gradient(circle at 48% 50%,transparent ${Math.max(0,inner-11)}%,rgba(255,245,161,.84) ${Math.max(0,inner-8)}%,rgba(245,90,23,.94) ${Math.max(0,inner-3)}%,transparent ${inner+3}%)`,
    mixBlendMode:'screen'}}/>
   <AbsoluteFill style={{opacity:.19*(1-t),background:'linear-gradient(160deg,#eb4c20,transparent 55%)',mixBlendMode:'screen'}}/>
  </AbsoluteFill>;
@@ -201,10 +201,10 @@ export const AudioReactiveParticles:React.FC<FxProps>=({from})=>{
     const size=5+noise(i+70)*13+level*18;
     return <div key={i} style={{position:'absolute',left:x,top:y,width:size,height:size,borderRadius:'50%',
       opacity:Math.min(.9,.23+level*1.8),background:i%3===0?'#65fff1':i%3===1?'#60a5ff':'#e6a4ff',
-      boxShadow:\`0 0 \${9+level*45}px \${2+level*12}px #60f3ff88\`,
+      boxShadow:`0 0 ${9+level*45}px ${2+level*12}px #60f3ff88`,
     }}/>;
   })}
-  {sprite(from,{filter:\`drop-shadow(0 0 \${10+level*70}px #8bfff2)\`})}
+  {sprite(from,{filter:`drop-shadow(0 0 ${10+level*70}px #8bfff2)`})}
   <Audio src={staticFile('sample/advanced-reactive.wav')}/>
  </AbsoluteFill>;
 };
