@@ -115,3 +115,18 @@ Run only offline local rendering with telemetry disabled; do not invoke cloud
 services, external media pipelines, paid HeyGen features or publishing without
 explicit owner authorization. Never infer a finished episode from a successful
 motion-graphics test.
+
+## Advanced full-frame FX registry
+
+Beyond the original 21 effects, twelve cinematic effects are available
+through `FxPreview`, `AdvancedFxShowcase` and cut-list validation
+(33 total). See [`docs/CINEMATIC_FX_12.md`](CINEMATIC_FX_12.md).
+These are optional artistic treatments for story-appropriate moments,
+**not** a change of approved default format, characters, voices or scene
+duration. The official Remotion effects `shatter()` and `filmBurn()`
+are unavailable under pinned 4.0.522 and are **not** claimed installed.
+The shipped equivalents are original DOM/SVG techniques. No unrequested
+brand plates, permanent headers/footers, technical-grid templates or
+slide-like labels may accompany an effect preview. Imported sample media
+and mattes must be real and verified; never substitute an effect code
+contract test for motion quality review.

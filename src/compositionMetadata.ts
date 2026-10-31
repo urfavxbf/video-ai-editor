@@ -13,6 +13,21 @@ export const EDIT_EFFECT_IDS = [
   'digital-zoom', 'phone-mockup', 'checklist-tally', 'glass-widgets', 'checklist', 'split',
 ] as const;
 
+export const ADVANCED_EFFECT_IDS = [
+  "rgb-split",
+  "speed-trails",
+  "film-light-leak",
+  "glass-shatter",
+  "liquid-displacement",
+  "pixel-dissolve",
+  "whip-pan-blur",
+  "svg-path-morph",
+  "comic-halftone",
+  "shader-portal",
+  "film-burn-reveal",
+  "audio-reactive-particles"
+] as const;
+
 function record(value: unknown, field: string): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     throw new Error(`${field} must be an object`);
@@ -58,7 +73,8 @@ export function validateEditSpec(input: unknown): EditSpec {
     number(s.at, `${p}.at`, 0, MAX_COMPOSITION_DURATION_FRAMES, true);
     total += duration(s.frames, `${p}.frames`);
     duration(total, 'ExampleEdit duration');
-    if (s.kind === 'fx' && !EDIT_EFFECT_IDS.includes(s.id as typeof EDIT_EFFECT_IDS[number])) {
+    if (s.kind === 'fx' && !(EDIT_EFFECT_IDS as readonly string[]).includes(s.id as string) &&
+        !(ADVANCED_EFFECT_IDS as readonly string[]).includes(s.id as string)) {
       throw new Error(`${p}.id must identify a registered effect`);
     }
     if (s.kind === 'aroll' && s.id !== undefined) throw new Error(`${p}.id is only valid for fx`);

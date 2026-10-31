@@ -101,6 +101,26 @@ See [production instructions](docs/HYPERFRAMES_PRODUCTION.md) and the
 telemetry disabled, and does not call cloud services, paid HeyGen APIs or
 external media providers without authorization.
 
+## 12 additional full-frame cinematic effects
+
+The existing 21 effects remain intact, with **12 new reusable motion effects**
+(total: **33**) for RGB channel splitting, animated light trails, light leaks,
+shattering cutouts, liquid warps, pixel dissolves, whip pans, SVG path
+morphing, halftone, original distortion portals, film-burn reveals, and
+original-audio RMS-driven particles. These are real source-video effects,
+not permanent labels or slideshow titles.
+
+```bash
+npm ci
+npm run advanced-fx:sample
+npm run typecheck
+npm run advanced-fx:showcase
+```
+
+See [Cinematic FX production guide](docs/CINEMATIC_FX_12.md) for IDs,
+no-GPU/version limitations, sample rights, and exact editor usage.
+The new `AdvancedFxShowcase` is full-bleed without unsolicited branding.
+
 ## Quick start
 
 ```bash
