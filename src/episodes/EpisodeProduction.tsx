@@ -2,13 +2,16 @@ import React, {useMemo} from 'react';
 import {AbsoluteFill, Sequence, useCurrentFrame} from 'remotion';
 import type {CalculateMetadataFunction} from 'remotion';
 import {HeroCharacterStage} from '../characters/HeroCharacterStage';
+import {HyperFramesGraphicLayer} from '../hyperframes/HyperFramesGraphicLayer';
+import {validateHyperFramesGraphics, type HyperFramesGraphics} from '../hyperframes/validateHyperFramesGraphics';
 import {compileEpisodeTimeline, type EpisodeManifestV1} from './episodeManifest';
 import {validateProductionCaptions, type ProductionCaptions, type ProductionCaption} from './productionCaptions';
 
-export type EpisodeProductionProps = {manifest: EpisodeManifestV1; captions: ProductionCaptions};
+export type EpisodeProductionProps = {manifest: EpisodeManifestV1; captions: ProductionCaptions; motionGraphics?: HyperFramesGraphics};
 export const calculateEpisodeProductionMetadata: CalculateMetadataFunction<EpisodeProductionProps> = ({props}) => {
   const compiled = compileEpisodeTimeline(props.manifest);
   validateProductionCaptions(props.captions, compiled.chapters);
+  validateHyperFramesGraphics(props.motionGraphics, compiled.chapters);
   return {durationInFrames: compiled.durationFrames};
 };
 const Captions: React.FC<{cues: ProductionCaption[]}> = ({cues}) => {
@@ -30,13 +33,15 @@ const ChapterTransition: React.FC = () => {
 };
 
 /** Uses measured/imported props. No providers, fake phonemes or study/demo overlay. */
-export const EpisodeProduction: React.FC<EpisodeProductionProps> = ({manifest,captions}) => {
+export const EpisodeProduction: React.FC<EpisodeProductionProps> = ({manifest,captions,motionGraphics}) => {
   const compiled = useMemo(() => compileEpisodeTimeline(manifest), [manifest]);
   const verified = useMemo(() => validateProductionCaptions(captions, compiled.chapters), [captions,compiled]);
+  const graphics = useMemo(() => validateHyperFramesGraphics(motionGraphics, compiled.chapters), [motionGraphics,compiled]);
   return <AbsoluteFill>{compiled.chapters.map(chapter =>
     <Sequence key={chapter.id} from={chapter.startFrame} durationInFrames={chapter.durationFrames}>
       <HeroCharacterStage assetsReady artApproved chapter={chapter.chapterNumber}
         voiceEvents={chapter.voiceEvents ?? []} audio={chapter.audio ?? []} showStudyOverlay={false}/>
+      {(graphics[chapter.id] ?? []).map((clip, index) => <HyperFramesGraphicLayer key={index} clip={clip}/>)}
       <div style={{position:'absolute',top:150,left:620,width:680,color:'#f1f6ff',textAlign:'center',
         fontFamily:'Inter',fontSize:48,fontWeight:850,lineHeight:1.2}}>{chapter.title}</div>
       <Captions cues={verified[chapter.id] ?? []}/>

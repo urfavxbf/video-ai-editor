@@ -26,7 +26,7 @@ python3 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -r requirements.txt 'groq>=0.30,<2'
 echo "== Installing official HyperFrames core skills =="
-npx --yes hyperframes skills update
+HYPERFRAMES_NO_TELEMETRY=1 DO_NOT_TRACK=1 ./node_modules/.bin/hyperframes skills update
 echo "== Ensuring browser renderer =="
 npx remotion browser ensure
 echo "== Validating installation (never reveal secrets) =="

@@ -32,3 +32,11 @@ public/characters/imported/
 # New true-frame canonical sprites; independently drawn source artwork remains review-gated
 public/characters/true-action/
 source-frames/
+
+# Verified, generated HyperFrames motion graphics (source HTML is committed)
+public/hyperframes/
+hyperframes/projects/**/renders/
+hyperframes/projects/**/snapshots/
+
+# GSAP is generated from pinned npm dependency; no remote CDN
+hyperframes/projects/kinetic-intro/assets/gsap.min.js

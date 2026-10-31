@@ -82,6 +82,25 @@ bash scripts/check-codespace.sh
 
 See [Codespaces setup and Groq secrets](docs/CODESPACES_SETUP.md) for Android-friendly steps. Codespaces and Groq usage can consume plan quotas.
 
+## First-class HyperFrames motion-graphics integration
+
+HyperFrames by HeyGen is now part of the local video-production stack (not
+an unverified skills-only add-on). It creates original HTML/GSAP graphics as
+verified H.264 files and stages them for chapter-timed
+`EpisodeProduction.motionGraphics` in Remotion. This preserves the approved
+UrFavXBF/PIX character stage and English Chatterbox V3 voices.
+
+```bash
+npm ci
+npm run hyperframes:lint
+npm run hyperframes:render
+```
+
+See [production instructions](docs/HYPERFRAMES_PRODUCTION.md) and the
+[HyperFrames copy-ready prompt](docs/AI_AGENT_PROMPTS.md). Rendering is local,
+telemetry disabled, and does not call cloud services, paid HeyGen APIs or
+external media providers without authorization.
+
 ## Quick start
 
 ```bash

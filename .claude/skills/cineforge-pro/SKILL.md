@@ -100,6 +100,19 @@ connect a chatbot to Codespaces, install models or grant credentials/budget.
 Historical portrait/V2 and 9:16 workflows remain explicit reproduction options.
 Official Remotion skills supply framework techniques, not project defaults.
 
+#### First-class HyperFrames motion graphics
+
+HyperFrames by HeyGen is integrated as a **pinned local animation renderer**,
+not just an agent skill install. Read `docs/HYPERFRAMES_PRODUCTION.md` and
+the primary `AGENTS.md` rules before using it. Use
+`npm run hyperframes:lint`, then `npm run hyperframes:render` to produce
+and stage verified 1920×1080/30fps offline motion graphics.
+`EpisodeProduction.motionGraphics` accepts validated, chapter-local,
+muted visual clips. Keep approved UrFavXBF/PIX characters and Chatterbox V3
+audio; do not call HyperFrames Cloud, media-use, publish, paid services or
+remote uploads without explicit authorization. The included 2-second
+graphic is an original integration fixture, not a full original episode.
+
 ---
 
 ## Module 02: remotion-best-practices
