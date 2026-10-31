@@ -69,7 +69,7 @@ class AgentPolicyContracts(unittest.TestCase):
 
     def test_prompt_playbook_has_usable_tasks_and_no_policy_override(self):
         self.assertIn("AGENTS.md", PROMPTS)
-        self.assertGreaterEqual(len(re.findall(r"(?m)^## [0-9]+\\. ", PROMPTS)), 14)
+        self.assertGreaterEqual(len(re.findall(r"(?m)^## [0-9]+[.] ", PROMPTS)), 14)
         for marker in ("HeroCharacterStage", "ExampleEdit", "DudutPremium",
                        "FxPreview", "Chatterbox", "Duik", "Lottie",
                        "FFprobe", "scripts/character_voiceover.py",
