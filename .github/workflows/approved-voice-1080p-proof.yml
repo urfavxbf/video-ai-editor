@@ -1,0 +1,193 @@
+name: Approved English voices — 1080p integration proof (CPU)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/73-approved-voice-1080p-proof
+    paths:
+      - .github/workflows/approved-voice-1080p-proof.yml
+      - docs/APPROVED_VOICE_1080P_PROOF.md
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: approved-voice-1080p-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  approved-voice-proof:
+    name: Verify approved WAVs and render 1080p two-character proof
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Prepare CPU-only render environment
+        run: |
+          npm ci --no-audit --no-fund
+          python -m pip install -r requirements.txt
+          npx remotion browser ensure
+          command -v ffprobe || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+      - name: Fetch approved UrFavXBF English Chatterbox WAV
+        uses: actions/download-artifact@v4
+        with:
+          name: chatterbox-v3-english-voice-sample
+          path: input-approved/host
+          run-id: 40607467395
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+      - name: Fetch approved PIX English Chatterbox WAV
+        uses: actions/download-artifact@v4
+        with:
+          name: pix-cute-female-chatterbox-voice-sample
+          path: input-approved/pix
+          run-id: 40614959831
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+      - name: Verify registry-approved hashes and generate bounded episode inputs
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import shutil
+          import wave
+          from pathlib import Path
+
+          registry = json.loads(Path('characters/registry.json').read_text())
+          sources = (
+              ('urfavxbf', 'host', 'chatterbox-v3-real-smoke.wav', 'host-voice-proof'),
+              ('pix', 'pix', 'pix-cute-female-chatterbox.wav', 'pix-voice-proof'),
+          )
+          chapters, receipts = [], []
+          current = 0
+          Path('public/voiceovers').mkdir(parents=True, exist_ok=True)
+          Path('out').mkdir(parents=True, exist_ok=True)
+          for index, (who, folder, filename, chapter_id) in enumerate(sources):
+              origin = Path('input-approved') / folder / filename
+              if not origin.is_file() or origin.is_symlink() or origin.stat().st_size > 20 * 1024 * 1024:
+                  raise ValueError('missing or oversized approved voice artifact')
+              digest = hashlib.sha256(origin.read_bytes()).hexdigest()
+              profile = registry['characters'][who]['english_voice']
+              if digest != profile['sample_sha256']:
+                  raise ValueError('approved English WAV SHA-256 mismatch')
+              with wave.open(str(origin), 'rb') as wav:
+                  if wav.getcomptype() != 'NONE' or wav.getsampwidth() != 2:
+                      raise ValueError('expected uncompressed PCM16 WAV')
+                  rate, count = wav.getframerate(), wav.getnframes()
+                  if rate != 24000 or wav.getnchannels() != 1 or not 1 <= count / rate <= 20:
+                      raise ValueError('unexpected approved WAV stream')
+              frames = (count * 30 + rate - 1) // rate
+              asset = Path('public/voiceovers') / (chapter_id + '.wav')
+              shutil.copyfile(origin, asset)
+              if hashlib.sha256(asset.read_bytes()).hexdigest() != digest:
+                  raise ValueError('staged WAV changed')
+              chapters.append({
+                  'id': chapter_id,
+                  'title': 'Approved English voice proof: ' + ('UrFavXBF' if who == 'urfavxbf' else 'PIX'),
+                  'chapterNumber': index + 1,
+                  'startFrame': current,
+                  'durationFrames': frames,
+                  'voiceEvents': [],
+                  'audio': [],
+              })
+              receipts.append({
+                  'chapterId': chapter_id,
+                  'speaker': who,
+                  'file': 'voiceovers/' + asset.name,
+                  'startFrame': 0,
+                  'voiceProfile': profile['identifier'],
+                  'sha256': digest,
+                  'provenance': 'owner-supplied-chatterbox',
+              })
+              current += frames
+          if not 300 <= current <= 600:
+              raise ValueError('unexpected total approved voice duration')
+          manifest = {
+              'schemaVersion': 1,
+              'episodeId': 'approved-english-voice-proof',
+              'language': 'en',
+              'video': {'width': 1920, 'height': 1080, 'fps': 30},
+              'chapters': chapters,
+          }
+          Path('out/approved-voice-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+          Path('out/approved-voice-clips.json').write_text(json.dumps({'schemaVersion': 1, 'clips': receipts}, indent=2) + '\n')
+          print('Hash-verified 2 approved English speaker WAVs, timeline frames:', current)
+          PY
+      - name: Real English WAV integration with full-resolution local rendering
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: |
+          python scripts/produce-episode.py \
+            --manifest out/approved-voice-manifest.json \
+            --clips out/approved-voice-clips.json \
+            --media-root public \
+            --work-dir out/approved-voice-1080p/run \
+            --render
+      - name: Verify final H.264/AAC and create human-review checklist
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path('out/approved-voice-1080p/run/stages')
+          renders = list(root.glob('render/*/episode.mp4'))
+          qa_files = list(root.glob('qa/*/qa.json'))
+          if len(renders) != 1 or len(qa_files) != 1:
+              raise ValueError('expected one completed MP4 and one QA report')
+          qa = json.loads(qa_files[0].read_text())
+          manifest = json.loads(Path('out/approved-voice-manifest.json').read_text())
+          video = qa['video']
+          if qa.get('machineChecks') != 'passed' or video['width'] != 1920 or video['height'] != 1080:
+              raise ValueError('full-resolution video machine QA failed')
+          if video['r_frame_rate'] != '30/1' or int(video['nb_frames']) != sum(c['durationFrames'] for c in manifest['chapters']):
+              raise ValueError('incorrect final frame count or frame rate')
+          if not qa['manualReviewRequired'] or qa.get('diagnostic'):
+              raise ValueError('voice proof must require human QA and not be labeled diagnostic tones')
+          report = {
+              'schemaVersion': 1,
+              'approvedArtifactsUsed': ['chatterbox-v3-english-voice-sample', 'pix-cute-female-chatterbox-voice-sample'],
+              'videoSha256': hashlib.sha256(renders[0].read_bytes()).hexdigest(),
+              'videoFrames': video['nb_frames'],
+              'videoResolution': '1920x1080',
+              'fps': 30,
+              'sourceWavSha256': [x['sha256'] for x in json.loads(Path('out/approved-voice-clips.json').read_text())['clips']],
+              'machineQa': 'passed',
+              'humanReviewRequired': True,
+              'reviewStatus': 'pending',
+              'checklist': [
+                  'Listen to both speakers and independently confirm approved voice identity and intelligibility',
+                  'Check word timing and spoken content; no word-aligned captions have been supplied',
+                  'Inspect full-resolution character pose presentation, transitions and visual timing',
+                  'Check true-peak and LUFS (if this feature is merged) against editorial targets',
+                  'Confirm source usage rights and factual accuracy; do not publish this audio sample proof',
+              ],
+          }
+          Path('out/approved-voice-review.json').write_text(json.dumps(report, indent=2) + '\n')
+          print('Machine QA passed; actual English speech verified by hash. Human listening pending.')
+          PY
+      - name: Upload proof media and machine/human review receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: approved-english-voices-1080p-proof
+          path: |
+            out/approved-voice-manifest.json
+            out/approved-voice-clips.json
+            out/approved-voice-review.json
+            out/approved-voice-1080p/run/stages/render/**/episode.mp4
+            out/approved-voice-1080p/run/stages/qa/**/qa.json
+          if-no-files-found: error
+          retention-days: 3
