@@ -78,6 +78,8 @@ jobs:
           npx remotion render AdvancedFxShowcase out/cinematic-fx/fx-motion-proof.mp4 \
             --frames=0-59 --scale=0.25 --concurrency=2 \
             --codec=h264 --pixel-format=yuv420p
+      - name: Render 24 actual motion frames across all twelve FX IDs
+        run: node scripts/render-advanced-fx-proofs.mjs out/cinematic-fx/stills
       - name: Probe and decode actual exported video
         run: |
           python3 - <<'PY'
