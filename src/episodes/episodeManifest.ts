@@ -90,12 +90,16 @@ export const validateEpisodeManifest = (value: unknown): EpisodeManifestV1 => {
   if (video.width !== 1920 || video.height !== 1080 || video.fps !== 30) {
     fail('manifest.video', 'must be 1920x1080 at 30fps');
   }
-  if (!Array.isArray(root.chapters) || root.chapters.length < 1 || root.chapters.length > MAX_CHAPTERS) {
+  const chapters = root.chapters;
+  if (!Array.isArray(chapters)) {
+    fail('manifest.chapters', `must contain 1–${MAX_CHAPTERS} chapters`);
+  }
+  if (chapters.length < 1 || chapters.length > MAX_CHAPTERS) {
     fail('manifest.chapters', `must contain 1–${MAX_CHAPTERS} chapters`);
   }
   const seenIds = new Set<string>();
   let nextStartFrame = 0;
-  for (const [index, raw] of root.chapters.entries()) {
+  for (const [index, raw] of chapters.entries()) {
     const p = `manifest.chapters[${index}]`;
     const chapter = object(raw, p);
     keys(chapter, ['id', 'title', 'chapterNumber', 'startFrame', 'durationFrames',
@@ -113,13 +117,17 @@ export const validateEpisodeManifest = (value: unknown): EpisodeManifestV1 => {
     }
     nextStartFrame += frames;
 
-    if (chapter.voiceEvents !== undefined) {
-      if (!Array.isArray(chapter.voiceEvents) || chapter.voiceEvents.length > MAX_EVENTS_PER_CHAPTER) {
+    const voiceEvents = chapter.voiceEvents;
+    if (voiceEvents !== undefined) {
+      if (!Array.isArray(voiceEvents)) {
+        fail(`${p}.voiceEvents`, 'must be an array of at most 3000 events');
+      }
+      if (voiceEvents.length > MAX_EVENTS_PER_CHAPTER) {
         fail(`${p}.voiceEvents`, 'must be an array of at most 3000 events');
       }
       const speakerEnd: Record<string, number> = {};
       let previousStart = -1;
-      for (const [j, rawEvent] of chapter.voiceEvents.entries()) {
+      for (const [j, rawEvent] of voiceEvents.entries()) {
         const path = `${p}.voiceEvents[${j}]`;
         const event = object(rawEvent, path);
         keys(event, ['speaker', 'startFrame', 'endFrame', 'rms', 'samplesPerSecond'], path);
@@ -137,11 +145,15 @@ export const validateEpisodeManifest = (value: unknown): EpisodeManifestV1 => {
         if (event.samplesPerSecond !== undefined) {
           integer(event.samplesPerSecond, `${path}.samplesPerSecond`, 1, 1000);
         }
-        if (event.rms !== undefined) {
-          if (!Array.isArray(event.rms) || event.rms.length > 100000) {
+        const rms = event.rms;
+        if (rms !== undefined) {
+          if (!Array.isArray(rms)) {
             fail(`${path}.rms`, 'must be an array of up to 100000 real audio samples');
           }
-          for (const [k, sample] of event.rms.entries()) {
+          if (rms.length > 100000) {
+            fail(`${path}.rms`, 'must be an array of up to 100000 real audio samples');
+          }
+          for (const [k, sample] of rms.entries()) {
             if (typeof sample !== 'number' || !Number.isFinite(sample) || sample < 0 || sample > 1) {
               fail(`${path}.rms[${k}]`, 'must be finite and between 0 and 1');
             }
@@ -149,11 +161,15 @@ export const validateEpisodeManifest = (value: unknown): EpisodeManifestV1 => {
         }
       }
     }
-    if (chapter.audio !== undefined) {
-      if (!Array.isArray(chapter.audio) || chapter.audio.length > MAX_EVENTS_PER_CHAPTER) {
+    const audio = chapter.audio;
+    if (audio !== undefined) {
+      if (!Array.isArray(audio)) {
         fail(`${p}.audio`, 'must be an array of at most 3000 clips');
       }
-      for (const [j, rawClip] of chapter.audio.entries()) {
+      if (audio.length > MAX_EVENTS_PER_CHAPTER) {
+        fail(`${p}.audio`, 'must be an array of at most 3000 clips');
+      }
+      for (const [j, rawClip] of audio.entries()) {
         const path = `${p}.audio[${j}]`;
         const clip = object(rawClip, path);
         keys(clip, ['file', 'startFrame', 'endFrame'], path);
