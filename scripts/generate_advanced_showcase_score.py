@@ -58,7 +58,7 @@ def render(path: Path) -> None:
 
     # One short synthetic accent at the exact start of every new effect.
     cumulative = 0
-    for duration in FX_DURATIONS[1:]:
+    for duration in FX_DURATIONS[:-1]:
         cumulative += duration
         at = cumulative * SR // FPS
         if at >= size:

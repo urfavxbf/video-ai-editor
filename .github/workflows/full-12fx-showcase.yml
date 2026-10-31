@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/full-12fx-showcase.yml
       - scripts/generate_advanced_showcase_score.py
+      - scripts/generate_advanced_showcase_source.py
   workflow_dispatch:
 
 permissions:
@@ -45,7 +46,8 @@ jobs:
           node --test tests/cinematic-fx-12.test.cjs
       - name: Generate actual moving video, frame-matched subject cutouts and original waveform
         run: |
-          npm run advanced-fx:sample
+          python3 scripts/generate_advanced_showcase_source.py --output public/sample
+          python3 scripts/generate_advanced_fx_audio.py
           test -s public/sample/take.mp4
           test -s public/sample/fg/0099.webp
           test -s public/sample/advanced-reactive.wav
