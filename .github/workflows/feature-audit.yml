@@ -104,7 +104,11 @@ jobs:
             echo "::endgroup::"
           done
           test "$(find out/audit-fx -maxdepth 1 -name '*.png' | wc -l)" -eq 21
-          echo "PASS: all 21 registered effects returned nonempty PNG stills"
+          npx remotion still FxShowcase out/audit-fx/FxShowcase.png --frame=20 --scale=0.25
+          npx remotion still ExampleEdit out/audit-fx/ExampleEdit.png --frame=40 --scale=0.25
+          test -s out/audit-fx/FxShowcase.png
+          test -s out/audit-fx/ExampleEdit.png
+          echo "PASS: all 21 effects + FxShowcase + ExampleEdit returned nonempty PNG stills"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -143,7 +147,8 @@ jobs:
           for id in HeroCharacterStage PixelProductionProof CharacterAnimationLab \
             EpisodeTimelineProof EpisodeProduction OfficialFeaturesDemo RepoShowcase \
             V4FacialReviewStage CanonicalFullBodyReviewStage \
-            TrueFrameReviewStage ChibiV4ReviewStage Y2038Teaser; do
+            TrueFrameReviewStage ChibiV4ReviewStage Y2038Teaser \
+            PixelPortraitHUD ImportedSpriteAnimationReview ChallengerDeep OriginalDoorway; do
             echo "::group::$id"
             npx remotion still "$id" "out/audit-compositions/$id.png" --frame=12 --scale=0.25
             test -s "out/audit-compositions/$id.png"
@@ -154,7 +159,7 @@ jobs:
               --props='{"videoPath":"sample/take.mp4","sourceStartSeconds":0}'
             test -s "out/audit-compositions/$id.png"
           done
-          echo "PASS: 14 key composition stills returned nonempty files"
+          echo "PASS: 18 key composition stills returned nonempty files"
       - name: Encode real video with both H264 and AAC
         run: |
           npx remotion render RepoShowcase out/audit-compositions/repo-showcase-video.mp4 \
