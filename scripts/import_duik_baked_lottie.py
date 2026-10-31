@@ -101,7 +101,7 @@ def validate_lottie(data: object) -> dict:
     if not isinstance(data, dict):
         raise ValueError("Lottie root must be an object")
     version = data.get("v")
-    if not isinstance(version, str) or not re.fullmatch(r"\\d+\\.\\d+\\.\\d+", version):
+    if not isinstance(version, str) or not re.fullmatch(r"[0-9]+[.][0-9]+[.][0-9]+", version):
         raise ValueError("Missing valid Bodymovin/Lottie version")
     w = int(positive_number(data.get("w"), "width", 16, 4096))
     h = int(positive_number(data.get("h"), "height", 16, 4096))
