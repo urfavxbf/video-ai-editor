@@ -121,3 +121,99 @@ Run the contract tests with:
 ```bash
 python3 -m unittest discover -s tests -p 'test_episode_pipeline.py' -v
 ```
+
+## Local production increment (issue #69)
+
+`python3 scripts/produce-episode.py --manifest episode.json --clips clips.json
+--media-root public --work-dir work/my-episode` runs validated manifest and media
+preparation stages. Add `--render` to run the CPU Remotion encoder and machine QA.
+The production render is English 1920×1080 at 30fps, H.264/AAC, concurrency 2, with
+a hard 600-second render deadline. Chromium uses software GL and hardware
+encoding is explicitly disabled. Logs are monitored while processes run.
+Input hashing and WAV analysis use cooperative deadlines (120 seconds per
+preflight/preparation pass, at most 30 seconds per WAV analysis); regular-file
+I/O can exceed a cooperative deadline during a single read. Total unique WAV
+inputs are capped at 2 GiB. Each CPU job runs in a dedicated Linux subreaper supervisor, so detached
+Chromium children remain owned after their original parent exits. Timeout and
+cancellation terminate that tree; pidfds pin process identities while signaling,
+and adopted children are reaped. Cleanup has a short additional bounded grace
+period. This is trusted local execution, not an OS sandbox.
+An explicit `--diagnostic` opt-in permits nonspeech fixtures and uses 480×270;
+that output is never a production delivery. No TTS, ASR, research provider,
+external API, GPU, upload or publishing is invoked.
+
+The job contract is:
+
+```json
+{
+  "schemaVersion": 1,
+  "clips": [{
+    "chapterId": "opening",
+    "speaker": "urfavxbf",
+    "file": "voiceovers/my-approved-clip.wav",
+    "startFrame": 0,
+    "voiceProfile": "natural-storyteller-v1",
+    "sha256": "REPLACE_WITH_ACTUAL_WAV_SHA256",
+    "provenance": "owner-supplied-chatterbox"
+  }]
+}
+```
+
+PIX must use `pix-cute-female-emily-v1`. Profile declarations are compared with
+the character registry; SHA-256 verifies the actual supplied bytes. Neither
+establishes speaker identity acoustically. A person must confirm the actual
+Chatterbox speaker/provenance by listening. No real character WAVs were supplied
+or generated for this implementation. Inputs must be local, stable PCM16 WAVs,
+8–96 kHz, mono/stereo, nonempty and nonsilent. Measurements derive actual sample
+durations, clip end frames and normalized RMS. Existing unverified manifest
+voice/audio/caption data is rejected at production preparation; clip receipts
+supply those values. Chapters must be long enough; overruns fail explicitly.
+
+An optional clip `alignment` object contains `schemaVersion:1`,
+`audioSha256` matching the exact WAV, `source:"human-reviewed"` or
+`"forced-alignment"`, `reviewed:true`, and `words:[{start:0.1,end:0.4,text:"Hello"}]`.
+Times are supplied seconds within that WAV. The importer checks provenance,
+ordering, overlap, duration bounds and text, then groups adjacent supplied words
+into readable cues. It does not infer words/times from the script or perform
+forced alignment. A `reviewed` flag is a declaration; semantic timing accuracy
+still needs listening. Missing alignment produces no captions. The Remotion
+`EpisodeProduction` scene uses chapter-local measured speaker/listener events,
+approved pixel poses, chapter titles and optional validated captions. There is
+no phoneme lip-sync claim.
+
+Preparation snapshots only the 13 hash-verified PNGs, local fonts and content-
+addressed WAVs into a private stage public directory. The render uses those
+snapshots, not an arbitrary served public tree. Stages include implementation,
+registry, asset, input and media hashes in cache keys; the render also records
+Node/FFmpeg versions and selected browser version. Outputs are reproducible for a pinned toolchain;
+we do not promise byte-identical encoding across browser/OS versions.
+
+Machine QA probes the actual encoded MP4 for H.264, dimensions, 30fps, exact
+video frame count, duration, AAC presence when narration exists, mean/peak dBFS,
+black intervals, audio EOF coverage, and excessive silence within source-derived
+active RMS windows (preserving genuine source pauses).
+Mean/peak dBFS is not integrated LUFS. Manual review remains required for identity,
+word timing, pronunciation, narrative/fact quality, caption readability and
+visual/audio playback. QA never grants publishing approval.
+
+Run the actual diagnostic render and cache-resume assertion:
+
+```bash
+REMOTION_BROWSER_EXECUTABLE=/usr/bin/chromium \
+python3 scripts/check-production-fixture.py --work-dir work/production-fixture
+```
+
+Omit the browser variable when using Remotion's installed managed Chrome.
+The fixture makes two explicitly labeled sine tones (not character voices),
+renders four seconds, checks the actual H.264/AAC artifact and asserts that a
+second invocation caches all four stages. GitHub's safety gate runs this proof
+and uploads MP4, state and QA artifacts. Local verification produced 120 video
+frames at 480×270/30fps, AAC, no black intervals; the first chapter was visually
+inspected. It is not a narrated, captioned or fully reviewed episode.
+
+Remaining milestones: sourced research/script/storyboard authoring stages,
+controlled opt-in Chatterbox/ASR generation receipts and quotas, real approved
+voice/alignment fixtures, integrated-LUFS targets, full-resolution long-form
+performance and manual delivery review. Existing standalone voice/transcription
+scripts remain available under their existing authorization rules; they are not
+automatically invoked here. Issue #69 remains open.

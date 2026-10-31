@@ -23,9 +23,11 @@ preflight/render job. Media paths remain public assets when served by Remotion.
 
 `python3 scripts/audit-media-exposure.py` fetched/scanned reachable branch/tag
 history (non-shallow checkout). It reports paths, blob IDs and counts, never URLs
-or credential values. The heuristic found no signed URLs in current tracked
+or credential values. The initial heuristic scan found no real signed media URLs in current tracked
 files and one historical blob version of
-`render-queue/dudut-20261027-premium.json`. Binary/large blobs >4 MiB are outside
+`render-queue/dudut-20261027-premium.json`. A repeat after the regression tests were committed also flags their deliberately
+invalid synthetic URL in `tests/edit-contract.test.cjs`; that fixture is not a
+media capability or credential. Binary/large blobs >4 MiB are outside
 this scan. Token validity was not tested and cannot be assumed revoked/expired.
 The historical download capability should be invalidated at its source if still
 active; owner authorization is required for token revocation or storage rotation.
