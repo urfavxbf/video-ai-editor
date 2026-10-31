@@ -57,8 +57,8 @@ def verify_delivery(filename, frames, width=1920, height=1080, require_audio=Tru
         # ebur128 provides the integrated ITU-R BS.1770 loudness and the
         # oversampled true peak. Parse its final summary, not per-frame logs.
         summary = log.rsplit('Summary:', 1)[-1] if 'Summary:' in log else ''
-        integrated = re.search(r'Integrated loudness:\\s*I:\\s*(-inf|-?[0-9]+(?:\\.[0-9]+)?)\\s+LUFS', summary)
-        true_peak = re.search(r'True peak:\\s*Peak:\\s*(-inf|-?[0-9]+(?:\\.[0-9]+)?)\\s+dBFS', summary)
+        integrated = re.search(r'Integrated loudness:\s*I:\s*(-inf|-?[0-9]+(?:\.[0-9]+)?)\s+LUFS', summary)
+        true_peak = re.search(r'True peak:\s*Peak:\s*(-inf|-?[0-9]+(?:\.[0-9]+)?)\s+dBFS', summary)
         if not integrated or not true_peak:
             raise ValueError('EBU R128 loudness or true-peak measurement missing')
         measured_lufs = float(integrated.group(1))
