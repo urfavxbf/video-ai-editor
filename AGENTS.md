@@ -21,9 +21,8 @@ does not authorize paid API or GPU use.
 
 Use the custom `.claude/skills/ai-video-editor/SKILL.md` for production guidance.
 `SKILL.md` at the root covers the legacy supplied-footage effects workflow.
-OpenMontage remains an opt-in isolated integration; follow its own nested
-guide when selected. Do not migrate frameworks, replace approved art, change
-voice identities, mix integration dependencies or fabricate completed renders.
+Do not migrate frameworks, replace approved art, change voice identities,
+or fabricate completed renders.
 
 For changes, use a dedicated branch/PR and run relevant existing checks. Never
 push to main, merge, publish videos or incur paid usage without authorization.
