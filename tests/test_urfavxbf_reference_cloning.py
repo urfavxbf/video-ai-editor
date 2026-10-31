@@ -28,7 +28,7 @@ class AuthorizedTagalogVoiceReferenceTests(unittest.TestCase):
     def test_unchanged_voice_design_has_no_reference(self):
         kwargs = tts.generation_kwargs("Kamusta!", tts.profile_for("urfavxbf"), None, seed=42)
         self.assertNotIn("reference_wav_path", kwargs)
-        self.assertIn("voice_design_prompt", kwargs["text"]) if False else self.assertIn("young adult", kwargs["text"])
+        self.assertIn("young adult Filipino male", kwargs["text"])
 
     def test_cloning_uses_exact_local_reference_for_every_chunk(self):
         with tempfile.TemporaryDirectory() as folder:
