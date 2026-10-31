@@ -27,6 +27,7 @@ export const Edit = ({ spec }: { spec: EditSpec }) => {
 	return <FxSourceContext.Provider value={spec.source}><GlassBlur.Provider value={false}><AbsoluteFill style={{ background: '#000' }}>
 		{segs.map((s, i) => {
 			const entry = s.kind === 'fx' ? fxById(s.id!) : undefined
+			if (s.kind === 'fx' && !entry) throw new Error('Unregistered edit effect')
 			return <Sequence key={i} from={s.start} durationInFrames={s.frames} premountFor={30}>
 				{entry ? <entry.Component from={s.at} /> : <ARoll from={s.at} />}
 				<Audio src={staticFile(spec.source.video)} trimBefore={s.at} volume={spec.sourceVolume ?? 1} />

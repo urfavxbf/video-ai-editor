@@ -46,7 +46,7 @@ const object = (value: unknown, path: string): Record<string, unknown> => {
 };
 const keys = (value: Record<string, unknown>, allowed: readonly string[], path: string): void => {
   for (const key of Object.keys(value)) {
-    if (!allowed.includes(key)) fail(`${path}.${key}`, 'unknown field');
+    if (!allowed.includes(key)) fail(path, 'unknown field');
   }
 };
 const integer = (value: unknown, path: string, min: number, max: number): number => {
