@@ -27,6 +27,8 @@ try {
     ['ExampleEdit', {spec: shortEdit}, 10],
     ['EpisodeTimelineProof', {}, 120],
     ['EpisodeTimelineProof', {manifest: shortEpisode}, 17],
+    ['EpisodeProduction', {}, 120],
+    ['EpisodeProduction', {manifest: shortEpisode, captions:{}}, 17],
   ];
   const invalidEpisode = structuredClone(episode);
   invalidEpisode.chapters[1].startFrame = 59;

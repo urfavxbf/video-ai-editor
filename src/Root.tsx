@@ -23,12 +23,16 @@ import {PixelProductionProof,PIXEL_PROOF_FRAMES,type PixelProductionProofProps} 
 import episodeFixture from './episodes/episode-proof-v1.json'
 import {compileEpisodeTimeline, type EpisodeManifestV1} from './episodes/episodeManifest'
 import {EpisodeTimelineProof, calculateEpisodeTimelineMetadata, type EpisodeTimelineProofProps} from './episodes/EpisodeTimelineProof'
+import {EpisodeProduction, calculateEpisodeProductionMetadata, type EpisodeProductionProps} from './episodes/EpisodeProduction'
 import './fonts'
 import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadata'
 
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="EpisodeProduction" component={EpisodeProduction} width={1920} height={1080} fps={30}
+    durationInFrames={120} calculateMetadata={calculateEpisodeProductionMetadata}
+    defaultProps={{manifest: episodeFixture as EpisodeManifestV1, captions:{}} satisfies EpisodeProductionProps}/>
   <Composition id="PixelProductionProof" component={PixelProductionProof}
     width={1920} height={1080} fps={30} durationInFrames={PIXEL_PROOF_FRAMES}
     defaultProps={{assetsReady:true} satisfies PixelProductionProofProps} />

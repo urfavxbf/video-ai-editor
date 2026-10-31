@@ -83,11 +83,16 @@ jobs:
           --scale=0.25 --concurrency=2 --codec=h264 --pixel-format=yuv420p --muted
       - name: Verify episode frame count and chapter boundary
         run: python scripts/check-episode-proof.py out/episode-timeline-proof.mp4
+      - name: Verify resumable local production with diagnostic tones
+        run: python scripts/check-production-fixture.py --work-dir out/production-fixture
       - uses: actions/upload-artifact@v4
         with:
           name: pr-safety-gate-fixture
           path: |
             out/pr-safety-gate.mp4
             out/episode-timeline-proof.mp4
+            out/production-fixture/run/state.json
+            out/production-fixture/run/stages/render/**/episode.mp4
+            out/production-fixture/run/stages/qa/**/qa.json
           if-no-files-found: error
           retention-days: 3

@@ -1,5 +1,6 @@
 node_modules/
 out/
+work/
 .DS_Store
 *.log
 # Footage and everything derived from it stays local: the sample (npm run sample) and your own takes.
