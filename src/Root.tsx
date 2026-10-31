@@ -34,7 +34,7 @@ const spec = edit as EditSpec
 
 export const Root = () => <>
   <Composition id="MotionShowreel" component={MotionShowreel}
-    width={1920} height={1080} fps={30} durationInFrames={SHOWREEL_FRAMES} />
+    width={1080} height={1920} fps={30} durationInFrames={SHOWREEL_FRAMES} />
   <Composition id="DuikBakedCharacterProof" component={DuikBakedCharacterProof}
     width={1920} height={1080} fps={30} durationInFrames={DUIK_BAKED_PROOF_FRAMES} />
   <Composition id="AfterEffectsLottieProof" component={AfterEffectsLottieProof}

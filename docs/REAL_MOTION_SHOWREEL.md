@@ -7,10 +7,15 @@ local Lottie vectors, a baked Duik-style puppet (not a real Duik-export sample),
 and HyperFrames locally rendered HTML/GSAP animation.
 
 Every effect runs over **changing actual video frames** and local person
-cutout/sticker mattes, not a background image with title cards. All shots
-share a single bold 1920×1080 broadcast-style graphical layout with
-continuously animated footage, kinetic titles, wipes, effects, compositing,
-live index/timing and an **original procedurally composed soundtrack**.
+cutout/sticker mattes, not a background image with title cards. Showreel composition is deliberately **native full-frame 1080×1920**, because
+all 21 effects were authored for portrait frames. Each effect occupies the
+whole image; there are **no studio headers, footers, watermarks, grids,
+explanatory sidebars, numbered title cards, artificial presentation screens,
+or permanent labels**. The actual effects may have their own purposeful
+editable UI text. The next three scenes show the actual motion engines
+without added branding or slides. The instrumental score is original and
+procedurally composed. This is a showcase-specific format: standard
+original episodes still default to 16:9, 1920×1080 and 30fps.
 Existing legacy SFX files are intentionally *not used* since their commercial
 distribution rights are not independently verified.
 
@@ -62,3 +67,12 @@ No claim of a finished narrated episode or that every numerical UI label
 describes real data.
 
 The raw test artifacts are intermediate, *not* public stock assets.
+
+## Explicit owner visual correction (do not revert)
+
+The owner rejected the prior slideshow-like version: dark perspective grid,
+permanent `URFAVXBF VIDEO AI EDITOR` header, bottom caption/clock,
+left-side title/number/info panel, bordered small portrait, and presentation
+styling were **unsolicited**. Their removal is mandatory. Effect content
+must be the dominant full-frame visual. Do not restore any visual decoration
+unless the owner expressly asks for that specific design element.

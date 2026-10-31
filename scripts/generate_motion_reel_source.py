@@ -61,9 +61,12 @@ def render(destination: Path):
                 y=int((k*83+i*(1.7+.08*k))%(H+180))-90
                 r=8+(k%8)*3
                 d.ellipse((x-r,y-r,x+r,y+r),fill=(92,239,184,12+(k%4)*7))
-            for k in range(13):
-                x=int(30+k*53+math.sin(t*1.3+k)*8)
-                d.line([(x,-20),(x-160,H+20)],fill=(76,237,193,22),width=2)
+            # Ambient particle motion, not a technical grid / slideshow backdrop.
+            for k in range(9):
+                xx=int((k*107 + 28*math.sin(t*.8+k*3))%W)
+                yy=int((k*137 + t*14)%(H+100))-50
+                rad=18 + k*4
+                d.ellipse((xx-rad,yy-rad,xx+rad,yy+rad),fill=(54,210,179,11))
             radius=210+int(math.sin(t*1.3)*30)
             glow=(W//2-radius,350-radius,W//2+radius,350+radius)
             d.ellipse(glow,outline=(83,255,199,70),width=4)

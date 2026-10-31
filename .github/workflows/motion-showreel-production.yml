@@ -102,7 +102,7 @@ jobs:
           streams=data['streams']
           v=next(s for s in streams if s['codec_type']=='video')
           a=next(s for s in streams if s['codec_type']=='audio')
-          assert (v['codec_name'],v['width'],v['height'],v['r_frame_rate'])==('h264',1920,1080,'30/1')
+          assert (v['codec_name'],v['width'],v['height'],v['r_frame_rate'])==('h264',1080,1920,'30/1')
           assert a['codec_name']=='aac'
           assert int(v['nb_frames'])>1200
           assert float(data['format']['duration'])>40
@@ -112,7 +112,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: native-hd-real-21-fx-motion-showreel
+          name: full-frame-portrait-21-fx-motion-showreel
           path: |
             out/motion-showreel/Real_21_FX_Motion_Showreel.mp4
             out/motion-showreel/opening.png
