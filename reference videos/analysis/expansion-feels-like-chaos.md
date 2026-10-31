@@ -24,14 +24,14 @@ These are **visual descriptions and readable on-screen excerpts**, not a claimed
 | Time (s) | Visual / backdrop | Text and editorial action |
 | --- | --- | --- |
 | 0.0–3.5 | Pale rounded inset; black/teal floating figure | Hook: bold black **WHAT A PRIVILEGE**; smaller subordinate words build a sentence about being tired from what one once wanted. Text changes every few spoken beats. |
-| 3.5–7.1 | Pale inset; black-and-white illustrated person holding faces/masks | Repeats **WHAT A PRIVILEGE**, **BY**, **THAT YOU ONCE**; varied line lengths set up parallel phrasing. |
+| 3.5–7.1 | Pale inset; black-and-white illustrated person holding faces/masks | Repeats **WHAT A PRIVILEGE IT IS TO BE OVERWHELMED**, then **BY** and **THAT YOU ONCE**; varied line lengths set up parallel phrasing. |
 | 7.1–10.2 | Very dark distressed architectural/walking collage, then figure interacting with a box | White **WHAT A PRIVILEGE**, **CHALLENGED** and **A LIFE** pop against near-black. High-contrast scene swap. |
 | 10.2–13.8 | Pale illustrated head used as a flower pot; green growth and colored flowers | **AND WHAT A PRIVILEGE IT IS TO OUTGROW THINGS THAT YOU USED TO SETTLE FOR** emerges in successive emphasis states, not as one static card. |
 | 13.8–17.6 | Vivid red/pink landscape, figure viewed from overhead | **WE PRAY**, then **CURSE THE WEIGHT OF IT**, then **WHEN IT FINALLY SHOWS UP**. Strong white headline on saturated illustration. |
 | 17.6–19.5 | Yellow ochre mountain scene with two small figures | **WE ASK FOR OPPORTUNITIES**, moving from soft/blurred to sharp text. |
 | 19.5–23.4 | Deep blue desk/night-work illustration, magenta outlines | The expected opportunity appears as effort: **PREPARED**, **TO COME DRESSED AS LONG NIGHTS**, **AND HEAVY**. |
 | 23.4–24.7 | Cyan/blue abstract person under a large leg/foot motif | **WE ASK TO...** begins the next parallel statement. |
-| 24.7–25.1 | Same motif briefly shifts to warm yellow/orange | **LEVEL UP** is the rapid accent; counts as a brief palette/typography beat, not an entirely new concept. |
+| 24.7–25.1 | Short red graphic starburst interrupts the prior motif | **AND NEVER** is a rapid contrast beat before the following **PRESSURE** card. |
 | 25.1–27.0 | Red stage with expressive multicolored limbs | **EXPECT IT TO ARRIVE AS PRESSURE** builds through a quick text replace. |
 | 27.0–27.9 | Graphic red/white diagonal panel | Single large consequence: **RESPONSIBILITY**. |
 | 27.9–28.8 | Blue/gray subway illustration with person seen from behind | Single large consequence: **EXPECTATIONS**. |
