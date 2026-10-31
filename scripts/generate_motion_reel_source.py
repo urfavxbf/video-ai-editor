@@ -40,7 +40,9 @@ def render(destination: Path):
         outline.alpha_composite(sprite)
         host_poses[key]=(sprite,outline)
     sidekick=character(PIX_DIR/"idle.png",110,140)
-    palettes=[(7,17,31),(11,24,43),(10,20,39),(19,20,43),(11,30,40)]
+    # Five contrasting visual environments rather than the rejected dark grid template.
+    palettes=[(245,222,200),(46,42,98),(252,169,133),(22,101,120),(190,154,220)]
+    accents=[(241,89,90),(145,125,251),(255,220,111),(75,232,185),(246,130,189)]
     video=destination/"take.mp4"
     ffmpeg=subprocess.Popen(["ffmpeg","-y","-hide_banner","-loglevel","error",
         "-f","rawvideo","-pix_fmt","rgb24","-s",f"{W}x{H}","-r",str(FPS),"-i","-",
@@ -55,34 +57,30 @@ def render(destination: Path):
             palette=palettes[(i//60)%len(palettes)]
             image=Image.new("RGB",(W,H),palette)
             d=ImageDraw.Draw(image,"RGBA")
-            # Real animated background and depth; no repeated still frame.
-            for k in range(24):
-                x=int((k*97 + i*(1.2+.1*k))%(W+180))-90
-                y=int((k*83+i*(1.7+.08*k))%(H+180))-90
-                r=8+(k%8)*3
-                d.ellipse((x-r,y-r,x+r,y+r),fill=(92,239,184,12+(k%4)*7))
-            # Ambient particle motion, not a technical grid / slideshow backdrop.
-            for k in range(9):
-                xx=int((k*107 + 28*math.sin(t*.8+k*3))%W)
-                yy=int((k*137 + t*14)%(H+100))-50
-                rad=18 + k*4
-                d.ellipse((xx-rad,yy-rad,xx+rad,yy+rad),fill=(54,210,179,11))
-            radius=210+int(math.sin(t*1.3)*30)
-            glow=(W//2-radius,350-radius,W//2+radius,350+radius)
-            d.ellipse(glow,outline=(83,255,199,70),width=4)
-            d.ellipse((W//2-145,350-145,W//2+145,350+145),outline=(146,216,253,36),width=3)
-            d.line([(0,715),(W,715)],fill=(123,251,201,96),width=5)
-            for k in range(12):
-                yy=715+k*k*2
-                if yy < H:
-                    d.line([(0,yy),(W,yy)],fill=(87,221,173,max(4,45-k*3)),width=2)
+            # Original animated shapes, color fields and independently moving layers.
+            # No dark technical grid, fixed HUD, progress track or dashboard layout.
+            accent=accents[(i//60)%len(accents)]
+            wave=math.sin(t*1.65)
+            d.ellipse((-250+int(30*wave),-210,540+int(40*wave),600),
+                      fill=(*accent,46))
+            d.ellipse((180+int(45*math.cos(t*.9)),400,820,1090),
+                      fill=(255,255,255,29))
+            d.polygon([(-180,720+int(t*28)),(120,340+int(45*wave)),
+                       (450,100+int(30*math.cos(t))), (670,320),
+                       (210,930),(-180,1050)],fill=(*accent,30))
+            for k in range(14):
+                xx=int((k*101 + i*(1.1+.09*k))%(W+140))-70
+                yy=int((k*157+i*(.8+.06*k))%(H+120))-60
+                rad=12+(k%6)*6
+                d.ellipse((xx-rad,yy-rad,xx+rad,yy+rad),
+                          fill=(255,255,255,18+(k%4)*6))
             # A small PIX cameo appears as a secondary graphic; the host matte stays correct.
             px=22+int(8*math.sin(t*1.4))
             py=665+int(9*math.sin(t*2.1))
             image.paste(sidekick,(px,py),sidekick)
             # Host animation is an actual sequence of pose changes and bobs.
-            sway=int(9*math.sin(t*2.8))
-            bob=int(11*math.sin(t*4.1))
+            sway=int(24*math.sin(t*1.7)+6*math.sin(t*5.3))
+            bob=int(18*math.sin(t*2.5))
             x=(W-host.width)//2+sway
             y=365+bob
             matte=Image.new("RGBA",(W,H),(0,0,0,0))
