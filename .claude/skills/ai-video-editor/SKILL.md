@@ -53,6 +53,4 @@ Groq transcription (`scripts/groq_transcribe.py`) is optional and requires an
 available key and authorization to send audio externally. A skill does not
 connect a chatbot to Codespaces, install models or grant credentials/budget.
 Historical portrait/V2 and 9:16 workflows remain explicit reproduction options.
-OpenMontage remains isolated and opt-in: read `integrations/openmontage/README.md`
-and its nested agent guide when selected. Do not mix its runtime into Remotion.
 Official Remotion skills supply framework techniques, not project defaults.

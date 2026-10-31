@@ -46,7 +46,6 @@ jobs:
       - name: Run existing model-free tests
         run: |
           python -m unittest discover -s tests -p 'test_*.py' -v
-          python -m unittest discover -s integrations/openmontage/tests -p 'test_*.py' -v
       - name: Verify all 13 approved character PNGs
         run: python scripts/stage_pixel_default_pack.py --verify-workspace
       - name: Verify registered metadata with actual input props

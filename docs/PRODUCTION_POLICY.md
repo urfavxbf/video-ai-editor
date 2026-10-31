@@ -51,10 +51,6 @@ Reuse approved English audio when available. Authorized new English generation
 uses the same profiles and existing CPU-capable Chatterbox path; never silently
 substitute speakers or claim a new WAV was generated from a preset alone.
 
-OpenMontage is a separate, opt-in faceless-video integration under
-`integrations/openmontage/`. Choosing it does not change the default character
-pipeline or grant credentials, budget, publishing rights or a live agent host.
-
 ## Historical reproduction and delivery
 
 Portrait-only/V2 layouts, canonical rig workbenches, old Tagalog defaults and

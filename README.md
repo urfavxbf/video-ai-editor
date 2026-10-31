@@ -1,7 +1,7 @@
 # Video AI Editor
 
-A Remotion/TypeScript + FFmpeg/Python AI video-production workspace, with
-an optional isolated OpenMontage integration. It is not an Android app.
+A Remotion/TypeScript + FFmpeg/Python AI video-production workspace.
+It is not an Android app.
 
 ## Current approved production settings
 
@@ -55,10 +55,6 @@ designs remain in [the archive-scoped policies](docs/MULTILINGUAL_PRODUCTION_POL
 and [portrait-only reference](docs/PIXEL_GLITCH_PORTRAITS_ONLY.md) for explicit
 reproduction. They do not supersede current defaults. Generic imported skills
 supply framework techniques, not a different project identity.
-
-[OpenMontage](integrations/openmontage/README.md) remains an opt-in, separately
-pinned faceless-production environment. It does not change the character stack,
-install a live agent connection, grant provider keys or authorize paid usage.
 
 ## One-click Codespaces setup (Android / browser)
 
