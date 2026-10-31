@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "id": "expansion-original-20261031",
+  "title": "The Weight of Becoming",
+  "sourceReferenceId": "7577091531933240631",
+  "language": "en",
+  "requestedFormat": "9:16",
+  "narrationProfile": "natural-storyteller-v1",
+  "narrationStatus": "guide-audio-only-local-render; approved Chatterbox not yet produced",
+  "scriptOriginal": true,
+  "illustrationRights": "original programmatic designs",
+  "scenes": [
+    {
+      "index": 0,
+      "headline": "THE STRANGE THING",
+      "subhead": "ABOUT GETTING WHAT YOU WANTED",
+      "narration": "Here's the strange thing about getting what you wanted.",
+      "palette": "ivory",
+      "motif": "balloon"
+    },
+    {
+      "index": 1,
+      "headline": "YOUR DREAM",
+      "subhead": "CAN LOOK LIKE A DEADLINE",
+      "narration": "Some mornings, your dream looks exactly like another deadline.",
+      "palette": "ivory",
+      "motif": "masks"
+    },
+    {
+      "index": 2,
+      "headline": "THE DOOR OPENED",
+      "subhead": "NOW YOU HAVE TO WALK THROUGH",
+      "narration": "The door you begged to open now asks you to show up.",
+      "palette": "coal",
+      "motif": "door"
+    },
+    {
+      "index": 3,
+      "headline": "A BIGGER LIFE",
+      "subhead": "COMES WITH MORE WEIGHT",
+      "narration": "You asked for a bigger life, not the weight that came with it.",
+      "palette": "paper",
+      "motif": "flowers"
+    },
+    {
+      "index": 4,
+      "headline": "YOU WISHED",
+      "subhead": "FOR CHANGE",
+      "narration": "You wished for change, then missed the comfort you left behind.",
+      "palette": "red",
+      "motif": "redland"
+    },
+    {
+      "index": 5,
+      "headline": "NEW CHANCES",
+      "subhead": "YOU USED TO DREAM ABOUT",
+      "narration": "You wanted new chances.",
+      "palette": "yellow",
+      "motif": "mountain"
+    },
+    {
+      "index": 6,
+      "headline": "LONG NIGHTS",
+      "subhead": "AND HARD WORK",
+      "narration": "They arrived disguised as long nights and hard work.",
+      "palette": "navy",
+      "motif": "desk"
+    },
+    {
+      "index": 7,
+      "headline": "RISE HIGHER",
+      "subhead": "THAN BEFORE",
+      "narration": "You asked to rise higher.",
+      "palette": "sky",
+      "motif": "stairs"
+    },
+    {
+      "index": 8,
+      "headline": "NOT QUIETLY",
+      "subhead": "NEVER WITHOUT A CHANGE",
+      "narration": "But growth doesn't arrive quietly.",
+      "palette": "red",
+      "motif": "burst"
+    },
+    {
+      "index": 9,
+      "headline": "PRESSURE",
+      "subhead": "IS PART OF THE CLIMB",
+      "narration": "Sometimes it feels like pressure.",
+      "palette": "scarlet",
+      "motif": "hands"
+    },
+    {
+      "index": 10,
+      "headline": "RESPONSIBILITY",
+      "subhead": "THE WEIGHT OF CHOICE",
+      "narration": "Responsibility.",
+      "palette": "paper",
+      "motif": "weight"
+    },
+    {
+      "index": 11,
+      "headline": "EXPECTATIONS",
+      "subhead": "A DIFFERENT KIND OF FEAR",
+      "narration": "Expectations.",
+      "palette": "steel",
+      "motif": "train"
+    },
+    {
+      "index": 12,
+      "headline": "A NEW VERSION",
+      "subhead": "OF WHO YOU ARE",
+      "narration": "And a version of yourself you haven't met yet.",
+      "palette": "ivory",
+      "motif": "float"
+    },
+    {
+      "index": 13,
+      "headline": "YOU DIDN'T",
+      "subhead": "CHOOSE WRONG",
+      "narration": "That doesn't mean you chose wrong.",
+      "palette": "lemon",
+      "motif": "stretch"
+    },
+    {
+      "index": 14,
+      "headline": "THE OLD MAP",
+      "subhead": "IS TOO SMALL",
+      "narration": "It means the old map isn't big enough anymore.",
+      "palette": "peach",
+      "motif": "map"
+    },
+    {
+      "index": 15,
+      "headline": "EXPANSION",
+      "subhead": "CAN FEEL LIKE CHAOS",
+      "narration": "Before it makes sense, expansion can feel like everything breaking.",
+      "palette": "coal",
+      "motif": "chaos"
+    },
+    {
+      "index": 16,
+      "headline": "DISCOMFORT",
+      "subhead": "ISN'T ALWAYS DANGER",
+      "narration": "But discomfort isn't always a warning.",
+      "palette": "sunset",
+      "motif": "sunperson"
+    },
+    {
+      "index": 17,
+      "headline": "YOUR LIMITS",
+      "subhead": "ARE FINALLY MOVING",
+      "narration": "Sometimes it's your limits moving out of the way.",
+      "palette": "charcoal",
+      "motif": "house"
+    },
+    {
+      "index": 18,
+      "headline": "OLD HABITS",
+      "subhead": "STOP FITTING",
+      "narration": "Old habits stop fitting.",
+      "palette": "teal",
+      "motif": "habits"
+    },
+    {
+      "index": 19,
+      "headline": "OLD EXCUSES",
+      "subhead": "START TO FADE",
+      "narration": "Old excuses get harder to believe.",
+      "palette": "ivory",
+      "motif": "mirror"
+    },
+    {
+      "index": 20,
+      "headline": "NEW STANDARDS",
+      "subhead": "A NEW WAY TO SEE YOURSELF",
+      "narration": "Even your standards begin to change.",
+      "palette": "pink",
+      "motif": "brain"
+    },
+    {
+      "index": 21,
+      "headline": "WHEN YOU'RE TIRED",
+      "subhead": "REMEMBER WHAT YOU'RE BUILDING",
+      "narration": "So when you're exhausted, remember what you're building.",
+      "palette": "aqua",
+      "motif": "worker"
+    },
+    {
+      "index": 22,
+      "headline": "WHEN YOU DOUBT",
+      "subhead": "REMEMBER HOW FAR YOU CAME",
+      "narration": "When you doubt yourself, remember what you survived.",
+      "palette": "yellow",
+      "motif": "heart"
+    },
+    {
+      "index": 23,
+      "headline": "YOU ONCE HOPED",
+      "subhead": "TO BE RIGHT HERE",
+      "narration": "You once hoped to stand in this very place.",
+      "palette": "blue",
+      "motif": "silhouette"
+    },
+    {
+      "index": 24,
+      "headline": "YOU'RE BECOMING",
+      "subhead": "SOMEONE NEW",
+      "narration": "You're not falling apart. You're becoming someone new.",
+      "palette": "electric",
+      "motif": "birds"
+    }
+  ]
+}
