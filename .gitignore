@@ -37,3 +37,6 @@ source-frames/
 public/hyperframes/
 hyperframes/projects/**/renders/
 hyperframes/projects/**/snapshots/
+
+# GSAP is generated from pinned npm dependency; no remote CDN
+hyperframes/projects/kinetic-intro/assets/gsap.min.js

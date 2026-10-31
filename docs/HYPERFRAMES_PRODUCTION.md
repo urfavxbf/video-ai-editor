@@ -22,7 +22,9 @@ This workflow **does not require HeyGen cloud or an API key**. Never use
 `hyperframes cloud render`, `hyperframes publish`, `hyperframes media-use`,
 or upload user media without express owner approval. The first-class package
 also has optional paid capabilities; they are outside this approved workflow.
-We disable CLI telemetry with `HYPERFRAMES_NO_TELEMETRY=1` and
+The standalone HTML declares a local `assets/gsap.min.js` browser script,
+staged from pinned `gsap@3.14.2` by `scripts/prepare-hyperframes.mjs`.
+No external GSAP CDN is used. We disable CLI telemetry with `HYPERFRAMES_NO_TELEMETRY=1` and
 `DO_NOT_TRACK=1`, and pass blank provider credentials to the render subprocess.
 
 ## Quick start (Node 22+, FFmpeg, FFprobe)

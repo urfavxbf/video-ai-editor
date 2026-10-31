@@ -12,7 +12,7 @@
     "stills": "node scripts/fx-stills.mjs",
     "bench": "node scripts/fx-bench.mjs",
     "render:repo-showcase": "remotion render RepoShowcase out/repo-showcase.mp4 --codec=h264 --crf=21 --pixel-format=yuv420p",
-    "hyperframes:lint": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes lint",
+    "hyperframes:lint": "node scripts/prepare-hyperframes.mjs && cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes lint",
     "hyperframes:render": "node scripts/render-hyperframes.mjs",
     "hyperframes:studio": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes preview"
   },
@@ -39,6 +39,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "typescript": "^5",
-    "hyperframes": "0.8.222"
+    "hyperframes": "0.8.222",
+    "gsap": "3.14.2"
   }
 }

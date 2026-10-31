@@ -32,6 +32,7 @@ function run(program,args,{cwd=project,capture=false}={}) {
   return capture ? r.stdout : '';
 }
 if (!existsSync(bin)) throw new Error('HyperFrames CLI not installed: run npm ci');
+run(process.execPath,[join(root,'scripts/prepare-hyperframes.mjs')],{cwd:root});
 if (!existsSync(join(project,'index.html'))) throw new Error('Missing original HyperFrames composition');
 run(bin,['lint']);
 mkdirSync(dirname(output),{recursive:true});

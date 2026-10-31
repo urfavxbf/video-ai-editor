@@ -31,8 +31,9 @@
       <div class="underline"></div>
     </section>
   </div>
+  <script src="./assets/gsap.min.js"></script>
   <script>
-    // HyperFrames provides GSAP locally. All animation is seekable, not played by timers.
+    // GSAP is copied from the pinned npm dependency; seekable animation, no external script.
     const timeline = gsap.timeline({paused:true});
     timeline.from("#headline-top",{y:100,opacity:0,duration:.55,ease:"power3.out"},0.05)
       .from("#accent",{y:70,opacity:0,duration:.6,ease:"power3.out"},0.23)
@@ -41,7 +42,7 @@
       .from("#tag",{y:30,opacity:0,duration:.55,ease:"power2.out"},0.48)
       .from("#orb",{scale:.65,opacity:0,rotation:-45,duration:.85,ease:"power2.out"},0.1)
       .from("#core",{scale:.8,opacity:0,duration:.7,ease:"power2.out"},0.25)
-      .to("#orb",{rotation:25,duration:1.2,ease:"none"},0.8)
+      .to("#orb",{rotation:25,duration:.95,ease:"none"},1.0)
       .to("#accent",{scale:1.035,duration:.4,ease:"power2.inOut"},1.2);
     window.__timelines["main"] = timeline;
   </script>
