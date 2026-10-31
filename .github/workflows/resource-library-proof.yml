@@ -1,0 +1,102 @@
+name: Licensed media resources — offline audit and original render
+
+on:
+  push:
+    branches:
+      - feat/licensed-media-resource-library-20261031
+    paths:
+      - .github/workflows/resource-library-proof.yml
+      - resources/**
+      - public/resources/original/**
+      - scripts/resource_library.py
+      - scripts/generate_original_ambient.py
+      - src/resources/ResourceLibraryProof.tsx
+      - src/Root.tsx
+      - tests/test_resource_library.py
+      - docs/MEDIA_RESOURCE_LIBRARY.md
+      - AGENTS.md
+      - docs/PRODUCTION_POLICY.md
+      - docs/AI_AGENT_PROMPTS.md
+      - package.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-and-render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install existing dependencies
+        run: |
+          npm ci --no-audit --no-fund
+          python -m pip install -r requirements.txt
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Audit existing fonts, SFX and original illustrations
+        run: |
+          python scripts/resource_library.py audit
+          python scripts/stage_pixel_default_pack.py --verify-workspace
+          python -m unittest discover -s tests -p 'test_resource_library.py' -v
+          npm run typecheck
+      - name: Generate and intake original ambient WAV
+        run: |
+          python scripts/generate_original_ambient.py --output out/resources/original-ambient-bed.wav
+          python scripts/resource_library.py intake out/resources/original-ambient-bed.wav \
+            --kind music --slug original-ambient-bed \
+            --license owner-original --creator 'Video AI Editor' --rights-confirmed
+          python scripts/resource_library.py audit
+      - name: Render real B-roll and stage with rights receipt
+        run: |
+          npx remotion browser ensure
+          npx remotion still ResourceLibraryProof out/resources/scene-still.png \
+            --frame=30 --scale=0.25
+          npx remotion render ResourceLibraryProof out/resources/original-broll.mp4 \
+            --frames=0-59 --scale=0.25 --concurrency=2 --codec=h264 --pixel-format=yuv420p
+          python scripts/resource_library.py intake out/resources/original-broll.mp4 \
+            --kind video --slug original-broll \
+            --license owner-original --creator 'Video AI Editor' --rights-confirmed
+          python scripts/resource_library.py audit
+      - name: Validate video, audio and decode
+        run: |
+          python - <<'PY'
+          import json, subprocess, wave
+          from pathlib import Path
+          with wave.open('out/resources/original-ambient-bed.wav','rb') as w:
+              assert w.getnchannels()==2 and w.getframerate()==48000
+              assert w.getnframes()==48000*8
+          media='out/resources/original-broll.mp4'
+          data=json.loads(subprocess.check_output([
+              'ffprobe','-v','error','-select_streams','v:0',
+              '-show_entries','stream=codec_name,width,height,r_frame_rate,nb_frames',
+              '-of','json',media],text=True))
+          stream=data['streams'][0]
+          assert (stream['codec_name'],stream['width'],stream['height'],stream['r_frame_rate'],stream['nb_frames'])==(
+              'h264',480,270,'30/1','60'),stream
+          subprocess.run(['ffmpeg','-v','error','-xerror','-i',media,'-f','null','-'],check=True)
+          assert Path('out/resources/scene-still.png').stat().st_size>1000
+          print('Verified original media: 60-frame H264 visual + 8-second stereo PCM16 WAV')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: video-editor-original-media-resource-proof
+          path: |
+            out/resources/scene-still.png
+            out/resources/original-broll.mp4
+            out/resources/original-ambient-bed.wav
+          retention-days: 7
+          if-no-files-found: error
