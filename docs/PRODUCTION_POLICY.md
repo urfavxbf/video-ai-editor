@@ -1,5 +1,12 @@
 # Current production policy
 
+> **Canonical production defaults.** AI agents must first follow
+> [AGENTS.md](../AGENTS.md), verify the current
+> [registry](../characters/registry.json) and
+> [approved pixel manifest](../characters/pixel-default-manifest.json), and
+> use the [AI agent prompt playbook](AI_AGENT_PROMPTS.md) only as an optional
+> task template. Historical documents never supersede these active settings.
+
 This is the current guide for new UrFavXBF × PIX productions, reflecting the
 approved 2026-10-29 pixel-pose defaults and retained English voice setting.
 Machine-readable values live in [the registry](../characters/registry.json)
@@ -64,3 +71,31 @@ readable, and fact-check material claims. Verify real media and final audio/vide
 streams, timing, identity and playback before claiming delivery. Publish only
 when explicitly requested; tests or artwork readiness do not prove a finished
 episode, permanent skill installation or a working external connection.
+
+## Agent routing and verification requirements
+
+The primary agent instructions are [`AGENTS.md`](../AGENTS.md). Its composition
+routing and 21-FX selection table apply to all work; a task-specific prompt
+from [`docs/AI_AGENT_PROMPTS.md`](AI_AGENT_PROMPTS.md) cannot grant any missing
+assets, processing permissions or production approvals.
+
+- Use `HeroCharacterStage` for the default character scene and
+  `EpisodeProduction` for actual multi-chapter assembly. `PixelProductionProof`
+  and `EpisodeTimelineProof` are proof tools, not finished episodes.
+- For supplied footage use `ExampleEdit`, validate `src/edit/edit.json`
+  with `node scripts/validate-edit.cjs src/edit/edit.json --media` and confirm
+  real video, mattes, stickers, face coordinates and audio streams.
+- The Lottie/Bodymovin and Duik compositions are import **demonstrations** only,
+  not a complete After Effects runtime nor proof of a genuine Duik export.
+- New English speech requires express authorization, the approved
+  `scripts/character_voiceover.py --language en --device cpu` route, a real
+  reference WAV for PIX at `input/pix-reference.wav`, and listening QA.
+  Using Groq uploads content externally and requires separate permission.
+- RMS or pose-swap character motion does not establish phoneme lip-sync.
+  Do not describe 2.5D images as physically modeled 3D.
+- Before delivery, verify the **actual rendered media** with FFprobe,
+  representative/transition frames, listened-to speech/mix and reviewed caption
+  alignment. A schema validation, successful CI run or artwork proof alone
+  never constitutes verified final delivery.
+- Do not merge changes to `main`, publish, trigger write-capable workflows,
+  or incur paid API/GPU costs without the owner's explicit authorization.

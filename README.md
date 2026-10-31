@@ -39,6 +39,22 @@ See [English policy](docs/ENGLISH_PRODUCTION_POLICY.md),
 [character identities](docs/OFFICIAL_CHARACTERS.md), and
 [production quality](docs/PRODUCTION_STANDARD.md).
 
+## AI agent operating policy and copy-ready prompts
+
+**Start with [AGENTS.md](AGENTS.md)** — the primary operating instructions for
+every AI coding/production agent. The authoritative default format, approved
+voices and approved assets remain in
+[docs/PRODUCTION_POLICY.md](docs/PRODUCTION_POLICY.md),
+[characters/registry.json](characters/registry.json) and
+[characters/pixel-default-manifest.json](characters/pixel-default-manifest.json).
+
+Use the [AI agent prompt playbook](docs/AI_AGENT_PROMPTS.md) to request a new
+episode, reference-inspired video, supplied-footage edit, one of 21 effects,
+approved English voiceover, transcript/captions, Lottie or Duik import, or
+production QA. All templates require real evidence before claiming delivery;
+copying a prompt never authorizes external uploads, paid services, GPU usage,
+publishing, or a merge to main.
+
 ## Agent entrypoints and historical work
 
 Codex reads [AGENTS.md](AGENTS.md). The active production skill is
