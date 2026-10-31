@@ -35,7 +35,7 @@ jobs:
       - name: Typecheck all compositions
         run: npm run typecheck
       - name: Test composition duration validation
-        run: node --test tests/composition-duration.test.cjs
+        run: node --test tests/composition-duration.test.cjs tests/episode-manifest.test.cjs
       - name: Run existing model-free tests
         run: |
           python -m unittest discover -s tests -p 'test_*.py' -v

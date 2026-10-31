@@ -18,6 +18,7 @@ export type HeroStageProps = {
   assets?: Record<CharacterId, HeroStageAsset>;
   audio?: {file: string; startFrame: number; endFrame: number}[];
   durationFrames?: number;
+  showStudyOverlay?: boolean;
 };
 export {HERO_STAGE_DURATION} from '../compositionMetadata';
 
@@ -53,7 +54,7 @@ const IdentityCard:React.FC<{
 };
 
 export const HeroCharacterStage:React.FC<HeroStageProps> = ({
-  assetsReady,artApproved=false, voiceEvents,chapter,audio=[],
+  assetsReady,artApproved=false, voiceEvents,chapter,audio=[],showStudyOverlay=true,
 })=>{
   const frame=useCurrentFrame();
   const {fps}=useVideoConfig();
@@ -82,7 +83,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
     <div style={{position:'absolute',right:60,top:43,letterSpacing:2,fontSize:17,color:'#96a8c3'}}>
       1920×1080 · 30 FPS · CANONICAL CHIBI
     </div>
-    <div style={{position:'absolute',top:145,left:625,width:670,textAlign:'center',opacity:fade}}>
+    {showStudyOverlay && <div style={{position:'absolute',top:145,left:625,width:670,textAlign:'center',opacity:fade}}>
       <div style={{letterSpacing:7,fontSize:18,color:'#70e8ff',fontWeight:750}}>
         CHARACTER PERFORMANCE STUDY
       </div>
@@ -102,7 +103,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
             {x}
           </div>)}
       </div>
-    </div>
+    </div>}
     {ready ? <>
       <PixelPoseCharacter id="urfavxbf" speaking={host.isSpeaking}
         gesture={heroGestureFor('urfavxbf',chapter,host.isSpeaking?'urfavxbf':undefined,frame,voiceEvents)}
