@@ -1,0 +1,93 @@
+name: All 12 effects — full video showcase (read-only)
+
+on:
+  push:
+    branches:
+      - feat/12-cinematic-motion-effects-20261101
+    paths:
+      - .github/workflows/full-12fx-showcase.yml
+      - scripts/generate_advanced_showcase_score.py
+      - scripts/generate_advanced_showcase_source.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-motion-showcase:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    env:
+      DO_NOT_TRACK: '1'
+      HYPERFRAMES_NO_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install pinned software and offline media tools
+        run: |
+          npm ci --no-audit --no-fund
+          python3 -m pip install -r requirements.txt
+          command -v ffprobe || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          npx remotion browser ensure
+      - name: Verify approved artwork and effect code
+        run: |
+          python3 -m py_compile scripts/generate_advanced_showcase_source.py scripts/generate_advanced_showcase_score.py
+          python3 scripts/stage_pixel_default_pack.py --verify-workspace
+          npm run typecheck
+          node --test tests/cinematic-fx-12.test.cjs
+      - name: Generate actual moving video, frame-matched subject cutouts and original waveform
+        run: |
+          python3 scripts/generate_advanced_showcase_source.py --output public/sample
+          python3 scripts/generate_advanced_fx_audio.py
+          test -s public/sample/take.mp4
+          test -s public/sample/fg/0099.webp
+          test -s public/sample/advanced-reactive.wav
+          mkdir -p out/advanced-showcase
+      - name: Render ALL 12 real effects at 30 fps, without labels or presentation frame
+        run: |
+          npx remotion render AdvancedFxShowcase out/advanced-showcase/video-only.mp4 \
+            --scale=0.5 --concurrency=2 --codec=h264 --crf=19 --pixel-format=yuv420p
+      - name: Compose original effect-timed soundtrack and final MP4
+        run: |
+          python3 scripts/generate_advanced_showcase_score.py --output out/advanced-showcase/score.wav
+          ffmpeg -y -hide_banner -loglevel error \
+            -i out/advanced-showcase/video-only.mp4 -i out/advanced-showcase/score.wav \
+            -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 192k \
+            -shortest -movflags +faststart \
+            out/advanced-showcase/Advanced_12_FX_Full_Showcase.mp4
+      - name: Full media verification — all frames + audio + decode
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json, subprocess
+          video=Path('out/advanced-showcase/Advanced_12_FX_Full_Showcase.mp4')
+          assert video.exists() and video.stat().st_size > 400_000
+          d=json.loads(subprocess.check_output([
+              'ffprobe','-v','error',
+              '-show_entries','format=duration:stream=codec_type,codec_name,width,height,r_frame_rate,nb_frames',
+              '-of','json',str(video)],text=True))
+          streams=d['streams']
+          v=next(s for s in streams if s['codec_type']=='video')
+          a=next(s for s in streams if s['codec_type']=='audio')
+          assert (v['codec_name'],v['width'],v['height'],v['r_frame_rate'],v['nb_frames'])==('h264',540,960,'30/1','936'),v
+          assert a['codec_name']=='aac',a
+          assert 31.15 < float(d['format']['duration']) < 31.4,d
+          subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(video),'-f','null','-'],check=True)
+          print('PASS: 12 full-length real effects, 936 decoded frames, 31.2s, original AAC soundtrack')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-12-cinematic-fx-showcase
+          path: out/advanced-showcase/Advanced_12_FX_Full_Showcase.mp4
+          retention-days: 14
+          if-no-files-found: error

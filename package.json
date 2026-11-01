@@ -14,7 +14,9 @@
     "render:repo-showcase": "remotion render RepoShowcase out/repo-showcase.mp4 --codec=h264 --crf=21 --pixel-format=yuv420p",
     "hyperframes:lint": "node scripts/prepare-hyperframes.mjs && cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes lint",
     "hyperframes:render": "node scripts/render-hyperframes.mjs",
-    "hyperframes:studio": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes preview"
+    "hyperframes:studio": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes preview",
+    "advanced-fx:sample": "npm run sample && python3 scripts/generate_advanced_fx_audio.py",
+    "advanced-fx:showcase": "remotion render AdvancedFxShowcase out/advanced-fx.mp4 --codec=h264 --pixel-format=yuv420p --crf=19 --concurrency=2"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.522",
@@ -33,7 +35,8 @@
     "lottie-web": "5.13.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "remotion": "4.0.522"
+    "remotion": "4.0.522",
+    "@remotion/paths": "4.0.522"
   },
   "devDependencies": {
     "@types/react": "^19",

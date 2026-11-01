@@ -260,3 +260,23 @@ ffprobe -v error -show_format -show_streams [EXISTING_MP4]
 owner's actual approval of creating new voice audio, using Groq or other remote
 processors, incurring charges, publishing, triggering privileged workflows, or
 merging to `main`. Use the existing zero-paid-API/CPU defaults.
+
+## 17. Advanced motion effects — 12 new cinematic effects
+
+```text
+Gamitin ang isa o kombinasyon ng 12 registered cinematic effects sa
+[FULL-FRAME SOURCE VIDEO PATH] sa tamang narration beat:
+rgb-split, speed-trails, film-light-leak, glass-shatter,
+liquid-displacement, pixel-dissolve, whip-pan-blur, svg-path-morph,
+comic-halftone, shader-portal, film-burn-reveal, audio-reactive-particles.
+Read docs/CINEMATIC_FX_12.md at AGENTS.md muna. Verify real source,
+frame-matched mattes at original approved audio. Use FxPreview to test
+one effect at a time, AdvancedFxShowcase para sa 12 effects,
+ExampleEdit para sa validated production cut-list.
+WALANG unrequested logo/watermark, dark grid, header, footer,
+scene counter, info sidebar, title-slide template o mini screen.
+Huwag magsabi na official v4.0.539 shatter/v4.0.540 filmBurn ang
+naka-install, o nag-import ng GLSL kung hindi iyon nangyari.
+Inspect representative and transition frames and decode playable
+MP4; never call static stills a polished motion production.
+```

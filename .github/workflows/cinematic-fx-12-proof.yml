@@ -1,0 +1,119 @@
+name: 12 cinematic effects — real media and no-slides acceptance proof
+
+on:
+  push:
+    branches:
+      - feat/12-cinematic-motion-effects-20261101
+    paths:
+      - .github/workflows/cinematic-fx-12-proof.yml
+      - src/fx/advanced/**
+      - src/fx/index.tsx
+      - src/compositionMetadata.ts
+      - src/Root.tsx
+      - package.json
+      - tests/cinematic-fx-12.test.cjs
+      - scripts/generate_advanced_fx_audio.py
+      - docs/CINEMATIC_FX_12.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cinematic-fx:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      DO_NOT_TRACK: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Synchronize exact Remotion paths dependency and install
+        run: |
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci --no-audit --no-fund
+          python3 -m pip install -r requirements.txt
+      - name: Guard approved character files and all metadata contracts
+        run: |
+          python3 scripts/stage_pixel_default_pack.py --verify-workspace
+          npm run typecheck
+          node --test tests/cinematic-fx-12.test.cjs
+      - name: Create real source video, tracked cutouts and measured audio
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          npx remotion browser ensure
+          npm run advanced-fx:sample
+          test -s public/sample/take.mp4
+          test -s public/sample/fg/0099.webp
+          test -s public/sample/sticker/0099.webp
+          test -s public/sample/advanced-reactive.wav
+      - name: Render full-bleed real effect keyframes without branding
+        run: |
+          mkdir -p out/cinematic-fx
+          npx remotion still FxPreview out/cinematic-fx/rgb.png \
+            --props='{"id":"rgb-split","from":12}' --frame=30 --scale=0.25
+          npx remotion still FxPreview out/cinematic-fx/shatter.png \
+            --props='{"id":"glass-shatter","from":12}' --frame=43 --scale=0.25
+          npx remotion still FxPreview out/cinematic-fx/liquid.png \
+            --props='{"id":"liquid-displacement","from":12}' --frame=31 --scale=0.25
+          npx remotion still FxPreview out/cinematic-fx/morph.png \
+            --props='{"id":"svg-path-morph","from":12}' --frame=38 --scale=0.25
+          npx remotion still FxPreview out/cinematic-fx/portal.png \
+            --props='{"id":"shader-portal","from":12}' --frame=36 --scale=0.25
+          npx remotion still FxPreview out/cinematic-fx/particles.png \
+            --props='{"id":"audio-reactive-particles","from":12}' --frame=60 --scale=0.25
+          npx remotion render AdvancedFxShowcase out/cinematic-fx/fx-motion-proof.mp4 \
+            --frames=0-59 --scale=0.25 --concurrency=2 \
+            --codec=h264 --pixel-format=yuv420p
+      - name: Render 24 actual motion frames across all twelve FX IDs
+        run: node scripts/render-advanced-fx-proofs.mjs out/cinematic-fx/stills
+      - name: Probe and decode actual exported video
+        run: |
+          python3 - <<'PY'
+          import json,subprocess
+          from pathlib import Path
+          p=Path('out/cinematic-fx/fx-motion-proof.mp4')
+          assert p.is_file() and p.stat().st_size>8000
+          s=json.loads(subprocess.check_output([
+            'ffprobe','-v','error','-select_streams','v:0',
+            '-show_entries','stream=codec_name,width,height,r_frame_rate,nb_frames',
+            '-of','json',str(p)],text=True))['streams'][0]
+          assert (s['codec_name'],s['width'],s['height'],s['r_frame_rate'],s['nb_frames'])==(
+            'h264',270,480,'30/1','60'),s
+          subprocess.run(['ffmpeg','-v','error','-xerror','-i',str(p),'-f','null','-'],check=True)
+          for n in ('rgb','shatter','liquid','morph','portal','particles'):
+            assert Path(f'out/cinematic-fx/{n}.png').stat().st_size>1000,n
+          print('12 FX registered; actual full-frame effect stills and 60-frame H264 preview verified')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cinematic-12-fx-media-preview
+          path: out/cinematic-fx
+          retention-days: 10
+          if-no-files-found: warn
+      - name: Commit exact lockfile only to isolated feature branch
+        if: github.ref == 'refs/heads/feat/12-cinematic-motion-effects-20261101'
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REF_NAME}" = 'feat/12-cinematic-motion-effects-20261101'
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "build: lock additional @remotion/paths dependency"
+            git push origin HEAD:"${GITHUB_REF_NAME}"
+          fi

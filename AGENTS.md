@@ -201,3 +201,22 @@ the generated skill's underlying source.
 Use [`docs/AI_AGENT_PROMPTS.md`](docs/AI_AGENT_PROMPTS.md) for ready-to-copy,
 task-specific instructions. Prompts **inherit**, and never replace, this file,
 `docs/PRODUCTION_POLICY.md` and verified machine-readable defaults.
+
+## Advanced cinematic effects (12 additional registered FX)
+
+Keep all 21 original effects, and expose the 12 new entries through
+`FxPreview`, `AdvancedFxShowcase` and validated `ExampleEdit` cut lists:
+`rgb-split`, `speed-trails`, `film-light-leak`, `glass-shatter`,
+`liquid-displacement`, `pixel-dissolve`, `whip-pan-blur`,
+`svg-path-morph`, `comic-halftone`, `shader-portal`,
+`film-burn-reveal`, `audio-reactive-particles`.
+Read `docs/CINEMATIC_FX_12.md` for sources, matte and clip preparation,
+version limitations and rights. **Full-frame action only:** no
+unsolicited watermarks, logos, counters, grids, title cards, split
+presentation layouts or persistent header/footer. `shatter` and
+`filmBurn` equivalents are original render-safe approximations, not
+newer Remotion APIs; the portal is a local SVG displacement filter, not
+a copied GL shader. Do not conflate generated original RMS with speech
+lip-sync. Verify actual source, mattes, sound, representative frames and
+fully decoded MP4 before describing any output as produced.
+
