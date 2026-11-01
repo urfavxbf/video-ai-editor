@@ -1,0 +1,98 @@
+name: True 33 FX and approved character media pack
+
+on:
+  push:
+    branches: [feat/true-33fx-character-showreel-20261101]
+    paths: ['.github/workflows/true-33fx-showreel.yml']
+  workflow_dispatch:
+  pull_request:
+    paths: ['.github/workflows/true-33fx-showreel.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  publish-approved-character-art:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install image validator requirements
+        run: python3 -m pip install Pillow
+      - name: Verify exact owner-approved poses
+        run: python3 scripts/stage_pixel_default_pack.py --verify-workspace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: approved-13-urfavxbf-pix-poses
+          path: |
+            public/characters/pixel-default
+            characters/pixel-default-manifest.json
+          retention-days: 14
+          if-no-files-found: error
+  render-verified-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      DO_NOT_TRACK: '1'
+      HYPERFRAMES_NO_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install pinned project dependencies
+        run: |
+          npm ci --no-audit --no-fund
+          python3 -m pip install -r requirements.txt
+          npx remotion browser ensure
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Verify approved artwork and registered FX
+        run: |
+          python3 scripts/stage_pixel_default_pack.py --verify-workspace
+          npm run typecheck
+          node --test tests/cinematic-fx-12.test.cjs
+      - name: Prepare original synchronized media and mattes
+        run: |
+          python3 scripts/generate_advanced_showcase_source.py --output public/sample
+          python3 scripts/generate_advanced_fx_audio.py
+          test -s public/sample/take.mp4
+          test -s public/sample/fg/0099.webp
+          test -s public/sample/advanced-reactive.wav
+          mkdir -p out/showreel-pack
+      - name: Render all 12 registered new effects from actual implementation
+        run: |
+          npx remotion render AdvancedFxShowcase out/showreel-pack/advanced12.mp4 --scale=0.35 --concurrency=2 --codec=h264 --crf=21 --pixel-format=yuv420p
+      - name: Render all 21 original effects from actual implementation
+        run: |
+          npx remotion render FxShowcase out/showreel-pack/original21.mp4 --scale=0.35 --concurrency=2 --codec=h264 --crf=21 --pixel-format=yuv420p
+      - name: Bundle both approved identities without altering artwork
+        run: |
+          cp characters/pixel-default-manifest.json out/showreel-pack/manifest.json
+          mkdir -p out/showreel-pack/characters
+          cp -R public/characters/pixel-default/urfavxbf out/showreel-pack/characters/
+          cp -R public/characters/pixel-default/pix out/showreel-pack/characters/
+          ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json out/showreel-pack/original21.mp4 > out/showreel-pack/original21.probe.json
+          ffprobe -v error -show_entries format=duration:stream=codec_name,width,height -of json out/showreel-pack/advanced12.mp4 > out/showreel-pack/advanced12.probe.json
+          ffmpeg -v error -xerror -i out/showreel-pack/original21.mp4 -f null -
+          ffmpeg -v error -xerror -i out/showreel-pack/advanced12.mp4 -f null -
+      - name: Upload video source and owner-approved sprites
+        uses: actions/upload-artifact@v4
+        with:
+          name: true-33fx-approved-characters-source
+          path: out/showreel-pack
+          retention-days: 14
+          if-no-files-found: error
