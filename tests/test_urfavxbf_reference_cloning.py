@@ -1,6 +1,8 @@
 """CPU-only, model-free regression tests for authorized UrFavXBF voice reference cloning."""
 import contextlib
+from array import array
 import io
+import math
 import json
 from pathlib import Path
 import sys
@@ -21,7 +23,8 @@ def make_reference(path: Path, seconds: int = 6):
         handle.setnchannels(1)
         handle.setsampwidth(2)
         handle.setframerate(16000)
-        handle.writeframes(b"\x00\x00" * 16000 * seconds)
+        samples = array("h", (round(3200 * math.sin(2 * math.pi * 170 * i / 16000)) for i in range(16000 * seconds)))
+        handle.writeframes(samples.tobytes())
 
 
 class AuthorizedTagalogVoiceReferenceTests(unittest.TestCase):
@@ -29,6 +32,17 @@ class AuthorizedTagalogVoiceReferenceTests(unittest.TestCase):
         kwargs = tts.generation_kwargs("Kamusta!", tts.profile_for("urfavxbf"), None, seed=42)
         self.assertNotIn("reference_wav_path", kwargs)
         self.assertIn("young adult Filipino male", kwargs["text"])
+
+    def test_silent_reference_is_rejected(self):
+        with tempfile.TemporaryDirectory() as folder:
+            wav = Path(folder) / "silent.wav"
+            with wave.open(str(wav), "wb") as handle:
+                handle.setnchannels(1)
+                handle.setsampwidth(2)
+                handle.setframerate(16000)
+                handle.writeframes(b"\x00\x00" * 16000 * 6)
+            with self.assertRaisesRegex(ValueError, "silent"):
+                tts.validate_reference(wav)
 
     def test_cloning_uses_exact_local_reference_for_every_chunk(self):
         with tempfile.TemporaryDirectory() as folder:
