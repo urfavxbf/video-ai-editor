@@ -5,6 +5,8 @@ on:
     branches: [feat/true-33fx-character-showreel-20261101]
     paths: ['.github/workflows/true-33fx-showreel.yml']
   workflow_dispatch:
+  pull_request:
+    paths: ['.github/workflows/true-33fx-showreel.yml']
 
 permissions:
   contents: read
