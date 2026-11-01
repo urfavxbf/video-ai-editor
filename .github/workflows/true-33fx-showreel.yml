@@ -12,6 +12,26 @@ permissions:
   contents: read
 
 jobs:
+  publish-approved-character-art:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify exact owner-approved poses
+        run: python3 scripts/stage_pixel_default_pack.py --verify-workspace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: approved-13-urfavxbf-pix-poses
+          path: |
+            public/characters/pixel-default
+            characters/pixel-default-manifest.json
+          retention-days: 14
+          if-no-files-found: error
   render-verified-source:
     runs-on: ubuntu-24.04
     timeout-minutes: 75
