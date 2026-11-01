@@ -7,16 +7,70 @@ This module is safe to import and test without heavyweight TTS dependencies.
 from __future__ import annotations
 
 import argparse
+from array import array
+import hashlib
 import json
 import math
 import re
 import sys
 import tempfile
+import wave
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "characters" / "registry.json"
 MAX_CHUNK = 320
+REFERENCE_STYLE = (
+    "a sincere, calm Filipino documentary narrator, thoughtful and warm, "
+    "with natural Tagalog and Taglish rhythm and restrained emotional emphasis"
+)
+
+
+def validate_reference(path: Path) -> str:
+    """Check a private, locally prepared 16 kHz mono WAV (5–30 s)."""
+    if not path.is_file():
+        raise ValueError(f"Reference voice file does not exist: {path}")
+    if path.suffix.lower() != ".wav":
+        raise ValueError("Voice reference must be a local WAV file; convert MP3 using FFmpeg")
+    try:
+        with wave.open(str(path), "rb") as handle:
+            if handle.getnchannels() != 1 or handle.getframerate() != 16000 or handle.getsampwidth() != 2:
+                raise ValueError("Reference must be mono, 16 kHz, 16-bit PCM WAV")
+            duration = handle.getnframes() / handle.getframerate()
+            if not 5.0 <= duration <= 30.0:
+                raise ValueError("Reference audio must be 5–30 seconds long")
+    except (wave.Error, EOFError) as exc:
+        raise ValueError("Invalid WAV voice reference") from exc
+    # Prevent generation against silent/corrupted reference audio without torch.
+    with wave.open(str(path), "rb") as handle:
+        pcm = array("h")
+        pcm.frombytes(handle.readframes(handle.getnframes()))
+    if sys.byteorder != "little":
+        pcm.byteswap()
+    if not pcm:
+        raise ValueError("Empty speaker reference")
+    rms = math.sqrt(sum(v * v for v in pcm) / len(pcm)) / 32768.0
+    peak = max(abs(v) for v in pcm) / 32768.0
+    if rms < 0.003 or peak < 0.02:
+        raise ValueError("Speaker reference is silent or too quiet")
+    clipped = sum(abs(v) >= 32700 for v in pcm) / len(pcm)
+    if clipped > 0.01:
+        raise ValueError("Speaker reference has excessive clipping")
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def generation_kwargs(text: str, profile: dict, reference_audio: Path | None, seed: int) -> dict:
+    """Pin the same speaker for each chunk when a local reference is provided."""
+    if reference_audio is None:
+        return {
+            "text": f"({profile['voice_design_prompt']}) {text}",
+            "cfg_value": 2.0, "inference_timesteps": 10, "seed": seed,
+        }
+    return {
+        "text": f"({REFERENCE_STYLE}) {text}",
+        "reference_wav_path": str(reference_audio.resolve()),
+        "cfg_value": 2.0, "inference_timesteps": 10, "seed": seed,
+    }
 
 
 def profile_for(character: str) -> dict:
@@ -67,6 +121,8 @@ def build_parser() -> argparse.ArgumentParser:
     source.add_argument("--text-file", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda", "mps"), default="auto")
+    parser.add_argument("--reference-audio", type=Path, help="Local authorized UrFavXBF speaker reference WAV; never uploaded")
+    parser.add_argument("--confirm-voice-rights", action="store_true", help="Confirm permission to synthesize this speaker")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--max-chars", type=int, default=MAX_CHUNK)
     parser.add_argument("--pause-ms", type=int, default=250)
@@ -83,6 +139,16 @@ def validate(args: argparse.Namespace) -> tuple[dict, list[str]]:
         text = args.text_file.read_text(encoding="utf-8-sig")
     else:
         text = args.text or ""
+    if args.reference_audio is not None:
+        if args.character != "urfavxbf":
+            raise ValueError("Reference voice cloning is configured only for UrFavXBF; PIX remains independent")
+        if not args.confirm_voice_rights:
+            raise ValueError("Cloning requires --confirm-voice-rights and speaker authorization")
+        validate_reference(args.reference_audio)
+        if args.reference_audio.resolve() == args.output.resolve():
+            raise ValueError("The output cannot overwrite the voice reference")
+    elif args.confirm_voice_rights:
+        raise ValueError("--confirm-voice-rights requires --reference-audio")
     chunks = split_text(text, args.max_chars)
     if args.output.suffix.lower() != ".wav":
         raise ValueError("Output must have a .wav extension")
@@ -113,10 +179,9 @@ def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str]) -> Pa
     offset = 0
     for i, chunk in enumerate(chunks):
         # Official VoxCPM2 voice-design syntax: parenthesized description before text.
-        designed_text = f"({profile['voice_design_prompt']}) {chunk}"
-        audio = np.asarray(model.generate(
-            text=designed_text, cfg_value=2.0, inference_timesteps=10, seed=args.seed + i
-        ), dtype=np.float32).reshape(-1)
+        audio = np.asarray(model.generate(**generation_kwargs(
+            chunk, profile, args.reference_audio, args.seed + i
+        )), dtype=np.float32).reshape(-1)
         if audio.size < rate // 5 or not np.isfinite(audio).all():
             raise RuntimeError(f"Invalid audio returned for chunk {i + 1}")
         start = offset / rate
@@ -138,6 +203,9 @@ def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str]) -> Pa
         "language": profile["language"], "engine": profile["engine"],
         "model_id": profile["model_id"], "sample_rate": rate,
         "seed": args.seed, "chunks": manifest_chunks,
+        "voice_mode": "reference-clone" if args.reference_audio else "voice-design",
+        "reference_sha256": validate_reference(args.reference_audio) if args.reference_audio else None,
+        "reference_audio_embedded": False,
         "timing_note": "Chunk boundaries only. Obtain word timing from alignment."
     }
     # Write WAV first to a temporary file, then replace the target atomically.
@@ -161,6 +229,8 @@ def synthesize(args: argparse.Namespace, profile: dict, chunks: list[str]) -> Pa
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.reference_audio is not None and args.device == "auto":
+        args.device = "cpu"  # Never silently select a GPU for reference cloning.
     try:
         profile, chunks = validate(args)
         if args.dry_run:
@@ -170,6 +240,9 @@ def main(argv: list[str] | None = None) -> int:
                 "voice_design_prompt": profile["voice_design_prompt"],
                 "chunks": chunks, "output": str(args.output),
                 "audio_generated": False,
+                "voice_mode": "reference-clone" if args.reference_audio else "voice-design",
+                "reference_sha256": validate_reference(args.reference_audio) if args.reference_audio else None,
+                "device": args.device,
             }, ensure_ascii=False, indent=2))
             return 0
         output = synthesize(args, profile, chunks)

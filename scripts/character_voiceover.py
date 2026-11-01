@@ -31,6 +31,8 @@ def build_parser() -> argparse.ArgumentParser:
     t.add_argument("--text-file", type=Path)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--device", choices=("auto", "cpu", "cuda", "mps"), default="auto")
+    p.add_argument("--reference-audio", type=Path, help="Speaker-authorized WAV used for Tagalog UrFavXBF cloning only")
+    p.add_argument("--confirm-voice-rights", action="store_true", help="Confirm permission to clone this voice")
     p.add_argument("--overwrite", action="store_true")
     p.add_argument("--dry-run", action="store_true", help="Validate Tagalog voice plan without inference.")
     return p
@@ -68,12 +70,19 @@ def main(argv: list[str] | None = None) -> int:
             options.extend(["--text-file", str(args.text_file)])
         else:
             options.extend(["--text", args.text])
+        if args.reference_audio is not None:
+            options.extend(["--reference-audio", str(args.reference_audio)])
+        if args.confirm_voice_rights:
+            options.append("--confirm-voice-rights")
         if args.overwrite:
             options.append("--overwrite")
         if args.dry_run:
             options.append("--dry-run")
         return voxcpm_main(options)
 
+    if args.reference_audio is not None or args.confirm_voice_rights:
+        print("Voice reference is supported only for Tagalog UrFavXBF (use --language tl).")
+        return 2
     if args.dry_run:
         print("English Chatterbox dry-run is unavailable; use --language tl for a design preview.")
         return 2
