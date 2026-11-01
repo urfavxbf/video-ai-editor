@@ -7,6 +7,7 @@ This module is safe to import and test without heavyweight TTS dependencies.
 from __future__ import annotations
 
 import argparse
+from array import array
 import hashlib
 import json
 import math
@@ -40,6 +41,21 @@ def validate_reference(path: Path) -> str:
                 raise ValueError("Reference audio must be 5–30 seconds long")
     except (wave.Error, EOFError) as exc:
         raise ValueError("Invalid WAV voice reference") from exc
+    # Prevent generation against silent/corrupted reference audio without torch.
+    with wave.open(str(path), "rb") as handle:
+        pcm = array("h")
+        pcm.frombytes(handle.readframes(handle.getnframes()))
+    if sys.byteorder != "little":
+        pcm.byteswap()
+    if not pcm:
+        raise ValueError("Empty speaker reference")
+    rms = math.sqrt(sum(v * v for v in pcm) / len(pcm)) / 32768.0
+    peak = max(abs(v) for v in pcm) / 32768.0
+    if rms < 0.003 or peak < 0.02:
+        raise ValueError("Speaker reference is silent or too quiet")
+    clipped = sum(abs(v) >= 32700 for v in pcm) / len(pcm)
+    if clipped > 0.01:
+        raise ValueError("Speaker reference has excessive clipping")
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
