@@ -4,17 +4,20 @@
 
 ## Why VoxCPM2, not pitch-shifted Edge TTS?
 
-VoxCPM2 supports Tagalog among 30 languages, local speaker-reference cloning via `reference_wav_path`, and `device="cpu", optimize=False`. A reference can guide the speaker timbre, unlike a generic Azure/Edge voice, but cloning is **not guaranteed to sound identical**. It is computationally heavy: the 2B model requires several GB of download/RAM and CPU inference may be slow. License for code/model: Apache-2.0. Source: https://voxcpm.readthedocs.io/en/latest/usage_guide.html
+VoxCPM2 supports Tagalog among 30 languages, local speaker-reference cloning via `reference_wav_path`, and `device="cpu", optimize=False`. A reference can guide the speaker timbre, unlike a generic Azure/Edge voice, but cloning is **not guaranteed to sound identical**. It is computationally heavy: the 2B model requires several GB of download/RAM and CPU inference may be slow; on a 6 GB RAM machine it may not fit at all. Successful model-free CI cannot substitute for a real CPU render. License for code/model: Apache-2.0. Source: https://voxcpm.readthedocs.io/en/latest/usage_guide.html
 
 ## Personal/local setup (no GPU and no paid API)
 
 1. Obtain an authorized, clean, single-speaker reference recording. Do not publish it or put it in a public Git repo. Consent/rights to synthesize the speaker are required.
-2. Create a **5–30 second, mono, 16 kHz, 16-bit PCM WAV**. For the owner's supplied ~46-second MP3, the locally reviewed candidate trim is 29.4–41.6 seconds (12.2 seconds). Adjust if an audition reveals noise/music:
+2. Prepare a **5–30 second, mono, 16 kHz, 16-bit PCM WAV** from the original authorized MP3. The 29.4–41.6 s selection is a candidate 12.2-second trim, **not yet auditioned for correct speech/timbre**. The conversion checks format, signal level, clipping and duration, then stages the file privately under gitignored `input/`:
 
    ```bash
-   mkdir -p input
-   ffmpeg -hide_banner -y -ss 29.4 -t 12.2 -i "lyca the breadwinner.mp3" -ac 1 -ar 16000 -c:a pcm_s16le input/urfavxbf-reference.wav
+   python scripts/prepare_urfavxbf_reference.py \
+     --source-audio "lyca the breadwinner.mp3" \
+     --confirm-voice-rights
    ```
+
+   Change `--start-seconds` / `--duration-seconds` if listening reveals music, multiple speakers, or mismatched delivery. Do **not** commit a reference recording into this public repository.
 
 3. On Python 3.10–3.12 with adequate RAM, install the existing optional VoxCPM2 runtime (no GPU):
 
@@ -39,7 +42,7 @@ This code supports an **explicit Tagalog opt-in only**. It does not silently cha
 
 ## Quality gate
 
-Before exporting a finished episode, compare generated and reference audio by listening: Filipino pronunciation, timbre, natural rests, intonation, consistency between chunks, clipping, and mouth/scene sync. Check the actual output with ffprobe; ensure captions are aligned to real narration. No live model generation or identical-sounding audio has yet been verified in this repository.
+Before exporting a finished episode, compare generated and reference audio by listening: Filipino pronunciation, timbre, natural rests, intonation, consistency between chunks, clipping, and mouth/scene sync. Check the actual output with ffprobe; ensure captions are aligned to real narration. The regression suite includes mocked local CPU synthesis, a real FFmpeg WAV preparation test, and model-free PR checks. **No live VoxCPM2 audio generation or identical-sounding audio has yet been verified.**
 
 ## Security and rights
 
