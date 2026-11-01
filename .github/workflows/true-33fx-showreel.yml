@@ -22,6 +22,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install image validator requirements
+        run: python3 -m pip install Pillow
       - name: Verify exact owner-approved poses
         run: python3 scripts/stage_pixel_default_pack.py --verify-workspace
       - uses: actions/upload-artifact@v4
@@ -56,6 +58,8 @@ jobs:
           npm ci --no-audit --no-fund
           python3 -m pip install -r requirements.txt
           npx remotion browser ensure
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Verify approved artwork and registered FX
         run: |
           python3 scripts/stage_pixel_default_pack.py --verify-workspace
