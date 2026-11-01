@@ -7,7 +7,7 @@ Reusable senior-level operating procedures for terminal/Linux/Codespaces, AI eng
 - **Use with an agent that supports Agent Skills:** Install or upload the entire `senior-multidisciplinary-agent/` folder or ZIP according to your agent environment. Its entry file is `SKILL.md`.
 - **Codespaces / Codex-style environments:** Keep the folder intact in your environment's supported skills directory. Ask your coding agent to use the `senior-multidisciplinary-agent` skill. Placement/discovery depends on the product and its version.
 - **Ordinary ChatGPT chat:** Upload the ZIP or `SKILL.md` and request: "Use the senior-multidisciplinary-agent skill for this task." Uploading a file does **not** necessarily install a persistent skill or provide missing tools.
-- **Optional repository instructions:** You may adapt `assets/AGENTS-template.md` as `AGENTS.md` in a repo after reviewing it. The specialized skill is **not** Android-only.
+- The specialized skill is **not** Android-only.
 
 ### What this bundle does **not** do
 
@@ -17,7 +17,6 @@ It is not an AI model, actual 15-year employment experience, persistent agent se
 
 - `SKILL.md` — scope, routing, orchestration, safeguards.
 - `references/` — detailed domain-specific playbooks.
-- `assets/` — report template and optional repository instruction template.
 - `scripts/doctor.py` — read-only tool/environment probe.
 - `scripts/validate_skill.py` — bundle integrity checks.
 

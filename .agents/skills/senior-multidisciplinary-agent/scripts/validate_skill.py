@@ -14,8 +14,6 @@ REQUIRED = [
     "references/information-and-research.md",
     "references/software-engineering.md",
     "references/safety-and-quality.md",
-    "assets/acceptance-report.md",
-    "assets/AGENTS-template.md",
     "scripts/doctor.py",
 ]
 def check() -> int:

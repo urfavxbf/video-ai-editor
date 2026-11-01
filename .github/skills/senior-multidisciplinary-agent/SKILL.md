@@ -77,7 +77,5 @@ If any answer is "no," either fix it or mark that specific limitation. Do not cl
 
 - `scripts/doctor.py`: local **read-only** tool availability and repository environment report. Use only with a permitted shell; does not grant capabilities.
 - `scripts/validate_skill.py`: local skill bundle integrity checks. No network and no external dependencies.
-- `assets/acceptance-report.md`: reusable evidence-oriented handoff template.
-- `assets/AGENTS-template.md`: optional repository-scoped companion; not required for skill discovery.
 
 Use the most specific relevant reference rather than loading every specialist guide for every request.

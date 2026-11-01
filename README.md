@@ -75,6 +75,9 @@ See [Codespaces setup and Groq secrets](docs/CODESPACES_SETUP.md) for Android-fr
 ```bash
 npm ci
 npm run typecheck
+# Install Python requirements in the active environment and generate synthetic preview media
+python3 -m pip install -r requirements.txt
+npm run sample
 npm run studio
 # Preview the 21 motion effects
 npm run render:showcase
