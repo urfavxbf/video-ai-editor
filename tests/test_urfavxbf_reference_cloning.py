@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+import types
 import wave
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -103,6 +104,55 @@ class AuthorizedTagalogVoiceReferenceTests(unittest.TestCase):
             self.assertEqual(len(data["reference_sha256"]), 64)
             self.assertFalse(data["audio_generated"])
             self.assertFalse(output.exists())
+
+    def test_reference_route_writes_wav_and_manifest_with_mock_cpu_model(self):
+        import numpy as np
+
+        class FakeModel:
+            tts_model = types.SimpleNamespace(sample_rate=16000)
+
+            def generate(self, **kwargs):
+                if "reference_wav_path" not in kwargs:
+                    raise AssertionError("Reference required for signature voice")
+                return np.full(6400, 0.075, dtype=np.float32)
+
+        class FakeVoxCPM:
+            @staticmethod
+            def from_pretrained(model_id, **options):
+                if model_id != "openbmb/VoxCPM2" or options.get("device") != "cpu":
+                    raise AssertionError("Wrong model or device")
+                if options.get("load_denoiser") is not False:
+                    raise AssertionError("Denoiser must be off")
+                return FakeModel()
+
+        def fake_write(path, audio, rate, subtype):
+            with wave.open(path, "wb") as wav:
+                wav.setnchannels(1)
+                wav.setframerate(rate)
+                wav.setsampwidth(2)
+                wav.writeframes(array("h", (round(float(a) * 32767) for a in audio)).tobytes())
+
+        with tempfile.TemporaryDirectory() as folder:
+            reference = Path(folder) / "reference.wav"
+            output = Path(folder) / "generated.wav"
+            make_reference(reference)
+            modules = {
+                "voxcpm": types.SimpleNamespace(VoxCPM=FakeVoxCPM),
+                "soundfile": types.SimpleNamespace(write=fake_write),
+            }
+            with patch.dict(sys.modules, modules):
+                with contextlib.redirect_stdout(io.StringIO()):
+                    code = tts.main(["--character", "urfavxbf", "--text", "Magandang gabi.",
+                                     "--reference-audio", str(reference), "--confirm-voice-rights",
+                                     "--device", "cpu", "--output", str(output)])
+            self.assertEqual(code, 0)
+            with wave.open(str(output), "rb") as wav:
+                self.assertEqual(wav.getframerate(), 16000)
+                self.assertGreater(wav.getnframes(), 3000)
+            manifest = json.loads(output.with_suffix(".json").read_text())
+            self.assertEqual(manifest["voice_mode"], "reference-clone")
+            self.assertEqual(manifest["reference_sha256"], tts.validate_reference(reference))
+            self.assertNotIn(str(reference), output.with_suffix(".json").read_text())
 
     def test_router_passes_reference_only_to_tagalog(self):
         with tempfile.TemporaryDirectory() as folder:
