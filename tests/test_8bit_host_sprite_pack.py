@@ -2,6 +2,10 @@
 import json
 from pathlib import Path
 import unittest
+import tempfile
+import os
+import subprocess
+import hashlib
 import xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[1]
 class EightBitHostTests(unittest.TestCase):
@@ -18,6 +22,20 @@ class EightBitHostTests(unittest.TestCase):
                 root=ET.parse(path).getroot()
                 self.assertEqual(root.attrib['viewBox'],'0 0 72 82')
                 self.assertTrue(root.tag.endswith('svg'))
+    def test_generator_reproduces_committed_frames_byte_for_byte(self):
+        with tempfile.TemporaryDirectory() as temp:
+            subprocess.run(
+                ['node', str(ROOT/'scripts/generate_8bit_host_sprites.mjs')],
+                env={**os.environ,'SPRITE_OUTPUT_ROOT':temp},
+                check=True, timeout=20,
+            )
+            m=json.loads((ROOT/'characters/8bit-host-sprite-manifest.json').read_text())
+            for action,v in m['characters']['urfavxbf']['actions'].items():
+                for i in range(v['frames']):
+                    rel=f'public/characters/8bit-host/urfavxbf/{action}/frame-{i:02d}.svg'
+                    actual=(Path(temp)/rel).read_bytes()
+                    expected=(ROOT/rel).read_bytes()
+                    self.assertEqual(hashlib.sha256(actual).digest(),hashlib.sha256(expected).digest(),rel)
     def test_default_host_is_svg_and_pix_preserved(self):
         reg=json.loads((ROOT/'characters/registry.json').read_text())
         self.assertEqual(reg['character_hero_system']['host_action_count'],15)

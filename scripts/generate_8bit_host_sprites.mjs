@@ -1,7 +1,8 @@
 // Deterministic original 8-bit sprite generator. Run: node scripts/generate_8bit_host_sprites.mjs
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {dirname,resolve} from 'node:path';
-const ROOT=resolve(import.meta.dirname,'..');
+const ROOT=resolve(process.env.SPRITE_OUTPUT_ROOT??resolve(import.meta.dirname,'..'));
+
 const counts={"idle":6,"talk":8,"point_camera":8,"point_object":8,"explain":8,"walk":12,"run":10,"jump":8,"laugh":8,"think":6,"surprised":6,"confused":6,"wave":8,"celebrate":8,"listen":6};
 const rect=(x,y,w,h,fill)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}"/>`;
 const path=(d,fill)=>`<path d="${d}" fill="${fill}"/>`;
