@@ -36,6 +36,18 @@ class EightBitHostTests(unittest.TestCase):
                     actual=(Path(temp)/rel).read_bytes()
                     expected=(ROOT/rel).read_bytes()
                     self.assertEqual(hashlib.sha256(actual).digest(),hashlib.sha256(expected).digest(),rel)
+    def test_episode_pipeline_stages_every_active_sprite_frame(self):
+        import importlib.util
+        import sys
+        sys.path.insert(0,str(ROOT/'scripts'))
+        spec=importlib.util.spec_from_file_location('production',ROOT/'scripts/produce-episode.py')
+        production=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(production)
+        staged=production.approved_assets()
+        host={key for key in staged if key.startswith('characters/8bit-host/urfavxbf/')}
+        self.assertEqual(len(host),116)
+        self.assertIn('characters/8bit-host/urfavxbf/idle/frame-00.svg',host)
+        self.assertIn('characters/pixel-default/pix/idle.png',staged)
     def test_default_host_is_svg_and_pix_preserved(self):
         reg=json.loads((ROOT/'characters/registry.json').read_text())
         self.assertEqual(reg['character_hero_system']['host_action_count'],15)
