@@ -53,7 +53,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
                 self.assertEqual(len(visual["sha256"]),64)
             else:
                 self.assertEqual(len(visual["legacy_approved_png_sha256"]),64)
-            self.assertFalse(visual["production_rig_ready"])
+            self.assertEqual(visual["production_rig_ready"], c is a["urfavxbf"])
         self.assertIsNone(a["pix"]["visual"]["official_full_body_reference"])
 
     def test_tagalog_profiles_and_legacy_english_voices(self):

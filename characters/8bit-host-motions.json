@@ -1,0 +1,200 @@
+[
+  {
+    "id": "fade-in",
+    "title": "Fade In",
+    "narration": "The host gradually appears from transparent to fully visible.",
+    "action": "idle"
+  },
+  {
+    "id": "fade-out",
+    "title": "Fade Out",
+    "narration": "The host slowly disappears by reducing opacity.",
+    "action": "idle"
+  },
+  {
+    "id": "slide-left",
+    "title": "Slide Left",
+    "narration": "Slide the sprite smoothly toward the left side.",
+    "action": "walk"
+  },
+  {
+    "id": "slide-right",
+    "title": "Slide Right",
+    "narration": "Move the sprite across the screen to the right.",
+    "action": "walk"
+  },
+  {
+    "id": "slide-up",
+    "title": "Slide Up",
+    "narration": "Raise the sprite from below the frame.",
+    "action": "jump"
+  },
+  {
+    "id": "slide-down",
+    "title": "Slide Down",
+    "narration": "Lower the sprite into its final position.",
+    "action": "jump"
+  },
+  {
+    "id": "zoom-in",
+    "title": "Zoom In",
+    "narration": "Bring the character closer by increasing its scale.",
+    "action": "talk"
+  },
+  {
+    "id": "zoom-out",
+    "title": "Zoom Out",
+    "narration": "Make the character appear farther away.",
+    "action": "talk"
+  },
+  {
+    "id": "bounce",
+    "title": "Bounce",
+    "narration": "A springy jump adds energy to entrances.",
+    "action": "jump"
+  },
+  {
+    "id": "rotate",
+    "title": "Rotate",
+    "narration": "Rotate the character around its center.",
+    "action": "celebrate"
+  },
+  {
+    "id": "spin",
+    "title": "Spin",
+    "narration": "Spin continuously for a playful fast transition.",
+    "action": "celebrate"
+  },
+  {
+    "id": "flip-x",
+    "title": "Flip X",
+    "narration": "Mirror the sprite horizontally.",
+    "action": "point_object"
+  },
+  {
+    "id": "flip-y",
+    "title": "Flip Y",
+    "narration": "Flip the sprite vertically.",
+    "action": "surprised"
+  },
+  {
+    "id": "shake",
+    "title": "Shake",
+    "narration": "Rapid side-to-side movement communicates impact.",
+    "action": "surprised"
+  },
+  {
+    "id": "wobble",
+    "title": "Wobble",
+    "narration": "A swinging rotation creates a soft wobble.",
+    "action": "confused"
+  },
+  {
+    "id": "pulse",
+    "title": "Pulse",
+    "narration": "A rhythmic scale change makes the character pulse.",
+    "action": "celebrate"
+  },
+  {
+    "id": "blink",
+    "title": "Blink",
+    "narration": "Briefly change opacity to create a blink.",
+    "action": "talk"
+  },
+  {
+    "id": "typewriter",
+    "title": "Typewriter",
+    "narration": "Reveal narration letters one at a time.",
+    "action": "explain"
+  },
+  {
+    "id": "pop-up",
+    "title": "Pop Up",
+    "narration": "Pop the character into view from below.",
+    "action": "celebrate"
+  },
+  {
+    "id": "elastic",
+    "title": "Elastic",
+    "narration": "Stretch and settle back like elastic.",
+    "action": "jump"
+  },
+  {
+    "id": "glitch",
+    "title": "Glitch",
+    "narration": "Offset colorful layers for a digital glitch.",
+    "action": "surprised"
+  },
+  {
+    "id": "vhs",
+    "title": "VHS",
+    "narration": "Add old tape scanlines and slight frame jitter.",
+    "action": "listen"
+  },
+  {
+    "id": "rgb-split",
+    "title": "RGB Split",
+    "narration": "Separate cyan and magenta silhouettes.",
+    "action": "run"
+  },
+  {
+    "id": "scanlines",
+    "title": "Scanlines",
+    "narration": "Overlay horizontal lines like an old monitor.",
+    "action": "listen"
+  },
+  {
+    "id": "pixelate",
+    "title": "Pixelate",
+    "narration": "Reduce the apparent detail to large pixels.",
+    "action": "idle"
+  },
+  {
+    "id": "mosaic",
+    "title": "Mosaic",
+    "narration": "Blur and block the sprite into larger tiles.",
+    "action": "idle"
+  },
+  {
+    "id": "motion-blur",
+    "title": "Motion Blur",
+    "narration": "Create directional softness during movement.",
+    "action": "run"
+  },
+  {
+    "id": "speed-ramp",
+    "title": "Speed Ramp",
+    "narration": "Change the speed from slow to fast and back.",
+    "action": "run"
+  },
+  {
+    "id": "parallax",
+    "title": "Parallax",
+    "narration": "Move background layers at different speeds.",
+    "action": "walk"
+  },
+  {
+    "id": "spotlight",
+    "title": "Spotlight",
+    "narration": "Isolate the character with a focused beam.",
+    "action": "point_camera"
+  },
+  {
+    "id": "sparkle",
+    "title": "Sparkle",
+    "narration": "Add twinkling highlights for a positive moment.",
+    "action": "celebrate"
+  },
+  {
+    "id": "smoke-puff",
+    "title": "Smoke Puff",
+    "narration": "Use expanding smoke clouds as a reveal.",
+    "action": "jump"
+  },
+  {
+    "id": "fireworks",
+    "title": "Fireworks",
+    "narration": "Finish with colorful fireworks and celebration.",
+    "action": "celebrate"
+  }
+]
