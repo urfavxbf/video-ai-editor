@@ -33,13 +33,16 @@ if(action==="wave"){right=2.38+0.23*sine;left=0.12;expression="happy";}
 if(action==="celebrate"){left=2.55+0.14*sine;right=2.55-0.14*sine;expression="happy";}
 if(action==="listen"){left=0.18;right=0.18;expression="smile";}
 const y=bob+lift;
+const breathingOffsets=[[0,0],[1,0],[1,1],[0,2],[-1,1],[-1,0],[0,-1],[1,-1]];
+const staticBreathing=["idle","listen","point_object","think","surprised"].includes(action);
+const [offsetX,offsetY]=staticBreathing?breathingOffsets[index]:[0,0];
 const endpoint=(x,a,side)=>[x+side*17*Math.sin(a),39+17*Math.cos(a)];
 const [lx,ly]=endpoint(23,left,-1),[rx,ry]=endpoint(49,right,1);
 const stride=moving?offset:jumping?Math.round(2*sine):0;
 const legY=action==="run"?-Math.abs(offset)*0.6:0;
 const lFootX=29-stride,rFootX=43+stride;
 let s=`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 72 82" width="288" height="328" shape-rendering="crispEdges" role="img" aria-label="8-bit UrFavXBF ${action} frame ${index+1}">`;
-s+=`<g transform="translate(0 ${y})">`;
+s+=`<g transform="translate(${offsetX} ${y+offsetY})">`;
 s+=limb(29,53,lFootX,69+legY,12,"#303247")+limb(43,53,rFootX,69+legY,12,"#303247");
 s+=rect(round(lFootX-8),round(69+legY),17,7,"#11162d")+rect(round(lFootX-7),round(70+legY),15,4,"#f5f5ff")+rect(round(rFootX-8),round(69+legY),17,7,"#11162d")+rect(round(rFootX-7),round(70+legY),15,4,"#f5f5ff");
 s+=limb(23,39,lx,ly,11,"#203968")+limb(49,39,rx,ry,11,"#203968");
