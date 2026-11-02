@@ -40,5 +40,10 @@ class EightBitHostTests(unittest.TestCase):
         self.assertIn('voiceoverFile&&<Audio',src)
         self.assertIn('<PixelPoseCharacter id="urfavxbf"',src)
         self.assertEqual(len(re.findall(r"case '[a-z-]+':",src)),33)
-        self.assertIn('Which one', (ROOT/'scripts/8bit-33-voiceover.txt').read_text())
+        narration=(ROOT/'scripts/8bit-33-voiceover.txt').read_text()
+        self.assertIn('Which one', narration)
+        # A script shorter than ~130 words was only 26.56s with Chatterbox
+        # and failed the 39.6s alignment guard. Keep narration substantive.
+        self.assertGreaterEqual(len(narration.split()), 140)
+        self.assertLessEqual(len(narration.split()), 165)
 if __name__=='__main__': unittest.main()

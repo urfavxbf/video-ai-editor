@@ -31,3 +31,7 @@ npx remotion render Host33MotionShowcase out/8bit-host-voiced.mp4 --props='{"voi
 ```
 
 If CPU synthesis, alignment, stream validation, or full decode fails, the video is **not** verified as voiced. Review pacing and spoken accuracy by listening before any public release.
+
+## Real Chatterbox failure and timing correction (2026-11-02)
+
+The first real English voice-render job synthesized a **26.56s WAV** from the 96-word script; the alignment tool rejected a 0.68 tempo ratio as unnatural. This is a narration-length issue, not evidence that Chatterbox V3 is broken. The revised **154-word** script explicitly describes each text effect and targets the measured 39.6-second edit. The guard still rejects unsupported large speed changes. CI also saves the raw WAV as a diagnostic artifact even if alignment or final rendering fails. Only treat the video as successfully voiced after a completed workflow with H.264 + AAC verification.

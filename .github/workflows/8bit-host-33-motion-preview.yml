@@ -63,6 +63,14 @@ jobs:
           python scripts/character_voiceover.py --character urfavxbf --language en --device cpu \
             --text-file scripts/8bit-33-voiceover.txt --output out/8bit-host-raw.wav
           python scripts/prepare_8bit_voiceover.py out/8bit-host-raw.wav public/narration/8bit-host-39s.wav
+      - name: Preserve generated speech for troubleshooting
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 8bit-host-raw-voice-debug
+          path: out/8bit-host-raw.wav
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Render verified 39.6 second video with voice
         run: |
           npx remotion render Host33MotionShowcase out/8bit-host-33-text-voiced.mp4 \
