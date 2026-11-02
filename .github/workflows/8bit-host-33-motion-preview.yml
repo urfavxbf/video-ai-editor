@@ -46,6 +46,10 @@ jobs:
           mkdir -p out
           npx remotion render Host33MotionShowcase out/8bit-host-33-motions.mp4 \
             --codec=h264 --pixel-format=yuv420p --scale=0.25 --concurrency=2 --muted
+      - name: Install FFmpeg and FFprobe for independent decode verification
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
       - name: Verify real encoded preview
         run: |
           python - <<'PY'
