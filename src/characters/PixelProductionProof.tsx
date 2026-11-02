@@ -6,14 +6,14 @@ import {PixelPoseCharacter} from './PixelPoseCharacter';
 export type PixelProductionProofProps={assetsReady:boolean};
 export const PIXEL_PROOF_FRAMES=360;
 const SHOTS=[
-  {headline:'TWO CHARACTERS.',sub:'ONE STORY.',host:'idle',pix:'idle',accent:'#6ffb8b'},
+  {headline:'TWO CHARACTERS.',sub:'ONE STORY.',host:'idle',pix:'idle',accent:'#85b2ff'},
   {headline:'FOLLOW THE IDEA',sub:'NOT THE TEMPLATE',host:'point_side',pix:'question',accent:'#70e8ff'},
   {headline:'WAIT. WHAT?!',sub:'REACTIONS THAT MATTER',host:'surprised',pix:'surprised',accent:'#f588d9'},
-  {headline:'TURN IDEAS',sub:'INTO VIDEOS',host:'talk',pix:'happy',accent:'#6ffb8b'},
+  {headline:'TURN IDEAS',sub:'INTO VIDEOS',host:'talk',pix:'happy',accent:'#85b2ff'},
 ] as const;
 export const PixelProductionProof:React.FC<PixelProductionProofProps>=({assetsReady})=>{
  const frame=useCurrentFrame();
- if(!assetsReady)throw new Error('13 verified pixel PNG binaries required before PixelProductionProof render (no legacy fallback)');
+ if(!assetsReady)throw new Error('8-bit host SVG frames and PIX PNG binaries required before PixelProductionProof render');
  const shotIndex=Math.min(SHOTS.length-1,Math.floor(frame/90));
  const shot=SHOTS[shotIndex];
  const beat=frame%90;
@@ -58,7 +58,7 @@ export const PixelProductionProof:React.FC<PixelProductionProofProps>=({assetsRe
     </div>
     <div style={{marginTop:18,fontSize:43,color:shot.accent,fontWeight:900,letterSpacing:3}}>{shot.sub}</div>
     <div style={{marginTop:22,fontSize:17,letterSpacing:4,color:'#9fb7c5'}}>
-      REAL POSES   •   GLITCH TRANSITIONS   •   16:9
+      ORIGINAL SVG SPRITES   •   GLITCH TRANSITIONS   •   16:9
     </div>
   </div>
   {glitch>0&&<AbsoluteFill style={{opacity:glitch*.72,pointerEvents:'none'}}>

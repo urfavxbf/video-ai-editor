@@ -65,7 +65,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
   const pixReaction=listeningReactionCues('pix',voiceEvents,chapter).find(c=>c.atFrame<=frame&&frame<c.atFrame+c.durationFrames)?.kind;
   const ready=canonicalArtworkApproved(assetsReady,artApproved);
   if (audio.length && !ready) {
-    throw new Error('Stage and approve both official 2026-10-29 canonical character assets before voiced hero rendering');
+    throw new Error('Verify the 8-bit host sprite pack and PIX artwork before voiced hero rendering');
   }
   return <AbsoluteFill style={{
     background:'#060d19',color:'#f1f6ff',fontFamily:'Inter',overflow:'hidden',
@@ -81,7 +81,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
       URFAVXBF × PIX // HERO CHARACTER SYSTEM
     </div>
     <div style={{position:'absolute',right:60,top:43,letterSpacing:2,fontSize:17,color:'#96a8c3'}}>
-      1920×1080 · 30 FPS · CANONICAL CHIBI
+      1920×1080 · 30 FPS · 8-BIT HOST
     </div>
     {showStudyOverlay && <div style={{position:'absolute',top:145,left:625,width:670,textAlign:'center',opacity:fade}}>
       <div style={{letterSpacing:7,fontSize:18,color:'#70e8ff',fontWeight:750}}>
@@ -114,7 +114,7 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
     </>:<div style={{position:'absolute',bottom:210,left:80,right:80,
       padding:20,textAlign:'center',border:'1px dashed #60728e',borderRadius:12,
       background:'#0d1a2b',fontSize:21}}>
-      OWNER-SELECTED PIXEL POSES MISSING — verify all 13 transparent PNGs, no legacy fallback.
+      8-bit host sprite pack or PIX artwork missing — verify active assets.
     </div>}
     <IdentityCard id="urfavxbf" energy={host.speakingEnergy}
       speaking={host.isSpeaking} frame={frame}/>
@@ -122,8 +122,8 @@ export const HeroCharacterStage:React.FC<HeroStageProps> = ({
       speaking={pix.isSpeaking} frame={frame}/>
     <div style={{position:'absolute',left:60,right:60,bottom:23,
       display:'flex',justifyContent:'space-between',fontSize:14,letterSpacing:1.5,color:'#8aa3be'}}>
-      <span>2026-10-29 PIXEL POSES · NO LEGACY FALLBACK</span>
-      <span>POSE-SWAP MOTION · NO FALSE FRAME-BY-FRAME CLAIMS</span>
+      <span>2026-11-02 8-BIT HOST FRAMES · PIX PRESERVED</span>
+      <span>DISCRETE HOST SVG FRAMES · NO PHONEME LIP SYNC</span>
     </div>
     {audio.map((a,i)=><Sequence key={i} from={a.startFrame}
       durationInFrames={a.endFrame-a.startFrame}>

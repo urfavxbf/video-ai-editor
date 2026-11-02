@@ -8,7 +8,7 @@ class PixelDefaultTests(unittest.TestCase):
     def test_13_published_poses_are_named_and_sha_pinned(self):
         reg=json.loads((ROOT/"characters/registry.json").read_text())
         m=json.loads((ROOT/"characters/pixel-default-manifest.json").read_text())
-        self.assertEqual(reg["character_hero_system"]["version"],"pixel-pose-default-2026-10-29")
+        self.assertEqual(reg["character_hero_system"]["version"],"original-8bit-svg-action-frames-2026-11-02")
         self.assertTrue(m["selectedAsDefaultByOwner"])
         self.assertEqual(m["assetDelivery"]["assetReady"],m["assetDelivery"]["assetsCommitted"])
         if m["assetDelivery"]["assetReady"]:
@@ -22,7 +22,7 @@ class PixelDefaultTests(unittest.TestCase):
         self.assertIn("surprised",m["characters"]["pix"]["poses"])
         hashes=[]
         for who,record in m["characters"].items():
-            self.assertEqual(reg["characters"][who]["visual"]["public_path"],record["poses"]["idle"]["path"])
+            self.assertEqual(reg["characters"][who]["visual"].get("legacy_approved_png_path",reg["characters"][who]["visual"]["public_path"]),record["poses"]["idle"]["path"])
             for pose,info in record["poses"].items():
                 self.assertEqual(info["path"],f"public/characters/pixel-default/{who}/{pose}.png")
                 self.assertEqual(len(info["sha256"]),64)
