@@ -1,0 +1,69 @@
+name: 8-bit host 33-motion preview
+
+on:
+  pull_request:
+    paths:
+      - 'src/characters/**'
+      - 'src/Root.tsx'
+      - 'characters/8bit-host-*.json'
+      - 'public/characters/8bit-host/**'
+      - 'scripts/generate_8bit_host_sprites.mjs'
+      - 'tests/test_8bit_host_sprite_pack.py'
+      - '.github/workflows/8bit-host-33-motion-preview.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: 8bit-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  original-host-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned Remotion runtime
+        run: |
+          npm ci --no-audit --no-fund
+          npx remotion browser ensure
+      - name: Check sprites, scripts, and composition types
+        run: |
+          python -m unittest discover -s tests -p 'test_8bit_host_sprite_pack.py' -v
+          npm run typecheck
+      - name: Render complete silent 33-motion storyboard
+        run: |
+          mkdir -p out
+          npx remotion render Host33MotionShowcase out/8bit-host-33-motions.mp4 \
+            --codec=h264 --pixel-format=yuv420p --scale=0.25 --concurrency=2 --muted
+      - name: Verify real encoded preview
+        run: |
+          python - <<'PY'
+          import json,subprocess
+          path='out/8bit-host-33-motions.mp4'
+          result=subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0',
+            '-show_entries','stream=codec_name,width,height,nb_frames,r_frame_rate',
+            '-of','json',path],text=True)
+          video=json.loads(result)['streams'][0]
+          assert video['codec_name']=='h264', video
+          assert (video['width'],video['height'])==(480,270),video
+          assert video['r_frame_rate']=='30/1',video
+          assert int(video['nb_frames'])==3465,video
+          subprocess.run(['ffmpeg','-v','error','-i',path,'-f','null','-'],check=True)
+          print('Verified 3465 decoded silent host-motion frames at 480x270/30fps')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 8bit-host-33-motion-preview
+          path: out/8bit-host-33-motions.mp4
+          retention-days: 14
