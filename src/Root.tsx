@@ -15,6 +15,7 @@ import {CharacterAnimationLab, type CharacterAnimationLabProps} from './characte
 import {PixelPortraitHUD, type PixelPortraitHUDProps} from './characters/PixelPortraitHUD'
 import {Y2038Teaser, type Y2038TeaserProps} from './episodes/Y2038Teaser'
 import {HeroCharacterStage, HERO_STAGE_DURATION, type HeroStageProps} from './characters/HeroCharacterStage'
+import {Host33MotionShowcase,HOST_MOTION_DEMO_FRAMES} from './characters/Host33MotionShowcase'
 import {V4FacialReviewStage, V4_FACIAL_REVIEW_FRAMES, type V4FacialReviewProps} from './characters/V4FacialReviewStage'
 import {ChibiV4ReviewStage, CHIBI_V4_REVIEW_DURATION, type ChibiV4ReviewProps} from './characters/ChibiV4ReviewStage'
 import {ImportedSpriteAnimation, type ImportedSpriteAnimationProps} from './characters/ImportedSpriteAnimation'
@@ -33,6 +34,7 @@ import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadat
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="Host33MotionShowcase" component={Host33MotionShowcase} width={1920} height={1080} fps={30} durationInFrames={HOST_MOTION_DEMO_FRAMES} />
   <Composition id="DuikBakedCharacterProof" component={DuikBakedCharacterProof}
     width={1920} height={1080} fps={30} durationInFrames={DUIK_BAKED_PROOF_FRAMES} />
   <Composition id="AfterEffectsLottieProof" component={AfterEffectsLottieProof}

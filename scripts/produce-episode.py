@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import re
 import signal
 import subprocess
 import tempfile
@@ -31,7 +32,8 @@ def source_hashes():
     paths=[*ROOT.glob('src/**/*.ts'),*ROOT.glob('src/**/*.tsx'),*ROOT.glob('src/**/*.json'),
         ROOT/'package-lock.json',*ROOT.glob('scripts/episode_*.py'),ROOT/'scripts/produce-episode.py',
         ROOT/'scripts/compile-episode.cjs',ROOT/'scripts/render-episode.mjs',ROOT/'scripts/extract_voice_envelope.py',
-        ROOT/'scripts/safe_media.py',ROOT/'scripts/production_process.py',ROOT/'characters/registry.json',ROOT/'characters/pixel-default-manifest.json']
+        ROOT/'scripts/safe_media.py',ROOT/'scripts/production_process.py',ROOT/'characters/registry.json',ROOT/'characters/pixel-default-manifest.json',
+        ROOT/'characters/8bit-host-sprite-manifest.json',ROOT/'scripts/generate_8bit_host_sprites.mjs']
     return {str(p.relative_to(ROOT)):file_sha256(p) for p in sorted(paths)}
 
 
@@ -43,6 +45,24 @@ def approved_assets():
             path=ROOT/pose['path']
             if file_sha256(path)!=pose['sha256']: raise ValueError('approved artwork hash mismatch')
             assets[str(path.relative_to(ROOT/'public'))]=file_sha256(path)
+    # The active UrFavXBF character is a separately animated SVG sprite pack.
+    # Stage every exact frame for production renders (not just the older PNG archive).
+    sprite_manifest=read_json(ROOT/'characters/8bit-host-sprite-manifest.json')
+    actions=sprite_manifest['characters']['urfavxbf']['actions']
+    if len(actions)!=15 or sum(item['frames'] for item in actions.values())!=116:
+        raise ValueError('invalid active 8-bit host sprite manifest')
+    for action,item in actions.items():
+        if not re.fullmatch(r'[a-z][a-z_]*', action):
+            raise ValueError('unsafe host sprite action')
+        for frame in range(item['frames']):
+            relative=f'characters/8bit-host/urfavxbf/{action}/frame-{frame:02d}.svg'
+            file=ROOT/'public'/relative
+            if file.stat().st_size>20000:
+                raise ValueError('unexpectedly oversized sprite frame')
+            content=file.read_bytes()
+            if not content.startswith(b'<svg ') or b'<script' in content or b'foreignObject' in content:
+                raise ValueError('invalid original SVG frame')
+            assets[relative]=file_sha256(file)
     for path in (ROOT/'public/fonts').glob('*'):
         if path.is_file(): assets[str(path.relative_to(ROOT/'public'))]=file_sha256(path)
     return assets

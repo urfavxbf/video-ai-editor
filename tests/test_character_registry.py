@@ -34,7 +34,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(v["character_layout"], "pixel-pose-chibi-cinematic-2p5d")
         self.assertTrue(v["legacy_portrait_demos_not_default"])
         self.assertTrue(v["full_body_rendering_default"])
-        self.assertEqual(self.data["character_hero_system"]["version"], "pixel-pose-default-2026-10-29")
+        self.assertEqual(self.data["character_hero_system"]["version"], "original-8bit-svg-action-frames-2026-11-02")
         self.assertTrue(self.data["character_hero_system"]["no_legacy_visual_fallback"])
         self.assertEqual(self.data["character_hero_system"]["runtime_assets_ready"],
                          json.loads((ROOT / "characters/pixel-default-manifest.json").read_text())["assetDelivery"]["assetReady"])
@@ -45,12 +45,15 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual((p["width"], p["height"]), (414, 468))
         self.assertEqual((p["left"], p["right"], p["top"]), (64, 64, 202))
         a = self.data["characters"]
-        self.assertNotEqual(a["urfavxbf"]["visual"]["sha256"], a["pix"]["visual"]["sha256"])
+        self.assertNotEqual(a["urfavxbf"]["visual"]["legacy_approved_png_sha256"], a["pix"]["visual"]["sha256"])
         for c in a.values():
             visual = c["visual"]
-            self.assertEqual(len(visual["sha256"]), 64)
-            self.assertTrue(visual["public_path"].startswith("public/characters/pixel-default/"))
-            self.assertFalse(visual["production_rig_ready"])
+            self.assertTrue(visual["public_path"].startswith("public/characters/"))
+            if "sha256" in visual:
+                self.assertEqual(len(visual["sha256"]),64)
+            else:
+                self.assertEqual(len(visual["legacy_approved_png_sha256"]),64)
+            self.assertEqual(visual["production_rig_ready"], c is a["urfavxbf"])
         self.assertIsNone(a["pix"]["visual"]["official_full_body_reference"])
 
     def test_tagalog_profiles_and_legacy_english_voices(self):

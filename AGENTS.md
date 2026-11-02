@@ -1,6 +1,6 @@
 # Video AI Editor — authoritative instructions for AI agents
 
-> **Primary agent operating policy.** Applies to Codex, Claude Code, Copilot,
+> **2026-11-02 owner-approved host replacement:** The new blue-jacket 8-bit UrFavXBF uses 116 original vector SVG frames across 15 actions (`public/characters/8bit-host/urfavxbf/`). See `characters/8bit-host-sprite-manifest.json`. `PixelPoseCharacter` selects these frames; PIX keeps its original PNG poses and both English Chatterbox voices remain unchanged. The old 13-image `pixel-default` pack remains archived and hash-verified. This design follows a generated concept sheet, not a photograph of the owner. A sprite pack is not proof of a mastered video or generated speech; the editor's 33 FX are distinct from the poster's 33 host motion ideas.\n\n> **Primary agent operating policy.** Applies to Codex, Claude Code, Copilot,
 > and other agents working in this repository. Start here for every task.
 > [Production defaults](docs/PRODUCTION_POLICY.md) and the character registry
 > are authoritative for their respective domains. Prompt templates are examples,

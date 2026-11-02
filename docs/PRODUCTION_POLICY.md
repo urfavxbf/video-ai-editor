@@ -1,6 +1,6 @@
 # Current production policy
 
-> **Canonical production defaults.** AI agents must first follow
+> **2026-11-02 owner-approved host replacement:** The new blue-jacket 8-bit UrFavXBF uses 116 original vector SVG frames across 15 actions (`public/characters/8bit-host/urfavxbf/`). See `characters/8bit-host-sprite-manifest.json`. `PixelPoseCharacter` selects these frames; PIX keeps its original PNG poses and both English Chatterbox voices remain unchanged. The old 13-image `pixel-default` pack remains archived and hash-verified. This design follows a generated concept sheet, not a photograph of the owner. A sprite pack is not proof of a mastered video or generated speech; the editor's 33 FX are distinct from the poster's 33 host motion ideas.\n\n> **Canonical production defaults.** AI agents must first follow
 > [AGENTS.md](../AGENTS.md), verify the current
 > [registry](../characters/registry.json) and
 > [approved pixel manifest](../characters/pixel-default-manifest.json), and

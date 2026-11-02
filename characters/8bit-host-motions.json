@@ -1,0 +1,200 @@
+[
+  {
+    "id": "fade-in",
+    "title": "Fade In",
+    "narration": "Text gradually appears on screen.",
+    "action": "idle"
+  },
+  {
+    "id": "fade-out",
+    "title": "Fade Out",
+    "narration": "Words smoothly disappear.",
+    "action": "idle"
+  },
+  {
+    "id": "slide-left",
+    "title": "Slide Left",
+    "narration": "The headline slides in from the right.",
+    "action": "walk"
+  },
+  {
+    "id": "slide-right",
+    "title": "Slide Right",
+    "narration": "The headline slides in from the left.",
+    "action": "walk"
+  },
+  {
+    "id": "slide-up",
+    "title": "Slide Up",
+    "narration": "Words rise up into place.",
+    "action": "jump"
+  },
+  {
+    "id": "slide-down",
+    "title": "Slide Down",
+    "narration": "Text drops down from above.",
+    "action": "jump"
+  },
+  {
+    "id": "zoom-in",
+    "title": "Zoom In",
+    "narration": "The headline grows closer.",
+    "action": "talk"
+  },
+  {
+    "id": "zoom-out",
+    "title": "Zoom Out",
+    "narration": "The headline shrinks into the distance.",
+    "action": "talk"
+  },
+  {
+    "id": "bounce",
+    "title": "Bounce",
+    "narration": "The words hop with a springy bounce.",
+    "action": "jump"
+  },
+  {
+    "id": "rotate",
+    "title": "Rotate",
+    "narration": "Text rotates around its center.",
+    "action": "celebrate"
+  },
+  {
+    "id": "spin",
+    "title": "Spin",
+    "narration": "The headline spins for a playful transition.",
+    "action": "celebrate"
+  },
+  {
+    "id": "flip-x",
+    "title": "Flip X",
+    "narration": "Text flips horizontally.",
+    "action": "point_object"
+  },
+  {
+    "id": "flip-y",
+    "title": "Flip Y",
+    "narration": "Text flips vertically.",
+    "action": "surprised"
+  },
+  {
+    "id": "shake",
+    "title": "Shake",
+    "narration": "Letters shake on impact.",
+    "action": "surprised"
+  },
+  {
+    "id": "wobble",
+    "title": "Wobble",
+    "narration": "The headline gently wobbles.",
+    "action": "confused"
+  },
+  {
+    "id": "pulse",
+    "title": "Pulse",
+    "narration": "Words grow and shrink in a rhythmic pulse.",
+    "action": "celebrate"
+  },
+  {
+    "id": "blink",
+    "title": "Blink",
+    "narration": "Text blinks on and off.",
+    "action": "talk"
+  },
+  {
+    "id": "typewriter",
+    "title": "Typewriter",
+    "narration": "Letters appear one at a time.",
+    "action": "explain"
+  },
+  {
+    "id": "pop-up",
+    "title": "Pop Up",
+    "narration": "Text pops into view.",
+    "action": "celebrate"
+  },
+  {
+    "id": "elastic",
+    "title": "Elastic",
+    "narration": "Letters stretch and settle back.",
+    "action": "jump"
+  },
+  {
+    "id": "glitch",
+    "title": "Glitch",
+    "narration": "Text jitters in digital glitch slices.",
+    "action": "surprised"
+  },
+  {
+    "id": "vhs",
+    "title": "VHS",
+    "narration": "Retro tape jitter and stripes cover the words.",
+    "action": "listen"
+  },
+  {
+    "id": "rgb-split",
+    "title": "RGB Split",
+    "narration": "Color channels split around the text.",
+    "action": "run"
+  },
+  {
+    "id": "scanlines",
+    "title": "Scanlines",
+    "narration": "Retro scanlines sweep over the words.",
+    "action": "listen"
+  },
+  {
+    "id": "pixelate",
+    "title": "Pixelate",
+    "narration": "Letters turn chunky and pixelated.",
+    "action": "idle"
+  },
+  {
+    "id": "mosaic",
+    "title": "Mosaic",
+    "narration": "Blocky mosaic squares distort the words.",
+    "action": "idle"
+  },
+  {
+    "id": "motion-blur",
+    "title": "Motion Blur",
+    "narration": "Moving text trails a soft blur.",
+    "action": "run"
+  },
+  {
+    "id": "speed-ramp",
+    "title": "Speed Ramp",
+    "narration": "The headline speeds up and slows down.",
+    "action": "run"
+  },
+  {
+    "id": "parallax",
+    "title": "Parallax",
+    "narration": "Shadow text layers shift at different speeds.",
+    "action": "walk"
+  },
+  {
+    "id": "spotlight",
+    "title": "Spotlight",
+    "narration": "A beam of light focuses on the headline.",
+    "action": "point_camera"
+  },
+  {
+    "id": "sparkle",
+    "title": "Sparkle",
+    "narration": "Sparkles surround the words.",
+    "action": "celebrate"
+  },
+  {
+    "id": "smoke-puff",
+    "title": "Smoke Puff",
+    "narration": "Smoke clouds rise across the headline.",
+    "action": "jump"
+  },
+  {
+    "id": "fireworks",
+    "title": "Fireworks",
+    "narration": "Fireworks explode around the finale text.",
+    "action": "celebrate"
+  }
+]

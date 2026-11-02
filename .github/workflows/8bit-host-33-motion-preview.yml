@@ -1,0 +1,103 @@
+name: 8-bit host 33 text effects with English voice
+
+on:
+  pull_request:
+    paths:
+      - 'src/characters/**'
+      - 'src/Root.tsx'
+      - 'characters/8bit-host-*.json'
+      - 'public/characters/8bit-host/**'
+      - 'scripts/generate_8bit_host_sprites.mjs'
+      - 'scripts/prepare_8bit_voiceover.py'
+      - 'scripts/8bit-33-voiceover.txt'
+      - 'tests/test_8bit_host_sprite_pack.py'
+      - '.github/workflows/8bit-host-33-motion-preview.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: 8bit-text-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  voiced-text-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+      OMP_NUM_THREADS: "4"
+      MKL_NUM_THREADS: "4"
+      TOKENIZERS_PARALLELISM: "false"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Remotion and CPU rendering tools
+        run: |
+          npm ci --no-audit --no-fund
+          npx remotion browser ensure
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Validate 116 SVG frames and 33 text effects
+        run: |
+          python -m unittest discover -s tests -p 'test_8bit_host_sprite_pack.py' -v
+          npm run typecheck
+      - name: Install approved pinned CPU Chatterbox V3
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchaudio==2.6.0
+          python -m pip install -r requirements-chatterbox.txt
+          python scripts/check_chatterbox_v3.py
+      - name: Generate real UrFavXBF English narration
+        run: |
+          mkdir -p out public/narration
+          python scripts/character_voiceover.py --character urfavxbf --language en --device cpu \
+            --text-file scripts/8bit-33-voiceover.txt --output out/8bit-host-raw.wav
+          python scripts/prepare_8bit_voiceover.py out/8bit-host-raw.wav public/narration/8bit-host-39s.wav
+      - name: Preserve generated speech for troubleshooting
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 8bit-host-raw-voice-debug
+          path: out/8bit-host-raw.wav
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Render verified 39.6 second video with voice
+        run: |
+          npx remotion render Host33MotionShowcase out/8bit-host-33-text-voiced.mp4 \
+            --props='{"voiceoverFile":"narration/8bit-host-39s.wav"}' \
+            --codec=h264 --audio-codec=aac --pixel-format=yuv420p --scale=0.5 --concurrency=2
+      - name: Verify codec, all frames and audible audio
+        run: |
+          python - <<'PY'
+          import json,subprocess
+          video='out/8bit-host-33-text-voiced.mp4'
+          streams=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-of','json',video],text=True))['streams']
+          v=next(x for x in streams if x['codec_type']=='video')
+          a=next(x for x in streams if x['codec_type']=='audio')
+          assert v['codec_name']=='h264'
+          assert (v['width'],v['height'])==(960,540),(v['width'],v['height'])
+          assert v['r_frame_rate']=='30/1'
+          assert int(v['nb_frames'])==1188
+          assert a['codec_name']=='aac'
+          subprocess.run(['ffmpeg','-v','error','-i',video,'-f','null','-'],check=True)
+          print('Verified real audio and 1188 decoded 30fps video frames')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 8bit-host-33-text-effects-with-voice
+          path: |
+            out/8bit-host-33-text-voiced.mp4
+            public/narration/8bit-host-39s.wav
+            scripts/8bit-33-voiceover.txt
+          if-no-files-found: error
+          retention-days: 14

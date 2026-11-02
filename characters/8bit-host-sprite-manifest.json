@@ -1,0 +1,95 @@
+{
+  "schema": "video-ai-editor/8bit-host-sprite/v1",
+  "effectiveDate": "2026-11-02",
+  "identity": "UrFavXBF",
+  "reference": "8-bit host design from current conversation (concept sheet; not a portrait-based likeness)",
+  "status": "code-generated original vector pixel sprites; visual render QA pending",
+  "format": "independent transparent SVG frames; discrete pose-specific limb/face changes; 72x82 virtual pixel canvas",
+  "frameRate": 8,
+  "mouth": "talk-frame toggle; not phoneme lip-sync",
+  "characters": {
+    "urfavxbf": {
+      "defaultAction": "idle",
+      "actions": {
+        "idle": {
+          "frames": 6,
+          "path": "public/characters/8bit-host/urfavxbf/idle/frame-%02d.svg",
+          "loop": true
+        },
+        "talk": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/talk/frame-%02d.svg",
+          "loop": true
+        },
+        "point_camera": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/point_camera/frame-%02d.svg",
+          "loop": false
+        },
+        "point_object": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/point_object/frame-%02d.svg",
+          "loop": false
+        },
+        "explain": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/explain/frame-%02d.svg",
+          "loop": true
+        },
+        "walk": {
+          "frames": 12,
+          "path": "public/characters/8bit-host/urfavxbf/walk/frame-%02d.svg",
+          "loop": true
+        },
+        "run": {
+          "frames": 10,
+          "path": "public/characters/8bit-host/urfavxbf/run/frame-%02d.svg",
+          "loop": true
+        },
+        "jump": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/jump/frame-%02d.svg",
+          "loop": false
+        },
+        "laugh": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/laugh/frame-%02d.svg",
+          "loop": true
+        },
+        "think": {
+          "frames": 6,
+          "path": "public/characters/8bit-host/urfavxbf/think/frame-%02d.svg",
+          "loop": true
+        },
+        "surprised": {
+          "frames": 6,
+          "path": "public/characters/8bit-host/urfavxbf/surprised/frame-%02d.svg",
+          "loop": false
+        },
+        "confused": {
+          "frames": 6,
+          "path": "public/characters/8bit-host/urfavxbf/confused/frame-%02d.svg",
+          "loop": true
+        },
+        "wave": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/wave/frame-%02d.svg",
+          "loop": true
+        },
+        "celebrate": {
+          "frames": 8,
+          "path": "public/characters/8bit-host/urfavxbf/celebrate/frame-%02d.svg",
+          "loop": false
+        },
+        "listen": {
+          "frames": 6,
+          "path": "public/characters/8bit-host/urfavxbf/listen/frame-%02d.svg",
+          "loop": true
+        }
+      }
+    }
+  },
+  "editorFxCount": 33,
+  "editorFxIntegration": "Existing FX library remains untouched; 33 demo board motions are a separate showcase.",
+  "voicePolicy": "Existing Chatterbox English profile untouched; no audio generated."
+}
