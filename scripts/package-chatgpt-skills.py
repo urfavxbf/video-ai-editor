@@ -83,7 +83,7 @@ def main():
         "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
         "name": "video-ai-editor-skills",
         "version": "0.2.0",
-        "description": "16 modular skills: central video AI task router, 12 official Remotion skills, project production and effects guides, and a senior engineering skill.",
+        "description": "16 modular skills: central video AI task router, 12 official Remotion skills, English UrFavXBF and PIX production and effects guides, and a senior engineering skill.",
         "repository": "https://github.com/urfavxbf/video-ai-editor",
     }
     compat = {
