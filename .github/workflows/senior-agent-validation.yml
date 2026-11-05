@@ -1,21 +1,22 @@
-name: Senior Agent Skill Validation
+name: Senior Agent and Central Skill Validation
 
 on:
   pull_request:
     paths:
       - '.github/agents/**'
-      - '.github/skills/**'
       - '.agents/skills/**'
+      - '.claude/skills/video-ai-orchestrator/**'
       - 'docs/SENIOR_MULTIDISCIPLINARY_AGENT.md'
+      - 'tests/test_skill_orchestrator.py'
       - '.github/workflows/senior-agent-validation.yml'
   push:
-    branches:
-      - 'feat/install-senior-multidisciplinary-agent'
+    branches: [main]
     paths:
       - '.github/agents/**'
-      - '.github/skills/**'
       - '.agents/skills/**'
+      - '.claude/skills/video-ai-orchestrator/**'
       - 'docs/SENIOR_MULTIDISCIPLINARY_AGENT.md'
+      - 'tests/test_skill_orchestrator.py'
       - '.github/workflows/senior-agent-validation.yml'
   workflow_dispatch:
 
@@ -24,30 +25,22 @@ permissions:
 
 jobs:
   validate:
-    name: Validate agent definitions and skills
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Check both skill manifests and local references
-        run: |
-          python3 .agents/skills/senior-multidisciplinary-agent/scripts/validate_skill.py
-          python3 .github/skills/senior-multidisciplinary-agent/scripts/validate_skill.py
-      - name: Verify Copilot and Codex skill copies match
-        run: |
-          diff -qr .agents/skills/senior-multidisciplinary-agent .github/skills/senior-multidisciplinary-agent
-      - name: Python source syntax
-        run: |
-          python3 -m py_compile .agents/skills/senior-multidisciplinary-agent/scripts/*.py
-          python3 -m py_compile .github/skills/senior-multidisciplinary-agent/scripts/*.py
-      - name: Validate custom agent profile
+      - name: Validate canonical senior skill
+        run: python3 .agents/skills/senior-multidisciplinary-agent/scripts/validate_skill.py
+      - name: Python syntax
+        run: python3 -m py_compile .agents/skills/senior-multidisciplinary-agent/scripts/*.py
+      - name: Validate all modular skill routes
+        run: python3 -m unittest discover -s tests -p 'test_skill_orchestrator.py' -v
+      - name: Validate custom Copilot agent profile
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          file = Path('.github/agents/senior-multidisciplinary.agent.md')
-          content = file.read_text(encoding='utf-8')
-          assert content.startswith('---\nname: Senior Multidisciplinary Engineer\n')
-          assert '\ndescription:' in content
-          assert '.agents/skills/senior-multidisciplinary-agent/SKILL.md' in content
-          print('PASS: workspace custom agent profile')
+          text = Path('.github/agents/senior-multidisciplinary.agent.md').read_text()
+          assert text.startswith('---\nname: Senior Multidisciplinary Engineer\n')
+          assert '.agents/skills/senior-multidisciplinary-agent/SKILL.md' in text
+          assert '.claude/skills/video-ai-orchestrator/SKILL.md' in text
           PY

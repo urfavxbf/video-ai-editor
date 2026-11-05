@@ -52,8 +52,8 @@ jobs:
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           npm ci --no-audit --no-fund
           python3 -m pip install -r requirements.txt
-      - name: Build compiled production skill from authoritative source
-        run: python3 scripts/build-cineforge-master-skill.py
+      - name: Verify modular skill routing contracts
+        run: python3 -m unittest discover -s tests -p 'test_skill_orchestrator.py' -v
       - name: Typecheck and test validated chapter motion graphics
         run: |
           npm run typecheck
@@ -129,15 +129,15 @@ jobs:
             out/hyperframes/episode-props.json
           retention-days: 7
           if-no-files-found: error
-      - name: Commit synced package lockfile and generated CineForge skill to feature branch
+      - name: Commit synced package lockfile to feature branch
         if: github.ref == 'refs/heads/feat/hyperframes-first-class-production-20261031'
         run: |
           set -euo pipefail
           test "${GITHUB_REF_NAME}" = 'feat/hyperframes-first-class-production-20261031'
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json .claude/skills/cineforge-pro/SKILL.md
+          git add package-lock.json
           if ! git diff --cached --quiet; then
-            git commit -m "build: lock HyperFrames and regenerate canonical CineForge skill"
+            git commit -m "build: lock HyperFrames dependency versions"
             git push origin HEAD:"${GITHUB_REF_NAME}"
           fi

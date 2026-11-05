@@ -1,6 +1,6 @@
 # Official Remotion Agent Skills
 
-We have **12 official Remotion skills** under [`.claude/skills/`](../.claude/skills/) alongside the independent [`ai-video-editor`](../.claude/skills/ai-video-editor/SKILL.md) project-specific skill.
+We have **12 official Remotion skills** under [`.claude/skills/`](../.claude/skills/) alongside the independent [`ai-video-editor`](../.claude/skills/ai-video-editor/SKILL.md) project-specific skill. The [central orchestrator](../.claude/skills/video-ai-orchestrator/SKILL.md) and [catalog](../.claude/skills/video-ai-orchestrator/references/skill-catalog.md) route tasks without duplicating the official skill content.
 
 ## Source and reproduction
 

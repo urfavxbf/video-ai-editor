@@ -23,7 +23,7 @@ class ProductionInstructionTests(unittest.TestCase):
     def test_codex_and_skill_entrypoints_route_to_current_policy(self):
         for path in ('AGENTS.md', 'README.md', 'SKILL.md',
                      '.claude/skills/ai-video-editor/SKILL.md',
-                     '.claude/skills/cineforge-pro/SKILL.md'):
+                     '.claude/skills/video-ai-orchestrator/SKILL.md'):
             with self.subTest(path=path):
                 text = (ROOT / path).read_text()
                 self.assertIn('docs/PRODUCTION_POLICY.md', text)
@@ -69,16 +69,16 @@ class ProductionInstructionTests(unittest.TestCase):
                 self.assertIn('PRODUCTION_POLICY.md', text)
                 self.assertNotRegex(text, r'(?i)default to\s+\*\*Tagalog/Taglish')
 
-    def test_cineforge_rebuild_matches_committed_instructions(self):
-        build = script('build-cineforge-master-skill')
-        with tempfile.TemporaryDirectory() as tmp:
-            dest = Path(tmp) / 'SKILL.md'
-            out = Path(tmp) / 'out'
-            with patch.object(build, 'DEST', dest), patch.object(build, 'OUT', out), contextlib.redirect_stdout(io.StringIO()):
-                build.main()
-            self.assertEqual(dest.read_bytes(), (ROOT / '.claude/skills/cineforge-pro/SKILL.md').read_bytes())
-            with ZipFile(out / 'CineForge-Pro-One-Skill.zip') as archive:
-                self.assertEqual(archive.read('SKILL.md'), dest.read_bytes())
+    def test_central_router_is_small_and_references_every_packaged_skill(self):
+        router = (ROOT / '.claude/skills/video-ai-orchestrator/SKILL.md').read_text()
+        catalog = (ROOT / '.claude/skills/video-ai-orchestrator/references/skill-catalog.md').read_text()
+        package = script('package-chatgpt-skills')
+        self.assertLess(len(router), 6000, "Router must not embed all source skills")
+        self.assertEqual(len(package.SKILLS), 16)
+        for name in package.SKILLS:
+            with self.subTest(name=name):
+                self.assertIn(f'`{name}`', catalog)
+        self.assertFalse((ROOT / '.claude/skills/cineforge-pro/SKILL.md').exists())
 
     def test_packaged_custom_skill_and_metadata_keep_current_defaults(self):
         package = script('package-chatgpt-skills')
@@ -86,9 +86,11 @@ class ProductionInstructionTests(unittest.TestCase):
             out = Path(tmp) / 'out'
             with patch.object(package, 'OUT', out), patch.object(package, 'PLUGIN', out / 'plugin'), contextlib.redirect_stdout(io.StringIO()):
                 package.main()
-            with ZipFile(out / 'Video-AI-Editor-13-Skills-Plugin.zip') as archive:
+            with ZipFile(out / 'Video-AI-Editor-16-Skills-Plugin.zip') as archive:
                 text = archive.read('skills/ai-video-editor/SKILL.md').decode()
                 self.assertEqual(text, (ROOT / '.claude/skills/ai-video-editor/SKILL.md').read_text())
+                for skill in ('video-ai-orchestrator', 'video-effects', 'senior-multidisciplinary-agent'):
+                    self.assertIn(f'skills/{skill}/SKILL.md', archive.namelist())
                 self.assertIn('English', archive.read('plugin.json').decode())
                 self.assertNotIn('Tagalog Shorts workflow', archive.read('plugin.json').decode())
 

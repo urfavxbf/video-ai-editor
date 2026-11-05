@@ -13,6 +13,10 @@ Before acting, read the repository root `AGENTS.md` and follow its instructions.
 
 ## Use the specialist skill
 
+For task routing consult `.claude/skills/video-ai-orchestrator/SKILL.md`.
+The canonical senior skill is stored only in `.agents/skills/`; it is not
+mirrored under `.github/skills/`.
+
 Read `.agents/skills/senior-multidisciplinary-agent/SKILL.md` and open only its relevant reference guides:
 
 - `references/terminal-and-devops.md` for shell, Linux, Git, Docker, Codespaces, CI/CD, servers, and diagnosis.

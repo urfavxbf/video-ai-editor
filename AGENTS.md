@@ -189,12 +189,13 @@ Remotion playback verification.
    branch/PR or executing writes requires authorization for the requested work.
    No silent merge.
 
-When editing the **source skill** `.claude/skills/ai-video-editor/SKILL.md`,
-regenerate the compiled skill with
-`python3 scripts/build-cineforge-master-skill.py` and run
-`python3 -m unittest discover -s tests -p 'test_production_instructions.py' -v`.
-Changing this agent entry point or the prompt playbook alone does not change
-the generated skill's underlying source.
+Use `.claude/skills/video-ai-orchestrator/SKILL.md` as the **central skill
+router** and its `references/skill-catalog.md` for task-specific skill selection
+after reviewing the five mandatory authoritative files above. Do not concatenate
+all modules into a generated master file. When editing production skills or
+routing, run `python3 -m unittest discover -s tests -p 'test_skill_orchestrator.py' -v`
+and `python3 -m unittest discover -s tests -p 'test_production_instructions.py' -v`.
+Keep all 12 official Remotion directories as pinned, separately maintained guidance.
 
 ## 8. Prompt playbook
 

@@ -57,13 +57,16 @@ publishing, or a merge to main.
 
 ## Agent entrypoints and historical work
 
-Codex reads [AGENTS.md](AGENTS.md). The active production skill is
-[ai-video-editor](.claude/skills/ai-video-editor/SKILL.md); the generated
-[CineForge Pro](.claude/skills/cineforge-pro/SKILL.md) includes that same guidance
-plus the 12 imported Remotion skills. Rebuild it with
-`python3 scripts/build-cineforge-master-skill.py` after changing its source.
-The root [video-effects skill](SKILL.md) covers explicitly requested supplied
-9:16 footage; it does not set defaults for new original episodes.
+Codex reads [AGENTS.md](AGENTS.md). The central task router is
+[video-ai-orchestrator](.claude/skills/video-ai-orchestrator/SKILL.md), with a
+[skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md)
+that selects targeted modules instead of embedding all guidance in a huge file.
+The project production skill remains
+[ai-video-editor](.claude/skills/ai-video-editor/SKILL.md); 12 independently
+maintained Remotion skills remain available. The root
+[video-effects skill](SKILL.md) is only for explicitly requested supplied
+9:16 footage, not the defaults for new original episodes. The older generated
+CineForge master was removed because it duplicated the source skills.
 
 The 21 existing FX remain available, selected for storytelling rather than
 forced into every video. Historical portrait/V2 layouts and Tagalog voice

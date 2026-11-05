@@ -10,7 +10,10 @@ filesystem, GitHub, GPU, model, API, Adobe or publishing access.
 [registry](../characters/registry.json) +
 [asset manifest](../characters/pixel-default-manifest.json) →
 [project production skill](../.claude/skills/ai-video-editor/SKILL.md).
-Read **all five files**, not just this page, before performing work. The latest
+Read **all five files**, not just this page, before performing work.
+Use the central [video-ai-orchestrator](../.claude/skills/video-ai-orchestrator/SKILL.md)
+and [skill catalog](../.claude/skills/video-ai-orchestrator/references/skill-catalog.md)
+to load only the relevant specialist instructions. The latest
 explicit owner request governs the deliverable; historical samples never silently
 change current defaults.
 
