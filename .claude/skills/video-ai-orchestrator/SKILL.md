@@ -46,11 +46,21 @@ the English production default. Never overwrite a newer user change.
   original episodes.
 - **Remotion implementation:** `remotion-best-practices` plus a targeted
   `remotion-*` skill from the catalog; keep original upstream supporting files.
+- **Original local HTML/GSAP motion or episode graphic:** `hyperframes-motion-graphics`;
+  use the pinned offline renderer, then verify the Remotion chapter bridge.
+- **Character narration or voice integrity:** `character-voice-production`;
+  keep approved English Chatterbox V3 identities, with VoxCPM2 opt-in only.
+- **Transcripts, SRT or word alignment:** `transcription-captions`; prefer
+  verified local input, and never transmit audio to Groq without consent.
+- **After Effects, Bodymovin, Lottie or Duik imports:** `animation-import`;
+  inspect the actual export and enforce the baked-vector compatibility limits.
 - **Engineering, AI, research, security, or terminal issues:** canonical
   `senior-multidisciplinary-agent`, opening only relevant references.
-- **Final media:** inspect real frame timing, dimensions, encoding, captions,
-  stream integrity, audio and visual content. Artwork/timeline proofs and
-  editor previews are not finished voiced episodes.
+- **Final media:** apply shared QA from `scripts/episode_qa.py` and
+  `docs/PRODUCTION_STANDARD.md`: inspect actual frame timing, dimensions,
+  encoding, captions, stream integrity, audio and visual content.
+  FFmpeg/FFprobe are tools rather than a separate redundant skill.
+  Artwork/timeline proofs and editor previews are not finished voiced episodes.
 
 ## Safeguards
 

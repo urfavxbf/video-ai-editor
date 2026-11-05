@@ -196,6 +196,13 @@ all modules into a generated master file. When editing production skills or
 routing, run `python3 -m unittest discover -s tests -p 'test_skill_orchestrator.py' -v`
 and `python3 -m unittest discover -s tests -p 'test_production_instructions.py' -v`.
 Keep all 12 official Remotion directories as pinned, separately maintained guidance.
+Route offline HyperFrames/GSAP graphics through `hyperframes-motion-graphics`,
+approved Chatterbox voices through `character-voice-production`, consented
+Groq transcription/word captions through `transcription-captions`, and
+Bodymovin/Lottie/Duik imports through `animation-import`. These skills
+document existing, opt-in capabilities and never authorize remote processing,
+paid services, a different speaker/language, media publishing or a silent
+merge. Reuse `scripts/episode_qa.py` for actual delivery validation.
 
 ## 8. Prompt playbook
 

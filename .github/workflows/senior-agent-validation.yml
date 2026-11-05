@@ -5,7 +5,7 @@ on:
     paths:
       - '.github/agents/**'
       - '.agents/skills/**'
-      - '.claude/skills/video-ai-orchestrator/**'
+      - '.claude/skills/**'
       - 'docs/SENIOR_MULTIDISCIPLINARY_AGENT.md'
       - 'tests/test_skill_orchestrator.py'
       - '.github/workflows/senior-agent-validation.yml'
@@ -14,7 +14,7 @@ on:
     paths:
       - '.github/agents/**'
       - '.agents/skills/**'
-      - '.claude/skills/video-ai-orchestrator/**'
+      - '.claude/skills/**'
       - 'docs/SENIOR_MULTIDISCIPLINARY_AGENT.md'
       - 'tests/test_skill_orchestrator.py'
       - '.github/workflows/senior-agent-validation.yml'

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare a portable skills-only Plugin plus 16 single-skill upload archives.
+"""Prepare a portable skills-only Plugin plus 20 single-skill upload archives.
 Never publishes, connects or installs the package in a ChatGPT account.
 """
 from __future__ import annotations
@@ -16,6 +16,10 @@ PLUGIN = OUT / "video-ai-editor-skills"
 SKILLS = (
     "video-ai-orchestrator",
     "ai-video-editor",
+    "hyperframes-motion-graphics",
+    "character-voice-production",
+    "transcription-captions",
+    "animation-import",
     "video-effects",
     "senior-multidisciplinary-agent",
     "remotion-best-practices",
@@ -82,8 +86,8 @@ def main():
     portable = {
         "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
         "name": "video-ai-editor-skills",
-        "version": "0.2.0",
-        "description": "16 modular skills: central video AI task router, 12 official Remotion skills, English UrFavXBF and PIX production and effects guides, and a senior engineering skill.",
+        "version": "0.3.0",
+        "description": "20 modular video production skills: one central router, 12 pinned official Remotion skills, four verified external integration workflows, and three project-owned specialists.",
         "repository": "https://github.com/urfavxbf/video-ai-editor",
     }
     compat = {
@@ -105,7 +109,7 @@ def main():
         "# Video AI Editor Skills\n\n"
         "This is a **skills-only** bundle; it does not install video runtime packages, connect services or grant terminal access.\n\n"
         "Included: 12 official Remotion Agent Skills at source commit "+OFFICIAL_COMMIT+
-        ", plus the video-ai-orchestrator, ai-video-editor, video-effects and senior-multidisciplinary-agent skills from urfavxbf/video-ai-editor.\n\n"
+        ", plus the central orchestrator, ai-video-editor, video-effects, senior-multidisciplinary-agent, HyperFrames, character voice, transcription, and animation import skills from urfavxbf/video-ai-editor.\n\n"
         "Source: https://github.com/remotion-dev/skills\n"
         "Project: https://github.com/urfavxbf/video-ai-editor\n\n"
         "To use it, install the plugin in a supporting ChatGPT/Codex host or upload the individual skills from the separate ZIP bundle. "

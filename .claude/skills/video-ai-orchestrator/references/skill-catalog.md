@@ -13,6 +13,10 @@ art or scripts still require a real checkout.
 | New character episode, approved narration, production QA, supplied-media decisions | `ai-video-editor` | `.claude/skills/ai-video-editor/SKILL.md` |
 | Explicit legacy 9:16 talking-head effects, source cuts and matte preparation | `video-effects` | `SKILL.md` |
 | Cross-domain terminal, DevOps, AI systems, research, software or quality procedures | `senior-multidisciplinary-agent` | `.agents/skills/senior-multidisciplinary-agent/SKILL.md` |
+| Offline HTML/GSAP graphics and HyperFrames chapter integration | `hyperframes-motion-graphics` | `.claude/skills/hyperframes-motion-graphics/SKILL.md` |
+| Approved Chatterbox V3 narration and optional VoxCPM2 experimentation | `character-voice-production` | `.claude/skills/character-voice-production/SKILL.md` |
+| Authorized transcription, Groq Whisper and reviewed word captions | `transcription-captions` | `.claude/skills/transcription-captions/SKILL.md` |
+| Compatible Bodymovin/Lottie and baked Duik animation import | `animation-import` | `.claude/skills/animation-import/SKILL.md` |
 
 ## Official Remotion specialists (pinned upstream)
 
@@ -40,6 +44,15 @@ art or scripts still require a real checkout.
   when those stages are reached.
 - For provided 9:16 footage, use `video-effects`; do not apply that aspect
   ratio or the sample footage workflow to new original episodes.
+- Route requests for local motion graphics to `hyperframes-motion-graphics`;
+  the official HyperFrames setup skills are optional installed dependencies,
+  not source copies to commit or reasons to enable cloud features.
+- Route approved character WAV generation to `character-voice-production`,
+  transcript/SRT/word review to `transcription-captions`, and AE/Duik/Lottie
+  imports to `animation-import`. Use multiple skills only for genuinely
+  multi-stage tasks; each points to the verified repository tooling.
+- Use `scripts/episode_qa.py`, `docs/PRODUCTION_STANDARD.md`, FFmpeg/FFprobe,
+  and the PR safety gate as **shared validation**, not a redundant skills bundle.
 - Use `remotion-best-practices` as the official framework router. The 12
   official skill directories contain nontrivial reference and asset material;
   do **not** remove them merely because sections overlap.

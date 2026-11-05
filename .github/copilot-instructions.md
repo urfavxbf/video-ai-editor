@@ -10,7 +10,9 @@ Start by reading **all five required files** in the checked-out branch:
 Route specialized work through the [central video AI orchestrator](../.claude/skills/video-ai-orchestrator/SKILL.md)
 and its [skill catalog](../.claude/skills/video-ai-orchestrator/references/skill-catalog.md).
 Load only the relevant specialist skill and references after respecting the five
-mandatory authoritative files. The generic senior skill is canonical under
+mandatory authoritative files. External integration skills cover local
+HyperFrames/GSAP motion, approved Chatterbox voices, consented Groq captions,
+and vetted Duik/Lottie/Bodymovin imports; none grants cloud processing rights. The generic senior skill is canonical under
 `.agents/skills/senior-multidisciplinary-agent/`, not duplicated under `.github/skills/`.
 
 Use [docs/AI_AGENT_PROMPTS.md](../docs/AI_AGENT_PROMPTS.md) for reusable prompt

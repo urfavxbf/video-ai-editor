@@ -68,6 +68,15 @@ maintained Remotion skills remain available. The root
 9:16 footage, not the defaults for new original episodes. The older generated
 CineForge master was removed because it duplicated the source skills.
 
+Four focused external-integration skills are also routed through the
+[central catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md):
+[HyperFrames/GSAP](.claude/skills/hyperframes-motion-graphics/SKILL.md),
+[Chatterbox and approved character voices](.claude/skills/character-voice-production/SKILL.md),
+[Groq transcription and reviewed captions](.claude/skills/transcription-captions/SKILL.md),
+and [After Effects/Duik/Lottie imports](.claude/skills/animation-import/SKILL.md).
+The portable bundle now contains 20 modular skills. A skill supplies
+instructions and does not install or authorize cloud services.
+
 The 21 existing FX remain available, selected for storytelling rather than
 forced into every video. Historical portrait/V2 layouts and Tagalog voice
 designs remain in [the archive-scoped policies](docs/MULTILINGUAL_PRODUCTION_POLICY.md)
