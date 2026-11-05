@@ -87,7 +87,7 @@ def main():
         "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
         "name": "video-ai-editor-skills",
         "version": "0.3.0",
-        "description": "20 modular video production skills: one central router, 12 pinned official Remotion skills, four verified external integration workflows, and three project-owned specialists.",
+        "description": "20 modular video production skills: central router, 12 pinned official Remotion skills, four verified external integration workflows, and three specialists for approved English UrFavXBF/PIX production, footage effects and engineering.",
         "repository": "https://github.com/urfavxbf/video-ai-editor",
     }
     compat = {
