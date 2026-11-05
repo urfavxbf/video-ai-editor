@@ -76,6 +76,8 @@ class ProductionInstructionTests(unittest.TestCase):
         self.assertLess(len(router), 6000, "Router must not embed all source skills")
         self.assertEqual(len(package.SKILLS), 16)
         for name in package.SKILLS:
+            if name == 'video-ai-orchestrator':
+                continue  # The catalog indexes specialists, not itself.
             with self.subTest(name=name):
                 self.assertIn(f'`{name}`', catalog)
         self.assertFalse((ROOT / '.claude/skills/cineforge-pro/SKILL.md').exists())
