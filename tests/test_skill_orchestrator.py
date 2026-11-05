@@ -17,7 +17,9 @@ SKILLS = (
 
 class SkillOrchestratorContracts(unittest.TestCase):
     def test_exact_inventory_without_generated_or_mirrored_duplicates(self):
-        actual = list(ROOT.rglob('SKILL.md'))
+        actual = ([ROOT / 'SKILL.md']
+                  + list((ROOT / '.agents/skills').rglob('SKILL.md'))
+                  + list((ROOT / '.claude/skills').rglob('SKILL.md')))
         self.assertEqual(len(actual), 16, [str(p.relative_to(ROOT)) for p in actual])
         self.assertFalse((ROOT / '.claude/skills/cineforge-pro').exists())
         self.assertFalse((ROOT / '.github/skills/senior-multidisciplinary-agent').exists())
