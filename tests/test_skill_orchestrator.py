@@ -26,7 +26,7 @@ class SkillOrchestratorContracts(unittest.TestCase):
 
     def test_catalog_routes_to_existing_files_and_unique_names(self):
         catalog = (ROOT / CATALOG).read_text(encoding='utf-8')
-        rows = re.findall(r'^\|[^\n]*?\| \x60([a-z0-9-]+)\x60 \| \x60([^\x60]+SKILL\.md)\x60 \|$', catalog, re.M)
+        rows = re.findall(r'^\|[^\n]*?\| \x60([a-z0-9-]+)\x60 \| \x60([^\x60]*SKILL\.md)\x60 \|$', catalog, re.M)
         self.assertEqual(len(rows), 15, rows)
         self.assertEqual(set(SKILLS) - {'video-ai-orchestrator'}, {name for name, _ in rows})
         for name, path in rows:
