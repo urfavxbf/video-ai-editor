@@ -4,6 +4,8 @@ No network listener, hosted API, tokens or uploads are enabled by this module.
 """
 from __future__ import annotations
 
+from typing import Any
+
 from mcp.server import MCPServer
 
 from mcp_server import bridge
@@ -12,43 +14,43 @@ mcp = MCPServer("Video AI Editor")
 
 
 @mcp.tool()
-def project_status() -> dict:
+def project_status() -> dict[str, Any]:
     """Read approved English production defaults, characters and current voices."""
     return bridge.project_status()
 
 
 @mcp.tool()
-def list_production_skills() -> dict:
+def list_production_skills() -> dict[str, Any]:
     """List 21 real modular project skills and their repository paths."""
     return bridge.list_skills()
 
 
 @mcp.tool()
-def verify_character_assets() -> dict:
+def verify_character_assets() -> dict[str, Any]:
     """Run the existing approved 13-PNG SHA-256 and pixel asset verifier."""
     return bridge.verify_character_assets()
 
 
 @mcp.tool()
-def validate_current_edit(check_media: bool = True) -> dict:
+def validate_current_edit(check_media: bool = True) -> dict[str, Any]:
     """Validate ExampleEdit JSON and, by default, referenced physical media."""
     return bridge.validate_edit(media=check_media)
 
 
 @mcp.tool()
-def inspect_local_media(relative_path: str) -> dict:
+def inspect_local_media(relative_path: str) -> dict[str, Any]:
     """FFprobe an actual safe local video/audio file within input/, out/ or public/."""
     return bridge.inspect_media(relative_path)
 
 
 @mcp.tool()
-def render_approved_preview(confirmed: bool = False) -> dict:
+def render_approved_preview(confirmed: bool = False) -> dict[str, Any]:
     """Render a local 30-frame Remotion proof only after explicit CPU/disk approval."""
     return bridge.preview_render(confirmed=confirmed)
 
 
 @mcp.tool()
-def inspect_approved_video_url(url: str, approved_network: bool = False) -> dict:
+def inspect_approved_video_url(url: str, approved_network: bool = False) -> dict[str, Any]:
     """Request restricted yt-dlp metadata only after approval; no video download."""
     return bridge.inspect_online_source(url, approved_network=approved_network)
 
