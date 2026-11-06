@@ -74,7 +74,7 @@ class ProductionInstructionTests(unittest.TestCase):
         catalog = (ROOT / '.claude/skills/video-ai-orchestrator/references/skill-catalog.md').read_text()
         package = script('package-chatgpt-skills')
         self.assertLess(len(router), 6000, "Router must not embed all source skills")
-        self.assertEqual(len(package.SKILLS), 20)
+        self.assertEqual(len(package.SKILLS), 21)
         for name in package.SKILLS:
             if name == 'video-ai-orchestrator':
                 continue  # The catalog indexes specialists, not itself.
@@ -88,12 +88,12 @@ class ProductionInstructionTests(unittest.TestCase):
             out = Path(tmp) / 'out'
             with patch.object(package, 'OUT', out), patch.object(package, 'PLUGIN', out / 'plugin'), contextlib.redirect_stdout(io.StringIO()):
                 package.main()
-            with ZipFile(out / 'Video-AI-Editor-20-Skills-Plugin.zip') as archive:
+            with ZipFile(out / 'Video-AI-Editor-21-Skills-Plugin.zip') as archive:
                 text = archive.read('skills/ai-video-editor/SKILL.md').decode()
                 self.assertEqual(text, (ROOT / '.claude/skills/ai-video-editor/SKILL.md').read_text())
                 for skill in ('video-ai-orchestrator', 'video-effects', 'senior-multidisciplinary-agent',
                               'hyperframes-motion-graphics', 'character-voice-production',
-                              'transcription-captions', 'animation-import'):
+                              'transcription-captions', 'animation-import', 'media-source-ingestion'):
                     self.assertIn(f'skills/{skill}/SKILL.md', archive.namelist())
                 self.assertIn('English', archive.read('plugin.json').decode())
                 self.assertNotIn('Tagalog Shorts workflow', archive.read('plugin.json').decode())

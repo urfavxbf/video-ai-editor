@@ -18,12 +18,13 @@ version-controlled workspace.
 | --- | --- | --- |
 | Original character videos | UrFavXBF + PIX, `HeroCharacterStage` (2.5D), chapter-based `EpisodeProduction` | [Production policy](docs/PRODUCTION_POLICY.md) |
 | Source-footage edits | Frame-accurate edit lists, talking-head effects and Remotion `ExampleEdit` | [Video effects skill](SKILL.md) |
+| Authorized online source intake | Pinned yt-dlp inspection, single-video downloads, and available subtitle files | [Media ingestion guide](docs/MEDIA_SOURCE_INGESTION.md) |
 | Cinematic effects | **33 effects:** 21 original talking-head effects plus 12 advanced full-frame effects | [Effects guide](docs/CINEMATIC_FX_12.md) |
 | Offline motion graphics | HyperFrames + GSAP, locally encoded H.264 clips, chapter-timed Remotion integration | [HyperFrames guide](docs/HYPERFRAMES_PRODUCTION.md) |
 | Character narration | Optional Chatterbox V3 voice synthesis with distinct approved UrFavXBF and PIX profiles | [Voice guide](docs/CHATTERBOX_TTS.md) |
 | Transcription and captions | Optional Groq Whisper JSON/TXT/SRT transcription; reviewed WAV-bound alignment for production | [AI video tools](docs/AI_VIDEO_TOOLS.md) |
 | Animation imports | Compatible Bodymovin/Lottie JSON and baked 2D Duik Ángela exports | [Lottie](docs/AFTER_EFFECTS_LOTTIE.md) / [Duik](docs/DUIK_ANGELA_IMPORT.md) |
-| AI-assisted workflows | **20 modular agent skills**, selected through one central orchestrator | [Skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md) |
+| AI-assisted workflows | **21 modular agent skills**, selected through one central orchestrator | [Skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md) |
 | Production verification | Python/Node tests, TypeScript checks, GitHub Actions, FFprobe and encoded video fixtures | [Agent policy](AGENTS.md) |
 
 These capabilities are scoped: a checked-in demo, proof composition, or
@@ -65,6 +66,9 @@ npm run hyperframes:render
 # Preview the 12 advanced full-frame effects on generated sample media.
 npm run advanced-fx:sample
 npm run advanced-fx:showcase
+
+# Optional, after Codespaces setup: inspect metadata for an approved source.
+.venv/bin/python scripts/media_ingest.py inspect 'https://vimeo.com/123'
 ```
 
 Actual edits require valid footage and supporting assets. The default
@@ -124,14 +128,15 @@ AGENTS.md                          # Authoritative project-wide rules
   character-voice-production/      # Chatterbox V3; VoxCPM2 opt-in
   transcription-captions/         # Groq consent and timing QA
   animation-import/               # Lottie + baked Duik imports
+  media-source-ingestion/         # Authorized yt-dlp URL intake
   remotion-*/                      # 12 pinned official Remotion skills
 .agents/skills/
   senior-multidisciplinary-agent/  # Engineering and quality workflows
 SKILL.md                          # Supplied 9:16 footage/effects
 ```
 
-**20 modular skills total:** 1 orchestrator + 12 official Remotion skills
-+ 4 project-specific external integration skills + 3 other project
+**21 modular skills total:** 1 orchestrator + 12 official Remotion skills
++ 5 project-specific external integration skills + 3 other project
 specialists (production, footage effects, senior engineering).
 See the full [skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md),
 [`AGENTS.md`](AGENTS.md) and [AI agent prompt playbook](docs/AI_AGENT_PROMPTS.md).
@@ -149,6 +154,10 @@ only when their workflow is relevant.
 
 ## Media, voice, and import safety
 
+- **yt-dlp:** Use the [source-ingestion guide](docs/MEDIA_SOURCE_INGESTION.md)
+  to inspect/download specific rights-cleared videos, then independently
+  validate streams before editing. No cookies, DRM bypass, playlist scraping,
+  untrusted sites or automatic publishing. Sources remain gitignored.
 - **Chatterbox V3:** Reuse approved WAVs when available. New synthesis uses
   `scripts/character_voiceover.py` only with authorized text, suitable
   optional model dependencies and an approved speaker. PIX needs its real,

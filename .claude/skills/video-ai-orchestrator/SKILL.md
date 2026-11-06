@@ -44,6 +44,9 @@ the English production default. Never overwrite a newer user change.
 - **Supplied portrait 9:16 footage:** root `video-effects` skill and actual
   media, cut list, matte and face-location checks. This is NOT the default for
   original episodes.
+- **Rights-cleared online video or subtitles:** `media-source-ingestion`;
+  validate source authorization before any yt-dlp network call, then
+  inspect real local media before handoff to FFmpeg/Remotion.
 - **Remotion implementation:** `remotion-best-practices` plus a targeted
   `remotion-*` skill from the catalog; keep original upstream supporting files.
 - **Original local HTML/GSAP motion or episode graphic:** `hyperframes-motion-graphics`;

@@ -17,6 +17,7 @@ art or scripts still require a real checkout.
 | Approved Chatterbox V3 narration and optional VoxCPM2 experimentation | `character-voice-production` | `.claude/skills/character-voice-production/SKILL.md` |
 | Authorized transcription, Groq Whisper and reviewed word captions | `transcription-captions` | `.claude/skills/transcription-captions/SKILL.md` |
 | Compatible Bodymovin/Lottie and baked Duik animation import | `animation-import` | `.claude/skills/animation-import/SKILL.md` |
+| Authorized source video metadata, yt-dlp single-file intake, subtitles | `media-source-ingestion` | `.claude/skills/media-source-ingestion/SKILL.md` |
 
 ## Official Remotion specialists (pinned upstream)
 
@@ -44,6 +45,9 @@ art or scripts still require a real checkout.
   when those stages are reached.
 - For provided 9:16 footage, use `video-effects`; do not apply that aspect
   ratio or the sample footage workflow to new original episodes.
+- For a user-authorized online source, load `media-source-ingestion` before
+  editing; inspect rights, stage a local file, validate physical media and
+  never treat a publicly visible URL as permission to download or publish.
 - Route requests for local motion graphics to `hyperframes-motion-graphics`;
   the official HyperFrames setup skills are optional installed dependencies,
   not source copies to commit or reasons to enable cloud features.

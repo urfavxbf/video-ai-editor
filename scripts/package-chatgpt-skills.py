@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare a portable skills-only Plugin plus 20 single-skill upload archives.
+"""Prepare a portable skills-only Plugin plus 21 single-skill upload archives.
 Never publishes, connects or installs the package in a ChatGPT account.
 """
 from __future__ import annotations
@@ -20,6 +20,7 @@ SKILLS = (
     "character-voice-production",
     "transcription-captions",
     "animation-import",
+    "media-source-ingestion",
     "video-effects",
     "senior-multidisciplinary-agent",
     "remotion-best-practices",
@@ -86,8 +87,8 @@ def main():
     portable = {
         "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
         "name": "video-ai-editor-skills",
-        "version": "0.3.0",
-        "description": "20 modular video production skills: central router, 12 pinned official Remotion skills, four verified external integration workflows, and three specialists for approved English UrFavXBF/PIX production, footage effects and engineering.",
+        "version": "0.4.0",
+        "description": "21 modular video production skills: central router, 12 official Remotion skills, five scoped integrations including yt-dlp, and three specialists for approved English UrFavXBF/PIX production, footage effects and engineering.",
         "repository": "https://github.com/urfavxbf/video-ai-editor",
     }
     compat = {
@@ -109,7 +110,7 @@ def main():
         "# Video AI Editor Skills\n\n"
         "This is a **skills-only** bundle; it does not install video runtime packages, connect services or grant terminal access.\n\n"
         "Included: 12 official Remotion Agent Skills at source commit "+OFFICIAL_COMMIT+
-        ", plus the central orchestrator, ai-video-editor, video-effects, senior-multidisciplinary-agent, HyperFrames, character voice, transcription, and animation import skills from urfavxbf/video-ai-editor.\n\n"
+        ", plus the central orchestrator, ai-video-editor, video-effects, senior-multidisciplinary-agent, HyperFrames, character voice, transcription, animation import, and yt-dlp media ingestion skills from urfavxbf/video-ai-editor.\n\n"
         "Source: https://github.com/remotion-dev/skills\n"
         "Project: https://github.com/urfavxbf/video-ai-editor\n\n"
         "To use it, install the plugin in a supporting ChatGPT/Codex host or upload the individual skills from the separate ZIP bundle. "

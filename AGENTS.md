@@ -122,6 +122,11 @@ Never fabricate chart numbers, captions, source positions, or source media.
   obtain **explicit permission for external processing**, credentials and any
   financial implications **before** using it. Prefer verified local transcripts
   when third-party processing is not authorized.
+- For permitted online videos, use `media-source-ingestion` and
+  `scripts/media_ingest.py` only after confirming the exact source rights.
+  See `docs/MEDIA_SOURCE_INGESTION.md`: no DRM/access bypass, cookies,
+  private URL scraping or playlists; keep source files under ignored
+  `input/ingested/`. Downloading footage never publishes or licenses it.
 - For `ExampleEdit`, run `node scripts/validate-edit.cjs src/edit/edit.json
   --media` after staging real source/derivative media. A schema-only check does
   not prove the referenced files exist or have the stated duration.
@@ -199,7 +204,8 @@ Keep all 12 official Remotion directories as pinned, separately maintained guida
 Route offline HyperFrames/GSAP graphics through `hyperframes-motion-graphics`,
 approved Chatterbox voices through `character-voice-production`, consented
 Groq transcription/word captions through `transcription-captions`, and
-Bodymovin/Lottie/Duik imports through `animation-import`. These skills
+Bodymovin/Lottie/Duik imports through `animation-import`, and rights-cleared
+URL-to-media intake through `media-source-ingestion`. These skills
 document existing, opt-in capabilities and never authorize remote processing,
 paid services, a different speaker/language, media publishing or a silent
 merge. Reuse `scripts/episode_qa.py` for actual delivery validation.
