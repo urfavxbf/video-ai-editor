@@ -34,9 +34,9 @@ actual media asset; inspect and verify each relevant input and result.
 - **16:9, 1920×1080, 30 fps**; total duration comes from the approved script and
   chapters, not a generic fixed-length demo.
 - **HeroCharacterStage**, with approved **UrFavXBF and PIX** full-body pixel poses
-  (13 committed images: 6 UrFavXBF, 7 PIX), cinematic **2.5D** staging.
-- UrFavXBF: Chatterbox Multilingual V3 `natural-storyteller-v1`, Natural Storyteller.
-- PIX: Chatterbox Multilingual V3 `pix-cute-female-emily-v1`, Emily; never substitute
+  (16 committed poses: 9 exact owner-sheet host viewports, 7 PIX PNGs), cinematic **2.5D** staging.
+- UrFavXBF: Kitten Mini 0.8 `kitten-mini-jasper-en-v1`, Jasper.
+- PIX: Kitten Mini 0.8 `kitten-mini-kiki-en-v1`, Kiki; never substitute
   another speaker or use UrFavXBF voice for PIX.
 - Use the committed approved art. Before rendering, run:
 
@@ -65,7 +65,9 @@ deliverable, but do not silently modify the registry or project-wide defaults.
 | One visual effect | `FxPreview`; supply a valid effect ID and necessary footage |
 | All 21 effect previews | `FxShowcase`; run `npm run sample` first |
 | Official Remotion feature demonstration | `OfficialFeaturesDemo`; captions/transitions/shapes demonstration only |
-| Repo product reel | `RepoShowcase`; **not** an editing application |
+| New owner-sheet host example | `WordPoseHostDemo`; latest owner-selected navy-hoodie host from attachment 52170.jpg, nine full-body poses/views, Jasper, actual-audio word cues and three-frame local glitches; see `docs/HOST_WORD_POSES.md` |
+| Repo cinematic showreel | `CinematicShowreel`; 82-second 16:9 landscape variants of all 33 FX; owner-selected Kitten Mini Jasper/Kiki voices in `src/showcase/showreel-voices.json`; current owner-sheet host and approved PIX; see `docs/CINEMATIC_SHOWREEL.md` and require actual audio preflight |
+| Legacy portrait product demo | `RepoShowcase`; 18-second graphics demonstration |
 | Lottie / Bodymovin graphics | `AfterEffectsLottieProof`; compatible local JSON only, not a full AE renderer |
 | Baked Duik-style puppet motion | `DuikBakedCharacterProof`; original demo JSON, **not** proof of a real Duik export |
 | Historical or prototype | `OriginalDoorway`, `ChallengerDeep`, `Y2038Teaser`, `CharacterAnimationLab`, `PixelPortraitHUD`, `CanonicalFullBodyReviewStage`, `TrueFrameReviewStage`, `ChibiV4ReviewStage`, `V4FacialReviewStage`, `ImportedSpriteAnimationReview`; require requested scope, actual assets and approval |
@@ -109,12 +111,13 @@ Never fabricate chart numbers, captions, source positions, or source media.
 
 ## 5. Media, voice, captions and audio
 
+- **Owner delivery preference:** generated narration WAVs and the original showreel score stay on Google Drive. Public Git contains code, artwork and timing/provenance JSON only. Restore approved audio locally with `scripts/stage_delivery_audio.py`; do not force-add audio or rendered MP4s without a new explicit owner instruction.
+
 - **Reuse approved real WAV audio** where available. When **explicitly
   authorized** to generate new English narration, use the existing
   `scripts/character_voiceover.py` CLI with `--language en --device cpu`,
   the right `--character`, an approved script, and a real `--output`.
-  PIX **requires** `input/pix-reference.wav`; a named preset alone is not
-  proof that a WAV was rendered.
+  Kitten Mini uses the approved built-in Jasper/Kiki speakers; no PIX reference WAV is needed. A named preset alone is not proof that a WAV was rendered.
 - Derive speaker events, captions and word timing from **actual listened-to
   audio** and reviewed alignment. Do not infer phonemes or seconds from text
   length, RMS, a filename, or a fake waveform.
@@ -163,7 +166,7 @@ pinned local `hyperframes` CLI; `npm run hyperframes:lint` and
 `EpisodeProduction.motionGraphics` allows chapter-local, validated, muted
 picture-in-picture or full-screen motion-graphics clips. It is **not** the
 replacement for `HeroCharacterStage`, approved PIX/UrFavXBF characters,
-Chatterbox V3 narration, or the default English 16:9 episode policy.
+Kitten Mini Jasper/Kiki narration, or the default English 16:9 episode policy.
 
 See `docs/HYPERFRAMES_PRODUCTION.md`. HyperFrames local preview and rendering
 are allowed for approved original graphics; never automatically invoke hosted
@@ -202,7 +205,7 @@ routing, run `python3 -m unittest discover -s tests -p 'test_skill_orchestrator.
 and `python3 -m unittest discover -s tests -p 'test_production_instructions.py' -v`.
 Keep all 12 official Remotion directories as pinned, separately maintained guidance.
 Route offline HyperFrames/GSAP graphics through `hyperframes-motion-graphics`,
-approved Chatterbox voices through `character-voice-production`, consented
+approved Kitten Mini voices through `character-voice-production`, consented
 Groq transcription/word captions through `transcription-captions`, and
 Bodymovin/Lottie/Duik imports through `animation-import`, and rights-cleared
 URL-to-media intake through `media-source-ingestion`. These skills

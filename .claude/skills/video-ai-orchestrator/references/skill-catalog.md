@@ -14,7 +14,7 @@ art or scripts still require a real checkout.
 | Explicit legacy 9:16 talking-head effects, source cuts and matte preparation | `video-effects` | `SKILL.md` |
 | Cross-domain terminal, DevOps, AI systems, research, software or quality procedures | `senior-multidisciplinary-agent` | `.agents/skills/senior-multidisciplinary-agent/SKILL.md` |
 | Offline HTML/GSAP graphics and HyperFrames chapter integration | `hyperframes-motion-graphics` | `.claude/skills/hyperframes-motion-graphics/SKILL.md` |
-| Approved Chatterbox V3 narration and optional VoxCPM2 experimentation | `character-voice-production` | `.claude/skills/character-voice-production/SKILL.md` |
+| Approved Kitten Mini Jasper/Kiki narration and optional VoxCPM2 experimentation | `character-voice-production` | `.claude/skills/character-voice-production/SKILL.md` |
 | Authorized transcription, Groq Whisper and reviewed word captions | `transcription-captions` | `.claude/skills/transcription-captions/SKILL.md` |
 | Compatible Bodymovin/Lottie and baked Duik animation import | `animation-import` | `.claude/skills/animation-import/SKILL.md` |
 | Authorized source video metadata, yt-dlp single-file intake, subtitles | `media-source-ingestion` | `.claude/skills/media-source-ingestion/SKILL.md` |

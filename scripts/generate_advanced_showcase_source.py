@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Build original animated UrFavXBF + PIX source for 12 advanced FX with matching mattes.
+"""Build original animated UrFavXBF + PIX source for 12 advanced FX with matching white-backed host cards and PIX mattes.
 This is owner-approved character art composited with synthetic original motion,
 not a slideshow and not a lip-sync demonstration. Never download remote media.
 """
 from __future__ import annotations
 import argparse
+import json
 from pathlib import Path
 import math
 import subprocess
@@ -14,12 +15,15 @@ from PIL import Image, ImageDraw, ImageFilter
 
 W, H, FPS, N = 540, 960, 30, 300
 ROOT = Path(__file__).resolve().parents[1]
-HOST_DIR = ROOT / "public/characters/pixel-default/urfavxbf"
+HOST_ART = json.loads((ROOT / "characters/urfavxbf-8bit-manifest.json").read_text())
 PIX_DIR = ROOT / "public/characters/pixel-default/pix"
 
-def character(path: Path, width: int, height: int) -> Image.Image:
+def character(path: Path, width: int, height: int, viewport=None) -> Image.Image:
     if not path.exists(): raise FileNotFoundError(str(path))
     source = Image.open(path).convert("RGBA")
+    if viewport is not None:
+        x,y,w,h=viewport
+        source=source.crop((x,y,x+w,y+h))
     bounds = source.getchannel("A").getbbox()
     if not bounds: raise RuntimeError("approved sprite is transparent: " + str(path))
     sprite = source.crop(bounds)
@@ -31,8 +35,8 @@ def render(destination: Path):
     fgdir,stickdir=destination/"fg",destination/"sticker"
     fgdir.mkdir(exist_ok=True);stickdir.mkdir(exist_ok=True)
     host_poses={}
-    for key in ("idle","talk","point_camera","happy","surprised","point_side"):
-        sprite=character(HOST_DIR/(key+".png"),400,585)
+    for key,desc in HOST_ART["poses"].items():
+        sprite=character(ROOT/HOST_ART["source"],400,585,desc["rect"])
         alpha=sprite.getchannel("A")
         outer=alpha.filter(ImageFilter.MaxFilter(17))
         outline=Image.new("RGBA",sprite.size,(0,0,0,0))
@@ -52,7 +56,7 @@ def render(destination: Path):
     try:
         for i in range(N):
             t=i/FPS
-            pose=("idle","talk","talk","point_camera","happy","surprised","point_side","talk")[(i//38)%8]
+            pose=tuple(HOST_ART["poses"])[(i//34)%len(HOST_ART["poses"])]
             host,outlined=host_poses[pose]
             palette=palettes[(i//60)%len(palettes)]
             image=Image.new("RGB",(W,H),palette)

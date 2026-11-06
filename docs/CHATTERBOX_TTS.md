@@ -1,3 +1,5 @@
+> **Superseded setup:** Current defaults are the owner-selected navy-hoodie UrFavXBF and Kitten Mini Jasper/Kiki. See [production policy](PRODUCTION_POLICY.md), [host poses](HOST_WORD_POSES.md) and `characters/registry.json`. Historical voice/art descriptions below do not override them. Previously rendered videos document their original art; rerender after the current character migration.
+
 > **Current production voice:** English Chatterbox V3 remains the default,
 > using Natural Storyteller for UrFavXBF and Emily for PIX. Read
 > [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and the registry's `english_voice`

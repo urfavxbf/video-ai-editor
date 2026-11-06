@@ -1,0 +1,15 @@
+{
+  "request": {
+    "text": "Thirty-three effects. One creative playground.",
+    "character": "urfavxbf",
+    "language": "en",
+    "profile": "kitten-mini-jasper-en-v1",
+    "engine": "kitten-onnx",
+    "model": "KittenML/kitten-tts-mini-0.8",
+    "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+    "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+    "voice": "Jasper",
+    "speed": 1.0
+  },
+  "sha256": "3e895c310638ea50af0dead458163e2e371e000d3941d9c68b7a3466982a38e5"
+}

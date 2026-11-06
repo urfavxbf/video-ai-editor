@@ -1,0 +1,15 @@
+{
+  "request": {
+    "text": "From bold typography to worlds made of light.",
+    "character": "urfavxbf",
+    "language": "en",
+    "profile": "kitten-mini-jasper-en-v1",
+    "engine": "kitten-onnx",
+    "model": "KittenML/kitten-tts-mini-0.8",
+    "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+    "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+    "voice": "Jasper",
+    "speed": 1.0
+  },
+  "sha256": "75a9a20c55cad5f137acd17184df2dac599ae42d11b27d4ebab5dd14c91e12ce"
+}

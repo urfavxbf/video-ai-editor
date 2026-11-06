@@ -35,7 +35,7 @@ class AgentPolicyContracts(unittest.TestCase):
         self.assertEqual(video["default_character_composition"], "HeroCharacterStage")
         for char in REGISTRY["characters"].values():
             self.assertIn(char["english_voice"]["identifier"], AGENT)
-        self.assertEqual(sum(len(v["poses"]) for v in MANIFEST["characters"].values()), 13)
+        self.assertEqual(sum(len(v["poses"]) for v in MANIFEST["characters"].values()), 16)
         self.assertIn("PixelProductionProof", AGENT)
         self.assertIn("--verify-workspace", AGENT)
 
@@ -59,7 +59,7 @@ class AgentPolicyContracts(unittest.TestCase):
         for token in ("EpisodeProduction", "EpisodeTimelineProof", "ExampleEdit",
                       "DudutPremium", "DudutV2", "FxPreview", "FxShowcase",
                       "AfterEffectsLottieProof", "DuikBakedCharacterProof",
-                      "input/pix-reference.wav", "groq_transcribe.py",
+                      "Kitten Mini", "groq_transcribe.py",
                       "--language en --device cpu", "ffprobe", "No paid",
                       "main", "not", "RMS"):
             with self.subTest(token=token):
@@ -71,7 +71,7 @@ class AgentPolicyContracts(unittest.TestCase):
         self.assertIn("AGENTS.md", PROMPTS)
         self.assertGreaterEqual(len(re.findall(r"(?m)^## [0-9]+[.] ", PROMPTS)), 14)
         for marker in ("HeroCharacterStage", "ExampleEdit", "DudutPremium",
-                       "FxPreview", "Chatterbox", "Duik", "Lottie",
+                       "FxPreview", "Kitten", "Duik", "Lottie",
                        "FFprobe", "scripts/character_voiceover.py",
                        "node scripts/validate-edit.cjs", "python3 scripts/stage_pixel_default_pack.py"):
             with self.subTest(marker=marker):

@@ -1,0 +1,27 @@
+{
+  "engine": "kitten-onnx",
+  "model": "KittenML/kitten-tts-mini-0.8",
+  "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+  "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+  "speed": 1.0,
+  "sampleRate": 24000,
+  "threads": 2,
+  "voices": {
+    "urfavxbf": "Jasper",
+    "pix": "Kiki"
+  },
+  "files": {
+    "config.json": "6b160bc9b19e24ecb21e84bc14f8a7da21fdf47ec72d42450bc5cf514b61804a",
+    "kitten_tts_mini_v0_8.onnx": "0f5bbae4fc4800c98dbc544a87ecfa79510de2fb8222db30d12e5bfe9177df91",
+    "voices.npz": "40ad2638952b77b7b2f30127e2608e169fc69dd256b53bd8aaa3409a33193c42"
+  },
+  "sdkFiles": {
+    "__init__.py": "abb314bee579279b0b7c1758c3aa38c6d81bda3d1a01ceda26f93d1992eeabc7",
+    "get_model.py": "5d01c6c65ac27ee15bf4daf34a769beee4f5d3635d77b8ddad41016534b48f43",
+    "preprocess.py": "a80265fbbdbbe8f946c046ec53aca79dd560675dcab92f1d2922bd25a854e333",
+    "repo.py": "0c3ef4f2cec7b304ee777e361b40b07e49328dadba3dabbeaf99cd4f9782d433",
+    "kittentts_legacy/__init__.py": "95d255aff96a869501f5a416d2a4d13712f5ed43975a861e2578faab778a8836",
+    "kittentts_legacy/model.py": "df60b903f35a4abb038063f590832f767059403c4f2dd7c2fb1bc00e8802878e",
+    "kittentts_legacy/onnx_model.py": "f1c1007237ef90dafe9ec3b7613102092671f60ca5c3df13bdb486dda70fbd5b"
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "ready": true,
+  "scriptSha256": "b558283802597eee224e709a77a85ac146fe700cfc2f73f890211d1913897aa7",
+  "generationRequest": {
+    "engine": "kitten-onnx",
+    "model": "KittenML/kitten-tts-mini-0.8",
+    "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+    "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+    "speed": 1.0,
+    "sampleRate": 24000,
+    "voice": "Jasper"
+  },
+  "alignmentSha256": "160871414856f2d51771ada0204e4f31cd1fbaa9d9e16a79c6657c5f1b703caa",
+  "generationSha256": "99421c133fa5e912b9df41e01570e9843c8690382c4641fdf9a1f0b1afe8de08",
+  "audio": "voiceovers/host-word-poses/jasper.wav",
+  "audioSha256": "fcd10cf6f651d3281bbdc2a5391c8479cd15a1a91cd2ae0691ab1b2c6d35a427",
+  "voice": "Kitten Mini 0.8 Jasper",
+  "alignment": "Local wav2vec2 ASR BASE 960h CTC forced alignment; transcript cross-checked by local Whisper tiny.en",
+  "review": "Local ASR transcript matched; local CTC alignment estimates, no human listening sign-off",
+  "fps": 30,
+  "durationFrames": 668,
+  "words": [
+    {
+      "text": "Hey,",
+      "startMs": 1061.7,
+      "endMs": 1302.5,
+      "timestampMs": null,
+      "confidence": 0.7496,
+      "pose": "waving"
+    },
+    {
+      "text": "creators!",
+      "startMs": 1563.5,
+      "endMs": 2065.2,
+      "timestampMs": null,
+      "confidence": 0.998,
+      "pose": "front"
+    },
+    {
+      "text": "I'm",
+      "startMs": 3208.27,
+      "endMs": 3288.57,
+      "timestampMs": null,
+      "confidence": 0.9793,
+      "pose": "three-quarter"
+    },
+    {
+      "text": "your",
+      "startMs": 3328.67,
+      "endMs": 3449.17,
+      "timestampMs": null,
+      "confidence": 0.9679,
+      "pose": "explaining"
+    },
+    {
+      "text": "favorite",
+      "startMs": 3509.37,
+      "endMs": 3870.57,
+      "timestampMs": null,
+      "confidence": 0.9728,
+      "pose": "thumbs-up"
+    },
+    {
+      "text": "host.",
+      "startMs": 3930.77,
+      "endMs": 4271.97,
+      "timestampMs": null,
+      "confidence": 0.9738,
+      "pose": "front"
+    },
+    {
+      "text": "Let's",
+      "startMs": 5455.23,
+      "endMs": 5676.03,
+      "timestampMs": null,
+      "confidence": 0.9647,
+      "pose": "explaining"
+    },
+    {
+      "text": "face",
+      "startMs": 5736.23,
+      "endMs": 5957.03,
+      "timestampMs": null,
+      "confidence": 1.0,
+      "pose": "front"
+    },
+    {
+      "text": "the",
+      "startMs": 6037.33,
+      "endMs": 6117.63,
+      "timestampMs": null,
+      "confidence": 0.9993,
+      "pose": "pointing"
+    },
+    {
+      "text": "challenge,",
+      "startMs": 6177.83,
+      "endMs": 6579.33,
+      "timestampMs": null,
+      "confidence": 0.9623,
+      "pose": "thumbs-up"
+    },
+    {
+      "text": "explore",
+      "startMs": 6900.53,
+      "endMs": 7281.93,
+      "timestampMs": null,
+      "confidence": 0.977,
+      "pose": "three-quarter"
+    },
+    {
+      "text": "another",
+      "startMs": 7342.23,
+      "endMs": 7623.23,
+      "timestampMs": null,
+      "confidence": 0.9981,
+      "pose": "explaining"
+    },
+    {
+      "text": "angle,",
+      "startMs": 7763.73,
+      "endMs": 8004.63,
+      "timestampMs": null,
+      "confidence": 0.9516,
+      "pose": "three-quarter"
+    },
+    {
+      "text": "look",
+      "startMs": 8285.73,
+      "endMs": 8426.23,
+      "timestampMs": null,
+      "confidence": 0.9987,
+      "pose": "pointing"
+    },
+    {
+      "text": "sideways,",
+      "startMs": 8526.63,
+      "endMs": 9008.43,
+      "timestampMs": null,
+      "confidence": 0.9643,
+      "pose": "side"
+    },
+    {
+      "text": "and",
+      "startMs": 9269.33,
+      "endMs": 9349.63,
+      "timestampMs": null,
+      "confidence": 0.9936,
+      "pose": "front"
+    },
+    {
+      "text": "check",
+      "startMs": 9409.83,
+      "endMs": 9610.63,
+      "timestampMs": null,
+      "confidence": 0.9994,
+      "pose": "pointing"
+    },
+    {
+      "text": "what's",
+      "startMs": 9670.83,
+      "endMs": 9851.53,
+      "timestampMs": null,
+      "confidence": 0.9785,
+      "pose": "three-quarter"
+    },
+    {
+      "text": "behind",
+      "startMs": 9911.73,
+      "endMs": 10212.83,
+      "timestampMs": null,
+      "confidence": 0.9876,
+      "pose": "back"
+    },
+    {
+      "text": "us.",
+      "startMs": 10333.33,
+      "endMs": 10393.53,
+      "timestampMs": null,
+      "confidence": 0.9999,
+      "pose": "front"
+    },
+    {
+      "text": "Look",
+      "startMs": 11536.8,
+      "endMs": 11697.4,
+      "timestampMs": null,
+      "confidence": 0.9392,
+      "pose": "pointing"
+    },
+    {
+      "text": "here!",
+      "startMs": 11777.7,
+      "endMs": 12018.5,
+      "timestampMs": null,
+      "confidence": 0.9961,
+      "pose": "three-quarter"
+    },
+    {
+      "text": "Let",
+      "startMs": 12921.9,
+      "endMs": 13042.3,
+      "timestampMs": null,
+      "confidence": 1.0,
+      "pose": "waving"
+    },
+    {
+      "text": "me",
+      "startMs": 13082.5,
+      "endMs": 13142.7,
+      "timestampMs": null,
+      "confidence": 1.0,
+      "pose": "front"
+    },
+    {
+      "text": "explain",
+      "startMs": 13243.1,
+      "endMs": 13644.5,
+      "timestampMs": null,
+      "confidence": 0.9712,
+      "pose": "explaining"
+    },
+    {
+      "text": "this",
+      "startMs": 13724.8,
+      "endMs": 13845.3,
+      "timestampMs": null,
+      "confidence": 0.9938,
+      "pose": "pointing"
+    },
+    {
+      "text": "idea.",
+      "startMs": 13965.7,
+      "endMs": 14387.3,
+      "timestampMs": null,
+      "confidence": 0.75,
+      "pose": "explaining"
+    },
+    {
+      "text": "Great",
+      "startMs": 15049.03,
+      "endMs": 15250.53,
+      "timestampMs": null,
+      "confidence": 0.9871,
+      "pose": "thumbs-up"
+    },
+    {
+      "text": "progress!",
+      "startMs": 15331.03,
+      "endMs": 15834.63,
+      "timestampMs": null,
+      "confidence": 0.9921,
+      "pose": "front"
+    },
+    {
+      "text": "Wow,",
+      "startMs": 16700.83,
+      "endMs": 16922.43,
+      "timestampMs": null,
+      "confidence": 0.852,
+      "pose": "surprised"
+    },
+    {
+      "text": "that's",
+      "startMs": 17123.83,
+      "endMs": 17345.43,
+      "timestampMs": null,
+      "confidence": 0.9795,
+      "pose": "explaining"
+    },
+    {
+      "text": "amazing!",
+      "startMs": 17425.93,
+      "endMs": 17849.03,
+      "timestampMs": null,
+      "confidence": 0.9993,
+      "pose": "thumbs-up"
+    },
+    {
+      "text": "Ready?",
+      "startMs": 18511.87,
+      "endMs": 18754.17,
+      "timestampMs": null,
+      "confidence": 0.9971,
+      "pose": "front"
+    },
+    {
+      "text": "Let's",
+      "startMs": 19642.47,
+      "endMs": 19824.17,
+      "timestampMs": null,
+      "confidence": 0.9507,
+      "pose": "pointing"
+    },
+    {
+      "text": "create",
+      "startMs": 19884.77,
+      "endMs": 20167.47,
+      "timestampMs": null,
+      "confidence": 0.9998,
+      "pose": "explaining"
+    },
+    {
+      "text": "together!",
+      "startMs": 20227.97,
+      "endMs": 20651.97,
+      "timestampMs": null,
+      "confidence": 0.8994,
+      "pose": "waving"
+    }
+  ],
+  "phrases": [
+    {
+      "text": "Hey, creators!",
+      "startMs": 1061.7,
+      "endMs": 2065.2,
+      "wordStart": 0,
+      "wordCount": 2
+    },
+    {
+      "text": "I'm your favorite host.",
+      "startMs": 3208.27,
+      "endMs": 4271.97,
+      "wordStart": 2,
+      "wordCount": 4
+    },
+    {
+      "text": "Let's face the challenge, explore another angle, look sideways, and check what's behind us.",
+      "startMs": 5455.23,
+      "endMs": 10393.53,
+      "wordStart": 6,
+      "wordCount": 14
+    },
+    {
+      "text": "Look here! Let me explain this idea.",
+      "startMs": 11536.8,
+      "endMs": 14387.3,
+      "wordStart": 20,
+      "wordCount": 7
+    },
+    {
+      "text": "Great progress! Wow, that's amazing!",
+      "startMs": 15049.03,
+      "endMs": 17849.03,
+      "wordStart": 27,
+      "wordCount": 5
+    },
+    {
+      "text": "Ready? Let's create together!",
+      "startMs": 18511.87,
+      "endMs": 20651.97,
+      "wordStart": 32,
+      "wordCount": 4
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "request": {
+    "text": "And I'm PIX. Let's break a few creative rules!",
+    "character": "pix",
+    "language": "en",
+    "profile": "kitten-mini-kiki-en-v1",
+    "engine": "kitten-onnx",
+    "model": "KittenML/kitten-tts-mini-0.8",
+    "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+    "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+    "voice": "Kiki",
+    "speed": 1.0
+  },
+  "sha256": "6c020fa7c38a9644786589cc7872db0e9649fa9f5b7e6b495c63d79599378673"
+}

@@ -16,14 +16,14 @@ dependent production. A Tagalog user message does not change video language.
 
 - **English (en)** for scripts, narration, captions, graphics and metadata.
 - Long-form **1920×1080, 16:9, 30 fps**; runtime follows script and chapters.
-- UrFavXBF: Chatterbox V3 **Natural Storyteller**, `natural-storyteller-v1`.
-- PIX: Chatterbox V3 **Emily**, `pix-cute-female-emily-v1`; keep independent speakers.
-- **13 committed** approved pixel PNG poses (UrFavXBF 6, PIX 7), under
-  `public/characters/pixel-default/`; verify against `characters/pixel-default-manifest.json`.
+- UrFavXBF: Kitten Mini **Jasper**, `kitten-mini-jasper-en-v1`.
+- PIX: Kitten Mini **Kiki**, `kitten-mini-kiki-en-v1`; keep independent speakers.
+- **16 committed** pixel poses (UrFavXBF 9 owner-sheet viewports, PIX 7 transparent PNGs), under
+  `public/characters/urfavxbf-8bit/` and `public/characters/pixel-default/pix/`; verify against `characters/pixel-default-manifest.json`.
 - Full-body pixel-pose characters on a cinematic 2.5D stage:
   **HeroCharacterStage** with approved assets enabled; **PixelProductionProof**
   is the existing model-free artwork proof. No substitute/rejected art.
-- Preserve black/neon-green UrFavXBF and cyan/lavender PIX identities. Use
+- Preserve the navy-hoodie Filipino UrFavXBF from owner sheet 52170.jpg and cyan/lavender PIX. The host is white-backed, not a transparent PNG. Use
   speaker/listener pose swaps and short scene-transition glitches; no claim of
   phoneme lip-sync or volumetric 3D from PNG transforms.
 - Tagalog/VoxCPM2 stays on hold, **opt-in only**. **No paid API or GPU** usage.
@@ -41,7 +41,7 @@ Do not demand the old V2 Library pack for the default workflow.
 2. Plan the story, chapter lengths, speaker turns and restrained FX. UrFavXBF
    covers wisdom, science, math, internet culture, AI and editing; never science-only.
 3. Reuse approved English WAVs when available. If new narration is authorized,
-   use the existing Chatterbox profiles via `scripts/character_voiceover.py`
+   use the selected Kitten Mini Jasper/Kiki profiles via `scripts/character_voiceover.py`
    with `--language en --device cpu`. Actual WAVs, word alignment and listening
    QA determine captions and speaker events, not guessed text duration.
 4. Apply `docs/PRODUCTION_STANDARD.md`. Use the 21 existing FX selectively,
@@ -63,7 +63,7 @@ the primary `AGENTS.md` rules before using it. Use
 `npm run hyperframes:lint`, then `npm run hyperframes:render` to produce
 and stage verified 1920×1080/30fps offline motion graphics.
 `EpisodeProduction.motionGraphics` accepts validated, chapter-local,
-muted visual clips. Keep approved UrFavXBF/PIX characters and Chatterbox V3
+muted visual clips. Keep approved UrFavXBF/PIX characters and Kitten Mini
 audio; do not call HyperFrames Cloud, media-use, publish, paid services or
 remote uploads without explicit authorization. The included 2-second
 graphic is an original integration fixture, not a full original episode.

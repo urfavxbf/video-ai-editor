@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "source": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+  "sourceSha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+  "selection": "Owner attachment 52170.jpg, 2026-11-06",
+  "technique": "Direct unmodified JPEG displayed in bounded CSS viewports; white-backed art, not transparent sprites",
+  "poses": {
+    "front": {
+      "rect": [
+        380,
+        156,
+        155,
+        311
+      ]
+    },
+    "three-quarter": {
+      "rect": [
+        620,
+        155,
+        150,
+        311
+      ]
+    },
+    "side": {
+      "rect": [
+        845,
+        158,
+        155,
+        309
+      ]
+    },
+    "back": {
+      "rect": [
+        1070,
+        157,
+        160,
+        310
+      ]
+    },
+    "waving": {
+      "rect": [
+        347,
+        606,
+        165,
+        254
+      ]
+    },
+    "pointing": {
+      "rect": [
+        522,
+        604,
+        164,
+        256
+      ]
+    },
+    "explaining": {
+      "rect": [
+        690,
+        602,
+        218,
+        258
+      ]
+    },
+    "thumbs-up": {
+      "rect": [
+        915,
+        602,
+        169,
+        258
+      ]
+    },
+    "surprised": {
+      "rect": [
+        1081,
+        595,
+        178,
+        265
+      ]
+    }
+  }
+}

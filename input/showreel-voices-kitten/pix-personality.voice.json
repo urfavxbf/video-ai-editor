@@ -1,0 +1,15 @@
+{
+  "request": {
+    "text": "Big motion. Tiny pixels. A whole lot of personality.",
+    "character": "pix",
+    "language": "en",
+    "profile": "kitten-mini-kiki-en-v1",
+    "engine": "kitten-onnx",
+    "model": "KittenML/kitten-tts-mini-0.8",
+    "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+    "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+    "voice": "Kiki",
+    "speed": 1.0
+  },
+  "sha256": "7a7062a8f3c26a59c50da3292dc493b382a6769728e13c8f44bd0a4c73f1af1a"
+}

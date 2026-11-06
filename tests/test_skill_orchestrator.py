@@ -49,7 +49,7 @@ class SkillOrchestratorContracts(unittest.TestCase):
             ),
             'character-voice-production': (
                 'scripts/character_voiceover.py', 'docs/CHATTERBOX_TTS.md',
-                'input/pix-reference.wav', 'VoxCPM2',
+                'Kiki', 'VoxCPM2',
             ),
             'transcription-captions': (
                 'scripts/groq_transcribe.py', 'docs/AI_VIDEO_TOOLS.md',

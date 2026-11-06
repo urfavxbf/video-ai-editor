@@ -1,0 +1,80 @@
+[
+  {
+    "text": "Hey, creators!",
+    "generationRequest": {
+      "engine": "kitten-onnx",
+      "model": "KittenML/kitten-tts-mini-0.8",
+      "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+      "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+      "speed": 1.0,
+      "sampleRate": 24000,
+      "voice": "Jasper"
+    },
+    "sha256": "6ee513654a0a5012e14c490b82f97e8e48d41b854685ea95ccb450768dd1743c"
+  },
+  {
+    "text": "I'm your favorite host.",
+    "generationRequest": {
+      "engine": "kitten-onnx",
+      "model": "KittenML/kitten-tts-mini-0.8",
+      "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+      "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+      "speed": 1.0,
+      "sampleRate": 24000,
+      "voice": "Jasper"
+    },
+    "sha256": "1c7206d45301d23e93ac77bdea07d55c9b4993650953aaa840f4a615d2be554b"
+  },
+  {
+    "text": "Let's face the challenge, explore another angle, look sideways, and check what's behind us.",
+    "generationRequest": {
+      "engine": "kitten-onnx",
+      "model": "KittenML/kitten-tts-mini-0.8",
+      "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+      "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+      "speed": 1.0,
+      "sampleRate": 24000,
+      "voice": "Jasper"
+    },
+    "sha256": "3a3cfc5fa42d105f78b7f91bf12b385cc938ba12515a5f63c5eea1cd30b21fad"
+  },
+  {
+    "text": "Look here! Let me explain this idea.",
+    "generationRequest": {
+      "engine": "kitten-onnx",
+      "model": "KittenML/kitten-tts-mini-0.8",
+      "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+      "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+      "speed": 1.0,
+      "sampleRate": 24000,
+      "voice": "Jasper"
+    },
+    "sha256": "1dcb6295d3401b20498b83d2a5e3ab35ca3a67d2a249a6ba340b468541f80b91"
+  },
+  {
+    "text": "Great progress! Wow, that's amazing!",
+    "generationRequest": {
+      "engine": "kitten-onnx",
+      "model": "KittenML/kitten-tts-mini-0.8",
+      "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+      "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+      "speed": 1.0,
+      "sampleRate": 24000,
+      "voice": "Jasper"
+    },
+    "sha256": "16de4e7f411fd45f40d3e235b2000aae628d785882d8cc2248d8fae5d0c55924"
+  },
+  {
+    "text": "Ready? Let's create together!",
+    "generationRequest": {
+      "engine": "kitten-onnx",
+      "model": "KittenML/kitten-tts-mini-0.8",
+      "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+      "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+      "speed": 1.0,
+      "sampleRate": 24000,
+      "voice": "Jasper"
+    },
+    "sha256": "30054fed1122dda9d5e8a768bdb1837561b7c133207e6940ad5d8512ccb4dff8"
+  }
+]

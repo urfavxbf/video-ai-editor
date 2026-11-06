@@ -1,0 +1,15 @@
+{
+  "request": {
+    "text": "I'm UrFavXBF. Let's give that idea a little character.",
+    "character": "urfavxbf",
+    "language": "en",
+    "profile": "kitten-mini-jasper-en-v1",
+    "engine": "kitten-onnx",
+    "model": "KittenML/kitten-tts-mini-0.8",
+    "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+    "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+    "voice": "Jasper",
+    "speed": 1.0
+  },
+  "sha256": "515cb3f7ef718662f174c55b25fa28ec50dac40c4acd0dec0fbdda645a179466"
+}

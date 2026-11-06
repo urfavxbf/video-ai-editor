@@ -1,0 +1,15 @@
+{
+  "request": {
+    "text": "Now, let's make your next move.",
+    "character": "pix",
+    "language": "en",
+    "profile": "kitten-mini-kiki-en-v1",
+    "engine": "kitten-onnx",
+    "model": "KittenML/kitten-tts-mini-0.8",
+    "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+    "sdkCommit": "b9517e3050adced306219f8bea5f117d87ecfaa7",
+    "voice": "Kiki",
+    "speed": 1.0
+  },
+  "sha256": "9d80ab63388c5c05f35f8ec9d98b9a5249174535e0f79d099cd97a3849e55082"
+}
