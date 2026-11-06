@@ -70,3 +70,11 @@ if (fs.existsSync(target)) {
   }
  });
 }
+test('on-screen pose totals follow the current host and PIX manifests',()=>{
+ const t=load('src/showcase/showreelTimeline.ts');
+ const manifest=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../characters/pixel-default-manifest.json')));
+ const expected=Object.values(manifest.characters).reduce((n,c)=>n+Object.keys(c.poses).length,0);
+ assert.ok(t.SHOWREEL_FACTS,'missing shared on-screen facts');
+ assert.equal(t.SHOWREEL_FACTS.poses,expected);
+ assert.equal(t.SHOWREEL_FACTS.poses,16);
+});

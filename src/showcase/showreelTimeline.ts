@@ -48,6 +48,7 @@ export const SHOWREEL_SHOTS:ShowreelShot[] = SHOT_DEFINITIONS.map(([id,title,fra
 export const SHOWREEL_FRAMES = at + OUTRO_FRAMES;
 export const HOST_POSES=['front','three-quarter','side','back','waving','pointing','explaining','thumbs-up','surprised'] as const;
 export const PIX_POSES=['idle','curious','talk','point','happy','question','surprised'] as const;
+export const SHOWREEL_FACTS={effects:SHOT_DEFINITIONS.length,characters:2,poses:HOST_POSES.length+PIX_POSES.length,voices:2} as const;
 export function shotPose(character:'urfavxbf'|'pix',index:number):string {
  const poses=character==='pix'?PIX_POSES:HOST_POSES;
  return poses[((index%poses.length)+poses.length)%poses.length];

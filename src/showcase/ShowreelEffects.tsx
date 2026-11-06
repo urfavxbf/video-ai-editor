@@ -2,11 +2,11 @@ import React from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {interpolatePath} from '@remotion/paths';
 import {PALETTES, ShowreelScene, ShowreelSubject, clamp, ease, hash, DISPLAY} from './ShowreelScene';
-import {type ShowreelShot, type ShowreelEffectId} from './showreelTimeline';
+import {SHOWREEL_FACTS,type ShowreelShot, type ShowreelEffectId} from './showreelTimeline';
 
 type Props={shot:ShowreelShot;energy:number};
 const Fill=({children,style={}}:{children?:React.ReactNode;style?:React.CSSProperties})=><AbsoluteFill style={{overflow:'hidden',isolation:'isolate',...style}}>{children}</AbsoluteFill>;
-const labels=['33 EFFECTS','2 CHARACTERS','13 POSES','2 VOICES'];
+const labels=[`${SHOWREEL_FACTS.effects} EFFECTS`,`${SHOWREEL_FACTS.characters} CHARACTERS`,`${SHOWREEL_FACTS.poses} POSES`,`${SHOWREEL_FACTS.voices} VOICES`];
 const steps=['WRITE THE IDEA','STAGE THE CHARACTERS','ADD THE MOTION','GIVE IT A VOICE','RENDER THE STORY'];
 
 /** Native 1920×1080 variants: same effect IDs/roles, original full-frame character sources.
@@ -62,9 +62,9 @@ export const ShowreelEffect=({shot,energy}:Props)=>{
   case 'glass-widgets':return <>{base}{labels.slice(0,3).map((label,i)=>card(label,{left:130+i*300,top:700-i*35,fontSize:32,transform:`translateY(${(1-ease(f,i*5))*140}px) rotate(${i*4-4}deg)`,opacity:ease(f,i*5)}))}</>;
   case 'checklist-pop':return <>{titleless}<div style={{position:'absolute',left:115,top:200,width:850}}>{labels.map((label,i)=><div key={label} style={{fontFamily:DISPLAY,fontSize:68,fontWeight:900,color:i%2?c.accent:c.fg,marginBottom:28,opacity:ease(f,i*8),transform:`translateX(${(1-ease(f,i*8))*-100}px)`}}><span style={{display:'inline-block',fontSize:43,verticalAlign:'middle',marginRight:30}}>✦</span>{label}</div>)}</div>{characters}</>;
   case 'checklist':return <>{titleless}<div style={{position:'absolute',left:120,top:175,width:900}}>{steps.map((label,i)=><div key={label} style={{display:'flex',gap:28,alignItems:'center',height:138,borderBottom:'1px solid '+c.fg+'33',fontFamily:DISPLAY,fontSize:40,fontWeight:800,color:c.fg,opacity:ease(f,i*9),transform:`translateY(${(1-ease(f,i*9))*55}px)`}}><span style={{color:c.accent,fontSize:38}}>✓</span>{label}</div>)}</div>{characters}</>;
-  case 'checklist-tally':return <>{empty}<div style={{position:'absolute',left:130,top:600,display:'flex',gap:55}}>{[['33','EFFECTS'],['13','POSES'],['2','VOICES']].map(([n,label],i)=><div key={label} style={{fontFamily:DISPLAY,color:c.fg,opacity:ease(f,8+i*8),transform:`translateY(${(1-ease(f,8+i*8))*100}px)`}}><div style={{fontSize:136,fontWeight:900,letterSpacing:-8}}>{Math.round(Number(n)*clamp((f-8-i*8)/25))}</div><div style={{fontSize:21,fontWeight:800,letterSpacing:3}}>{label}</div></div>)}</div>{characters}</>;
+  case 'checklist-tally':return <>{empty}<div style={{position:'absolute',left:130,top:600,display:'flex',gap:55}}>{[['33','EFFECTS'],[String(SHOWREEL_FACTS.poses),'POSES'],['2','VOICES']].map(([n,label],i)=><div key={label} style={{fontFamily:DISPLAY,color:c.fg,opacity:ease(f,8+i*8),transform:`translateY(${(1-ease(f,8+i*8))*100}px)`}}><div style={{fontSize:136,fontWeight:900,letterSpacing:-8}}>{Math.round(Number(n)*clamp((f-8-i*8)/25))}</div><div style={{fontSize:21,fontWeight:800,letterSpacing:3}}>{label}</div></div>)}</div>{characters}</>;
   case 'headline-storm':{
-   const text=['33 EFFECTS.','URFAVXBF.','PIX.','13 APPROVED POSES.','TWO DISTINCT VOICES.','ORIGINAL MOTION.','ONE CREATIVE REPO.'];
+   const text=['33 EFFECTS.','URFAVXBF.','PIX.',`${SHOWREEL_FACTS.poses} APPROVED POSES.`,'TWO DISTINCT VOICES.','ORIGINAL MOTION.','ONE CREATIVE REPO.'];
    return <>{titleless}{text.map((label,i)=><div key={label} style={{position:'absolute',left:85+(i%3)*55,top:105+i*115,padding:'15px 35px',background:i%2?c.accent:c.fg,color:i%2?c.bg:'#eeeae0',fontFamily:DISPLAY,fontSize:46,fontWeight:900,letterSpacing:-1,transform:`translateX(${(1-ease(f,i*5))*-1300}px) rotate(${(i%2?1:-1)*(2+i*.5)}deg)`,boxShadow:'0 10px 30px #0002'}}>{label}</div>)}{characters}</>;
   }
   case 'chat-takeover':return <>{titleless}{card(<><div style={{fontSize:23,letterSpacing:4,color:c.accent,marginBottom:30}}>THE IDEA</div><div style={{fontSize:52,lineHeight:1.2}}>“Give every idea<br/>a little character.”</div><div style={{height:2,background:'#fff3',margin:'35px 0'}}/><div style={{fontSize:39,color:c.accent,opacity:ease(f,30)}}>Let's make it move.<span style={{opacity:f%20<10?1:0}}> ▌</span></div></>,{left:115,top:240,width:820,transform:`translateY(${(1-e)*60}px)`,opacity:e})}{characters}</>;
