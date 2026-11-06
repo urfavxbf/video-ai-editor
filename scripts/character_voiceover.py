@@ -61,8 +61,8 @@ def synth_args(args: argparse.Namespace, pix_reference: Path | None = None) -> l
 
 
 def kitten_request(args: argparse.Namespace) -> dict:
-    from kitten_showreel_voice import config
-    profile=config();voice=profile['voices'][args.character]
+    profile=json.loads((ROOT/'src/showcase/showreel-voices.json').read_text())
+    voice=profile['voices'][args.character]
     registered=json.loads(REGISTRY.read_text())['characters'][args.character]['english_voice']
     if registered.get('voice')!=voice or registered.get('modelRevision')!=profile['modelRevision']:
         raise ValueError('Kitten config differs from the approved character registry')

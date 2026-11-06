@@ -11,6 +11,13 @@ from pix_voice_profile import DEFAULT_PIX
 
 
 class CharacterVoiceoverTests(unittest.TestCase):
+    def test_kitten_voice_plan_needs_no_optional_inference_dependencies(self):
+        import json,subprocess
+        result=subprocess.run([sys.executable,'-S',str(Path(voice.__file__)),
+            '--character','pix','--text','Hello.','--output','out/dry-run.wav','--dry-run'],text=True,capture_output=True)
+        self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+        self.assertEqual(json.loads(result.stdout)['voice'],'Kiki')
+
     def test_default_english_engine_uses_owner_selected_kitten_voices(self):
         import contextlib,io,json
         for who,expected in [('urfavxbf','Jasper'),('pix','Kiki')]:
