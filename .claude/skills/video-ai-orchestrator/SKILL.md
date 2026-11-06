@@ -59,6 +59,9 @@ the English production default. Never overwrite a newer user change.
   inspect the actual export and enforce the baked-vector compatibility limits.
 - **Engineering, AI, research, security, or terminal issues:** canonical
   `senior-multidisciplinary-agent`, opening only relevant references.
+- **MCP-capable host integration:** use `docs/MCP_SERVER.md` and the
+  `mcp_server/` stdio bridge. MCP tools invoke selected existing scripts;
+  they are not additional SKILL.md modules or proof of ChatGPT installation.
 - **Final media:** apply shared QA from `scripts/episode_qa.py` and
   `docs/PRODUCTION_STANDARD.md`: inspect actual frame timing, dimensions,
   encoding, captions, stream integrity, audio and visual content.

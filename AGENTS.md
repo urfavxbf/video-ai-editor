@@ -210,6 +210,18 @@ document existing, opt-in capabilities and never authorize remote processing,
 paid services, a different speaker/language, media publishing or a silent
 merge. Reuse `scripts/episode_qa.py` for actual delivery validation.
 
+## Local MCP server integration
+
+The optional `mcp_server/` exposes a **local stdio** tool surface through the
+official Python MCP SDK v2. Use `docs/MCP_SERVER.md` for scope and host
+installation. Preserve the existing policy precedence and validation scripts;
+MCP tools do not replace the 21 specialist skills, grant new permissions,
+authorize external data uploads, create an internet-accessible API, or prove
+that a voiced episode exists. Render and network tools require explicit
+per-call owner authorization; a model-supplied boolean is not a substitute
+for a host permission prompt. Do not commit secrets or automatically install
+the server into anyone's ChatGPT/desktop account.
+
 ## 8. Prompt playbook
 
 Use [`docs/AI_AGENT_PROMPTS.md`](docs/AI_AGENT_PROMPTS.md) for ready-to-copy,

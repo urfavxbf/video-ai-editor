@@ -1,0 +1,48 @@
+name: Video AI Editor MCP Server Validation
+
+on:
+  pull_request:
+    paths:
+      - 'mcp_server/**'
+      - 'scripts/run-mcp-server.py'
+      - 'requirements-mcp.txt'
+      - 'tests/test_mcp_bridge.py'
+      - 'tests/mcp_protocol_smoke.py'
+      - 'docs/MCP_SERVER.md'
+      - '.github/workflows/mcp-server-validation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'mcp_server/**'
+      - 'scripts/run-mcp-server.py'
+      - 'requirements-mcp.txt'
+      - 'tests/test_mcp_bridge.py'
+      - 'tests/mcp_protocol_smoke.py'
+      - 'docs/MCP_SERVER.md'
+      - '.github/workflows/mcp-server-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mcp-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-mcp.txt
+      - name: Install official pinned MCP SDK
+        run: python3 -m pip install -r requirements-mcp.txt
+      - name: Compile MCP bridge and tests
+        run: python3 -m py_compile mcp_server/*.py scripts/run-mcp-server.py tests/test_mcp_bridge.py tests/mcp_protocol_smoke.py
+      - name: Run offline bridge unit tests
+        run: python3 -m unittest discover -s tests -p 'test_mcp_bridge.py' -v
+      - name: Verify real MCP protocol tool listing and calls
+        run: python3 tests/mcp_protocol_smoke.py

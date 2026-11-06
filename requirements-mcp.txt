@@ -1,0 +1,3 @@
+# Official MCP Python SDK v2, pinned after API verification (2026-11-06).
+# Install separately to keep the existing Remotion/FFmpeg runtime lightweight.
+mcp==2.3.0
