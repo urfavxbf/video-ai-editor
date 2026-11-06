@@ -111,6 +111,8 @@ Never fabricate chart numbers, captions, source positions, or source media.
 
 ## 5. Media, voice, captions and audio
 
+- **Owner delivery preference:** generated narration WAVs and the original showreel score stay on Google Drive. Public Git contains code, artwork and timing/provenance JSON only. Restore approved audio locally with `scripts/stage_delivery_audio.py`; do not force-add audio or rendered MP4s without a new explicit owner instruction.
+
 - **Reuse approved real WAV audio** where available. When **explicitly
   authorized** to generate new English narration, use the existing
   `scripts/character_voiceover.py` CLI with `--language en --device cpu`,
