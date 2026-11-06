@@ -1,5 +1,9 @@
 """MCP v2 wire-level smoke test, installed only by the focused MCP CI job."""
 import asyncio
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from mcp import Client
 from mcp_server.server import mcp

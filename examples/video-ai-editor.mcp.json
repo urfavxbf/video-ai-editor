@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "video-ai-editor": {
+      "command": "/ABSOLUTE/PATH/video-ai-editor/.venv/bin/python",
+      "args": [
+        "/ABSOLUTE/PATH/video-ai-editor/scripts/run-mcp-server.py"
+      ]
+    }
+  }
+}

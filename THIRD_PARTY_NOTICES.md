@@ -24,6 +24,15 @@ source/wheel licensing is published as the **Unlicense**; bundled binaries
 and optional dependencies may carry other licenses. We do not vendor
 yt-dlp source or grant any rights to download, edit, or republish videos.
 
+## Model Context Protocol Python SDK (optional local server)
+
+The optional local MCP integration depends on the official
+[Model Context Protocol Python SDK](https://github.com/modelcontextprotocol/python-sdk)
+distributed under the MIT License. It is installed as a separately pinned
+package by `requirements-mcp.txt` and is not vendored or relicensed here.
+Dependent libraries may have separate licenses. No project-wide MIT license
+is declared.
+
 ## Remotion framework
 
 The `remotion` and `@remotion/*` dependencies come from [remotion-dev/remotion](https://github.com/remotion-dev/remotion), which publishes its **own license** at [LICENSE.md](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md). Remotion is not generally MIT-licensed. Review its eligibility and commercial usage rules separately.

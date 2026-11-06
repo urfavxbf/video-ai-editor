@@ -25,6 +25,7 @@ version-controlled workspace.
 | Transcription and captions | Optional Groq Whisper JSON/TXT/SRT transcription; reviewed WAV-bound alignment for production | [AI video tools](docs/AI_VIDEO_TOOLS.md) |
 | Animation imports | Compatible Bodymovin/Lottie JSON and baked 2D Duik Ángela exports | [Lottie](docs/AFTER_EFFECTS_LOTTIE.md) / [Duik](docs/DUIK_ANGELA_IMPORT.md) |
 | AI-assisted workflows | **21 modular agent skills**, selected through one central orchestrator | [Skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md) |
+| Local AI assistant tools (MCP) | Official Python MCP v2 stdio server for current policy, skills, validation, FFprobe and bounded renders | [MCP server guide](docs/MCP_SERVER.md) |
 | Production verification | Python/Node tests, TypeScript checks, GitHub Actions, FFprobe and encoded video fixtures | [Agent policy](AGENTS.md) |
 
 These capabilities are scoped: a checked-in demo, proof composition, or
@@ -88,6 +89,27 @@ The committed [devcontainer](.devcontainer/devcontainer.json) and
 [setup guide](docs/CODESPACES_SETUP.md) describe the environment.
 Codespaces may consume account quota. Creating a Codespace does not
 automatically give this chat access to its terminal or files.
+
+## Connect an AI assistant (MCP server)
+
+A **local, opt-in MCP server** exposes real project tools to MCP-compatible
+clients such as coding agents and desktop IDEs. It uses the official Python
+MCP SDK v2 and starts over `stdio`, with no public endpoint or cloud
+credentials required. It is separate from the 21 instructional skills.
+
+```bash
+# In a project-local Python 3.11+ virtual environment:
+.venv/bin/python -m pip install -r requirements-mcp.txt
+.venv/bin/python scripts/run-mcp-server.py
+```
+
+The last command intentionally **waits for an MCP host**; it is not a
+human-facing CLI. Configure the host using the copy-ready instructions in
+[docs/MCP_SERVER.md](docs/MCP_SERVER.md). It can inspect project metadata,
+list skills, validate art and edits, probe local media, and, only with explicit
+approval, run a restricted proof render or request yt-dlp metadata.
+No finished video, remote ChatGPT connection, or plugin installation is
+implied simply by running the server.
 
 ## Current approved production defaults
 
