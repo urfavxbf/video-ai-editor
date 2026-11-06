@@ -1,139 +1,204 @@
 # Video AI Editor
 
-A Remotion/TypeScript + FFmpeg/Python AI video-production workspace.
-It is not an Android app.
+**AI-assisted video production toolkit powered by Remotion, FFmpeg, HyperFrames, and specialized AI agent skills.**
 
-## Current approved production settings
+Build and verify original character-led videos, footage edits, cinematic motion
+graphics, narration, captions, and compatible vector animation imports in one
+version-controlled workspace.
 
-Read [the current production policy](docs/PRODUCTION_POLICY.md) and
-[characters/registry.json](characters/registry.json) before planning. The latest
-explicit user instruction governs the request; otherwise current registry values
-win over historical examples and superseded policy bodies.
+> **Project status:** This is a **Remotion/TypeScript + FFmpeg/Python production
+> toolkit**, not a hosted one-click AI video generator, a finished GUI video
+> editor, or a native Android app. Features below are existing tools and
+> workflows; a complete episode still needs actual media, approved audio,
+> storyboarding, rendering, and audiovisual review.
 
-- **English (en)** for script, narration, captions, graphics and metadata.
-- **Long-form, 16:9, 1920×1080, 30 fps**; runtime follows script and chapters.
-- **13 committed approved pixel poses**: UrFavXBF (6) and PIX (7), with original
-  transparent PNGs and SHA-256 fingerprints in the [asset manifest](characters/pixel-default-manifest.json).
-- **HeroCharacterStage** is the default full-body pixel-pose/2.5D composition.
-  **PixelProductionProof** is the existing model-free artwork proof.
-- English Chatterbox V3 voices stay **Natural Storyteller** for UrFavXBF
-  (`natural-storyteller-v1`) and **Emily** for PIX (`pix-cute-female-emily-v1`).
-- Tagalog/VoxCPM2 is **on hold, opt-in only**. No paid API/GPU usage or
-  replacement/rejected art is authorized by the default workflow.
+## What this repository can do
 
-Verify the actual checkout with:
+| Capability | Existing implementation | Where to start |
+| --- | --- | --- |
+| Original character videos | UrFavXBF + PIX, `HeroCharacterStage` (2.5D), chapter-based `EpisodeProduction` | [Production policy](docs/PRODUCTION_POLICY.md) |
+| Source-footage edits | Frame-accurate edit lists, talking-head effects and Remotion `ExampleEdit` | [Video effects skill](SKILL.md) |
+| Authorized online source intake | Pinned yt-dlp inspection, single-video downloads, and available subtitle files | [Media ingestion guide](docs/MEDIA_SOURCE_INGESTION.md) |
+| Cinematic effects | **33 effects:** 21 original talking-head effects plus 12 advanced full-frame effects | [Effects guide](docs/CINEMATIC_FX_12.md) |
+| Offline motion graphics | HyperFrames + GSAP, locally encoded H.264 clips, chapter-timed Remotion integration | [HyperFrames guide](docs/HYPERFRAMES_PRODUCTION.md) |
+| Character narration | Optional Chatterbox V3 voice synthesis with distinct approved UrFavXBF and PIX profiles | [Voice guide](docs/CHATTERBOX_TTS.md) |
+| Transcription and captions | Optional Groq Whisper JSON/TXT/SRT transcription; reviewed WAV-bound alignment for production | [AI video tools](docs/AI_VIDEO_TOOLS.md) |
+| Animation imports | Compatible Bodymovin/Lottie JSON and baked 2D Duik Ángela exports | [Lottie](docs/AFTER_EFFECTS_LOTTIE.md) / [Duik](docs/DUIK_ANGELA_IMPORT.md) |
+| AI-assisted workflows | **21 modular agent skills**, selected through one central orchestrator | [Skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md) |
+| Production verification | Python/Node tests, TypeScript checks, GitHub Actions, FFprobe and encoded video fixtures | [Agent policy](AGENTS.md) |
+
+These capabilities are scoped: a checked-in demo, proof composition, or
+generated manifest does **not** prove that a complete voiced episode was delivered.
+
+## Quick start
+
+**Prerequisites:** Node.js 22+, npm, Python 3.11, FFmpeg and FFprobe.
+Some audio/graphics tools have optional runtime dependencies; see the guides
+before installing model weights or invoking external providers.
 
 ```bash
-python3 scripts/stage_pixel_default_pack.py --verify-workspace
+git clone https://github.com/urfavxbf/video-ai-editor.git
+cd video-ai-editor
+npm ci
+npm run typecheck
+npm run studio
 ```
 
-The approved images are already in the repository; no manual Library upload is
-needed for the default art. Voice synchronization, word alignment and episode
-content still require actual audio and audiovisual QA. Artwork readiness does
-not mean that a voiced episode or real lip-sync has been delivered.
+Open **Remotion Studio** to inspect the registered compositions.
 
-If new English narration is authorized, use the existing character CLI with
-`--language en --device cpu` and the optional Chatterbox runtime. Reuse approved
-WAVs where available; do not silently switch speakers or generate Tagalog audio.
-See [English policy](docs/ENGLISH_PRODUCTION_POLICY.md),
-[character identities](docs/OFFICIAL_CHARACTERS.md), and
-[production quality](docs/PRODUCTION_STANDARD.md).
+Useful local commands:
 
-## AI agent operating policy and copy-ready prompts
+```bash
+# Verify the 13 approved character images and their manifest.
+python3 scripts/stage_pixel_default_pack.py --verify-workspace
 
-**Start with [AGENTS.md](AGENTS.md)** — the primary operating instructions for
-every AI coding/production agent. The authoritative default format, approved
-voices and approved assets remain in
-[docs/PRODUCTION_POLICY.md](docs/PRODUCTION_POLICY.md),
-[characters/registry.json](characters/registry.json) and
-[characters/pixel-default-manifest.json](characters/pixel-default-manifest.json).
+# Preview the original 21-effect library after generating sample media.
+npm run sample
+npm run render:showcase
 
-Use the [AI agent prompt playbook](docs/AI_AGENT_PROMPTS.md) to request a new
-episode, reference-inspired video, supplied-footage edit, one of 21 effects,
-approved English voiceover, transcript/captions, Lottie or Duik import, or
-production QA. All templates require real evidence before claiming delivery;
-copying a prompt never authorizes external uploads, paid services, GPU usage,
-publishing, or a merge to main.
+# Render your own source edit after configuring src/edit/edit.json.
+npm run render:edit
 
-## Agent entrypoints and historical work
+# Offline HyperFrames graphics: validate first, then render.
+npm run hyperframes:lint
+npm run hyperframes:render
 
-Codex reads [AGENTS.md](AGENTS.md). The active production skill is
-[ai-video-editor](.claude/skills/ai-video-editor/SKILL.md); the generated
-[CineForge Pro](.claude/skills/cineforge-pro/SKILL.md) includes that same guidance
-plus the 12 imported Remotion skills. Rebuild it with
-`python3 scripts/build-cineforge-master-skill.py` after changing its source.
-The root [video-effects skill](SKILL.md) covers explicitly requested supplied
-9:16 footage; it does not set defaults for new original episodes.
+# Preview the 12 advanced full-frame effects on generated sample media.
+npm run advanced-fx:sample
+npm run advanced-fx:showcase
 
-The 21 existing FX remain available, selected for storytelling rather than
-forced into every video. Historical portrait/V2 layouts and Tagalog voice
-designs remain in [the archive-scoped policies](docs/MULTILINGUAL_PRODUCTION_POLICY.md)
-and [portrait-only reference](docs/PIXEL_GLITCH_PORTRAITS_ONLY.md) for explicit
-reproduction. They do not supersede current defaults. Generic imported skills
-supply framework techniques, not a different project identity.
+# Optional, after Codespaces setup: inspect metadata for an approved source.
+.venv/bin/python scripts/media_ingest.py inspect 'https://vimeo.com/123'
+```
 
-## One-click Codespaces setup (Android / browser)
+Actual edits require valid footage and supporting assets. The default
+`render:edit` command uses `src/edit/edit.json`; verify its referenced files
+and timing before expecting a production result. HyperFrames local rendering
+does not require HeyGen Cloud or its paid APIs.
 
-Create a Codespace from the `main` branch using **Code → Codespaces → Create codespace on main**. The committed `.devcontainer/devcontainer.json` installs the full editing toolchain automatically. After initialization, run:
+### GitHub Codespaces (browser or Android)
+
+Create a Codespace from **Code → Codespaces** using the desired branch, and run:
 
 ```bash
 bash scripts/check-codespace.sh
 ```
 
-See [Codespaces setup and Groq secrets](docs/CODESPACES_SETUP.md) for Android-friendly steps. Codespaces and Groq usage can consume plan quotas.
+The committed [devcontainer](.devcontainer/devcontainer.json) and
+[setup guide](docs/CODESPACES_SETUP.md) describe the environment.
+Codespaces may consume account quota. Creating a Codespace does not
+automatically give this chat access to its terminal or files.
 
-## First-class HyperFrames motion-graphics integration
+## Current approved production defaults
 
-HyperFrames by HeyGen is now part of the local video-production stack (not
-an unverified skills-only add-on). It creates original HTML/GSAP graphics as
-verified H.264 files and stages them for chapter-timed
-`EpisodeProduction.motionGraphics` in Remotion. This preserves the approved
-UrFavXBF/PIX character stage and English Chatterbox V3 voices.
+For **new original UrFavXBF × PIX episodes**, the authoritative settings are
+in [`docs/PRODUCTION_POLICY.md`](docs/PRODUCTION_POLICY.md),
+[`characters/registry.json`](characters/registry.json), and the
+[approved pixel asset manifest](characters/pixel-default-manifest.json).
 
-```bash
-npm ci
-npm run hyperframes:lint
-npm run hyperframes:render
+| Setting | Current default |
+| --- | --- |
+| Script, narration, captions, graphics and metadata | **English** |
+| Format | **16:9, 1920 × 1080, 30 fps**; duration follows the story and chapters |
+| Characters | UrFavXBF and PIX using **13 approved pixel poses** |
+| Scene system | `HeroCharacterStage`, full-body 2.5D presentation |
+| UrFavXBF voice | Chatterbox V3 **Natural Storyteller** (`natural-storyteller-v1`) |
+| PIX voice | Chatterbox V3 **Emily** (`pix-cute-female-emily-v1`) |
+| Optional Tagalog / VoxCPM2 | **On hold**, explicit opt-in only |
+| External services and spending | No paid API/GPU use or external media upload without explicit authorization |
+
+Speaker pose swaps and audio-driven motion are **not** genuine phoneme
+lip-sync or native 3D. A specific new request can authorize an alternate
+format, but archived portrait workflows do not silently replace the active
+defaults. See [character identities](docs/OFFICIAL_CHARACTERS.md) and
+[production quality](docs/PRODUCTION_STANDARD.md).
+
+## Central AI skills architecture
+
+The [central orchestrator](.claude/skills/video-ai-orchestrator/SKILL.md)
+routes a task to the **relevant** instructions, rather than loading a huge
+merged `SKILL.md` on every request.
+
+```text
+AGENTS.md                          # Authoritative project-wide rules
+.claude/skills/
+  video-ai-orchestrator/           # Central task router + skill catalog
+  ai-video-editor/                 # Project production standards
+  hyperframes-motion-graphics/     # Offline motion design
+  character-voice-production/      # Chatterbox V3; VoxCPM2 opt-in
+  transcription-captions/         # Groq consent and timing QA
+  animation-import/               # Lottie + baked Duik imports
+  media-source-ingestion/         # Authorized yt-dlp URL intake
+  remotion-*/                      # 12 pinned official Remotion skills
+.agents/skills/
+  senior-multidisciplinary-agent/  # Engineering and quality workflows
+SKILL.md                          # Supplied 9:16 footage/effects
 ```
 
-See [production instructions](docs/HYPERFRAMES_PRODUCTION.md) and the
-[HyperFrames copy-ready prompt](docs/AI_AGENT_PROMPTS.md). Rendering is local,
-telemetry disabled, and does not call cloud services, paid HeyGen APIs or
-external media providers without authorization.
+**21 modular skills total:** 1 orchestrator + 12 official Remotion skills
++ 5 project-specific external integration skills + 3 other project
+specialists (production, footage effects, senior engineering).
+See the full [skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md),
+[`AGENTS.md`](AGENTS.md) and [AI agent prompt playbook](docs/AI_AGENT_PROMPTS.md).
 
-## 12 additional full-frame cinematic effects
-
-The existing 21 effects remain intact, with **12 new reusable motion effects**
-(total: **33**) for RGB channel splitting, animated light trails, light leaks,
-shattering cutouts, liquid warps, pixel dissolves, whip pans, SVG path
-morphing, halftone, original distortion portals, film-burn reveals, and
-original-audio RMS-driven particles. These are real source-video effects,
-not permanent labels or slideshow titles.
+Portable skill archives can be generated with:
 
 ```bash
-npm ci
-npm run advanced-fx:sample
+python3 scripts/package-chatgpt-skills.py
+```
+
+This creates a **skills-only** bundle under `out/chatgpt-skills/`; it does
+not install dependencies, connect the AI assistant to GitHub/Codespaces, grant
+credentials, or authorize cloud processing. Specialized skills are loaded
+only when their workflow is relevant.
+
+## Media, voice, and import safety
+
+- **yt-dlp:** Use the [source-ingestion guide](docs/MEDIA_SOURCE_INGESTION.md)
+  to inspect/download specific rights-cleared videos, then independently
+  validate streams before editing. No cookies, DRM bypass, playlist scraping,
+  untrusted sites or automatic publishing. Sources remain gitignored.
+- **Chatterbox V3:** Reuse approved WAVs when available. New synthesis uses
+  `scripts/character_voiceover.py` only with authorized text, suitable
+  optional model dependencies and an approved speaker. PIX needs its real,
+  permitted reference recording; a voice preset alone is not a WAV.
+- **Groq Whisper:** `scripts/groq_transcribe.py` sends audio to an external
+  provider. Use only with explicit authorization, a securely configured
+  `GROQ_API_KEY`, and acceptance of any usage costs. Locally available
+  reviewed transcripts take priority when suitable.
+- **HyperFrames:** Use the pinned local CLI. Cloud rendering, publication
+  and external asset processing are out of scope without authorization.
+- **Lottie / Duik:** Import approved, compatible vector animation. Duik
+  requires a separate licensed After Effects workstation for authoring;
+  the checked-in sample is not a real Duik-export proof.
+- **Rights:** Only use footage, character art, audio, fonts and other
+  assets that are owned or licensed for the intended use.
+
+## Verification and delivery
+
+```bash
 npm run typecheck
-npm run advanced-fx:showcase
+node --test tests/*.test.cjs
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+python3 scripts/stage_pixel_default_pack.py --verify-workspace
 ```
 
-See [Cinematic FX production guide](docs/CINEMATIC_FX_12.md) for IDs,
-no-GPU/version limitations, sample rights, and exact editor usage.
-The new `AdvancedFxShowcase` is full-bleed without unsolicited branding.
+For rendered output, verify the actual encoded dimensions, frame rate,
+duration, audio/video streams, decoded frames, captions and listening
+quality. The [GitHub Actions PR safety gate](.github/workflows/pr-safety-gate.yml)
+also builds and renders deterministic fixtures. Tests, preflight checks and
+fixtures are evidence of those specific checks—not proof of an unseen
+finished episode. Repository updates belong on a branch with a reviewed PR;
+keep `main` working.
 
-## Quick start
+## Documentation and repository About
 
-```bash
-npm ci
-npm run typecheck
-npm run studio
-# Preview the 21 motion effects
-npm run render:showcase
-# Render an edit configured in src/edit/edit.json
-npm run render:edit
-```
-
-Install FFmpeg separately. See [AI editing setup](docs/AI_VIDEO_TOOLS.md) for Groq and HyperFrames configuration. Some subject-masking steps currently require macOS / Apple Vision; Android/Codespaces and Linux need a different segmentation provider for those specific effects. This repository is an editing toolkit, not yet an end-to-end one-tap automated video service.
+- [Project operating rules](AGENTS.md)
+- [Current production policy](docs/PRODUCTION_POLICY.md)
+- [Production quality standard](docs/PRODUCTION_STANDARD.md)
+- [AI agent prompts](docs/AI_AGENT_PROMPTS.md)
+- [Skills catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md)
+- [GitHub About description and topics](docs/GITHUB_ABOUT.md)
 
 ## Provenance and licenses
 

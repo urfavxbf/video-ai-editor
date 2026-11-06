@@ -122,6 +122,11 @@ Never fabricate chart numbers, captions, source positions, or source media.
   obtain **explicit permission for external processing**, credentials and any
   financial implications **before** using it. Prefer verified local transcripts
   when third-party processing is not authorized.
+- For permitted online videos, use `media-source-ingestion` and
+  `scripts/media_ingest.py` only after confirming the exact source rights.
+  See `docs/MEDIA_SOURCE_INGESTION.md`: no DRM/access bypass, cookies,
+  private URL scraping or playlists; keep source files under ignored
+  `input/ingested/`. Downloading footage never publishes or licenses it.
 - For `ExampleEdit`, run `node scripts/validate-edit.cjs src/edit/edit.json
   --media` after staging real source/derivative media. A schema-only check does
   not prove the referenced files exist or have the stated duration.
@@ -189,12 +194,21 @@ Remotion playback verification.
    branch/PR or executing writes requires authorization for the requested work.
    No silent merge.
 
-When editing the **source skill** `.claude/skills/ai-video-editor/SKILL.md`,
-regenerate the compiled skill with
-`python3 scripts/build-cineforge-master-skill.py` and run
-`python3 -m unittest discover -s tests -p 'test_production_instructions.py' -v`.
-Changing this agent entry point or the prompt playbook alone does not change
-the generated skill's underlying source.
+Use `.claude/skills/video-ai-orchestrator/SKILL.md` as the **central skill
+router** and its `references/skill-catalog.md` for task-specific skill selection
+after reviewing the five mandatory authoritative files above. Do not concatenate
+all modules into a generated master file. When editing production skills or
+routing, run `python3 -m unittest discover -s tests -p 'test_skill_orchestrator.py' -v`
+and `python3 -m unittest discover -s tests -p 'test_production_instructions.py' -v`.
+Keep all 12 official Remotion directories as pinned, separately maintained guidance.
+Route offline HyperFrames/GSAP graphics through `hyperframes-motion-graphics`,
+approved Chatterbox voices through `character-voice-production`, consented
+Groq transcription/word captions through `transcription-captions`, and
+Bodymovin/Lottie/Duik imports through `animation-import`, and rights-cleared
+URL-to-media intake through `media-source-ingestion`. These skills
+document existing, opt-in capabilities and never authorize remote processing,
+paid services, a different speaker/language, media publishing or a silent
+merge. Reuse `scripts/episode_qa.py` for actual delivery validation.
 
 ## 8. Prompt playbook
 

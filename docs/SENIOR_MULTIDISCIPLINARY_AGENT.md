@@ -1,21 +1,32 @@
 # Senior Multidisciplinary AI Agent
 
-This repository includes a workspace custom agent and reusable skill for professional engineering assistance.
+This repository keeps **one canonical copy** of the general senior skill:
 
-## Locations
-- VS Code / Copilot custom agent: `.github/agents/senior-multidisciplinary.agent.md`
-- Copilot project skill: `.github/skills/senior-multidisciplinary-agent/SKILL.md`
-- Codex project skill: `.agents/skills/senior-multidisciplinary-agent/SKILL.md`
+- Skill source: `.agents/skills/senior-multidisciplinary-agent/SKILL.md`
+- Copilot custom agent: `.github/agents/senior-multidisciplinary.agent.md`
+- Central selector: `.claude/skills/video-ai-orchestrator/SKILL.md`
 
-The two skill copies have matching content for compatibility; update both when maintaining the skill. The agent may be selected from the VS Code Chat agent picker; skill discovery depends on the active harness.
+The older `.github/skills/senior-multidisciplinary-agent/` mirror was
+byte-for-byte identical and is intentionally removed. Copilot's custom agent
+continues to link to the canonical `.agents/skills/` version. Skill automatic
+discovery varies by host; use the explicit agent/profile or repository instructions
+where auto-discovery of that directory is unavailable.
 
-## Scope
-Senior-level procedures for terminal and DevOps, AI engineering, motion graphics, sourced research, and production software engineering. This skill is instructions and supporting scripts, not a separately hosted model or autonomous service.
+## Scope and precedence
 
-## Precedence and preservation
-Follow the existing root `AGENTS.md`, `docs/PRODUCTION_POLICY.md`, character registry, and existing `.claude/skills/ai-video-editor/SKILL.md` for actual video production. The new skill does not replace or weaken those requirements.
+The reusable skill covers terminal/DevOps, AI engineering, motion graphics,
+sourced research, software engineering and quality review. Load only the
+relevant reference files for each task. It does not override `AGENTS.md`,
+`docs/PRODUCTION_POLICY.md`, the registry, or the project production skill.
 
 ## Verification
-Run `python3 .agents/skills/senior-multidisciplinary-agent/scripts/validate_skill.py`, or the equivalent command at `.github/skills/`. The read-only diagnostic is `scripts/doctor.py` in either skill directory.
 
-Agent definition and skill files are configuration/instructions. They do not grant model access, terminal execution rights, file-edit permission or paid API access. Review resulting actions and tests.
+Run:
+
+```bash
+python3 .agents/skills/senior-multidisciplinary-agent/scripts/validate_skill.py
+python3 -m unittest discover -s tests -p 'test_skill_orchestrator.py' -v
+```
+
+The skill/profile cannot grant model access, terminal permissions, paid API
+access or any autonomous service.

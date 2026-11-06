@@ -1,0 +1,2 @@
+# Pinned stable yt-dlp; installation does not fetch source media.
+yt-dlp[default]==2026.10.26

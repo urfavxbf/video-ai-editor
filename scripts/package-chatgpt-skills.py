@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare a portable skills-only Plugin plus 13 single-skill upload archives.
+"""Prepare a portable skills-only Plugin plus 21 single-skill upload archives.
 Never publishes, connects or installs the package in a ChatGPT account.
 """
 from __future__ import annotations
@@ -14,7 +14,15 @@ SOURCE = ROOT / ".claude" / "skills"
 OUT = ROOT / "out" / "chatgpt-skills"
 PLUGIN = OUT / "video-ai-editor-skills"
 SKILLS = (
+    "video-ai-orchestrator",
     "ai-video-editor",
+    "hyperframes-motion-graphics",
+    "character-voice-production",
+    "transcription-captions",
+    "animation-import",
+    "media-source-ingestion",
+    "video-effects",
+    "senior-multidisciplinary-agent",
     "remotion-best-practices",
     "remotion-captions",
     "remotion-create",
@@ -29,6 +37,11 @@ SKILLS = (
     "remotion-upgrade",
 )
 OFFICIAL_COMMIT = "30d4553ecd46fbc5212fd0ff006ae43af522158b"
+EXTRA_SOURCES = {
+    "video-effects": ROOT,
+    "senior-multidisciplinary-agent": ROOT / ".agents" / "skills" / "senior-multidisciplinary-agent",
+}
+TOTAL = len(SKILLS)
 
 
 def create_zip(base: Path, target: Path):
@@ -52,14 +65,19 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     for name in SKILLS:
-        folder = SOURCE / name
+        folder = EXTRA_SOURCES.get(name, SOURCE / name)
         meta = folder / "SKILL.md"
         if not meta.is_file():
             raise RuntimeError(f"Missing required skill: {name}")
         header = meta.read_text(encoding="utf-8")
         if not header.startswith("---\n") or not re.search(r"(?m)^name:\s*",header):
             raise RuntimeError(f"Skill manifest invalid: {name}")
-        shutil.copytree(folder, PLUGIN / "skills" / name)
+        dest = PLUGIN / "skills" / name
+        if name == "video-effects":
+            dest.mkdir(parents=True)
+            shutil.copy2(meta, dest / "SKILL.md")
+        else:
+            shutil.copytree(folder, dest)
         print("Packaged skill:", name)
 
     actual = {f.name for f in (PLUGIN / "skills").iterdir() if f.is_dir()}
@@ -69,8 +87,8 @@ def main():
     portable = {
         "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
         "name": "video-ai-editor-skills",
-        "version": "0.1.0",
-        "description": "Thirteen AI editing skills: twelve official Remotion skills plus the current English UrFavXBF and PIX production workflow and supplied-footage editing.",
+        "version": "0.4.0",
+        "description": "21 modular video production skills: central router, 12 official Remotion skills, five scoped integrations including yt-dlp, and three specialists for approved English UrFavXBF/PIX production, footage effects and engineering.",
         "repository": "https://github.com/urfavxbf/video-ai-editor",
     }
     compat = {
@@ -92,28 +110,28 @@ def main():
         "# Video AI Editor Skills\n\n"
         "This is a **skills-only** bundle; it does not install video runtime packages, connect services or grant terminal access.\n\n"
         "Included: 12 official Remotion Agent Skills at source commit "+OFFICIAL_COMMIT+
-        ", plus the custom ai-video-editor skill from urfavxbf/video-ai-editor.\n\n"
+        ", plus the central orchestrator, ai-video-editor, video-effects, senior-multidisciplinary-agent, HyperFrames, character voice, transcription, animation import, and yt-dlp media ingestion skills from urfavxbf/video-ai-editor.\n\n"
         "Source: https://github.com/remotion-dev/skills\n"
         "Project: https://github.com/urfavxbf/video-ai-editor\n\n"
         "To use it, install the plugin in a supporting ChatGPT/Codex host or upload the individual skills from the separate ZIP bundle. "
         "A user must approve installation in their own account; upload support is subject to account/workspace eligibility.\n",
         encoding="utf-8"
     )
-    combined = OUT / "Video-AI-Editor-13-Skills-Plugin.zip"
+    combined = OUT / f"Video-AI-Editor-{TOTAL}-Skills-Plugin.zip"
     create_zip(PLUGIN,combined)
     upload = OUT / "individual-skill-uploads"
     upload.mkdir(parents=True)
     for name in SKILLS:
         create_zip(PLUGIN / "skills" / name,upload / f"{name}.zip")
-    with ZipFile(OUT / "Video-AI-Editor-13-Individual-Skills.zip","w",ZIP_DEFLATED,compresslevel=9) as z:
+    with ZipFile(OUT / f"Video-AI-Editor-{TOTAL}-Individual-Skills.zip","w",ZIP_DEFLATED,compresslevel=9) as z:
         for file in sorted(upload.iterdir()):
             z.write(file,file.name)
-    assert len(list(upload.glob("*.zip"))) == 13
+    assert len(list(upload.glob("*.zip"))) == TOTAL
     with ZipFile(combined) as z:
         nested = [name for name in z.namelist() if re.match(r"skills/[^/]+/SKILL[.]md$",name)]
-        assert len(nested)==13,nested
+        assert len(nested)==TOTAL,nested
     print("Ready:",combined)
-    print("Ready: 13 individual skills upload bundle")
+    print(f"Ready: {TOTAL} individual skills upload bundle")
     print("INSTALL STATUS: not installed in ChatGPT; user approval/account setup required")
 
 

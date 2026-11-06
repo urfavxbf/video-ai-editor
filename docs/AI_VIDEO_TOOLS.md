@@ -38,6 +38,13 @@ Output: out/transcripts/myclip.json, .txt and .srt. The script compresses audio 
 
 ## Claude Skill
 
+The project [central router](../.claude/skills/video-ai-orchestrator/SKILL.md)
+coordinates [HyperFrames](../.claude/skills/hyperframes-motion-graphics/SKILL.md),
+[voice production](../.claude/skills/character-voice-production/SKILL.md),
+[transcription](../.claude/skills/transcription-captions/SKILL.md), and
+[animation imports](../.claude/skills/animation-import/SKILL.md), while the
+canonical production rules remain in `AGENTS.md` and the registry.
+
 Project-local .claude/skills/ai-video-editor/SKILL.md is for Claude Code. For the separate Claude.ai app upload, import the accompanying ZIP through Customize > Skills > Create skill > Upload a skill. Enable code execution. The ZIP describes workflows; it cannot access files in Codespaces without an actual connection.
 
 Links:

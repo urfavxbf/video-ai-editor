@@ -16,6 +16,14 @@ The source repository published that code under the MIT License. The full copyri
 
 The repository also vendors 12 official skills and their reference materials from [remotion-dev/skills](https://github.com/remotion-dev/skills). The exact pinned source commit is recorded in [docs/REMOTION_SKILLS_SOURCE_COMMIT.txt](docs/REMOTION_SKILLS_SOURCE_COMMIT.txt). These materials are upstream Remotion content, not original code authored by this repository, and are not represented as MIT-licensed. Follow the publisher's applicable terms.
 
+## yt-dlp (optional media intake)
+
+The setup installs separately pinned `yt-dlp` from
+[yt-dlp/yt-dlp](https://github.com/yt-dlp/yt-dlp). The project's Python
+source/wheel licensing is published as the **Unlicense**; bundled binaries
+and optional dependencies may carry other licenses. We do not vendor
+yt-dlp source or grant any rights to download, edit, or republish videos.
+
 ## Remotion framework
 
 The `remotion` and `@remotion/*` dependencies come from [remotion-dev/remotion](https://github.com/remotion-dev/remotion), which publishes its **own license** at [LICENSE.md](https://github.com/remotion-dev/remotion/blob/main/LICENSE.md). Remotion is not generally MIT-licensed. Review its eligibility and commercial usage rules separately.
