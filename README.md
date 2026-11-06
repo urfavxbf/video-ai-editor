@@ -21,7 +21,7 @@ version-controlled workspace.
 | Authorized online source intake | Pinned yt-dlp inspection, single-video downloads, and available subtitle files | [Media ingestion guide](docs/MEDIA_SOURCE_INGESTION.md) |
 | Cinematic effects | **33 effects:** 21 original talking-head effects plus 12 advanced full-frame effects | [Effects guide](docs/CINEMATIC_FX_12.md) |
 | Offline motion graphics | HyperFrames + GSAP, locally encoded H.264 clips, chapter-timed Remotion integration | [HyperFrames guide](docs/HYPERFRAMES_PRODUCTION.md) |
-| Character narration | Optional Chatterbox V3 voice synthesis with distinct approved UrFavXBF and PIX profiles | [Voice guide](docs/CHATTERBOX_TTS.md) |
+| Character narration | Kitten Mini Jasper/Kiki synthesis; explicit legacy Chatterbox tools remain available | [Voice guide](docs/CHATTERBOX_TTS.md) |
 | Transcription and captions | Optional Groq Whisper JSON/TXT/SRT transcription; reviewed WAV-bound alignment for production | [AI video tools](docs/AI_VIDEO_TOOLS.md) |
 | Animation imports | Compatible Bodymovin/Lottie JSON and baked 2D Duik Ángela exports | [Lottie](docs/AFTER_EFFECTS_LOTTIE.md) / [Duik](docs/DUIK_ANGELA_IMPORT.md) |
 | AI-assisted workflows | **21 modular agent skills**, selected through one central orchestrator | [Skill catalog](.claude/skills/video-ai-orchestrator/references/skill-catalog.md) |
@@ -29,6 +29,31 @@ version-controlled workspace.
 
 These capabilities are scoped: a checked-in demo, proof composition, or
 generated manifest does **not** prove that a complete voiced episode was delivered.
+
+## Latest UrFavXBF character
+
+The owner-selected navy-hoodie Filipino host uses **all nine supplied poses/views**, Jasper narration and a **100 ms pixel/glitch transition at every spoken word** in `WordPoseHostDemo`. See [character and timing instructions](docs/HOST_WORD_POSES.md).
+
+[Watch the 22-second example](https://drive.google.com/file/d/1Xz_LYJSSvzi3kD3acJHYiGhqNQGMkNu7/view) · [Source/audio delivery](https://drive.google.com/file/d/1dWWqbD8CkfASr-0_Lyqft-oQiBfCtvMe/view)
+
+The public repository contains code, artwork, word timing and generation receipts. **Audio and score stay on Google Drive**, as selected by the owner. Download the [current approved audio pack](https://drive.google.com/file/d/1dWWqbD8CkfASr-0_Lyqft-oQiBfCtvMe/view), then stage the ZIP locally with the command below. It verifies known WAV hashes and ignores all other archive files. No speech-model installation or regeneration is needed to reuse the approved audio. Model caches and rendered MP4s also remain outside Git.
+
+```bash
+python3 scripts/stage_delivery_audio.py /path/to/Video-AI-Editor-Current-Approved-Audio.zip
+python3 scripts/prepare_host_word_poses.py --check
+npm run render:host-word-poses
+npm run showreel:check
+npm run render:cinematic-showreel
+```
+
+## Cinematic character showreel
+
+[Watch the updated showreel with the new host](https://drive.google.com/file/d/1TK4S5Tt46HdVtvkCpVqbTBzWuQii-600/view).
+
+`CinematicShowreel` is an editable 82-second widescreen reel with native landscape variants of all **33 FX**, the current **UrFavXBF and PIX** artwork/16 poses, and owner-selected English KittenTTS Mini voices (Jasper for UrFavXBF, Kiki for PIX). It combines kinetic type, shape morphs, light, particles, character acting and an original score.
+
+See [production and reproduction instructions](docs/CINEMATIC_SHOWREEL.md). Prepare the real local narration with `npm run showreel:prepare`, verify with `npm run showreel:check`, and export with `npm run render:cinematic-showreel`. The default Studio view is a silent visual preview; the export command requires actual audio.
+
 
 ## Quick start
 
@@ -49,7 +74,7 @@ Open **Remotion Studio** to inspect the registered compositions.
 Useful local commands:
 
 ```bash
-# Verify the 13 approved character images and their manifest.
+# Verify the current owner-host and PIX images and their manifest.
 python3 scripts/stage_pixel_default_pack.py --verify-workspace
 
 # Preview the original 21-effect library after generating sample media.
@@ -100,10 +125,10 @@ in [`docs/PRODUCTION_POLICY.md`](docs/PRODUCTION_POLICY.md),
 | --- | --- |
 | Script, narration, captions, graphics and metadata | **English** |
 | Format | **16:9, 1920 × 1080, 30 fps**; duration follows the story and chapters |
-| Characters | UrFavXBF and PIX using **13 approved pixel poses** |
+| Characters | UrFavXBF and PIX using **16 current pixel poses** |
 | Scene system | `HeroCharacterStage`, full-body 2.5D presentation |
-| UrFavXBF voice | Chatterbox V3 **Natural Storyteller** (`natural-storyteller-v1`) |
-| PIX voice | Chatterbox V3 **Emily** (`pix-cute-female-emily-v1`) |
+| UrFavXBF voice | Kitten Mini **Jasper** (`kitten-mini-jasper-en-v1`) |
+| PIX voice | Kitten Mini **Kiki** (`kitten-mini-kiki-en-v1`) |
 | Optional Tagalog / VoxCPM2 | **On hold**, explicit opt-in only |
 | External services and spending | No paid API/GPU use or external media upload without explicit authorization |
 
@@ -125,7 +150,7 @@ AGENTS.md                          # Authoritative project-wide rules
   video-ai-orchestrator/           # Central task router + skill catalog
   ai-video-editor/                 # Project production standards
   hyperframes-motion-graphics/     # Offline motion design
-  character-voice-production/      # Chatterbox V3; VoxCPM2 opt-in
+  character-voice-production/      # Kitten Jasper/Kiki; VoxCPM2 opt-in
   transcription-captions/         # Groq consent and timing QA
   animation-import/               # Lottie + baked Duik imports
   media-source-ingestion/         # Authorized yt-dlp URL intake
@@ -158,10 +183,10 @@ only when their workflow is relevant.
   to inspect/download specific rights-cleared videos, then independently
   validate streams before editing. No cookies, DRM bypass, playlist scraping,
   untrusted sites or automatic publishing. Sources remain gitignored.
-- **Chatterbox V3:** Reuse approved WAVs when available. New synthesis uses
+- **Kitten Mini:** Reuse approved WAVs when available. New synthesis uses
   `scripts/character_voiceover.py` only with authorized text, suitable
-  optional model dependencies and an approved speaker. PIX needs its real,
-  permitted reference recording; a voice preset alone is not a WAV.
+  optional ONNX dependencies and the approved Jasper/Kiki speakers. No reference
+  recording is needed; a voice preset alone is not a WAV.
 - **Groq Whisper:** `scripts/groq_transcribe.py` sends audio to an external
   provider. Use only with explicit authorization, a securely configured
   `GROQ_API_KEY`, and acceptance of any usage costs. Locally available

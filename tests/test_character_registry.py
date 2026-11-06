@@ -34,7 +34,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         self.assertEqual(v["character_layout"], "pixel-pose-chibi-cinematic-2p5d")
         self.assertTrue(v["legacy_portrait_demos_not_default"])
         self.assertTrue(v["full_body_rendering_default"])
-        self.assertEqual(self.data["character_hero_system"]["version"], "pixel-pose-default-2026-10-29")
+        self.assertEqual(self.data["character_hero_system"]["version"], "pixel-pose-default-2026-11-06")
         self.assertTrue(self.data["character_hero_system"]["no_legacy_visual_fallback"])
         self.assertEqual(self.data["character_hero_system"]["runtime_assets_ready"],
                          json.loads((ROOT / "characters/pixel-default-manifest.json").read_text())["assetDelivery"]["assetReady"])
@@ -49,7 +49,7 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
         for c in a.values():
             visual = c["visual"]
             self.assertEqual(len(visual["sha256"]), 64)
-            self.assertTrue(visual["public_path"].startswith("public/characters/pixel-default/"))
+            self.assertTrue(visual["public_path"].startswith("public/characters/"))
             self.assertFalse(visual["production_rig_ready"])
         self.assertIsNone(a["pix"]["visual"]["official_full_body_reference"])
 
@@ -66,11 +66,9 @@ class OfficialCharacterRegistryTests(unittest.TestCase):
             self.assertTrue(c["voice"]["voice_design_prompt"])
             self.assertIn("no real Tagalog WAV", c["voice"]["sample_status"])
             self.assertEqual(c["english_voice"]["language"], "en")
-            self.assertEqual(len(c["english_voice"]["sample_sha256"]), 64)
-        self.assertEqual(first["english_voice"]["identifier"], DEFAULT_NARRATOR.identifier)
-        self.assertEqual(second["english_voice"]["identifier"], DEFAULT_PIX.identifier)
-        self.assertEqual(second["english_voice"]["reference_source"],
-                         "devnen/Chatterbox-TTS-Server @ 915ae289340e10c6047f27f47e22eae9bf350c32 voices/Emily.wav")
+            self.assertEqual(c["english_voice"]["engine"], "kitten-onnx")
+        self.assertEqual(first["english_voice"]["identifier"], "kitten-mini-jasper-en-v1")
+        self.assertEqual(second["english_voice"]["identifier"], "kitten-mini-kiki-en-v1")
         self.assertNotEqual(first["voice"]["identifier"], second["voice"]["identifier"])
 
 

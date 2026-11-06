@@ -43,3 +43,15 @@ The sound effects under `public/sfx/` came with the imported effects project. It
 The independent additions, including the Dudut editing compositions, original Doorway Effect composition, automation workflows, and editorial scripts, are not licensed solely by the imported MIT notice. No new project-wide open-source grant is made by this notices file.
 
 The historic Git commit record preserves prior files and their notices, including the formerly present top-level `LICENSE`.
+
+## Optional KittenTTS Mini showreel narration
+
+The owner-selected cinematic showreel uses the external KittenML SDK and
+`KittenML/kitten-tts-mini-0.8` model. SDK code is Apache-2.0; the Mini 0.8
+model card declares Apache-2.0. Source/model revisions and integrity hashes
+are pinned in `src/showcase/showreel-voices.json`. SDK/model binaries are
+not vendored here. Keep their applicable notices when redistributing them.
+KittenTTS 2 is a separate model family with different weight licensing and
+is not used by this showreel. See
+[SDK license](https://github.com/KittenML/KittenTTS/blob/b9517e3050adced306219f8bea5f117d87ecfaa7/LICENSE)
+and [Mini model card](https://huggingface.co/KittenML/kitten-tts-mini-0.8).

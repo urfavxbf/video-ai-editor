@@ -13,7 +13,7 @@ const SHOTS=[
 ] as const;
 export const PixelProductionProof:React.FC<PixelProductionProofProps>=({assetsReady})=>{
  const frame=useCurrentFrame();
- if(!assetsReady)throw new Error('13 verified pixel PNG binaries required before PixelProductionProof render (no legacy fallback)');
+ if(!assetsReady)throw new Error('16 verified current pixel poses required before PixelProductionProof render (no legacy fallback)');
  const shotIndex=Math.min(SHOTS.length-1,Math.floor(frame/90));
  const shot=SHOTS[shotIndex];
  const beat=frame%90;

@@ -18,7 +18,7 @@ def fixture(work_dir):
     manifest=json.loads((Path(__file__).resolve().parents[1]/'src/episodes/episode-proof-v1.json').read_text())
     clips=[]
     for i,(speaker,profile,frequency) in enumerate([
-        ('urfavxbf','natural-storyteller-v1',440),('pix','pix-cute-female-emily-v1',660)]):
+        ('urfavxbf','kitten-mini-jasper-en-v1',440),('pix','kitten-mini-kiki-en-v1',660)]):
         wav=inputs/'audio'/f'{speaker}-diagnostic.wav'
         with wave.open(str(wav),'wb') as f:
             f.setparams((1,2,16000,0,'NONE','not compressed'))

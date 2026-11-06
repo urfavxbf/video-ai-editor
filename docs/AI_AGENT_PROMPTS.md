@@ -41,8 +41,8 @@ Audience: [AUDIENCE]. Goal: [TEACH / ENTERTAIN / EXPLAIN].
 Sundin ang current defaults: English script/graphics/captions/audio,
 16:9 1920x1080 at 30 fps, runtime ayon sa chapters, HeroCharacterStage
 para sa character scenes at EpisodeProduction para sa actual assembly.
-Gamitin lamang ang approved 13 pixel poses at existing approved English
-Chatterbox V3 voices. I-run ang asset --verify-workspace check.
+Gamitin lamang ang approved 16 pixel poses at existing approved English
+Kitten Mini Jasper/Kiki voices. I-run ang asset --verify-workspace check.
 Unahin ang chapter outline, original script, factual verification, scene plan,
 speaker turns, at media preflight. Reuse approved WAVs where possible.
 Hindi pa kita pinapayagan gumawa ng bagong voice WAV, gumamit ng external API,
@@ -106,7 +106,7 @@ I-render ang representative frames; huwag basta maglagay ng effects para
 punuin ang timeline.
 ```
 
-## 6. Voiceover using existing approved Chatterbox V3
+## 6. Voiceover using existing approved Kitten Mini Jasper/Kiki
 
 ```text
 Character: [urfavxbf / pix]. English script: [EXACT APPROVED SCRIPT PATH].
@@ -177,7 +177,7 @@ Huwag sabihing final o downloadable nang walang real validated artifact.
 
 ```text
 I-audit ang current repo state para sa [FEATURES / ALL AVAILABLE TESTS].
-Suriin ang CI, 21 effects, registered compositions, Chatterbox profiles,
+Suriin ang CI, 21 effects, registered compositions, Kitten Jasper/Kiki profiles,
 Remotion dependency builds, asset hashes at video/audio QA.
 Ihiwalay ang PASS, FAIL, NOT TESTED, BLOCKED at production-only gaps.
 Run existing tests first; report exact reproducible errors, hindi assumptions.
@@ -223,14 +223,14 @@ at frame range, ayon sa actual timing at approved narration.
 Verify via FFprobe, representative frames, Remotion render at audio QA.
 Huwag mag-generate ng voice, gumamit ng HeyGen cloud, paid API,
 media-use, telemetry, remote uploads, o publish nang walang permiso.
-Huwag palitan ang default HeroCharacterStage o Chatterbox V3.
+Huwag palitan ang default HeroCharacterStage o Kitten Mini Jasper/Kiki.
 ```
 
 ## Fast path: choose task, then verify
 
 | Goal | Starting point | Required verification |
 | --- | --- | --- |
-| Original full episode | `HeroCharacterStage` + `EpisodeProduction` | Asset check, Chatterbox WAV, real MP4, listening QA |
+| Original full episode | `HeroCharacterStage` + `EpisodeProduction` | Asset check, Kitten WAV, real MP4, listening QA |
 | Supplied footage | `ExampleEdit` / `src/edit/edit.json` | Contract + physical media validation |
 | All FX demo | `npm run sample` → `FxShowcase` | Real preview stills/render |
 | One FX | `FxPreview` | Required matte/face/sticker inputs |

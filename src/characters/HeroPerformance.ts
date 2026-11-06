@@ -12,9 +12,9 @@ export const HERO_IDENTITY = {
     role: 'host',
     accent: '#6ffb8b',
     glow: 'rgba(111,251,139,0.18)',
-    assetPath: 'characters/canonical/urfavxbf/full-body.png',
+    assetPath: 'characters/urfavxbf-8bit/owner-sheet.jpg',
     referenceSha256: 'b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5',
-    voiceProfile: 'natural-storyteller-v1',
+    voiceProfile: 'kitten-mini-jasper-en-v1',
     notes: 'Controlled, clear, warm, subtly witty. Stable posture and deliberate explanation gestures.',
   },
   pix: {
@@ -24,7 +24,7 @@ export const HERO_IDENTITY = {
     glow: 'rgba(39,232,253,0.2)',
     assetPath: 'characters/canonical/pix/full-body.png',
     referenceSha256: 'c1cecc799230c4f190e8a3f11f478ba9bac478dd014dce83aaaf2c2171c9a069',
-    voiceProfile: 'pix-cute-female-emily-v1',
+    voiceProfile: 'kitten-mini-kiki-en-v1',
     notes: 'Curious, bright, expressive and playful; punctuated bounces and quick reactions.',
   },
 } as const;

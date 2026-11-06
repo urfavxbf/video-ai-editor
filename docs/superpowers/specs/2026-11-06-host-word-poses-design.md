@@ -1,0 +1,7 @@
+# UrFavXBF word acting example
+
+The owner selected attachment 52170.jpg as the new UrFavXBF appearance: navy hoodie, Philippine flag patch, black hair. Make a voiced 1920×1080, 30 fps example using all nine full-body views/poses, changing pose at every recognized spoken word with a fast local pixel/glitch transition. Use previously selected Kitten Mini Jasper locally on CPU. English narration and captions remain the production default.
+
+Display the supplied JPEG directly through bounded sprite viewports on a white stage, preserving exact artwork without regenerating it. Transparent redraws trade fidelity for flexible backgrounds; they are unnecessary for this example. Keep the existing delivered showreel reproducible; implement this new character as a separate reusable component and composition. Do not claim transparent assets, animation frames, phoneme lip-sync or human-reviewed alignment. Local ASR supplies audio-derived word estimates, checked against authored words and waveform bounds. Sprite-local glitches last three frames and do not flash the entire screen.
+
+Acceptance: all nine poses visible, every word changes pose, Jasper audible in rendered MP4, captions fit safe areas, original image hash recorded, timing bound to actual WAV hash, exact streams verified and fully decoded. Deliver MP4 and source assets through the previously authorized Google Drive workflow. No GitHub publication.

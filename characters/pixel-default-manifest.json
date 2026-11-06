@@ -1,69 +1,147 @@
 {
-  "schema": "video-ai-editor/pixel-default-assets/v2",
-  "effectiveDate": "2026-10-29",
+  "schema": "video-ai-editor/pixel-default-assets/v3",
+  "effectiveDate": "2026-11-06",
   "selectedAsDefaultByOwner": true,
-  "referenceArt": "Owner-selected Oct 29 pixel style sheets (50984 PIX, 50985 UrFavXBF)",
-  "originalArt": "13 independently generated PNG poses; none cropped from reference sheets",
+  "referenceArt": "Owner-selected 52170.jpg host; retained approved PIX art",
+  "originalArt": "Exact host JPEG in nine bounded display viewports; seven original transparent PIX PNGs",
   "productionTechnique": "pose-swapped pixel characters + cinematic 2.5D + intentional RGB/pixel-slice glitch at every scene boundary",
-  "imageProcessing": "use original 1254x1254 RGBA images; image-rendering:pixelated; nearest-neighbor if resized",
+  "imageProcessing": "Unmodified owner JPEG viewports on white backing; nearest-neighbor pixel display",
   "assetDelivery": {
-    "archive": "UrFavXBF_PIX_13_Pose_Production_Pack.zip",
+    "archive": "Current assets committed in repository",
     "assetsCommitted": true,
     "assetReady": true,
     "missingAssetPolicy": "strict; no fallback to legacy, rejected, or generated placeholder art",
-    "assetInstallation": "all 13 original full-resolution PNG images verified in GitHub working tree"
+    "assetInstallation": "8 physical images expose 16 poses: 9 host views and 7 PIX images"
   },
   "characters": {
     "urfavxbf": {
-      "defaultPose": "idle",
+      "defaultPose": "front",
       "poses": {
-        "idle": {
-          "path": "public/characters/pixel-default/urfavxbf/idle.png",
-          "sha256": "864097c7b03db19610f172259e04cf1ea7e6c089529c82fdb5b183818a9762d3",
-          "bytes": 708034,
-          "source": "neon_green_gamer_chibi_sprite.png",
-          "width": 1254,
-          "height": 1254
+        "front": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            380,
+            156,
+            155,
+            311
+          ],
+          "kind": "owner-jpeg-viewport"
         },
-        "talk": {
-          "path": "public/characters/pixel-default/urfavxbf/talk.png",
-          "sha256": "0449ca47dec807e634be9bb7085fbaad4d1d0f60c11ca482cf8a16c088fdac33",
-          "bytes": 864237,
-          "source": "neon_green_chibi_gamer_sprite.png",
-          "width": 1254,
-          "height": 1254
+        "three-quarter": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            620,
+            155,
+            150,
+            311
+          ],
+          "kind": "owner-jpeg-viewport"
         },
-        "point_camera": {
-          "path": "public/characters/pixel-default/urfavxbf/point_camera.png",
-          "sha256": "eec2598fe2663953a0e631547f2423d66d4b68480b087b71e5d8118c4086145d",
-          "bytes": 923732,
-          "source": "neon_green_pointing_gamer_sprite.png",
-          "width": 1254,
-          "height": 1254
+        "side": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            845,
+            158,
+            155,
+            309
+          ],
+          "kind": "owner-jpeg-viewport"
         },
-        "point_side": {
-          "path": "public/characters/pixel-default/urfavxbf/point_side.png",
-          "sha256": "91aefec80c54717b5729fb4f0953be4766261deebc25545035228a5ada5a5e75",
-          "bytes": 801941,
-          "source": "neon_gamer_chibi_pointing_right.png",
-          "width": 1254,
-          "height": 1254
+        "back": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            1070,
+            157,
+            160,
+            310
+          ],
+          "kind": "owner-jpeg-viewport"
         },
-        "happy": {
-          "path": "public/characters/pixel-default/urfavxbf/happy.png",
-          "sha256": "6a7ae94df79281988fe81ee22212d43b172e1175057b52cbb1ec85b7a4a728d2",
-          "bytes": 889985,
-          "source": "celebratory_neon_green_gamer_sprite.png",
-          "width": 1254,
-          "height": 1254
+        "waving": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            347,
+            606,
+            165,
+            254
+          ],
+          "kind": "owner-jpeg-viewport"
+        },
+        "pointing": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            522,
+            604,
+            164,
+            256
+          ],
+          "kind": "owner-jpeg-viewport"
+        },
+        "explaining": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            690,
+            602,
+            218,
+            258
+          ],
+          "kind": "owner-jpeg-viewport"
+        },
+        "thumbs-up": {
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            915,
+            602,
+            169,
+            258
+          ],
+          "kind": "owner-jpeg-viewport"
         },
         "surprised": {
-          "path": "public/characters/pixel-default/urfavxbf/surprised.png",
-          "sha256": "bb67b262ffe0404e62803595074f606ba4dbb5777bda12aa19eab44c253cc83c",
-          "bytes": 863643,
-          "source": "startled_neon_gamer_chibi.png",
-          "width": 1254,
-          "height": 1254
+          "path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+          "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+          "bytes": 174128,
+          "width": 1280,
+          "height": 960,
+          "rect": [
+            1081,
+            595,
+            178,
+            265
+          ],
+          "kind": "owner-jpeg-viewport"
         }
       }
     },

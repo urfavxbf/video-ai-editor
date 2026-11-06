@@ -4,8 +4,8 @@
   "production_language": "en",
   "main_character": "urfavxbf",
   "companion_character": "pix",
-  "assets_location": "public/characters/pixel-default/ (13 verified original images)",
-  "approved_on": "2026-10-29",
+  "assets_location": "Owner host JPEG viewports + seven approved PIX PNGs",
+  "approved_on": "2026-11-06",
   "characters": {
     "urfavxbf": {
       "name": "UrFavXBF",
@@ -13,16 +13,16 @@
       "persona": "Versatile thinker and creator covering wisdom, science, mathematics, internet culture, AI and video editing; never science-only",
       "visual": {
         "kind": "owner-selected-pixel-art-chibi-host",
-        "style": "Black tousled hair with neon-green streak, green eyes, black/neon X headphones, deep-green hoodie, black trousers, green shoes, high-quality pixel-art chibi",
-        "official_face_reference": "assets/character-references/UrFavXBF_Facial_Expressions_Official.png",
-        "official_face_reference_sha256": "a803b78adaa0ef8f3ee8f427ca83a0c65a9f90ea8ed87e8487cae36efa1dac99",
-        "official_full_body_reference": "assets/character-references/UrFavXBF_FullBody_Official.png",
-        "official_full_body_reference_sha256": "b41cc8e27e3476f15c3df5efe944177a065a610b74f1d3c9b1e0f34aa6f752b5",
-        "public_path": "public/characters/pixel-default/urfavxbf/idle.png",
-        "sha256": "864097c7b03db19610f172259e04cf1ea7e6c089529c82fdb5b183818a9762d3",
+        "style": "Black tousled hair, navy hoodie with gray hood and Philippine flag patch, white shirt, dark cargo pants and sneakers; exact owner sheet 52170.jpg",
+        "official_face_reference": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+        "official_face_reference_sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+        "official_full_body_reference": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+        "official_full_body_reference_sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
+        "public_path": "public/characters/urfavxbf-8bit/owner-sheet.jpg",
+        "sha256": "38da44a4963e75c1a7d7eb2440b2058de235d0c5c502a10c7f293bf4fe8697bb",
         "production_rig_ready": false,
         "pose_manifest": "characters/pixel-default-manifest.json",
-        "pose_count": 6
+        "pose_count": 9
       },
       "voice": {
         "engine": "voxcpm2",
@@ -36,16 +36,15 @@
         "sample_status": "design-approved; no real Tagalog WAV rendered yet"
       },
       "english_voice": {
-        "engine": "Chatterbox Multilingual V3",
-        "identifier": "natural-storyteller-v1",
+        "engine": "kitten-onnx",
+        "identifier": "kitten-mini-jasper-en-v1",
+        "display_name": "Jasper",
         "language": "en",
-        "profile_path": "scripts/chatterbox_voice_profile.py",
-        "source": "approved built-in speaker",
-        "exaggeration": 0.5,
-        "cfg_weight": 0.5,
-        "sample_library_path": "/UrFavXBF Video Characters/UrFavXBF_Chatterbox_Natural_Storyteller_Sample.wav",
-        "sample_sha256": "701270b711ac2c44c4e3158d89f74220129c8fec3ae945c5bd3c83e3a7fdf089",
-        "successful_audio_run": "https://github.com/urfavxbf/video-ai-editor/actions/runs/40607467395"
+        "model": "KittenML/kitten-tts-mini-0.8",
+        "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+        "voice": "Jasper",
+        "profile_path": "src/showcase/showreel-voices.json",
+        "source": "Owner-selected Kitten built-in synthetic speaker"
       }
     },
     "pix": {
@@ -77,17 +76,15 @@
         "sample_status": "design-approved; no real Tagalog WAV rendered yet"
       },
       "english_voice": {
-        "engine": "Chatterbox Multilingual V3",
-        "identifier": "pix-cute-female-emily-v1",
+        "engine": "kitten-onnx",
+        "identifier": "kitten-mini-kiki-en-v1",
+        "display_name": "Kiki",
         "language": "en",
-        "profile_path": "scripts/pix_voice_profile.py",
-        "source": "approved female synthetic Emily reference",
-        "reference_source": "devnen/Chatterbox-TTS-Server @ 915ae289340e10c6047f27f47e22eae9bf350c32 voices/Emily.wav",
-        "exaggeration": 0.65,
-        "cfg_weight": 0.35,
-        "sample_library_path": "/UrFavXBF Video Characters/PIX_Chatterbox_V3_Emily_Sample.wav",
-        "sample_sha256": "60de53f726de4ee37d7e8d14c93dbc23ac4e15348f642412d541575bf81ac2e0",
-        "successful_audio_run": "https://github.com/urfavxbf/video-ai-editor/actions/runs/40614959831"
+        "model": "KittenML/kitten-tts-mini-0.8",
+        "modelRevision": "c02725660cea441db4c383af69f1f26f5cd00947",
+        "voice": "Kiki",
+        "profile_path": "src/showcase/showreel-voices.json",
+        "source": "Owner-selected Kitten built-in synthetic speaker"
       }
     }
   },
@@ -114,10 +111,10 @@
     "script_language": "en",
     "caption_language": "en",
     "metadata_language": "en",
-    "voice_generation_policy": "Use archived English Chatterbox profiles by default; Tagalog VoxCPM2 is on hold, opt-in only. No GPU spending.",
-    "character_motion": "13 pose-selectable pixel characters, speaker/reaction-aware; no false lip-sync; glitch at scene boundaries",
+    "voice_generation_policy": "Kitten Mini 0.8 Jasper for UrFavXBF, Kiki for PIX, local CPU. Optional Tagalog VoxCPM2 remains opt-in.",
+    "character_motion": "16 selectable poses, short glitches; actual-audio word timing is production-specific",
     "character_system": "src/characters/PixelPoseCharacter.tsx + src/characters/HeroPerformance.ts",
-    "visual_asset_status": "13 owner-selected pixel PNG binaries present and SHA-256 verified; independent voice sync still episode-specific",
+    "visual_asset_status": "Owner host JPEG hash verified with 9 bounded poses; seven PIX PNGs SHA-256 verified",
     "character_art_fallback": "DISABLED (rejected 3D/old 2D never substituted)",
     "full_body_rendering_default": true,
     "default_character_composition": "HeroCharacterStage",
@@ -130,17 +127,17 @@
     "en"
   ],
   "character_hero_system": {
-    "version": "pixel-pose-default-2026-10-29",
+    "version": "pixel-pose-default-2026-11-06",
     "protagonists": [
       "urfavxbf",
       "pix"
     ],
     "all_new_episodes": true,
     "reference_manifest": "characters/pixel-default-manifest.json",
-    "voice_profiles_unchanged": true,
+    "voice_profiles_unchanged": false,
     "no_legacy_visual_fallback": true,
     "runtime_assets_ready": true,
-    "next_art_step": "Assets validated; integrate real English Chatterbox audio and align dialogue in long-form episodes.",
+    "next_art_step": "Use current 9-pose owner host and retained 7-pose PIX; align actual selected Kitten audio per episode.",
     "default_layout": "pixel-chibi-poses-2p5d-stage",
     "frameByFrameActionContract": "characters/true-action-contract.json",
     "productionAnimationMethod": "pose-swaps-plus-glitch-transitions",
@@ -154,5 +151,16 @@
     },
     "current_default_assets_commit": "5b0f9813d333dfe43811d90c60cf602674efff53"
   },
-  "canonical_visual_version": "urfavxbf-pix-pixel-default-2026-10-29"
+  "canonical_visual_version": "urfavxbf-owner-sheet-pix-2026-11-06",
+  "showreel_character_revision": {
+    "selected_on": "2026-11-06",
+    "selection": "Latest owner request: use attached 52170.jpg navy-hoodie Filipino host for UrFavXBF",
+    "urfavxbf_manifest": "characters/urfavxbf-8bit-manifest.json",
+    "component": "src/characters/word-poses/OwnerSheetHost.tsx",
+    "example_composition": "WordPoseHostDemo",
+    "voice": "Kitten Mini 0.8 Jasper",
+    "motion": "Each spoken word selects an authored pose; three-frame local pixel/slice glitch",
+    "scope": "Current default host and English voices; supersedes old host PNGs and Chatterbox default identities",
+    "documentation": "docs/HOST_WORD_POSES.md"
+  }
 }

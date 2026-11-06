@@ -11,6 +11,17 @@ from pix_voice_profile import DEFAULT_PIX
 
 
 class CharacterVoiceoverTests(unittest.TestCase):
+    def test_default_english_engine_uses_owner_selected_kitten_voices(self):
+        import contextlib,io,json
+        for who,expected in [('urfavxbf','Jasper'),('pix','Kiki')]:
+            args=voice.build_parser().parse_args(['--character',who,'--text','Hello!','--output','out/a.wav'])
+            self.assertEqual(args.engine,'kitten')
+            output=io.StringIO()
+            with contextlib.redirect_stdout(output):
+                code=voice.main(['--character',who,'--text','Hello!','--output','out/a.wav','--dry-run'])
+            self.assertEqual(code,0)
+            self.assertEqual(json.loads(output.getvalue())['voice'],expected)
+
     def test_new_videos_default_to_current_english_character_voices(self):
         args = voice.build_parser().parse_args([
             "--character", "urfavxbf", "--text", "Alam mo ba?", "--output", "out/a.wav"
@@ -53,11 +64,11 @@ class CharacterVoiceoverTests(unittest.TestCase):
         self.assertEqual(flags[flags.index("--exaggeration") + 1], str(DEFAULT_PIX.exaggeration))
         self.assertNotEqual(DEFAULT_PIX.identifier, DEFAULT_NARRATOR.identifier)
 
-    def test_english_pix_routing_unchanged(self):
+    def test_explicit_legacy_pix_routing_still_requires_reference(self):
         with patch("prepare_pix_reference.prepare", return_value=Path("input/pix-reference.wav")) as prep:
             with patch("chatterbox_voiceover.main", return_value=0) as synth:
                 code = voice.main(["--character", "pix", "--language", "en",
-                                   "--text", "Hello!", "--output", "out/pix-en.wav"])
+                                   "--text", "Hello!", "--output", "out/pix-en.wav", "--engine", "chatterbox"])
         self.assertEqual(code, 0)
         prep.assert_called_once()
         self.assertIn("--voice-reference", synth.call_args.args[0])

@@ -1,0 +1,251 @@
+{
+  "method": "Local wav2vec2 ASR BASE 960h CTC forced alignment; transcript cross-checked by local Whisper tiny.en",
+  "lines": [
+    {
+      "sha256": "6ee513654a0a5012e14c490b82f97e8e48d41b854685ea95ccb450768dd1743c",
+      "words": [
+        {
+          "text": "Hey,",
+          "start": 0.4617,
+          "end": 0.7025,
+          "probability": 0.7496
+        },
+        {
+          "text": "creators!",
+          "start": 0.9635,
+          "end": 1.4652,
+          "probability": 0.998
+        }
+      ]
+    },
+    {
+      "sha256": "1c7206d45301d23e93ac77bdea07d55c9b4993650953aaa840f4a615d2be554b",
+      "words": [
+        {
+          "text": "I'm",
+          "start": 0.4816,
+          "end": 0.5619,
+          "probability": 0.9793
+        },
+        {
+          "text": "your",
+          "start": 0.602,
+          "end": 0.7225,
+          "probability": 0.9679
+        },
+        {
+          "text": "favorite",
+          "start": 0.7827,
+          "end": 1.1439,
+          "probability": 0.9728
+        },
+        {
+          "text": "host.",
+          "start": 1.2041,
+          "end": 1.5453,
+          "probability": 0.9738
+        }
+      ]
+    },
+    {
+      "sha256": "3a3cfc5fa42d105f78b7f91bf12b385cc938ba12515a5f63c5eea1cd30b21fad",
+      "words": [
+        {
+          "text": "Let's",
+          "start": 0.5019,
+          "end": 0.7227,
+          "probability": 0.9647
+        },
+        {
+          "text": "face",
+          "start": 0.7829,
+          "end": 1.0037,
+          "probability": 1.0
+        },
+        {
+          "text": "the",
+          "start": 1.084,
+          "end": 1.1643,
+          "probability": 0.9993
+        },
+        {
+          "text": "challenge,",
+          "start": 1.2245,
+          "end": 1.626,
+          "probability": 0.9623
+        },
+        {
+          "text": "explore",
+          "start": 1.9472,
+          "end": 2.3286,
+          "probability": 0.977
+        },
+        {
+          "text": "another",
+          "start": 2.3889,
+          "end": 2.6699,
+          "probability": 0.9981
+        },
+        {
+          "text": "angle,",
+          "start": 2.8104,
+          "end": 3.0513,
+          "probability": 0.9516
+        },
+        {
+          "text": "look",
+          "start": 3.3324,
+          "end": 3.4729,
+          "probability": 0.9987
+        },
+        {
+          "text": "sideways,",
+          "start": 3.5733,
+          "end": 4.0551,
+          "probability": 0.9643
+        },
+        {
+          "text": "and",
+          "start": 4.316,
+          "end": 4.3963,
+          "probability": 0.9936
+        },
+        {
+          "text": "check",
+          "start": 4.4565,
+          "end": 4.6573,
+          "probability": 0.9994
+        },
+        {
+          "text": "what's",
+          "start": 4.7175,
+          "end": 4.8982,
+          "probability": 0.9785
+        },
+        {
+          "text": "behind",
+          "start": 4.9584,
+          "end": 5.2595,
+          "probability": 0.9876
+        },
+        {
+          "text": "us.",
+          "start": 5.38,
+          "end": 5.4402,
+          "probability": 0.9999
+        }
+      ]
+    },
+    {
+      "sha256": "1dcb6295d3401b20498b83d2a5e3ab35ca3a67d2a249a6ba340b468541f80b91",
+      "words": [
+        {
+          "text": "Look",
+          "start": 0.4818,
+          "end": 0.6424,
+          "probability": 0.9392
+        },
+        {
+          "text": "here!",
+          "start": 0.7227,
+          "end": 0.9635,
+          "probability": 0.9961
+        },
+        {
+          "text": "Let",
+          "start": 1.8669,
+          "end": 1.9873,
+          "probability": 1.0
+        },
+        {
+          "text": "me",
+          "start": 2.0275,
+          "end": 2.0877,
+          "probability": 1.0
+        },
+        {
+          "text": "explain",
+          "start": 2.1881,
+          "end": 2.5895,
+          "probability": 0.9712
+        },
+        {
+          "text": "this",
+          "start": 2.6698,
+          "end": 2.7903,
+          "probability": 0.9938
+        },
+        {
+          "text": "idea.",
+          "start": 2.9107,
+          "end": 3.3323,
+          "probability": 0.75
+        }
+      ]
+    },
+    {
+      "sha256": "16de4e7f411fd45f40d3e235b2000aae628d785882d8cc2248d8fae5d0c55924",
+      "words": [
+        {
+          "text": "Great",
+          "start": 0.1007,
+          "end": 0.3022,
+          "probability": 0.9871
+        },
+        {
+          "text": "progress!",
+          "start": 0.3827,
+          "end": 0.8863,
+          "probability": 0.9921
+        },
+        {
+          "text": "Wow,",
+          "start": 1.7525,
+          "end": 1.9741,
+          "probability": 0.852
+        },
+        {
+          "text": "that's",
+          "start": 2.1755,
+          "end": 2.3971,
+          "probability": 0.9795
+        },
+        {
+          "text": "amazing!",
+          "start": 2.4776,
+          "end": 2.9007,
+          "probability": 0.9993
+        }
+      ]
+    },
+    {
+      "sha256": "30054fed1122dda9d5e8a768bdb1837561b7c133207e6940ad5d8512ccb4dff8",
+      "words": [
+        {
+          "text": "Ready?",
+          "start": 0.0202,
+          "end": 0.2625,
+          "probability": 0.9971
+        },
+        {
+          "text": "Let's",
+          "start": 1.1508,
+          "end": 1.3325,
+          "probability": 0.9507
+        },
+        {
+          "text": "create",
+          "start": 1.3931,
+          "end": 1.6758,
+          "probability": 0.9998
+        },
+        {
+          "text": "together!",
+          "start": 1.7363,
+          "end": 2.1603,
+          "probability": 0.8994
+        }
+      ]
+    }
+  ]
+}

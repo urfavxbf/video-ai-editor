@@ -1,3 +1,5 @@
+> **Superseded setup:** Current defaults are the owner-selected navy-hoodie UrFavXBF and Kitten Mini Jasper/Kiki. See [production policy](PRODUCTION_POLICY.md), [host poses](HOST_WORD_POSES.md) and `characters/registry.json`. Historical voice/art descriptions below do not override them. Previously rendered videos document their original art; rerender after the current character migration.
+
 # Official UrFavXBF and PIX — current production character bible
 
 Read [PRODUCTION_POLICY.md](PRODUCTION_POLICY.md) and

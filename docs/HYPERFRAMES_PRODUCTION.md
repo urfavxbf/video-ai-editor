@@ -15,7 +15,7 @@ lint/render/staging command, strict motion-graphics clip validation in
 | Validate and encode original 1920×1080 at 30 fps | `npm run hyperframes:render` + FFprobe/FFmpeg |
 | Publish to local Remotion asset directory | `public/hyperframes/kinetic-intro.mp4`, generated/ignored |
 | Chapter-specific timed inset or full-screen visual | `EpisodeProduction.motionGraphics` |
-| UrFavXBF / PIX / Chatterbox narration / accurate captions | Existing approved Remotion production stack |
+| UrFavXBF / PIX / Kitten Mini narration / accurate captions | Existing approved Remotion production stack |
 | Media and audio delivery QA | Existing production gate + new render smoke |
 
 This workflow **does not require HeyGen cloud or an API key**. Never use
@@ -71,7 +71,7 @@ fit inside that chapter. Layout options: `inset` (positioned motion graphic
 on the right) or `fullscreen` (explicit graphic transition).
 File paths must be local `public/hyperframes/*.mp4` paths; untrusted URLs,
 traversal, unknown chapters and out-of-range clips are rejected.
-Audio is always muted so no demo sounds replace approved Chatterbox narration.
+Audio is always muted so no demo sounds replace approved Kitten Mini narration.
 
 A production owner should create appropriate graphics for each scene and
 should not reuse the 2-second proof clip throughout an actual episode.
@@ -87,7 +87,7 @@ and MP4 artifacts are uploaded for review. Validation is explicit: this is
 a local-only graphics-to-episode integration, **not** a one-click AI script-to-
 finished-video service, a true phoneme lip-sync engine, or a cloud integration.
 
-The approved registry and default English 16:9 Chatterbox/UrFavXBF/PIX
+The approved registry and default English 16:9 Kitten Mini/UrFavXBF/PIX
 production settings are unchanged. Do not generate or upload new narration
 without permission.
 

@@ -29,7 +29,7 @@ class EpisodeMediaTests(unittest.TestCase):
         manifest={'schemaVersion':1,'episodeId':'fixture','language':'en','video':{'width':1920,'height':1080,'fps':30},
           'chapters':[{'id':'intro','title':'Diagnostic fixture','chapterNumber':1,'startFrame':0,'durationFrames':30}]}
         clip={'chapterId':'intro','speaker':'pix','file':'audio/diagnostic.wav','startFrame':3,
-              'voiceProfile':'pix-cute-female-emily-v1','sha256':hashlib.sha256(wav.read_bytes()).hexdigest(),
+              'voiceProfile':'kitten-mini-kiki-en-v1','sha256':hashlib.sha256(wav.read_bytes()).hexdigest(),
               'provenance':'fixture-diagnostic'}
         return manifest,clip
 

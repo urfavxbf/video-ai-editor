@@ -23,7 +23,7 @@ The first pilot had strong overall motion design, but both characters need visib
 
 ## Character animation and identity integrity
 
-- Load the **13 committed approved transparent PNG poses** under `public/characters/pixel-default/`, using `characters/registry.json` and `characters/pixel-default-manifest.json`. Run `python3 scripts/stage_pixel_default_pack.py --verify-workspace`; no old Library pack is required for the current HeroCharacterStage default.
+- Load the **16 committed approved poses**: nine owner-host JPEG viewports under `public/characters/urfavxbf-8bit/` and seven transparent PIX PNGs under `public/characters/pixel-default/pix/`, using `characters/registry.json` and `characters/pixel-default-manifest.json`. Run `python3 scripts/stage_pixel_default_pack.py --verify-workspace`; no old Library pack is required for the current HeroCharacterStage default.
 - Animate both characters with intentional, scene-specific **idle breathing or bobbing, head tilts, eye blinks, gaze shifts, emphatic poses, ear/tail reactions for PIX, turns, entrance/exit motion and reaction timing**, to the extent actually supported by the available image rig/assets.
 - Speaker-specific cues must derive from the final audio and annotated speaker track. Use reaction motion on listening characters; do not animate both as talking simultaneously unless deliberately overlapping dialogue.
 - **A static transparent PNG is not a rigged or lip-synced model.** If mouth-shape sprites, an actual face rig or phoneme/viseme mapping are unavailable, avoid claiming real lip sync. Use honest, limited bob/gesture proxies until an authentic rig is created.
@@ -31,10 +31,10 @@ The first pilot had strong overall motion design, but both characters need visib
 
 ## Voice identity, accuracy & music
 
-- **UrFavXBF**: current English Chatterbox V3 Natural Storyteller, `natural-storyteller-v1`. Tagalog VoxCPM2 designs remain on hold and opt-in only.
-- **PIX**: current English Chatterbox V3 Emily reference, `pix-cute-female-emily-v1`. No paid API or GPU usage is authorized by the defaults. Prefer the character-aware CLI `scripts/character_voiceover.py` to avoid assigning the wrong speaker.
-- Generate **distinct WAV lines or manageable chapter-sized segments**, mark the speaker and exact script for each line, retain real start/end times, and sequence them with visual reactions. Use the existing Chatterbox long-form chunking where appropriate. Avoid accidental overwriting, speech clipping, double audio, overlapping lines or voice drift between chapters.
-- **Check voice accuracy by listening**: no missing or invented words, no swapped lines, corrected pronunciation of UrFavXBF, PIX and technical terms, appropriate expressive delivery, no unexplained shifts of voice identity. Chatterbox can vary across generations; voice presets alone do not prove audible quality.
+- **UrFavXBF**: current English Kitten Mini Jasper, `kitten-mini-jasper-en-v1`. Tagalog VoxCPM2 designs remain on hold and opt-in only.
+- **PIX**: current English Kitten Mini Kiki, `kitten-mini-kiki-en-v1`. No paid API or GPU usage is authorized by the defaults. Prefer the character-aware CLI `scripts/character_voiceover.py` to avoid assigning the wrong speaker.
+- Generate **distinct WAV lines or manageable chapter-sized segments**, mark the speaker and exact script for each line, retain real start/end times, and sequence them with visual reactions. Use the Kitten narration split into bounded lines or chapters where appropriate. Avoid accidental overwriting, speech clipping, double audio, overlapping lines or voice drift between chapters.
+- **Check voice accuracy by listening**: no missing or invented words, no swapped lines, corrected pronunciation of UrFavXBF, PIX and technical terms, appropriate expressive delivery, no unexplained shifts of voice identity. TTS can vary across generations; voice presets alone do not prove audible quality.
 - Build **word-aligned captions from the actual final generated audio** (forced alignment or transcript with human review). Captions, kinetic text, scene changes and reaction animation must track the audible speech; do not invent word timestamps. Check SRT/caption line wrapping, safe-area placement and readability.
 - Music and SFX must be licensed and mixed below speech. No auto-upload or publishing without explicit authorization.
 
@@ -46,7 +46,7 @@ For each episode, plan the overall timeline, chapter transitions, recurring grap
 
 Before declaring the video complete:
 1. Confirm the required **approved poses for both characters** are actually present and rendered with transparent backgrounds, consistent pixelated styling and no cropping/off-screen errors.
-2. Confirm **both approved English Chatterbox voices** have distinct speaker identities, intelligible audio and accurate captions; independently listen and compare with the locked script. Presets or prior samples do not prove a new WAV or a completed episode.
+2. Confirm **both approved English Kitten Mini voices** have distinct speaker identities, intelligible audio and accurate captions; independently listen and compare with the locked script. Presets or prior samples do not prove a new WAV or a completed episode.
 3. Confirm credible character motion, clearly differentiated speaker turns and character-reactive motion graphics. Check no distracting or excessive effect stacking.
 4. Preview representative and transition frames; verify typography, overlays, motion timing, camera/effect continuity and zero missing assets.
 5. Validate actual MP4 video + audio streams, encoding, dimensions, length, audio balance, speech-to-caption alignment and playback using ffprobe and preview.
@@ -54,4 +54,4 @@ Before declaring the video complete:
 
 ## Tooling terminology
 
-The repository contains **21 motion-effect implementations** in its effects library and **13 bundled agent workflow skills** (the custom AI video editor skill plus 12 official Remotion agent skills, assembled into CineForge Pro). The 21 effects are **not 21 separate installed agent skills**. Both resources should be available to guide quality.
+The repository contains **33 registered effects** and **21 modular agent skills**, selected through `.claude/skills/video-ai-orchestrator/SKILL.md`. Effects are runtime components, not separately installed skills. Use the relevant specialist modules without generating a merged master skill.

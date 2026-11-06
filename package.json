@@ -16,7 +16,12 @@
     "hyperframes:render": "node scripts/render-hyperframes.mjs",
     "hyperframes:studio": "cd hyperframes/projects/kinetic-intro && ../../../node_modules/.bin/hyperframes preview",
     "advanced-fx:sample": "npm run sample && python3 scripts/generate_advanced_fx_audio.py",
-    "advanced-fx:showcase": "remotion render AdvancedFxShowcase out/advanced-fx.mp4 --codec=h264 --pixel-format=yuv420p --crf=19 --concurrency=2"
+    "advanced-fx:showcase": "remotion render AdvancedFxShowcase out/advanced-fx.mp4 --codec=h264 --pixel-format=yuv420p --crf=19 --concurrency=2",
+    "showreel:voices": "python3 scripts/render_showreel_voices.py",
+    "showreel:prepare": "python3 scripts/prepare_showreel.py",
+    "showreel:check": "python3 scripts/prepare_showreel.py --check",
+    "render:cinematic-showreel": "node scripts/render_cinematic_showreel.mjs",
+    "render:host-word-poses": "node scripts/render_host_word_poses.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.522",

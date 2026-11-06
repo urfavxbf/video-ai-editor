@@ -8,7 +8,7 @@
 > task template. Historical documents never supersede these active settings.
 
 This is the current guide for new UrFavXBF × PIX productions, reflecting the
-approved 2026-10-29 pixel-pose defaults and retained English voice setting.
+owner-selected 2026-11-06 character and English voices.
 Machine-readable values live in [the registry](../characters/registry.json)
 and [the approved asset manifest](../characters/pixel-default-manifest.json).
 
@@ -35,27 +35,21 @@ and [the approved asset manifest](../characters/pixel-default-manifest.json).
 | --- | --- |
 | Language | English (en): script, narration, captions, graphics and metadata |
 | Format | Long-form, 16:9, 1920×1080, 30 fps; script/chapter-driven runtime |
-| UrFavXBF voice | Chatterbox V3 `natural-storyteller-v1`, Natural Storyteller |
-| PIX voice | Chatterbox V3 `pix-cute-female-emily-v1`, synthetic Emily reference |
-| Artwork | 13 committed approved RGBA pixel poses: UrFavXBF 6, PIX 7 |
+| UrFavXBF voice | Kitten Mini 0.8 `kitten-mini-jasper-en-v1`, Jasper |
+| PIX voice | Kitten Mini 0.8 `kitten-mini-kiki-en-v1`, Kiki |
+| Artwork | 16 poses: 9 exact owner-sheet UrFavXBF views, 7 transparent PIX PNGs |
 | Layout/runtime | Full-body pixel-pose characters, cinematic 2.5D; `HeroCharacterStage` |
 | Motion | Speaker/listener pose swaps; short glitches at transitions; no false lip-sync claims |
 | Asset verification | `python3 scripts/stage_pixel_default_pack.py --verify-workspace` |
 | Visual proof | `PixelProductionProof`; artwork proof, not a voiced episode |
 | Budget | No paid API or GPU usage; maximum external sprite spend is zero |
 
-UrFavXBF retains black/neon-green styling; PIX retains the approved
-cyan/lavender feline styling. Use the existing PNGs and their hashes, not a
-new interpretation, substitute pack, concept-sheet crop or rejected prototype.
-Check actual files before rendering: the repository includes the approved art;
-a missing local file is a concrete setup failure, not a reason to demand a new
-Library upload or silently select historical assets. Voice synchronization and
-word alignment remain episode-specific and must use actual audio.
+UrFavXBF now uses the owner's navy-hoodie Filipino host in attachment 52170.jpg, with black hair and a Philippine flag patch. `characters/urfavxbf-8bit-manifest.json` pins the exact JPEG and nine viewports; the runtime displays white backing, not transparent sprites. PIX retains its seven approved transparent cyan/lavender feline poses. The six superseded neon-green host PNGs have been removed. Do not substitute them or claim new 3D/lip-sync. Verify the current image manifest before rendering.
 
 Tagalog/VoxCPM2 is **on hold and opt-in only**. Keep its designs/runtime for an
 explicitly requested experiment; opt-in does not authorize paid GPU/API use.
 Reuse approved English audio when available. Authorized new English generation
-uses the same profiles and existing CPU-capable Chatterbox path; never silently
+uses the owner-selected Kitten Mini Jasper/Kiki profiles and local ONNX CPU path; never silently
 substitute speakers or claim a new WAV was generated from a preset alone.
 
 ## Historical reproduction and delivery
@@ -88,8 +82,7 @@ assets, processing permissions or production approvals.
 - The Lottie/Bodymovin and Duik compositions are import **demonstrations** only,
   not a complete After Effects runtime nor proof of a genuine Duik export.
 - New English speech requires express authorization, the approved
-  `scripts/character_voiceover.py --language en --device cpu` route, a real
-  reference WAV for PIX at `input/pix-reference.wav`, and listening QA.
+  `scripts/character_voiceover.py --language en --device cpu` Kitten route and listening QA. PIX uses built-in Kiki; no reference WAV is needed.
   Using Groq uploads content externally and requires separate permission.
 - RMS or pose-swap character motion does not establish phoneme lip-sync.
   Do not describe 2.5D images as physically modeled 3D.
@@ -130,3 +123,8 @@ brand plates, permanent headers/footers, technical-grid templates or
 slide-like labels may accompany an effect preview. Imported sample media
 and mattes must be real and verified; never substitute an effect code
 contract test for motion quality review.
+
+
+## Latest word-acting example
+
+`WordPoseHostDemo` demonstrates all nine current host views with Jasper and actual-audio word estimates. Each spoken word selects a different authored pose and triggers a three-frame local pixel/slice glitch. The included audio and receipts can be rendered without regenerating voices. See `HOST_WORD_POSES.md`. Existing compositions now resolve host poses to this same current artwork; old pose names are accepted only as API aliases, never as old-art fallback. Legacy Chatterbox inference is explicit opt-in through `--engine chatterbox`.

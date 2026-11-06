@@ -8,7 +8,7 @@ description: Use when editing explicitly requested 9:16 talking-head footage wit
 **Scope:** this is the supplied-footage/legacy vertical-effects reference, not
 the default for new original episodes. Read `docs/PRODUCTION_POLICY.md` and
 `characters/registry.json` first. Current original productions use English,
-the 13 approved pixel poses and HeroCharacterStage in 1920×1080/30 fps.
+the 16 current pixel poses (9 owner-host views and 7 PIX poses) and HeroCharacterStage in 1920×1080/30 fps.
 Use `.claude/skills/ai-video-editor/SKILL.md` for that workflow. Historical
 examples below do not override the latest explicit user instruction or registry.
 

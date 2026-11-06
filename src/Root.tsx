@@ -1,3 +1,6 @@
+import {WordPoseHostDemo, WORD_POSE_FRAMES} from './characters/word-poses/WordPoseHostDemo'
+import {CinematicShowreel} from './showcase/CinematicShowreel'
+import {SHOWREEL_FRAMES} from './showcase/showreelTimeline'
 import { Composition } from 'remotion'
 import { Edit, type EditSpec, editDuration } from './edit/Edit'
 import edit from './edit/edit.json'
@@ -33,6 +36,10 @@ import {calculateEditMetadata, calculateHeroMetadata} from './compositionMetadat
 const spec = edit as EditSpec
 
 export const Root = () => <>
+  <Composition id="WordPoseHostDemo" component={WordPoseHostDemo} width={1920} height={1080} fps={30} durationInFrames={WORD_POSE_FRAMES} defaultProps={{audioReady:false}} />
+  <Composition id="CinematicShowreel" component={CinematicShowreel}
+    width={1920} height={1080} fps={30} durationInFrames={SHOWREEL_FRAMES}
+    defaultProps={{audioReady:false}} />
   <Composition id="DuikBakedCharacterProof" component={DuikBakedCharacterProof}
     width={1920} height={1080} fps={30} durationInFrames={DUIK_BAKED_PROOF_FRAMES} />
   <Composition id="AfterEffectsLottieProof" component={AfterEffectsLottieProof}

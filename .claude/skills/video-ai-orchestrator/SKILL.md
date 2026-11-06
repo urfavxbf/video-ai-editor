@@ -52,7 +52,7 @@ the English production default. Never overwrite a newer user change.
 - **Original local HTML/GSAP motion or episode graphic:** `hyperframes-motion-graphics`;
   use the pinned offline renderer, then verify the Remotion chapter bridge.
 - **Character narration or voice integrity:** `character-voice-production`;
-  keep approved English Chatterbox V3 identities, with VoxCPM2 opt-in only.
+  keep approved English Kitten Mini Jasper/Kiki identities, with VoxCPM2 opt-in only.
 - **Transcripts, SRT or word alignment:** `transcription-captions`; prefer
   verified local input, and never transmit audio to Groq without consent.
 - **After Effects, Bodymovin, Lottie or Duik imports:** `animation-import`;
