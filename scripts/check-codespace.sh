@@ -24,6 +24,11 @@ if test ! -x .venv/bin/python; then
   exit 1
 fi
 .venv/bin/python -c 'import groq, numpy, PIL; print("OK: Groq SDK, NumPy, Pillow")'
+.venv/bin/python -m yt_dlp --version || {
+  echo "MISSING: yt-dlp. Install with: .venv/bin/python -m pip install -r requirements-media-ingestion.txt"
+  exit 1
+}
+echo "OK: yt-dlp local media ingestion runtime"
 test -x node_modules/.bin/remotion || {
   echo "MISSING: Remotion CLI. Run: npm ci"
   exit 1

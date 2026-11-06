@@ -1,4 +1,4 @@
-name: Package Video AI Editor 20 ChatGPT skills
+name: Package Video AI Editor 21 ChatGPT skills
 
 on:
   push:
@@ -20,30 +20,30 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
-      - name: Validate and bundle all 20 installed skills
+      - name: Validate and bundle all 21 installed skills
         run: python3 scripts/package-chatgpt-skills.py
       - name: Verify portable plugin bundle and individual uploads
         run: |
           python3 - <<'PY'
           from zipfile import ZipFile
           from pathlib import Path
-          p = Path("out/chatgpt-skills/Video-AI-Editor-20-Skills-Plugin.zip")
+          p = Path("out/chatgpt-skills/Video-AI-Editor-21-Skills-Plugin.zip")
           with ZipFile(p) as z:
               n = z.namelist()
               assert "plugin.json" in n
               assert ".codex-plugin/plugin.json" in n
-              assert len([x for x in n if x.startswith("skills/") and x.endswith("/SKILL.md") and x.count("/")==2])==20
+              assert len([x for x in n if x.startswith("skills/") and x.endswith("/SKILL.md") and x.count("/")==2])==21
           x=Path("out/chatgpt-skills/individual-skill-uploads")
-          assert len(list(x.glob("*.zip")))==20
-          print("Packaging passed: 20 skills and plugin manifests")
+          assert len(list(x.glob("*.zip")))==21
+          print("Packaging passed: 21 skills and plugin manifests")
           PY
       - name: Upload ready-to-install skill archives
         uses: actions/upload-artifact@v4
         with:
-          name: chatgpt-video-ai-editor-20-skills
+          name: chatgpt-video-ai-editor-21-skills
           path: |
-            out/chatgpt-skills/Video-AI-Editor-20-Skills-Plugin.zip
-            out/chatgpt-skills/Video-AI-Editor-20-Individual-Skills.zip
+            out/chatgpt-skills/Video-AI-Editor-21-Skills-Plugin.zip
+            out/chatgpt-skills/Video-AI-Editor-21-Individual-Skills.zip
             out/chatgpt-skills/individual-skill-uploads/*.zip
           retention-days: 14
           if-no-files-found: error

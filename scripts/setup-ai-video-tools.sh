@@ -25,6 +25,9 @@ echo "== Installing Python dependencies and Groq client =="
 python3 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -r requirements.txt 'groq>=0.30,<2'
+echo "== Installing pinned yt-dlp for optional licensed media ingestion =="
+.venv/bin/python -m pip install -r requirements-media-ingestion.txt
+.venv/bin/python -m yt_dlp --version
 echo "== Installing official HyperFrames core skills =="
 HYPERFRAMES_NO_TELEMETRY=1 DO_NOT_TRACK=1 ./node_modules/.bin/hyperframes skills update
 echo "== Ensuring browser renderer =="

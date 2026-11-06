@@ -6,7 +6,7 @@ by changing README or merging a pull request.
 
 ## Description
 
-AI video production toolkit with Remotion, FFmpeg, HyperFrames, Chatterbox V3, captions, Lottie imports, and modular agent skills.
+AI video production toolkit with Remotion, FFmpeg, HyperFrames, Chatterbox V3, yt-dlp source intake, captions, Lottie, and modular agent skills.
 
 ## Topics
 

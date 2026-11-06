@@ -7,7 +7,7 @@ This repository has a checked-in [dev container](../.devcontainer/devcontainer.j
 1. Open https://github.com/urfavxbf/video-ai-editor while signed into your GitHub account.
 2. Choose **Code** → **Codespaces** → **Create codespace on main**. If you see **New with options**, select branch `main` and the **Video AI Editor** dev container.
 3. Open in the browser's VS Code editor. If the UI is cramped on a phone, use the browser's **Desktop site** option.
-4. The dev container runs `bash scripts/setup-ai-video-tools.sh` at first creation. This installs Node/Remotion, FFmpeg, Python/Groq SDK, HyperFrames skills, and the Remotion browser.
+4. The dev container runs `bash scripts/setup-ai-video-tools.sh` at first creation. This installs Node/Remotion, FFmpeg, Python/Groq SDK, pinned yt-dlp (no video downloads), HyperFrames skills, and the Remotion browser.
 
 Initial setup downloads several dependencies. If it stops or an installation fails, reopen the terminal in the repository and retry:
 
@@ -36,7 +36,7 @@ Run in the Codespaces terminal:
 bash scripts/check-codespace.sh
 ```
 
-The check verifies Node.js, FFmpeg/FFprobe, Groq SDK, NumPy, Pillow, Remotion CLI and TypeScript. It only reports whether a Groq key is present — it never prints the key or makes a paid API request.
+The check verifies Node.js, FFmpeg/FFprobe, Groq SDK, NumPy, Pillow, pinned yt-dlp, Remotion CLI and TypeScript. It only reports whether a Groq key is present — it never prints the key or makes a paid API request.
 
 For a preview, from the project root:
 
